@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata"><description>This field is created for the story S-45438. It stores the value of specialty or board certification of the supervisor</description>
+        <externalId>false</externalId>
+        <label>Speciality Or Board Certification</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </CustomField>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata"><defaultValue>false</defaultValue>
+        <description>This field is used to store the consent of the user to display their mailing address publicly for Story: S-46032</description>
+        <label>Consent for Primary Contact Address</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </CustomField>

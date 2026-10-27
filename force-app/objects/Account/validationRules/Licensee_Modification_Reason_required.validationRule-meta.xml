@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata"><active>true</active>
+        <description>If Licensee Modification is selected as true, Licensee Modification Reason should be required</description>
+        <errorConditionFormula>IF( (Licensee_Modification__c = true &amp;&amp; ISPICKVAL(Licensee_Modification_Reason__c,"") ) , true , false)</errorConditionFormula>
+        <errorDisplayField>Licensee_Modification_Reason__c</errorDisplayField>
+        <errorMessage>Please select the modification reason.</errorMessage>
+    </ValidationRule>

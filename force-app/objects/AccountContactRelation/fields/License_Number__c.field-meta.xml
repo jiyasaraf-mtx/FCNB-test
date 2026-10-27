@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata"><description>Neeraj Mani Sai - This field is used to save the selected License Num in Person In Charge Step and show the same in App Review Page</description>
+        <externalId>false</externalId>
+        <label>Individual license number</label>
+        <length>30</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </CustomField>

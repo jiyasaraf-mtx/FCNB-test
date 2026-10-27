@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata"><externalId>false</externalId>
+        <formula>IF(Open_Case_Counter__c &gt;0,IMAGE('/img/samples/flag_yellow.gif','Yellow Flag'),NULL)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Open Case Flag</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </CustomField>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata"><label>Ethnicity</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Asian/Pacific Islander</fullName>
+                    <default>false</default>
+                    <label>Asian/Pacific Islander</label>
+                </value>
+                <value>
+                    <fullName>American Indian/Eskimo/Aleut</fullName>
+                    <default>false</default>
+                    <label>American Indian/Eskimo/Aleut</label>
+                </value>
+                <value>
+                    <fullName>Black-Not Hispanic</fullName>
+                    <default>false</default>
+                    <label>Black-Not Hispanic</label>
+                </value>
+                <value>
+                    <fullName>Hispanic</fullName>
+                    <default>false</default>
+                    <label>Hispanic</label>
+                </value>
+                <value>
+                    <fullName>Other</fullName>
+                    <default>false</default>
+                    <label>Other</label>
+                </value>
+                <value>
+                    <fullName>Unknown</fullName>
+                    <default>false</default>
+                    <label>Unknown</label>
+                </value>
+                <value>
+                    <fullName>White-Not Hispanic</fullName>
+                    <default>false</default>
+                    <label>White-Not Hispanic</label>
+                </value>
+                <value>
+                    <fullName>AFRICAN-AMERICAN</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>AFRICAN-AMERICAN</label>
+                </value>
+                <value>
+                    <fullName>AMERICAN INDIAN/ALASKAN NATIVE</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>AMERICAN INDIAN/ALASKAN NATIVE</label>
+                </value>
+                <value>
+                    <fullName>CAUCASIAN (WHITE)</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>CAUCASIAN (WHITE)</label>
+                </value>
+                <value>
+                    <fullName>Not Applicable</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Not Applicable</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </CustomField>

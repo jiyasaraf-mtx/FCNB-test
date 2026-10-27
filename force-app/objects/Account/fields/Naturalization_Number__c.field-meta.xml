@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata"><description>This field is created for story S-46711 to story naturalization number if the citizenship is US and proof of citizenship is chosen as naturalization</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Verify for proof of citizenship as Naturalization</inlineHelpText>
+        <label>Naturalization Number</label>
+        <length>40</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </CustomField>

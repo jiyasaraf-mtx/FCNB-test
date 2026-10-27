@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata"><description>Created for Story Number : S-43404 (Question : Provide a detailed description of the proposed intern job duties/responsibilities)</description>
+        <label>Description Of Proposed Intern Job</label>
+        <length>32768</length>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </CustomField>

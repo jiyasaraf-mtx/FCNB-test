@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata"><description>S-46920 : To capture Height(Feet)
+This field is used in the Additional Info sub-section of Personal Information for story S-44270</description>
+        <externalId>false</externalId>
+        <label>Feet</label>
+        <length>10</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </CustomField>

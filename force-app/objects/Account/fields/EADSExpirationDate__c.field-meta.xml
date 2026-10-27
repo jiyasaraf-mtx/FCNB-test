@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata"><description>This field is created for story S-46711 to store the expiration date for foreign citizens with student visa</description>
+        <inlineHelpText>Verify for F-1 Student Visa and is non-immigrant,Temporary Employement Authorized. (Value derived through SAVE)</inlineHelpText>
+        <label>EADS Expiration Date</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Date</type>
+    </CustomField>

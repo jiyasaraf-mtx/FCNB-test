@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata"><defaultValue>false</defaultValue>
+        <description>S-44309 To store relationship when Establishment added in Funeral Establishment Requirement section.</description>
+        <label>If Relationship is Associated with you</label>
+        <type>Checkbox</type>
+    </CustomField>

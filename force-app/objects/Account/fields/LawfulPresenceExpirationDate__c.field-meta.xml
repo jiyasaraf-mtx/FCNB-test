@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata"><description>This field is created for story S-46711 to store the lawful presence expiration date for users who are present lawfully</description>
+        <inlineHelpText>Verify if citizenship is selected as Foreign and residence address is inside USA</inlineHelpText>
+        <label>Lawful Presence Expiration Date</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Date</type>
+    </CustomField>
