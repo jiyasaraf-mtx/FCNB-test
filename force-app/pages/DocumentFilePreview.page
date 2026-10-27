@@ -1,0 +1,78 @@
+<apex:page controller="DocumentFilePreviewController"
+    showHeader="false"
+    sidebar="false"
+    standardStylesheets="false"
+    applyHtmlTag="true"
+    applyBodyTag="true"
+    docType="html-5.0"
+    cache="false">
+    <head>
+        <style>
+            html, body {
+                margin: 0;
+                padding: 0;
+                height: 100%;
+                background: #edf1f6;
+            }
+            .preview-host {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .pdf-object,
+            .pdf-frame {
+                width: 100%;
+                height: 100%;
+                border: 0;
+            }
+            .image-scroll {
+                width: 100%;
+                height: 100%;
+                overflow: auto;
+                text-align: center;
+                background: #edf1f6;
+            }
+            .image-scroll img {
+                max-width: 100%;
+                height: auto;
+                display: inline-block;
+                margin: 0.5rem auto;
+                box-shadow: 0 8px 24px rgba(16, 24, 40, 0.12);
+                background: #fff;
+            }
+            .preview-message {
+                color: #6b7c93;
+                text-align: center;
+                padding: 2rem 1rem;
+                font-family: 'Salesforce Sans', Arial, sans-serif;
+            }
+            .preview-message a {
+                color: #0176d3;
+            }
+        </style>
+    </head>
+
+    <div class="preview-host">
+        <apex:outputPanel layout="none" rendered="{!AND(hasData, isPdf)}">
+            <object class="pdf-object" data="{!dataUri}" type="application/pdf">
+                <iframe class="pdf-frame" src="{!dataUri}" title="{!fileTitle}"></iframe>
+            </object>
+        </apex:outputPanel>
+
+        <apex:outputPanel layout="block" styleClass="image-scroll" rendered="{!AND(hasData, isImage)}">
+            <img src="{!dataUri}" alt="{!fileTitle}" />
+        </apex:outputPanel>
+
+        <apex:outputPanel layout="block" styleClass="preview-message" rendered="{!NOT(hasData)}">
+            <p>{!IF(errorMessage == null, 'Inline preview is unavailable for this file.', errorMessage)}</p>
+            <apex:outputPanel layout="none" rendered="{!downloadUrl != null}">
+                <p><a href="{!downloadUrl}" target="_blank">Open / Download File</a></p>
+            </apex:outputPanel>
+        </apex:outputPanel>
+    </div>
+</apex:page>
