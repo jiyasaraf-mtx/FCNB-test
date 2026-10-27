@@ -1,0 +1,110 @@
+:host {
+    display: block;
+    --ink: #172033;
+    --muted: #667085;
+    --brand: #1261c9;
+    --line: #dfe4ea;
+    --green: #137333;
+    --amber: #9a6700;
+}
+
+.summary-page {
+    padding: 0.25rem 0 2rem;
+    color: var(--ink);
+    max-width: 1100px;
+}
+
+.summary-toolbar {
+    margin-bottom: 1rem;
+}
+
+.summary-toolbar.bottom {
+    margin-top: 1.5rem;
+    margin-bottom: 0;
+}
+
+.page-title {
+    margin: 0 0 0.35rem;
+    font-size: 1.7rem;
+    font-weight: 800;
+}
+
+.sub {
+    color: var(--muted);
+    font-size: 0.85rem;
+    margin-bottom: 1.35rem;
+}
+
+.section {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 13px;
+    padding: 1rem 1.15rem 1.15rem;
+    box-shadow: 0 5px 20px #1018280a;
+    margin-bottom: 1rem;
+}
+
+.section-title {
+    margin: 0 0 0.85rem;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--ink);
+    padding-bottom: 0.5rem;
+    border-bottom: 3px solid #003768;
+}
+
+.field-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.85rem 1.25rem;
+}
+
+.field.span-12 {
+    grid-column: 1 / -1;
+}
+
+.field-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--muted);
+    margin-bottom: 0.2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+}
+
+.field-value {
+    font-size: 0.9rem;
+    color: var(--ink);
+    word-break: break-word;
+    white-space: pre-wrap;
+}
+
+.badge {
+    display: inline-block;
+    padding: 5px 8px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 800;
+    background: #f2f4f7;
+    color: #475467;
+}
+
+.badge.green {
+    background: #e9f8ef;
+    color: var(--green);
+}
+
+.badge.amber {
+    background: #fff4d6;
+    color: var(--amber);
+}
+
+@media (max-width: 768px) {
+    .field-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .page-title {
+        font-size: 1.35rem;
+    }
+}
