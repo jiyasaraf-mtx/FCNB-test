@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata"><label>Position</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Lecturer</fullName>
+                    <default>false</default>
+                    <label>Lecturer</label>
+                </value>
+                <value>
+                    <fullName>Assistant Professor</fullName>
+                    <default>false</default>
+                    <label>Assistant Professor</label>
+                </value>
+                <value>
+                    <fullName>Associate Professor</fullName>
+                    <default>false</default>
+                    <label>Associate Professor</label>
+                </value>
+                <value>
+                    <fullName>Professor</fullName>
+                    <default>false</default>
+                    <label>Professor</label>
+                </value>
+                <value>
+                    <fullName>Adjunct Professor</fullName>
+                    <default>false</default>
+                    <label>Adjunct Professor</label>
+                </value>
+                <value>
+                    <fullName>Teaching Assistant</fullName>
+                    <default>false</default>
+                    <label>Teaching Assistant</label>
+                </value>
+                <value>
+                    <fullName>Research Assistant</fullName>
+                    <default>false</default>
+                    <label>Research Assistant</label>
+                </value>
+                <value>
+                    <fullName>Lab Instructor</fullName>
+                    <default>false</default>
+                    <label>Lab Instructor</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </CustomField>

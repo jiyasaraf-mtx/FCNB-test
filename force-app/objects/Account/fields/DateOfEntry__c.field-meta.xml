@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata"><description>This field is created for story S-47611 date of entry for foreign users with VISA proof</description>
+        <inlineHelpText>Verify for Visa with stamped date of US entry (Value derived through save)</inlineHelpText>
+        <label>Date of Entry</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Date</type>
+    </CustomField>

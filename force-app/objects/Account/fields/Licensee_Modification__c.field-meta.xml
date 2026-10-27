@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata"><defaultValue>false</defaultValue>
+        <description>Only the Executive Director is able to edit this field to do multiple Functionality (S-54480)</description>
+        <label>Licensee Modification</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </CustomField>
