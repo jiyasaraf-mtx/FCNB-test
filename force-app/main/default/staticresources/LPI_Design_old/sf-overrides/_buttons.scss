@@ -1,0 +1,223 @@
+// .primary-button-bordered {
+//     padding: 0.125rem;
+//     border: 0.125rem solid $primary-main;
+//     border-radius: $border-radius-medium;
+
+//     .slds-button_brand {
+//         width: 100%;
+//         background: $primary-main;
+//         padding: 0.375rem;
+//         font-size: $font-size-14;
+
+//         &:focus {
+//             outline: toRem(2) dotted $outline-border !important;
+//             outline-offset: toRem(10) !important;
+//         }
+//     }
+// }
+
+// .secondary-button-bordered {
+//     padding: 0.1875rem;
+//     background: $white;
+//     width: 8.5rem;
+//     border-radius: $border-radius-medium;
+
+//     .slds-button_neutral {
+//         width: 100%;
+//         color: $secondary-main;
+//         font-size: $font-size-14;
+//         padding: 0.1874rem;
+//         border: toRem(1) solid $secondary-main;
+
+//         &:focus {
+//             outline: toRem(2) dotted $outline-border !important;
+//             outline-offset: toRem(10) !important;
+//         }
+//     }
+// }
+
+// .primary-button {
+//     .slds-button_brand {
+//         width: 7.5rem;
+//         background: $secondary-main;
+//         padding: 0.1874rem;
+//         font-size: $font-size-14;
+//         border: toRem(1) solid $secondary-main;
+//     }
+// }
+
+// .secondary-button {
+
+//     .slds-button_neutral,
+//     .slds-button_outline-brand {
+//         width: 7.5rem;
+//         color: $secondary-main;
+//         font-size: $font-size-14;
+//         padding: 0.1874rem;
+//         border: toRem(1) solid $secondary-main;
+//     }
+// }
+
+// .previous-button {
+//     .slds-button_neutral {
+//         width: 7.5rem;
+//         color: $text-secondary;
+//         padding: 0.1874rem;
+//         border: toRem(1) solid $text-secondary;
+//         font-size: $font-size-14;
+//     }
+// }
+
+
+// .slds-button_brand {
+//     background: $secondary-main;
+//     font-size: $font-size-14;
+//     border: toRem(1) solid $secondary-main;
+// }
+
+// .slds-button_neutral,
+// .slds-button_outline-brand {
+//     color: $secondary-main;
+//     font-size: $font-size-14;
+//     border: toRem(1) solid $secondary-main;
+// }
+
+// .slds-progress-bar__value {
+//     background-color: $secondary-main;
+// }
+
+// .save-m-btn {
+//     position: absolute;
+//     right: 1.5rem;
+//     // z-index: 10;
+//     margin-top: 0.5rem;
+//     bottom: -2.9rem !important;
+//     z-index: 1;
+
+//     .slds-button_brand {
+//         background-color: $primary-main;
+//         min-width: 7.5rem;
+//         padding: 0.225rem 0;
+//     }
+// }
+
+
+// a {
+//     color: $link-blue !important;
+// }
+
+// .slds-button_brand,
+// .slds-button_icon-brand {
+//     background-color: $primary-main;
+// }
+
+// omnistudio-omniscript-navigate-action[data-omni-key="NavigateAction1"] {
+//     .slds-p-top_xx-small {
+//         padding-top: 0;
+//     }
+// }
+
+// .omniscript-button-position {
+//     .omniscript-btn-previous {
+//         position: relative;
+//         right: 5rem;
+//         margin-right: 4rem;
+//     }
+// }
+
+// .income {
+//     .slds-button_destructive {
+//         margin-left: 2rem;
+
+//         @media all and (max-width:30rem) {
+//             margin-left: 0;
+//             width: max-content;
+//         }
+//     }
+// }
+
+// .slds-notify {
+//     .slds-button {
+//         &:focus {
+//             outline: toRem(3) dotted !important;
+//             outline-offset: toRem(2) !important;
+//             border: 0 !important;
+//             box-shadow: none !important;
+//         }
+//     }
+// }
+
+// /* Aplha Design */
+// a {
+//     color: $primary-main;
+//     min-height: unset !important;
+//     text-decoration: none;
+//     font-size: 0.875rem;
+// }
+
+// .payment-link {
+//     color: $primary-main;
+//     font-size:$font-size-20;
+//     font-weight: $font-weight-medium;
+// }
+
+// .slds-button {
+//     font-size: 0.813rem;
+//     cursor: pointer;
+//     &.slds-button_outline-brand {
+//         color: $secondary-main;
+//         border-color: $secondary-main;
+//     }
+
+//     &.table-icon.slds-button_icon:active {
+//         color: $white;
+//         background-color: $secondary-main;
+//         border-color: $secondary-main;
+//         fill: $white;
+//     }
+// }
+
+// .payment-view-button.primary-button-bordered {
+//     display: block;
+//     width: 16.875rem;
+// }
+
+// .primary-button-bordered {
+//     &.login-button {
+//         button {
+//             padding: 0rem 1rem;
+
+//             &:focus {
+//                 outline-offset: 0.5rem !important;
+//             }
+//         }
+//     }
+
+//     &.success-back-btn {
+//         width: 20%;
+//         margin: 3rem auto;
+//     }
+// }
+
+// .view-button {
+//     display: flex;
+//     justify-content: center;
+
+//     .secondary-button {
+//         .slds-button_neutral {
+//             color: $secondary-main;
+//             border: 0.0625rem solid $secondary-main;
+//         }
+//     }
+// }
+
+// .delete-btn .slds-button,
+// button[title="Delete"],
+// button[title="delete"]  {
+//     background-color: $destructive;
+//     color: $white;
+//     border: 0;
+//     .slds-button__icon{
+//         fill: $white !important;
+//     }
+// }

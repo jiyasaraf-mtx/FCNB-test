@@ -1,0 +1,116 @@
+<!-- sldsValidatorIgnore -->
+<template>
+	<div>
+		<lightning-card title="Audit Licenses" heading-level="3" icon-name="custom:custom85">
+			<lightning-spinner
+				variant="brand"
+				class="slds-align_absolute-center"
+				if:true={isProcessing}
+			></lightning-spinner>
+			<div class="slds-p-around_medium slds-col slds-size_1-of-1">
+				<div class="slds-var-p-around_x-large">
+					<div class="slds-col slds-size_1-of-1">
+						<lightning-layout>
+							<lightning-layout-item flexibility="auto" size="6">
+								<div class="slds-col slds-size_1-of-1 slds-medium-size_8-of-12 slds-large-size_8-of-12">
+									<lightning-combobox
+										options={auditTypeOptions}
+										label="Audit Type"
+										name="auditType"
+										onchange={handleChange}
+										value={auditType}
+										required
+										class="validate"
+									></lightning-combobox>
+								</div>
+							</lightning-layout-item>
+							<lightning-layout-item flexibility="auto" size="6" if:true={showSubProfessions}>
+								<div class="slds-col slds-size_1-of-1 slds-medium-size_8-of-12 slds-large-size_8-of-12">
+									<lightning-combobox
+										options={subProfessionOptions}
+										label="Sub Profession"
+										name="subProfession"
+										value={selectedSubProfession}
+										onchange={handleChange}
+										required
+										class="validate"
+									></lightning-combobox>
+								</div>
+							</lightning-layout-item>
+							<lightning-layout-item flexibility="auto" size="6" if:true={showYearPickList}>
+								<div class="slds-col slds-size_1-of-1 slds-medium-size_8-of-12 slds-large-size_8-of-12">
+									<lightning-combobox
+										options={yearOptions}
+										label="Select Audit Year"
+										name="auditYear"
+										onchange={handleChange}
+										value={selectedAuditYears}
+										class="validate"
+										required
+									></lightning-combobox>
+								</div>
+							</lightning-layout-item>
+						</lightning-layout>
+					</div>
+				</div>
+			</div>
+			<div class="slds-modal__footer">
+				<lightning-button
+					label="Cancel"
+					variant="Neutral"
+					onclick={handleCancelButton}
+					class="slds-var-m-around_small slds-float_left"
+				></lightning-button>
+				<lightning-button
+					label="Save"
+					variant="brand"
+					onclick={handleSaveButton}
+					class="slds-var-m-around_small"
+				></lightning-button>
+			</div>
+			<template if:true={openConfirmationModal}>
+				<section
+					role="dialog"
+					tabindex="-1"
+					aria-labelledby="modal-heading-01"
+					aria-modal="true"
+					aria-describedby="modal-content-id-1"
+					class="slds-modal slds-fade-in-open"
+				>
+					<div class="slds-modal__container">
+						<header class="slds-modal__header">
+							<button
+								class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+								onclick={handleCancelConfirmation}
+							>
+								<lightning-icon
+									icon-name="utility:close"
+									variant="inverse"
+									size="small"
+								></lightning-icon>
+								<span class="slds-assistive-text">Close Caution modal</span>
+							</button>
+							<h1 id="modal-heading-03" class="section-heading slds-hyphenate">Caution!</h1>
+						</header>
+						<div class="slds-modal__content slds-var-p-around_medium" id="modal-content-id-03">
+							<p>There is already an audit record. Click 'OK' to redirect to it or 'Cancel' to go back</p>
+						</div>
+						<footer class="slds-modal__footer">
+							<lightning-button label="Cancel" name="Cancel" onclick={handleCancelConfirmation}>
+							</lightning-button>
+							<lightning-button
+								label="OK"
+								class="slds-var-m-left_medium"
+								variant="brand"
+								name="OK"
+								onclick={navigateToBoardRecordPage}
+							>
+							</lightning-button>
+						</footer>
+					</div>
+				</section>
+				<div class="slds-backdrop slds-backdrop_open"></div>
+			</template>
+		</lightning-card>
+	</div>
+</template>

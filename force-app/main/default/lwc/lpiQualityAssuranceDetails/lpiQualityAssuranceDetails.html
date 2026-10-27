@@ -1,0 +1,58 @@
+<!--
+  @description       : 
+  @author            : Vamsi Mudaliar
+  @group             : 
+  @last modified on  : 10-06-2023
+  @last modified by  : Vamsi Mudaliar
+-->
+<template>
+  <template if:true={showSpinner}>
+    <lightning-spinner alternative-text="Loading"></lightning-spinner>
+  </template>
+  <lightning-card title="Quality Assurance Details">
+
+    <div class="slds-grid slds-wrap slds-gutters slds-m-top_large">
+
+      <template for:each={quesWrapperList} for:item="question">
+
+        <div key={question.questionId} class="slds-col slds-size_6-of-12">
+          <div class="questionValue slds-p-around_small">
+            <template lwc:if={question.isPicklist}>
+              <lightning-combobox options={question.options} onchange={handleInputChange} value={question.value}
+                label={question.questionName} data-question-id={question.questionId} data-type={question.dataType}
+                disabled={disableSubmit} required>
+              </lightning-combobox>
+            </template>
+            <template lwc:elseif={question.isMultiPicklist}>
+              <lightning-dual-listbox name="complaintPractice" source-label="Available" selected-label="Selected"
+                label={question.questionName} options={question.options} onchange={handleInputChange}
+                data-question-id={question.questionId} data-type={question.dataType} value={question.value}
+                disabled={disableSubmit} required>
+              </lightning-dual-listbox>
+            </template>
+            <template lwc:elseif={question.isNumeric}>
+              <lightning-input type="number" onchange={handleInputChange} label={question.questionName} max="999"
+                value={question.numberResponseValue} data-question-id={question.questionId}
+                data-type={question.dataType} disabled={disableSubmit} required></lightning-input>
+            </template>
+            <template lwc:else>
+              <lightning-textarea type="text" value={question.value} label={question.questionName}
+                onchange={handleInputChange} data-question-id={question.questionId} data-type={question.dataType}
+                disabled={disableSubmit} max-length="32768" required></lightning-textarea>
+            </template>
+          </div>
+
+        </div>
+      </template>
+    </div>
+    <div class="slds-clearfix" if:false={disableSubmit}>
+      <div class="slds-float_right slds-p-top_small">
+        <lightning-button variant="brand" label="Submit" onclick={saveDetails}></lightning-button>
+      </div>
+    </div>
+  </lightning-card>
+
+
+
+
+</template>

@@ -1,0 +1,59 @@
+<template>
+            <div class="slds-grid slds-wrap slds-is-relative ">
+            <div style="position: fixed;z-index: 999999;top: 0;right: 0;">
+  <omnistudio-toast class="flexcard-toast-element" theme="slds" title="" message="" styletype=""> </omnistudio-toast>
+</div>
+            <div if:true={showLoader} class="slds-is-absolute vloc-loader_override" style="height: 100%; width: 100%; min-height:50px; background: transparent; z-index: 99;">
+  <div>
+   <omnistudio-spinner
+      variant="brand"
+      alternative-text="Loading content..."
+      size="medium"
+      theme="slds"
+      ></omnistudio-spinner>
+  </div>
+</div>
+            <template if:false={hasPermission}>
+              You don't have required permissions to view this card.
+            </template>
+            <template if:true={hasPermission}>
+              <template if:true={hasRecords}>
+                        <template for:each={_records} for:item="record" for:index="rindex">
+                            <omnistudio-flex-card-state if:true={record}  key={record._flex.uniqueKey} data-recordid={record.Id} record={record} data-statue="true"  data-index="0" data-rindex={rindex} class="cf-vlocity-state-0 cf-vlocity-state slds-size_12-of-12"  tracking-obj={_childCardTrackingObj} >
+      <div if:true={cardLoaded} class="slds-grid slds-wrap slds-card slds-p-around_x-small slds-m-bottom_x-small" style="">
+          <div data-style-id="state0element0" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-flex-action data-style-id="state0element0_child"  tracking-obj={_childCardTrackingObj}  class= "state0element0_child flexActionElement" 
+        data-action-element-class="state0element0_child" data-action-key="state0element0" onexecuteaction={performAction} data-show-spinner="false"
+        data-element-label="pay"   state-obj={record}  card={card}  record={record}  label="Pay"  icon-name="standard-default"  action-list='\[{"stateAction":{"id":"flex-action-1788265099318","type":"Flyout","openUrlIn":"Current Window","flyoutType":"OmniScripts","openFlyoutIn":"Modal","channelName":"","layoutType":"lightning","osName":"FCNB/PaymentChild/Multi-Language","flyoutLwc":"f-c-n-b-payment-child-multi-language"},"key":"1788265002299-7i204a4hj","label":"Action","draggable":true,"isOpen":true,"actionIndex":0}]'  flyout-details='\{"openFlyoutIn":"Modal"}'  flyout-channel=""  display-as-button="true"  theme="slds"  ><div slot="modalflyout" class="payaction0 " ><omnistudio-custom-lwc-wrapper element-name="c-f-c-n-b-payment-child-multi-language" property='\{"prefill":"{\"omniscriptEmbeddedSource\":\"flyout\"}"}' records={records} record-id={recordId} record={record}  card={card}  action={modalAction.payaction0} >
+     <c-f-c-n-b-payment-child-multi-language   layout='lightning'    ></c-f-c-n-b-payment-child-multi-language>
+    </omnistudio-custom-lwc-wrapper></div></omnistudio-flex-action>
+      </div>
+        </div>
+      </omnistudio-flex-card-state>
+                        </template>
+                      </template>
+                      <template if:false={hasRecords}>
+                            <omnistudio-flex-card-state  record={record} data-statue="false"  data-index="0" data-rindex={rindex} class="cf-vlocity-state-0 cf-vlocity-state slds-size_12-of-12"  tracking-obj={_childCardTrackingObj} >
+      <div if:true={cardLoaded} class="slds-grid slds-wrap slds-card slds-p-around_x-small slds-m-bottom_x-small" style="">
+          <div data-style-id="state0element0" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-flex-action data-style-id="state0element0_child"  tracking-obj={_childCardTrackingObj}  class= "state0element0_child flexActionElement" 
+        data-action-element-class="state0element0_child" data-action-key="state0element0" onexecuteaction={performAction} data-show-spinner="false"
+        data-element-label="pay"   state-obj={record}  card={card}  record={record}  label="Pay"  icon-name="standard-default"  action-list='\[{"stateAction":{"id":"flex-action-1788265099318","type":"Flyout","openUrlIn":"Current Window","flyoutType":"OmniScripts","openFlyoutIn":"Modal","channelName":"","layoutType":"lightning","osName":"FCNB/PaymentChild/Multi-Language","flyoutLwc":"f-c-n-b-payment-child-multi-language"},"key":"1788265002299-7i204a4hj","label":"Action","draggable":true,"isOpen":true,"actionIndex":0}]'  flyout-details='\{"openFlyoutIn":"Modal"}'  flyout-channel=""  display-as-button="true"  theme="slds"  ><div slot="modalflyout" class="payaction0 " ><omnistudio-custom-lwc-wrapper element-name="c-f-c-n-b-payment-child-multi-language" property='\{"prefill":"{\"omniscriptEmbeddedSource\":\"flyout\"}"}' records={records} record-id={recordId} record={record}  card={card}  action={modalAction.payaction0} >
+     <c-f-c-n-b-payment-child-multi-language   layout='lightning'    ></c-f-c-n-b-payment-child-multi-language>
+    </omnistudio-custom-lwc-wrapper></div></omnistudio-flex-action>
+      </div>
+        </div>
+      </omnistudio-flex-card-state>
+                      </template>
+            </template>
+            <template if:true={hasError}>
+            {error}
+            </template>
+            
+      <omnistudio-action action-wrapperclass="slds-hide" re-render-flyout class="action-trigger slds-col" onupdateos={updateOmniscript} onselectcards={updateSelectedCards} onsetvalue={updateAction} onfireactionevent={actionEvtHandler}>
+      
+      </omnistudio-action>
+  
+            <omnistudio-action class="execute-action" re-render-flyout action-wrapperclass="slds-hide" onupdateos={updateOmniscript} onselectcards={updateSelectedCards} onsetvalue={updateAction} onfireactionevent={actionEvtHandler}>
+            
+            </omnistudio-action>
+            </div>
+          </template>

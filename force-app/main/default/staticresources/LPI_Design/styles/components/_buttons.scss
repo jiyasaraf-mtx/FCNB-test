@@ -1,0 +1,643 @@
+
+//button default
+.slds-button {
+&.slds-button_brand,&.slds-button_outline-brand {
+    padding: $xx-small $medium !important;
+}
+}
+.slds-button {
+    // border-radius: $brr-medium;
+    font-weight: $font-weight-semi-bold;
+    font-size: $font-size-16 !important;
+    &.slds-button_brand {
+        background-color: $primary-main;
+        border-color: $primary-main;
+        &:hover,&:focus {
+            background-color: $primary-dark !important;
+            border-color: $primary-dark;
+        }
+    }
+    &.slds-button_outline-brand,&.slds-button_neutral {
+        color: $primary-main;
+        border-color: $primary-main;
+        &:hover,&:focus {
+            color: $primary-dark !important;
+            border-color: $primary-dark !important;
+            background: none;
+        }
+    }
+    &.slds-button_destructive {
+        background-color: $error-main;
+    }
+    &.slds-button_text-destructive {
+        color: $error-main;
+        border-color: $error-main;
+    }
+    &.slds-button_outline-brand[disabled],
+    &.slds-button_outline-brand:disabled,
+    &.slds-button_neutral[disabled],
+    &.slds-button_neutral:disabled{
+        border-color: $text-secondary;
+        background: transparent;
+        color: $text-secondary !important;
+    }
+    &.slds-button_brand[disabled],
+    &.slds-button_brand:disabled,
+    &.slds-button--brand[disabled],
+    &.slds-button--brand:disabled {
+        background: $action-disabled-background-12-p;
+        border-color: $text-disabled;
+    }
+    &[disabled]{
+        color: $action-active-54-p !important;
+    }
+}
+.input-size {
+    .slds-button {
+        height: toRem(36);
+    }
+}
+
+.button-icon_custom {
+    lightning-primitive-icon {
+        svg {
+            display: none;
+        }
+        &::before {
+            margin-right: 0.25rem;
+            margin-top: 0.45rem;
+            display: block;
+        }
+    }
+    &.edit-button,
+    &.save-button,
+    &.cancel-button {
+        .slds-button {
+            height: toRem(26);
+            padding: 0 $small;
+        }
+    }
+}
+//button-icons
+.slds-button {
+    &.slds-button_icon {
+        padding: unset !important;
+        border-radius: unset !important;
+    }
+}
+.download-btn{
+    .slds-button{
+        line-height: 0;
+    }
+}
+
+//back button
+.base{
+&-table-btn,&-delete-btn,&-table-error-btn,&-edit-btn,&-link-btn,&-associate-btn,&-support-link,&-link-copy,&-btn-circle{
+    .slds-button {
+        padding: 0;
+        border-radius: unset;
+        color: $primary-main;
+        font-weight: $font-weight-semi-bold;
+        &:hover {
+            color: $primary-dark;
+        }
+    }
+}
+    &-delete-btn{
+        .slds-button {
+            color: $error-main;
+            background: transparent;
+            &:hover {
+                color: $error-dark;
+            }
+        }
+    }
+}
+.back-button{
+    font-size: toRem(14);
+}
+
+
+
+//links
+a {
+    color: $primary-main !important;
+    &.link-underline {
+        text-decoration: underline;
+    }
+}
+
+.base-link{
+    color: $primary-main;
+    display: flex;
+    font-weight: $font-weight-semi-bold;
+    align-items: center;
+    button {
+        padding: 0;
+        color: $primary-main;
+    }
+    .slds-button:after {
+        content: '\ea10' !important;
+        font-family: 'material-icon';
+        margin-left: $xx-small;
+    }
+    .slds-button:hover {
+        color: $primary-dark; 
+    }
+    &.base-link_new-tab{
+        .slds-button{
+            &:after {
+                transform: rotate(-45deg);
+                display: inline-block;
+            }
+        }
+    }
+}
+.base-link-left{
+    .slds-button{
+        color: $primary-main;
+        &:before {
+            content: '\ea11';
+            font-family: 'material-icon';
+            margin-right: $xx-small;
+        }
+    }
+}
+.base-link-btn{
+    .slds-button{
+        color: $primary-main;
+        &:before {
+            content: '\ea11';
+            font-family: 'material-icon';
+            margin-right: $xx-small;
+        }
+    }
+}
+.base-link-downarrow{
+    display: inline-block;
+    text-decoration: underline;
+    margin-left: $x-small;
+    font-weight: $font-weight-semi-bold;
+    &::after {
+        content: '\ea19';
+        font-family: 'material-icon';
+        margin-left: $xx-small;
+    }
+}
+
+
+.base-link-btn-no-icon {
+    .slds-button {
+        color: $primary-main;
+        // border-bottom: 1px solid;
+        border-radius: 0;
+        line-height: initial;
+        padding: 0;
+        &:hover {
+            color: $primary-dark;
+            // border-bottom-color: $primary-dark;
+        }
+    }
+}
+
+.base-edit-btn {
+    .slds-button,a {
+        color: $primary-main !important;
+        display: block;
+        lightning-primitive-icon{
+            display: none;
+        }
+        &:before {
+            content: '\ea20';
+            font-family: 'material-icon';
+            margin-right: $x-small;
+        }
+
+        &:hover {
+            color: $primary-dark;
+        }
+    }
+}
+.btn-right-arrow {
+    .slds-button {
+        &::after {
+            content: '\ea10' !important;
+            font-family: 'material-icon';
+            margin-left: $x-small;
+        }
+    }
+}
+.brand-download {
+    .slds-button {
+        &::before {
+            content: '\ea35';
+            font-family: 'material-icon';
+            margin-right: $x-small;
+        }
+    }
+}
+.add-btn {
+    .slds-button {
+        &::before {
+            content: '\ea15';
+            font-family: 'material-icon';
+            margin-right: $x-small;
+        }
+    }
+}
+.brand-outlinebtn-add {
+    .slds-button_outline-brand,.slds-button_neutral {
+        &:before {
+            content: '\ea15';
+            font-family: 'material-icon';
+            margin-right: $x-small;
+        }
+    }
+}
+.file-delete-btn,.file-download-btn,.file-edit-btn {
+    .slds-button{
+        lightning-primitive-icon {
+            display: none;
+        }
+    } 
+}
+.button-small{
+    .slds-button{
+        font-size: $font-size-14 !important;
+        padding: $xx-small $small !important;
+    }
+}
+.base-delete-btn {
+    .slds-button,a {
+        color: $error-main !important;
+        &:before {
+            content: '\ea1f';
+            font-family: 'material-icon';
+            margin-right: $x-small;
+        }
+
+        &:hover {
+            color: $error-dark;
+        }
+    }
+}
+.menu-item-delete-btn {
+    a{
+        color: $error-main !important;
+        &:before {
+            content: '\ea14';
+            font-family: 'material-icon';
+            color: $error-main !important;
+            position: absolute;
+            top: 0.5rem;
+            &:hover{
+                color: $error-dark !important;
+            }
+        }
+        .slds-truncate{
+            padding-left: $xx-medium;
+        }
+        &:hover {
+            color: $error-dark !important;
+        }
+    }
+}
+
+.bookmarkIcon-btn {
+    .slds-button_icon {
+        &:before {
+            content: '\ea10';
+            font-family: 'material-icon';
+            font-size: $font-size-22;
+            color: $success-main;
+        }
+
+        svg {
+            display: none;
+        }
+    }
+
+}
+
+.close-btn {
+    .slds-button_icon {
+        border-radius: $border-radius-circle;
+        width: auto;
+        height: auto;
+
+        &:before {
+            content: '\ea25';
+            font-family: 'material-icon';
+            font-size: $font-size-22;
+            background: $background-light;
+            padding: $xx-small;
+            border-radius: $border-radius-circle;
+            color: $primary-main;
+            width: $large;
+            height: $large;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all ease-in 0.2s;
+        }
+
+        &:hover {
+            &:before {
+                background: $background-extra-light;
+                color: $primary-dark;
+            }
+        }
+
+        svg {
+            display: none;
+        }
+    }
+
+}
+
+/* Custom Buttons for Icons */
+.icon-btn {
+    background: transparent;
+    border: none;
+    padding: 0 !important;
+
+    .mtx-icon {
+        font-size: 1.5rem;
+    }
+}
+
+.brand-outline-destructive {
+    .slds-button {
+        color: $error-dark;
+        border-color: $error-dark;
+    }
+}
+
+.brand-outlineicon-destructive {
+    .slds-button {
+        color: $error-dark;
+        border-color: $error-dark;
+
+        &:before {
+            content: "\ea14";
+            font-family: "material-icon";
+            margin-right: 0.5rem;
+        }
+    }
+}
+.btn-full{
+    .slds-button,.brand-outlinebtn-icon-right{
+        width: 100%;
+    }
+}
+    
+.back-icon-btn .slds-button{
+    padding: 0;
+
+&::before {
+    content: "\ea19";
+    font-family: "material-icon";
+    margin-right: 0.5rem;
+    background: $background-default;
+    height: 2rem;
+    width: 2rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $primary-main;
+}
+}
+.text-underline{
+    text-decoration: underline;
+    .slds-button{
+        text-decoration: underline;
+    }
+}
+
+.slds-dropdown-trigger{
+    .slds-dropdown__list {
+        font-size: 0.875rem;
+    }
+}
+
+
+//old code
+
+.primary-button-bordered {
+    padding: 0.125rem;
+    border: 0.125rem solid $primary-main;
+    border-radius: $border-radius-medium;
+    width: max-content;
+    .slds-button_brand {
+        width: 100%;
+        background: $primary-main;
+        padding: 0.375rem;
+        font-size: $font-size-16;
+        &:focus {
+            outline: toRem(2) dotted $outline-border !important;
+            outline-offset: toRem(10) !important;
+        }
+    }
+}
+
+.secondary-button-bordered {
+    padding: 0.1875rem;
+    background: $white;
+    width: max-content;
+    border-radius: $border-radius-medium;
+
+    .slds-button_neutral {
+        width: 100%;
+        color: $primary-main;
+        font-size: $font-size-14;
+        padding: 0.1874rem;
+        border: toRem(1) solid $primary-main;
+
+        &:focus {
+            outline: toRem(2) dotted $outline-border !important;
+            outline-offset: toRem(10) !important;
+        }
+    }
+}
+
+.primary-button {
+    .slds-button_brand {
+        width: 7.5rem;
+        background: $primary-main;
+        padding: 0.1874rem;
+        font-size: $font-size-14;
+        border: toRem(1) solid $primary-main;
+    }
+}
+
+.secondary-button {
+
+    .slds-button_neutral,
+    .slds-button_outline-brand {
+        width: 7.5rem;
+        color: $primary-main;
+        font-size: $font-size-14;
+        padding: 0.1874rem;
+        border: toRem(1) solid $primary-main;
+    }
+}
+
+.previous-button {
+    .slds-button_neutral {
+        width: 7.5rem;
+        color: $primary-main;
+        padding: 0.1874rem;
+        border: toRem(1) solid $primary-main;
+        font-size: $font-size-14;
+    }
+}
+
+
+.slds-button_brand {
+    background: $primary-main;
+    font-size: $font-size-14;
+    border: toRem(1) solid $primary-main;
+}
+
+.slds-button_neutral,
+.slds-button_outline-brand {
+    color: $primary-main;
+    font-size: $font-size-14;
+    border: toRem(1) solid $primary-main;
+}
+
+.slds-progress-bar__value {
+    background-color: $primary-main;
+}
+
+.save-m-btn {
+    position: absolute;
+    right: 1.5rem;
+    // z-index: 10;
+    margin-top: 0.5rem;
+    bottom: -2.9rem !important;
+    z-index: 1;
+
+    .slds-button_brand {
+        background-color: $primary-main;
+        min-width: 7.5rem;
+        padding: 0.225rem 0;
+    }
+}
+
+.slds-button_brand,
+.slds-button_icon-brand {
+    background-color: $primary-main;
+}
+
+omnistudio-omniscript-navigate-action[data-omni-key="NavigateAction1"] {
+    .slds-p-top_xx-small {
+        padding-top: 0;
+    }
+}
+
+.omniscript-button-position {
+    .omniscript-btn-previous {
+        position: relative;
+        right: 0;
+        margin-right: 0;
+        margin-bottom: 0;
+    }
+}
+
+.income {
+    .slds-button_destructive {
+        margin-left: 2rem;
+
+        @media all and (max-width:30rem) {
+            margin-left: 0;
+            width: max-content;
+        }
+    }
+}
+
+.slds-notify {
+    .slds-button {
+        &:focus {
+            outline: toRem(3) dotted !important;
+            outline-offset: toRem(2) !important;
+            border: 0 !important;
+            box-shadow: none !important;
+        }
+    }
+}
+
+/* Aplha Design */
+a {
+    color: $primary-main;
+    min-height: unset !important;
+    text-decoration: none;
+    font-size: 0.875rem;
+}
+
+.payment-link {
+    color: $primary-main;
+    font-size:$font-size-20;
+    font-weight: $font-weight-medium;
+}
+
+.slds-button {
+    font-size: $font-size-16;
+    font-weight: $font-weight-semi-bold;
+    cursor: pointer;
+    &.slds-button_outline-brand {
+        color: $primary-main;
+        border-color: $primary-main;
+    }
+
+    &.table-icon.slds-button_icon:active {
+        color: $white;
+        background-color: $secondary-main;
+        border-color: $secondary-main;
+        fill: $white;
+    }
+}
+
+.payment-view-button.primary-button-bordered {
+    display: block;
+    width: 16.875rem;
+}
+
+.login-button {
+    .slds-button_brand {
+        padding: $xx-small $medium !important;
+
+        &:focus {
+            outline-offset: 0.5rem !important;
+        }
+    }
+}
+// .primary-button-bordered {
+//     &.success-back-btn {
+//         width: 20%;
+//         margin: 3rem auto;
+//     }
+// }
+
+.card-view-button {
+    display: flex;
+    justify-content: center;
+    // background: $background-light;
+}
+
+// .delete-btn .slds-button,
+// button[title="Delete"],
+// button[title="delete"]  {
+//     background-color: $error-main;
+//     color: $white;
+//     border: 0;
+//     .slds-button__icon{
+//         fill: $white !important;
+//     }
+// }
+
+.uiButton .label{
+    color: $white !important;
+}

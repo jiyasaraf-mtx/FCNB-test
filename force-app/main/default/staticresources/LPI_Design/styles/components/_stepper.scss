@@ -1,0 +1,180 @@
+// .cc-stepper-navigation {
+//     background: $white;
+//     // border-radius: $border-radius-medium;
+//     box-shadow: $box-shadow;
+//     // height: 100%;
+//     min-height: 85vh;
+//     @include responsive(tab-port){
+//         min-height: 100%;
+//     }
+//     .slds-progress.slds-progress_vertical {
+//         padding: 0 1.5rem;
+//         @include responsive(tab-port){
+//             flex-direction: column;
+//         }
+//         .step-markup-section {
+//             padding: 1rem 0 1rem 1rem;
+//             min-height: 85vh;
+//             @include responsive(tab-port){
+//                 min-height: 100%;
+//             }
+//             .slds-progress__list {
+//                 display: flex;
+//                 justify-content: center;
+//                 flex-direction: column;
+//                 @include responsive(tab-port){
+//                     flex-direction: row;
+//                 }
+//                 .slds-progress__item {
+//                     height: 5rem;
+//                     @include responsive(tab-port){
+//                         min-width: 5rem;
+//                         margin-left: 0.25rem;
+//                     }
+//                     // &:last-child{
+//                     //     &::before{
+//                     //         display: none;
+//                     //     }
+//                     // }
+                   
+//                     &:after {
+//                         left: 0;
+//                         right: 0;
+//                         margin: 0 auto;
+//                         background: $text-secondary;
+//                         @include responsive(tab-port){
+//                             transform: rotate(90deg);
+//                             top: 0;
+//                             left: 45px;
+//                             z-index: 5;
+//                         }
+//                     }
+
+//                     &:before {
+//                         left: 0;
+//                         right: 0;
+//                         margin: 0 auto;
+//                         background: $text-secondary;
+//                         @include responsive(tab-port){
+//                             transform: rotate(90deg);
+//                             bottom: 0px;
+//                         }
+//                     }
+
+//                     &.slds-is-active {
+//                         .slds-progress__marker {
+//                             color: $primary-main;
+
+//                             div{
+//                                 display: flex;
+//                                 align-items: center;
+//                                 justify-content: center;
+//                                 border: 2px solid $primary-main;
+//                                 width: 100%;
+//                                 border-radius: 50%;
+//                                 height: 100%;
+//                             }
+//                         }
+//                         &:after {
+//                             background-color: $primary-main !important;
+//                         }
+//                         &:before {
+//                             background-color: $success-main !important;
+//                         }
+
+//                         + .slds-progress__item {
+//                             &:before {
+//                                 background-color: $primary-main !important;
+//                             }
+//                         }
+//                     }
+
+
+//                     &.slds-is-completed {
+//                         .slds-progress__marker {
+//                             background: $success-light;
+//                             box-shadow: 0 0 0 0 $background-light;
+
+//                             &:after {
+//                                 content: "\ea4d";
+//                                 font-family: "material-icon";
+//                                 position: absolute;
+//                                 top: 50%;
+//                                 left: 50%;
+//                                 transform: translate(-50%, -58%);
+//                                 color: $white;
+//                             }
+//                             div{
+//                                 opacity: 0;
+//                             }
+//                         }
+
+//                         &:after {
+//                             background-color: $success-main !important;
+//                         }
+//                         &:before {
+//                             background-color: $success-main !important;
+//                         }
+//                     }
+
+//                     .slds-progress__marker {
+//                         background: $white;
+//                         width: $large;
+//                         height: $large;
+//                         margin: 0;
+//                         border-color: $background-light;
+//                         border-width: 1.5px;
+
+//                         div{
+//                             display: flex;
+//                             align-items: center;
+//                             justify-content: center;
+//                             border: 2px solid $text-secondary;
+//                             width: 100%;
+//                             border-radius: 50%;
+//                             height: 100%;
+//                         }
+//                     }
+//                 }
+//             }
+//         }
+
+//         .step-text-section {
+//             padding: $small;
+//             @include responsive(tab-port){
+//                 display: none;
+//             }
+//             .slds-progress__item {
+//                 height: 5rem;
+//                 display: flex;
+//                 font-size: $font-size-16;
+//                 font-weight: $font-weight-semi-bold;
+//                 align-items: center;
+
+//                 span {
+//                     display: block;
+//                     font-weight: $font-weight-regular;
+//                     font-size: $font-size-10;
+//                 }
+
+//                 &.slds-is-active {
+//                     color: $primary-main;
+//                     font-size: $font-size-16;
+//                 }
+//                 &.slds-is-completed {
+//                     .slds-progress__item_content{
+//                         color: $success-light;
+//                     }
+//                 }
+//                 &:focus{
+//                     @include focus-outline;
+//                 }
+
+//                 &:after,
+//                 &:before {
+//                     width: 0;
+//                 }
+//             }
+//         }
+//     }
+// }

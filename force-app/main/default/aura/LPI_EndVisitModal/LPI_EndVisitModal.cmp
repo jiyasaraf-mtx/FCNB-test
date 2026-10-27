@@ -1,0 +1,10 @@
+<!--
+  @description       : 
+  @author            : Vamshi Kumar
+  @group             : 
+  @last modified on  : 07-21-2023
+  @last modified by  : Vamsi Mudaliar
+-->
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickActionWithoutHeader">
+    <c:lpiEndVisitModal recordId ="{!v.recordId}" onclose="{!c.closeAction}"/>
+</aura:component>

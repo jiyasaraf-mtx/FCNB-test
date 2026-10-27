@@ -1,0 +1,10 @@
+<!--
+  @description       : 
+  @author            : Vamsi Mudaliar
+  @group             : 
+  @last modified on  : 09-25-2023
+  @last modified by  : Mohit Karani
+-->
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:lightningQuickActionWithoutHeader,force:hasRecordId">
+    <c:lpiNewVisitRecord isAddtionalInspection = "true" recordId ="{!v.recordId}" onclose="{!c.closeQuickAction}"  />         
+</aura:component>

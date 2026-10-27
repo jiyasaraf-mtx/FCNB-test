@@ -1,0 +1,273 @@
+// .complaint-form{
+//     margin-top: 2rem;
+//     margin-bottom: 2rem;
+//     @media only screen and (max-width: 61.938rem) {
+//         margin-top: 0.5rem;
+//         margin-left: 0rem;
+//         margin-right: 0rem;
+//     }
+//     &__banner{
+//         color: $white;
+//         background: linear-gradient(180deg, $primary-main 0%, $secondary-main 100%);
+//         border-radius: toRem(4);
+//         h1{
+//             font-weight: $font-weight-regular;
+//             font-size: $font-size-10;
+//             color: $white;
+//         }
+//         .anonymousLink{
+//             &:focus{
+//                 @include focus-outline-white;
+//             }
+//         }
+//     }    
+//     &__content{
+//         background: $white;
+//         box-shadow: toRem(0) toRem(2) toRem(4) rgba(0, 0, 0, 0.1);
+//         border-radius: toRem(4);
+//         @media only screen and (max-width: 48rem) {
+//             padding: 0.5rem !important;
+//         }
+//         .heading-2{
+//             font-size: toRem(28);
+//             color: $text-color-4;
+//             font-weight: normal;
+//         }
+//         .section-heading{
+//             color: $secondary-main;
+//             font-family: $font-family !important;
+//         }
+//         .validate{
+//             .slds-form-element__control {
+//                 display: flex;
+//                 .slds-radio {
+//                     padding-right: 1rem;
+//                     .slds-form-element__label {
+//                         color: $secondary-main;
+//                         font-size: $font-size-14;
+//                     }
+//                 }
+//             }
+//             &.mobile-full-width-radio{
+//                 .slds-form-element__control {
+//                     .slds-radio {
+//                         @media only screen and (max-width: 48rem) {
+//                             width: 100%;
+//                             margin-right: 0;
+//                         }
+//                     }
+//                 }
+//             }
+//         }
+
+//         lightning-datepicker .slds-dropdown-trigger .slds-form-element__control {
+//             max-width: 16rem;
+//             @media only screen and (max-width: 48rem) {
+//                 max-width: 100%;
+//             }
+//         }
+
+//         .radio-button-label {
+//             font-size: 1rem;
+//             font-weight: 600;
+//             line-height: 1.375rem;
+//             color: $secondary-main;
+//             font-family: "Tahoma", sans-serif !important;
+//         }
+
+//         .slds-form-element__help{
+//             font-weight: normal;
+//         }
+
+//         .slds-button_neutral, .slds-button_outline-brand {
+//             color: $secondary-main;
+//             font-size: $font-size-14;
+//             border: toRem(1) solid $secondary-main;
+//         }
+//         .slds-button_neutral[aria-disabled="true"],
+//         .slds-button_outline-brand[aria-disabled="true"] {
+//             border: toRem(1) solid $dark-grey;
+//             color: $dark-grey;
+//         }
+
+//         .submit-button .slds-button,
+//         .reset-button .slds-button{
+//             padding: 0.2rem 4rem;
+//             font-weight: $font-weight-bold;
+//             font-size: $font-size-14;
+//             &_brand{
+//                 background: $secondary-main;
+//             }
+//             &_neutral{
+//                 border: toRem(1) solid $secondary-main;
+//                 color: $secondary-main;
+//             }
+//         }
+//         .footer-buttons{
+//             .reset-button {
+//                 margin-right: 1rem;
+//                 @media only screen and (max-width: 48rem) {
+//                     margin-right: 0rem;
+//                     .slds-button{
+//                         margin-bottom: 1rem;
+//                     }
+//                 }
+//             }
+//         }
+//         .slds-form-element {
+//             margin-bottom: 0.5rem;
+//         }
+//         label.slds-form-element__label{
+//             color: $secondary-main;
+//             font-size: $font-size-14;
+//             font-weight: $font-weight-semi-bold;
+//         }
+//         .tc-cb{
+//             .slds-form-element__label{
+//                 color: $secondary-main;
+//             }
+//         }
+
+//         .documentActions{
+//             lightning-icon.delete {
+//                 cursor: pointer;
+//             }
+//         }
+
+//         .slds-combobox_container{
+//             .slds-listbox{
+//                 max-height: 15rem;
+//                 overflow-y: auto;
+//             }
+//         }
+
+//         @media only screen and (max-width: 48rem) {
+//             .slds-box {
+//                 padding: 0.5rem;
+//             }
+//             .slds-grid {
+//                 display: block;
+//             }
+//             .slds-size_4-of-12,
+//             .slds-size_6-of-12 {
+//                 width: 100%;
+//                 &.slds-p-right_small {
+//                     padding:0;
+//                 }
+//             }
+//             .slds-button {
+//                 width: 100%;
+//             }
+
+//             .slds-modal__header,
+//             .slds-modal__footer{
+//                 .slds-button {
+//                     width: auto;
+//                 }
+//             }
+
+//             .slds-table{
+//                 .slds-button {
+//                     width: 2rem;
+//                 }
+//             }
+
+//             input[type="search"]{
+//                 padding-right: 0.25rem;
+//             }
+//             .date-cmp .slds-input {
+//                 -webkit-appearance : none;
+//             }
+//         }
+//     }
+
+//     .success-msg{
+//         padding-bottom: 7rem;
+//         .success-icon{
+//             flex-direction: column;
+//             align-items: center;
+//         }
+//         .success-text{
+//             color: $text-dark-blue;
+//         }
+//         .complain-container {
+//             background: $background-light;
+//             border-radius: toRem(10);
+//             max-width: 22rem;
+//             margin: 3rem auto;
+//             padding: 1rem;
+//             text-align: center;
+//             .complain-label{
+//                 color: $secondary-main;
+//                 font-size: 1rem;
+//                 font-weight: bold;
+//             }
+//             .complain-number{    
+//                 font-size: 2rem;
+//                 font-weight: 700;
+//                 color: $primary-main;
+//                 word-break: break-word;
+//             }
+//             .slds-button.slds-button_brand {
+//                 background: $secondary-main;
+//                 border: toRem(1) solid $white;
+//                 border-radius: toRem(45);
+//                 padding: 0.3rem 6rem;
+//                 font-weight: 400;
+//                 font-size: toRem(14);
+//             }
+//         }
+//         .backtohome-button {
+//             display: flex;
+//             align-items: center;
+//             justify-content: center;
+//             .primary-button-bordered{
+//                 width: 22rem;
+//             }
+//         }
+//     }
+
+//     @media all and (max-width: 71.875rem) {
+//         .table-container{
+//             overflow: auto;
+//         }
+//     }
+
+//     // .professionLookup,
+//     // .respondentWitness{
+//     //     margin-left: 0.5rem;
+//     //     margin-right: 0.5rem;
+//     // }
+//     input[name=unknownProfession] + label.slds-checkbox__label span.slds-form-element__label {
+//         color: $secondary-main;
+//     }
+
+// }
+
+// .main-content.open-sidebar{
+//     .complaint-form{
+//         margin-left: 0rem;
+//     }
+// }
+
+// .complaint-form button.slds-button.slds-button_destructive {
+//     padding: 0.1874rem 2rem !important;
+//     font-size: 0.875rem;
+// }
+
+// .file-upload-instrucions li.slds-item {
+//     font-size: toRem(14);
+// }
+// .slds-textarea[name="complaintDesc"] {
+//     min-height: 15rem !important;
+// }
+
+// .fileComplainSucessTable{
+//     .complain-container{
+//         max-width: unset !important;
+//     }
+// }
+
+// .add-incident-table .slds-dropdown__list a:focus {
+//     outline-offset: toRem(-3) !important;
+// }

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+   <apiVersion>55.0</apiVersion>
+   <isExposed>true</isExposed>
+   <targets>
+       <target>lightning__AppPage</target>
+       <target>lightning__RecordPage</target>
+       <target>lightning__HomePage</target>
+   </targets>
+   <targetConfigs>
+       <targetConfig targets="lightning__RecordPage">
+           <property name="columns" label="Columns" type="String" required="false"/>
+           <property name="objectName" label="Object Name" type="String" required="false"/>
+           <property name="relatedFieldApiName" label="Related Field Name" type="String" required="false"/>
+           <property name="condition" label="Condition" type="String" required="false"/>
+           <property name="title" label="Title" type="String" required="false"/>
+           <property name="iconName" label="Icon Name" type="String" required="false"/>
+       </targetConfig>
+   </targetConfigs>
+</LightningComponentBundle>

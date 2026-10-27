@@ -1,0 +1,321 @@
+<!--
+  @description       : 
+  @author            : Mohit Karani
+  @group             : 
+  @last modified on  : 06-21-2024
+  @last modified by  : Bharath Kumar M
+-->
+<template>
+    <div class="slds-card" variant="base">
+        <template if:true={showSpinner}>
+            <lightning-spinner alternative-text="Loading"></lightning-spinner>
+        </template>
+        <div class="slds-p-around_medium assessment-task-cmp">
+            <div class="slds-grid slds-m-bottom--small slds-grid--vertical-align-center slds-grid--align-spread">
+                    <h1>Task Assessments</h1>
+                    <div>
+                        <lightning-button disabled={readOnly} variant="brand" label="Save and Complete"
+                        title="Save and Complete" onclick={handleSave} class="slds-m-right--medium">
+                        </lightning-button>
+                        <lightning-button disabled={readOnly} variant="brand-outline" label="Cancel"
+                        title="Cancel" onclick={handleCancel}>
+                        </lightning-button>
+
+                    </div>
+            </div>
+            <div class="slds-scoped-notification slds-media slds-media_center slds-theme_info m-b-medium" role="status">
+                <div class="slds-media__figure">
+                    <span class="slds-icon_container slds-icon-utility-info" title="info">
+                        <i class="material-icon material-icon-info_outline"></i>
+                    </span>
+                </div>
+                <div class="slds-media__body">
+                    <p>{header}</p>
+                </div>
+            </div>
+            <div class="slds-scoped-notification slds-media slds-media_center slds-theme_info m-b-medium" role="status">
+                <div class="slds-media__figure">
+                    <span class="slds-icon_container slds-icon-utility-info" title="info">
+                        <i class="material-icon material-icon-info_outline"></i>
+                    </span>
+                </div>
+                <div class="slds-media__body">
+                    <p>If Status is set to Violation, Fail, or Not Completed, you must Add Comments </p>
+                </div>
+            </div>
+            <!-- <p>
+                    <b>
+                        {header}
+                    </b>
+            </p> -->
+            <template if:true={questionsList}>
+                <div class="container">
+                    <div class="container-table assessment-task-table lpiApplication">
+                        <table class=" slds-table slds-table_fixed-layout">
+                            <thead>
+                                <th>Assessment Item</th>
+                                <th>Status</th>
+                                <th>Rationale/Suggestions/Recommendations/Comments</th>
+                                <th>Files</th>
+                            </thead>
+                            <tbody>
+                                <template for:each={questionsList} for:item="question" for:index="index">
+                                    <tr  key={question.questionId}>
+                                        <td>{question.questionLabel}</td>
+                                        <td>
+                                            <span>
+                                                <template if:true={question.isMultiPicklist}>
+                                                    <lightning-dual-listbox disabled={readOnly} data-multipicklist="true"
+                                                        name="multiselectValueList" label={question.questionName} required
+                                                        value={question.multiselectValueList} options={question.options}
+                                                        onchange={handleChange} data-index={index} data-question={question.questionName}></lightning-dual-listbox>
+                                                </template>
+                                                <template if:false={question.isMultiPicklist}>
+                                                    <template if:true={question.isBoardNursing}>
+                                                        <h1 style="width: 200%;">{question.questionName}</h1>
+                                                    </template>
+                                                    <lightning-combobox disabled={readOnly} required if:true={question.options}
+                                                        name="value" options={question.options} value={question.value}  variant="label-hidden"
+                                                         onchange={handleChange} data-index={index} data-question={question.questionName}>
+                                                    </lightning-combobox>
+                                                </template>
+                                                <template if:true={question.isString}>
+                                                    <lightning-textarea disabled={readOnly} required if:false={question.options}
+                                                        name="value" value={question.value} label={question.questionName}
+                                                        data-index={index} data-question={question.questionName} onchange={handleChange}>
+                                                    </lightning-textarea>
+                                                </template>
+                                                <template if:true={question.isNumberic}>
+                                                    <lightning-input type="number" max="999" disabled={readOnly} required
+                                                        name="numberResponseValue" value={question.numberResponseValue}
+                                                        label={question.questionName} data-index={index} data-question={question.questionName} onchange={handleChange}>
+                                                    </lightning-input>
+                                                </template>
+                                                <template if:true={question.isDateField}>
+                                                    <lightning-input disabled={readOnly} type="Date" required name="dateTimeValue"
+                                                        value={question.dateTimeValue} label={question.questionName}
+                                                        data-index={index} data-question={question.questionName} onchange={handleChange}>
+                                                    </lightning-input>
+                                                </template>
+            
+                                            </span>
+                                        </td>
+                                        <td>  
+                                            <template if:false={question.hideComments}>
+                                                <lightning-textarea disabled={readOnly} name="comment" value={question.comment}
+                                                required={question.markRequired}
+                                                variant="label-hidden"
+                                                placeholder="Provide Comments here..." onchange={handleChange}
+                                                max-length="32768" data-index={index}>
+                                            </lightning-textarea>
+                                            </template>
+                                        </td>
+                                        <td>
+                                            <lightning-button disabled={readOnly} name="Upload" title="Upload File"
+                                        variant="brand-outline" label="Upload File" data-recordid={question.questionId}
+                                        data-board={question.boardName} onclick={handleFileUpload}
+                                        data-metadata={question.payload} data-index={index} data-question={question.questionName}>
+                                            </lightning-button>
+                                        <template if:true={question.filesList}>
+                                            <template for:each={question.filesList} for:item="file" for:index="fileindex">
+                                                <div key={file.parentRecId} class="slds-m-vertical_x-small slds-grid">
+                                                    <a key={file.parentRecId} class="link-underline" target="_Self"
+                                                        data-filename={file.fileName} data-fileid={file.fileId} tabindex="0"
+                                                        title={file.fileName} data-parentid={file.parentRecId}
+                                                        onkeydown={handleKeyDown} onclick={handleDownload}>
+                                                        {file.fileName} </a>
+                                                    <br key={file.parentRecId} />
+                                                    <lightning-button-icon key={file.parentRecId} size="small" icon-name="utility:delete"
+                                                        alternative-text="Delete" title="Delete"
+                                                        data-fileid={file.fileId}
+                                                        data-parentindex={index}  data-fileindex={fileindex}
+                                                        data-parentid={file.parentRecId} onclick={handleDeleteConfirmation} class="slds-m-left_x-small">
+                                                    </lightning-button-icon>
+                                                </div>
+                                            </template>
+                                        </template>
+                                        </td>
+                                        <!-- <template if:true={question.filesList}>
+                                            <td colspan="4">
+                                                <table>
+                                                    <thead></thead>
+                                                    <tbody>
+                                                        <template for:each={question.filesList} for:item="file" for:index="fileindex">
+                                                        <tr key={file.parentRecId}>
+                                                            <td><a key={file.parentRecId} class="link-underline" target="_Self"
+                                                                data-filename={file.fileName} data-fileid={file.fileId} tabindex="0"
+                                                                title={file.fileName} data-parentid={file.parentRecId}
+                                                                onkeydown={handleKeyDown} onclick={handleDownload}>
+                                                                {file.fileName} </a></td>
+                                                                <td>
+                                                                    <lightning-button-icon key={file.parentRecId} size="small" icon-name="utility:delete"
+                                                                    alternative-text="Delete" title="Delete"
+                                                                    data-fileid={file.fileId}
+                                                                    data-parentindex={index}  data-fileindex={fileindex}
+                                                                    data-parentid={file.parentRecId} onclick={handleDeleteConfirmation} class="slds-m-left_x-small">
+                                                                </lightning-button-icon>
+                                                                </td>
+                                                        </tr>
+                                                        </template>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </template> -->
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </template>
+            <!-- <template if:true={questionsList} for:each={questionsList} for:item="question" for:index="index">
+                <div key={question.questionId} class="slds-grid slds-gutters slds-wrap">
+                    <div
+                        class="slds-p-around_small slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+                        <div class="slds-grid slds-grid_vertical slds-gutters slds-wrap">
+                            <div class=" slds-p-around_small slds-col slds-size_1-of-1">
+                                <span>
+                                    <template if:true={question.isMultiPicklist}>
+                                        <lightning-dual-listbox disabled={readOnly} data-multipicklist="true"
+                                            name="multiselectValueList" label={question.questionName} required
+                                            value={question.multiselectValueList} options={question.options}
+                                            onchange={handleChange} data-index={index} data-question={question.questionName}></lightning-dual-listbox>
+                                    </template>
+                                    <template if:false={question.isMultiPicklist}>
+                                        <template if:true={question.isBoardNursing}>
+                                            <h1 style="width: 200%;">{question.questionName}</h1>
+                                        </template>
+                                        <lightning-combobox disabled={readOnly} required if:true={question.options}
+                                            name="value" options={question.options} value={question.value}
+                                            label={question.questionLabel} onchange={handleChange} data-index={index} data-question={question.questionName}>
+                                        </lightning-combobox>
+                                    </template>
+                                    <template if:true={question.isString}>
+                                        <lightning-textarea disabled={readOnly} required if:false={question.options}
+                                            name="value" value={question.value} label={question.questionName}
+                                            data-index={index} data-question={question.questionName} onchange={handleChange}>
+                                        </lightning-textarea>
+                                    </template>
+                                    <template if:true={question.isNumberic}>
+                                        <lightning-input type="number" max="999" disabled={readOnly} required
+                                            name="numberResponseValue" value={question.numberResponseValue}
+                                            label={question.questionName} data-index={index} data-question={question.questionName} onchange={handleChange}>
+                                        </lightning-input>
+                                    </template>
+                                    <template if:true={question.isDateField}>
+                                        <lightning-input disabled={readOnly} type="Date" required name="dateTimeValue"
+                                            value={question.dateTimeValue} label={question.questionName}
+                                            data-index={index} data-question={question.questionName} onchange={handleChange}>
+                                        </lightning-input>
+                                    </template>
+
+                                </span>
+                            </div>
+                            <div class=" slds-p-around_small slds-col slds-size_1-of-1">
+                                <span>
+                                    <template if:false={question.hideComments}>
+                                        <lightning-textarea disabled={readOnly} name="comment" value={question.comment}
+                                            label={question.commentsLabel}
+                                            required={question.markRequired}
+                                            placeholder="Provide Comments here..." onchange={handleChange}
+                                            max-length="32768" data-index={index}>
+                                        </lightning-textarea>
+                                    </template>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="slds-p-around_small slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+                        <div class="slds-grid slds-grid_vertical slds-gutters slds-wrap">
+                            <div if:true={question.filesList} class=" slds-p-around_small slds-col slds-size_1-of-1">
+                                <span>
+                                    <div
+                                        class="slds-page-header__row slds-var-m-top_x-small slds-var-m-left_mediumslds-grid slds-wrap">
+                                        <div class="slds-grid slds-wrap slds-gutters">
+
+                                            <template for:each={question.filesList} for:item="file" for:index="fileindex">
+                                                <div key={file.parentRecId} class="slds-m-vertical_x-small d-flex">
+                                                    <a key={file.parentRecId} class="link-underline" target="_Self"
+                                                        data-filename={file.fileName} data-fileid={file.fileId} tabindex="0"
+                                                        title={file.fileName} data-parentid={file.parentRecId}
+                                                        onkeydown={handleKeyDown} onclick={handleDownload}>
+                                                        {file.fileName} </a>
+                                                    <br key={file.parentRecId} />
+                                                    <lightning-button-icon key={file.parentRecId} size="small" icon-name="utility:delete"
+                                                        alternative-text="Delete" title="Delete"
+                                                        data-fileid={file.fileId}
+                                                        data-parentindex={index}  data-fileindex={fileindex}
+                                                        data-parentid={file.parentRecId} onclick={handleDeleteConfirmation} class="slds-m-left_x-small">
+                                                    </lightning-button-icon>
+                                                    </div>
+                                            </template>
+                                        </div>
+                                    </div>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="slds-p-around_small slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+                        <div class="slds-grid slds-grid_vertical slds-gutters slds-wrap">
+                            <div class=" slds-p-around_small slds-col slds-size_1-of-1">
+                                <span>
+                                    <lightning-button disabled={readOnly} name="Upload" title="Upload File"
+                                        variant="brand" label="Upload File" data-recordid={question.questionId}
+                                        data-board={question.boardName} onclick={handleFileUpload}
+                                        data-metadata={question.payload} data-index={index} data-question={question.questionName}>
+
+                                    </lightning-button>
+                                    <lightning-file-upload disabled={readOnly} record-id={docIdForUpload}
+                                        data-metadata={question.payload} data-recordid={question.questionId} onuploadfinished={handleUploadFinished} data-index={index}>
+                                    </lightning-file-upload>
+                                    <lightning-input data-recordid={question.questionId}
+                                        data-metadata={question.payload} data-board={question.boardName} type="file"
+                                        name="fileUploader" data-index={index} onchange={handleFile} disabled={readOnly}>
+                                    </lightning-input>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </template> -->
+
+            <template if:true={showUploadModal}>
+                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                    aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open" onkeydown={handleClose}>
+                    <div class="slds-modal__container">
+                        <header class="slds-modal__header">
+                            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                                aria-label="Cancel" onclick={handleClose}>
+                                <lightning-icon icon-name="utility:close" variant="inverse" size="small">
+                                </lightning-icon>
+                            </button>
+                            <h1 id="modal-heading-01" class="section-heading slds-m-bottom_x-small">
+                                {modalHeading}</h1>
+                        </header>
+                        <div if:false={isDeleteModal} class="slds-modal__content slds-p-around_medium"
+                            id="modal-content-id-1">
+                            <lightning-file-upload label="Attach file" name="fileUploader" accept={acceptedFormats}
+                                record-id={docIdForUpload} onuploadfinished={handleUploadFinished}>
+                            </lightning-file-upload>
+
+                        </div>
+
+                        <footer class="slds-modal__footer">
+                            <lightning-button variant="outline" class="slds-float_left" label="Cancel" title="Cancel"
+                                onclick={handleClose}>
+                            </lightning-button>
+                            <lightning-button if:true={isDeleteModal} variant="brand" label="Yes" title="Yes"
+                                onclick={handleDelete}>
+                            </lightning-button>
+                        </footer>
+                    </div>
+                </section>
+                <div class="slds-backdrop slds-backdrop_open"></div>
+            </template>
+           
+        </div>
+    </div>
+</template>

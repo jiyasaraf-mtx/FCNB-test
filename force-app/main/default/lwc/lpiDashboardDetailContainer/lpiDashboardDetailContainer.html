@@ -1,0 +1,93 @@
+<!--
+  @description       : 
+  @author            : Ranjitha M U
+  @group             : 
+  @last modified on  : 08-14-2024
+  @last modified by  : MTX Group Product Team
+-->
+<template>
+    <div class="backdrop" if:true={showSpinner}>
+        <div class="spinner">
+            <lightning-spinner alternative-text="Loading..."></lightning-spinner>
+        </div>
+    </div>
+    <div class="slds-grid slds-gutters dashboard-details main-dashboard p-t-medium">
+        <div class={licenseClass}>
+            <div class="slds-card" data-tab="license" onclick={getMyLicenseDetails} tabindex="0" aria-label={labels.myCertifications} onkeydown={handleKeyDown}>
+                <div class="icon-block m-b-xml">
+                    <i class="material-icon material-icon-badge"></i>
+                </div>
+                <div class="dashboard-card-text">
+                    <h2 class="regular-text-18 m-b-xml">{labels.myCertifications}</h2>
+                    <div class="bold-32">{licenseCount}</div>
+                </div>
+            </div>
+        </div>
+        <div class={applicationClass}>
+            <div class="slds-card" data-tab="application" onclick={fetchApplicationRecords} tabindex="0"
+                aria-label={labels.myApplications} onkeydown={handleKeyDown1}>
+                <div class="icon-block m-b-xml">
+                    <i class="material-icon material-icon-application"></i>
+                </div>
+                <div class="dashboard-card-text">
+                    <h2 class="regular-text-18 m-b-xml">{labels.myApplications}</h2>
+                    <div class="bold-32">{appCount}</div>
+                </div>
+            </div>
+        </div>
+        <div class={paymentClass}>
+            <div class="slds-card" data-tab="payment" onclick={fetchPaymentRecord} tabindex="0" aria-label={labels.myPayments} onkeydown={handleKeyDown2}>
+                <div class="icon-block m-b-xml">
+                    <i class="material-icon material-icon-payment-1"></i>
+                </div>
+                <div class="dashboard-card-text">
+                    <h2 class="regular-text-18 m-b-xml">{labels.myPayments}</h2>
+                    <div class="bold-32">{paymentCount}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="warning-message-box slds-p-top_none slds-list_horizontal slds-m-top_medium">
+        <lightning-icon class=" slds-icon-utility-info-alt slds-icon_container slds-m-right_small"
+            icon-name="utility:info_alt" title={labels.warning}>
+            <span style="--sds-c-icon-color-background: var(--slds-c-icon-color-background, transparent)"
+                part="boundary">
+                <lightning-primitive-icon size="medium" variant="">...</lightning-primitive-icon>
+                <span class="slds-assistive-text">{labels.warning}</span>
+            </span>
+        </lightning-icon>
+        <div if:true={licensedata} class="slds-media__body">
+            <div>{labels.importantNotice}</div>
+            <p>{labels.noticeLicense}</p>
+        </div>
+        <div if:true={applicationdata} class="slds-media__body">
+            <div>{labels.importantNotice}</div>
+            <p>{labels.noticeApplication}</p>
+        </div>
+        <div if:true={paymentdata} class="slds-media__body">
+            <div>{labels.importantNotice}</div>
+            <p>{labels.noticePayment}</p>
+        </div>
+    </div>
+
+    <div class='slds-m-vertical_large'>
+        <div class="slds-card" if:true={showSection}>
+            <div class="dashboard_table_heading">
+                <div>
+                    <h3 class="semiBold-18">{childCardTitle}</h3>
+                </div>
+                <div>
+                    <lightning-button variant="base" label={labels.viewAll} title={labels.viewAll} onclick={handleViewAll} aria-label={viewAllButtonAriaLabel} class="base-link"></lightning-button>
+                </div>
+            </div>
+            <c-lpi-dashboard-table-details onchildmethod={callFromChild} paymentdata={paymentdata}
+                applicationdata={applicationdata} licensedata={licensedata} columns={Columns}
+                recordsdata={recordsData}></c-lpi-dashboard-table-details>
+        </div>
+        <span if:true={licensedata}>
+            <br>
+            <c-lpi-identification-card-table-details onspinnerhandlerfromchild={spinnerHandler}>
+            </c-lpi-identification-card-table-details>
+        </span>
+    </div>
+</template>

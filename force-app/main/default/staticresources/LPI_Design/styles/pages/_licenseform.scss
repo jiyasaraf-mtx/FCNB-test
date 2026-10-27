@@ -1,0 +1,3020 @@
+.help-text-box {
+    padding: 1rem;
+    font-size: $font-size-16;
+    font-weight: $font-weight-regular;
+    color: $primary-main;
+    border: toRem(1) solid $primary-main;
+    border-radius: $border-radius-medium;
+    background: $bg-blue;
+    a {
+        color: $primary-main;
+        font-weight: $font-weight-semi-bold;
+    }
+}
+.instructions {
+    .lpi-accordion {
+        border: 0.0625rem solid $other-divider;
+        background-color: $white;
+        a {
+            color: $primary-main;
+        }
+        .slds-accordion__summary-content {
+            font-weight: $font-weight-regular;
+            color: $text-primary;
+        }
+        .slds-accordion__summary-action {
+            .slds-button_icon {
+                border: none;
+                &:hover,
+                &:active,
+                &:focus {
+                    color: $primary-main;
+                }
+                .slds-button__icon {
+                    width: 1.5rem;
+                    height: 1.5rem;
+                }
+            }
+        }
+        .slds-accordion__summary {
+            margin: 0 0.625rem;
+        }
+        .slds-accordion__section {
+            padding: 0;
+        }
+        .slds-accordion__section.slds-is-open {
+            padding: 0;
+            .slds-accordion__summary {
+                margin: 0 0.625rem;
+            }
+            .slds-accordion__content {
+                padding: 1rem 3rem;
+                background: $background-light;
+                font-size: $font-size-14;
+                font-weight: $font-weight-regular;
+                color: $text-primary;
+            }
+        }
+    }
+}
+.review-and-summary,
+.transfer-license-details,
+.application-information {
+    .slds-card.lpi-card {
+        padding: 1rem;
+    }
+    .lpi-accordion {
+        .slds-accordion__summary-action {
+            .slds-button_icon {
+                border: none;
+            }
+        }
+        .slds-accordion__section {
+            padding-left: 1rem;
+        }
+        .slds-accordion__list-item {
+            border: 0.0625rem solid $other-divider;
+        }
+        .slds-accordion__summary-content {
+            font-size:$font-size-18;
+            font-weight: $font-weight-semi-bold;
+            color: $primary-main;
+        }
+        .slds-accordion__section.slds-is-open {
+            .slds-button_icon.slds-button_icon-border {
+                transform: rotate(90deg);
+            }
+        }
+        .slds-accordion__content {
+            .label {
+                font-size: $font-size-14;
+                font-weight: $font-weight-semi-bold;
+                color: $text-secondary;
+            }
+            .text-input {
+                font-size: $font-size-16;
+                font-weight: $font-weight-regular;
+                color: $text-primary;
+            }
+            p {
+                font-size: $font-size-14;
+                font-weight: $font-weight-regular;
+                color: $text-primary;
+            }
+        }
+    }
+}
+//PSF-Apply License Form
+.comm-page-custom-apply-for-license .for-intake-forms,
+.comm-page-custom-apply-license .for-intake-forms,
+// c-apply-for-license-intake-form-english,
+// c-amendments-amendment-form-english,
+// c-user-access-personal-info-english,
+// c-complaint-flow-unauthenticated-english,
+// c-application-barber-school-english,
+// c-complaint-flow_-v2-complaint-flow_-v2-english,
+// c-complaint-flow-v2-complaint-flow-v2-english,
+// c-apply-for-license-step6-english,
+// c-r-s-broker-amendment-application-english, 
+.comm-page-custom-apply-for-license .for-intake-forms .omnistudioVlocityLWCWrapper {
+    .omniscript-article.slds-card {
+        box-shadow: none;
+        //Edit button on top code
+        omnistudio-omniscript-navigate-action[data-omni-key="NavigateAction1"] {
+            display: flex;
+            justify-content: flex-end;
+            height: 0;
+            @media all and (max-width: 48rem) {
+                justify-content: center;
+            }
+            button {
+                color: $primary-main;
+                border: 0.063rem solid $primary-main;
+                border-radius: 0.25rem;
+                position: relative;
+                font-weight: $font-weight-semi-bold;
+                font-size: $font-size-16;
+                // top: -3.125rem;
+                top: -1.125rem;
+            }
+        }
+        //stepper
+        omnistudio-omniscript-step-chart[data-omni-key="omniscriptStepChart"] {
+            .slds-m-top_medium.slds-p-left_large {
+                margin-top: 0;
+                padding-left: 0;
+            }
+            h1.slds-page-header__title {
+                display: none;
+            }
+            .slds-progress.slds-progress_vertical {
+                padding: 0;
+            }
+            li.slds-progress__item {
+                padding-bottom: 1rem;
+            }
+            .slds-progress__item {
+                &::after,
+                &::before {
+                    left: 0.875rem;
+                    background-color: $input-border !important;
+                }
+                .slds-progress__item_content {
+                    font-size: $font-size-16;
+                    color: $text-primary;
+                    font-weight: $font-weight-regular;
+                    cursor: default;
+                }
+                .slds-progress__marker {
+                    width: 2rem;
+                    height: 2rem;
+                    border-width: 0.625rem;
+                    border-color: $background-light;
+                    background-color: $white;
+                    cursor: default;
+                }
+                &.slds-is-completed {
+                    .slds-progress__marker {
+                        border: 0.625rem solid $success-light;
+                        .slds-icon {
+                            display: none;
+                        }
+                    }
+                    .slds-progress__item_content{
+                        color: $success-main;
+                    }
+                }
+                .slds-is-active {
+                    .slds-progress__marker {
+                        width: 2rem;
+                        height: 2rem;
+                        border-width: 0.625rem;
+                        border-color: $primary-main;
+                        cursor: pointer;
+                    }
+                    .slds-progress__item_content {
+                        color: $primary-main;
+                        font-weight: $font-weight-semi-bold;
+                    }
+                }
+                &.omni-vert-stepchart-active[omnistudio-omniscriptStepChart_omniscriptStepChart]:before {
+                    background-color: $input-border;
+                }
+                &.slds-is-completed {
+                    .slds-progress__item_content,
+                    .slds-progress__marker{
+                        cursor: pointer;
+                    }
+                }
+                &.omni-vert-stepchart-completed{
+                    
+                    &::after,&::before{
+                        background-color: $success-light !important;
+                    }
+                }
+                &.omni-vert-stepchart-active{
+                    &::before{
+                        background-color: $success-light !important;
+                    }
+                    &::after{
+                        background-color: $primary-main !important;
+                    }
+                }
+            }
+            .slds-progress_vertical[omnistudio-omniscriptStepChart_omniscriptStepChart]
+                .slds-progress__list[omnistudio-omniscriptStepChart_omniscriptStepChart]
+                .omni-vert-stepchart-completed[omnistudio-omniscriptStepChart_omniscriptStepChart]:before,
+            .slds-progress_vertical[omnistudio-omniscriptStepChart_omniscriptStepChart]
+                .slds-progress__list[omnistudio-omniscriptStepChart_omniscriptStepChart]
+                .omni-vert-stepchart-completed[omnistudio-omniscriptStepChart_omniscriptStepChart]:after,
+            .slds-progress_vertical[omnistudio-omniscriptStepChart_omniscriptStepChart]
+                .slds-progress__list[omnistudio-omniscriptStepChart_omniscriptStepChart]
+                .omni-vert-stepchart-active[omnistudio-omniscriptStepChart_omniscriptStepChart]:before,
+            .slds-progress_vertical[omnistudio-omniscriptStepChart_omniscriptStepChart]
+                .slds-progress__list[omnistudio-omniscriptStepChart_omniscriptStepChart]
+                .omni-vert-stepchart-last-completed[omnistudio-omniscriptStepChart_omniscriptStepChart]:before {
+                background-color: $input-border;
+            }
+        }
+
+        //Form Body content
+        .omniscript-body {
+            border-left: none;
+            border-right: none;
+            .vlc-separator {
+                border: none;
+                display: none;
+            }
+            .slds-page-header__title {
+                margin-top: 0;
+                padding: 0;
+                font-weight: $font-weight-bold;
+                font-size:$font-size-24;
+                color: $text-primary;
+            }
+            .omniscript-step__body {
+                position: relative;
+                .slds-grid.slds-p-left_medium.slds-size_1-of-1.slds-wrap {
+                    padding-left: 0;
+                }
+            }
+
+            //Footer Buttons
+            .slds-grid.slds-wrap.slds-gutters.slds-p-horizontal_medium.slds-show_medium {
+                position: relative;
+            }
+            .omniscript-btn-next {
+                width: 7.5rem;
+                margin-bottom: 0 !important;
+                .slds-button_brand {
+                    background-color: $primary-main;
+                    padding: 0.25rem;
+                    top: 0;
+                    width: max-content;
+                    .btnLabel{
+                        font-size: $font-size-16;
+                        font-weight: $font-weight-semi-bold;
+                    }
+                }
+            }
+            .omniscript-btn-previous {
+                width: 7.5rem;
+                position: absolute;
+                right: 10rem;
+                left: unset;
+                bottom: 0;
+                // bottom: -2rem;
+                // margin-left: 0.625rem;
+                .slds-button_neutral {
+                    color: $primary-main;
+                    padding: 0.25rem;
+                    border: toRem(1) solid $primary-main;
+                    .btnLabel{
+                        font-size: $font-size-16;
+                        font-weight: $font-weight-semi-bold;
+                    }
+                }
+            }
+            .slds-grid.slds-wrap.slds-gutters.slds-p-horizontal_medium.slds-show_medium {
+                .slds-order_1.slds-medium-order_2 {
+                    width: 100%;
+                }
+                .omniscript-btn-save-for-later {
+                    position: absolute;
+                    // bottom: 0;
+                    // right: 10rem;
+                    bottom: 0;
+                    right: 0;
+                    left: 0.5rem;
+                    width: max-content;
+                    top: 24px;
+                    .slds-button {
+                        display: flex;
+                        justify-content: center;
+                        width: 7.5rem;
+                        border: toRem(1) solid $primary-main;
+                        padding: 0.1875rem;
+                        font-weight: 500;
+                        color: $primary-main;
+                        padding: 0.25rem !important;
+                        .btnLabel{
+                            font-size: $font-size-16;
+                            font-weight: $font-weight-semi-bold;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    lightning-formatted-rich-text {
+        ol {
+            li {
+                margin: 0.35rem 0;
+            }
+        }
+    }
+    omnistudio-omniscript-radio{
+        .slds-form-element{
+            margin-bottom: $medium;
+        }
+    }
+}
+//personal Information step
+[data-omni-key=PersonalInformation],
+[data-omni-key=PersonalInformationNameAmendment] {
+    c-cf-info-box-orange-helptext{
+        .slds-card,
+        .slds-col.slds-p-around_x-small.slds-size_12-of-12 {
+            padding: 0;
+        }
+        .heading {
+            padding-bottom: 0.625rem;
+        }
+        .info-box {
+            padding-bottom: 1.5rem;
+            margin: 1rem 0;
+            // .slds-col.slds-size_1-of-1 .slds-grid.slds-wrap {
+            //     align-items: center;
+            // }
+            .slds-col.slds-size_1-of-1 {
+                padding: 1rem;
+                font-size: $font-size-16;
+                font-weight: $font-weight-regular;
+                color: $text-primary !important;
+                border: toRem(1) solid $warning-main;
+                border-radius: $border-radius-medium;
+                background: $warning-shades-4-p;
+            }
+            .info-icon.slds-size_1-of-12 {
+                width: auto !important;
+                padding-right: 1rem;
+                .slds-icon {
+                    fill: $warning-main;
+                }
+            }
+            .info-text{
+                .slds-rich-text-editor__output{
+                    &>span {
+                        &> div:first-child{
+                            color: $warning-main !important;
+                            font-weight: $font-weight-bold
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+    omnistudio-omniscript-text-block[data-omni-key=PersonalInfoResidenceAddressReadOnly]{
+        margin-bottom: 0 !important;
+        margin-top: 1rem;
+        .slds-rich-text-editor__output p {
+            font-size: $font-size-16;
+            color: $text-primary;
+        }
+    }
+    [data-omni-key=ReadBlockDetails] {
+        margin-top: 1rem;
+    }
+  
+}
+[data-omni-key=ConsentBlockForPharmacyIndividualLicense],
+[data-omni-key=ConsentBlockForAll] {
+    .slds-accordion {
+        border: none;
+    }
+}
+.exam-question-review{
+    .slds-col.slds-p-around_x-small.slds-size_12-of-12{
+        margin-bottom: $medium;
+    }
+}
+.license-ques-review{
+    .slds-col.slds-p-bottom_small{
+        padding-bottom: 0 !important;
+        margin-bottom: $medium;
+    }
+}
+.semiBold-16{
+    p{
+        font-weight: $font-weight-semi-bold;
+    }
+}
+// License Questions Step
+omnistudio-omniscript-step[data-omni-key="LicenseQuestions"] {
+    c-cf-info-box-blue[data-omni-key="CustomLWC1"] {
+        .slds-card,
+        .slds-col.slds-p-around_x-small.slds-size_12-of-12 {
+            padding: 0;
+        }
+        .info-box-blue {
+            // margin: 1.25rem 0;
+            .slds-col.slds-size_1-of-1 .slds-grid.slds-wrap {
+                align-items: center;
+            }
+            .slds-col.slds-size_1-of-1 {
+                padding: 1rem;
+                font-size: $font-size-14;
+                font-weight: $font-weight-regular;
+                color: $primary-main;
+                border: toRem(1) solid $primary-main;
+                border-radius: $border-radius-medium;
+                background: $bg-blue;
+            }
+            .info-icon-blue.slds-size_1-of-12 {
+                width: 4%;
+                .slds-icon {
+                    fill: $primary-main;
+                    width: 1.75rem;
+                }
+            }
+        }
+    }
+}
+//Documents step
+omnistudio-omniscript-step[data-omni-key="Documents"] {
+    omnistudio-omniscript-file[data-omni-key="UploadDocument"] {
+        .slds-file-selector__dropzone {
+            border: toRem(1) dashed $primary-main;
+            padding: 5rem;
+            display: flex;
+            justify-content: center;
+            background-color: $bg-blue;
+        }
+        .slds-form-element__label {
+            display: none;
+        }
+    }
+}
+
+omnistudio-omniscript-step[data-omni-key="Review and Summary"],
+omnistudio-omniscript-step[data-omni-key = "ApplicationReview"],
+omnistudio-omniscript-step[data-omni-key = "ReviewAndSummary"],
+omnistudio-omniscript-step[data-omni-key = "Application Review"],
+omnistudio-omniscript-step[data-omni-key ="ApplicationReview"],
+c-cf-popular-questions-list,
+c-application-barber-school-english,
+.for-intake-forms .omnistudioVlocityLWCWrapper {
+    .accordion-block {
+        padding: 0;
+        button {
+            width: 100%;
+            margin: 0;
+            padding-left: 0;
+            padding-right: 0;
+            cursor: pointer;
+            &.slds-button:focus,
+            &.slds-button:active,
+            &.slds-button {
+                // outline: unset !important;
+                // outline-offset: unset !important;
+                box-shadow: unset;
+                border: none;
+                padding: $small;
+                background: $primary-shades-4-p;
+                border-bottom: 1px solid $primary-shades-12-p;
+                border-bottom-right-radius: 0;
+                border-bottom-left-radius: 0;
+            }
+            span {
+                &:first-child {
+                    display: flex;
+                    flex-direction: row-reverse;
+                    align-items: center;
+                    justify-content: space-between;
+                    width: 100%;
+                    flex: 1;
+                }
+            }
+        }
+        .slds-combobox__input.slds-input_faux {
+            padding-left: 0.5rem;
+        }
+        .accordion {
+            margin-bottom: 1rem;
+            border: 0.063rem solid $primary-shades-12-p;
+            border-radius: 0.25rem;
+            &-heading {
+                color: $primary-main;
+                margin: 0.6rem 0;
+                font-weight: $font-weight-semi-bold;
+            }
+            &-subsection {
+                border-top: 0.063rem solid $input-border;
+                margin-top: 1.25rem;
+            }
+          
+            .text-input {
+                font-size: $font-size-16;
+                font-weight: $font-weight-regular;
+                color: $text-primary;
+            }
+            .accordion-row {
+                margin-bottom: 1rem;
+            }
+            .block-header {
+                padding: 0;
+                button{
+                    padding: 1rem 1.5rem;
+                }
+            }
+            .blockSlot {
+                padding: 1.5rem 1.5rem;
+                // padding-left: 0;
+                // padding-top: 0.6rem;
+                .data-interpolatedLabel{
+                    .slds-col.slds-size_12-of-12.slds-p-around_x-small{
+                        padding: 0;
+                        margin-bottom: 1.5rem;
+                        .block-container{
+                            slot{
+                                // margin-bottom: 1.5rem;
+                                // display: block;
+                            .slds-col.label.slds-size_12-of-12{
+                                font-size: $font-size-16;
+                                font-weight: $font-weight-medium;
+                                color: $text-primary;
+                            }
+                            .slds-col.slds-size_12-of-12{
+                                font-size: $font-size-16;
+                                font-weight: $font-weight-semi-bold;
+                                color: $text-primary;
+                            }
+                        }
+                    }
+                }
+                }
+            }
+            a {
+                color: $text-primary;
+            }
+        }
+        .data-interpolatedLabel{
+            .label {
+                font-size: $font-size-16;
+                font-weight: $font-weight-regular !important;
+                color: $text-secondary;
+            }
+            .field-value {
+                font-weight: $font-weight-semi-bold !important;
+            }
+        }
+
+        .label.heading_small {
+            .slds-form-element__label{
+                font-size: $font-size-14;
+                color: $text-secondary;
+            }
+        }
+        
+        .via-slds.datePickerHt {
+            button {
+                border: none !important;
+                width: unset;
+                top: 35%;
+            }
+        }
+        .slds-text-heading_small {
+            color: $text-primary !important;
+            width: 100%;
+            text-align: left;
+            font-weight: $font-weight-semi-bold;
+            font-size: $font-size-20;
+        }
+        .input-block {
+            // margin-right: 1rem;
+            padding-right: 1rem;
+        }
+    }
+}
+.review-card,.education-history-review{
+    .slds-col.slds-size_12-of-12.slds-p-around_x-small,
+    .slds-col.slds-p-around_small.slds-size_12-of-12,
+    .slds-col.slds-p-around_small.slds-size_6-of-12,
+    .slds-col.slds-p-around_x-small.slds-size_6-of-12,
+    .slds-col.slds-p-around_x-small.slds-size_4-of-12{
+        padding: 0;
+        margin-bottom: 1.5rem;
+    }
+}
+c-cf-payment_-fc[data-omni-key="CustomLWC1"], c-apply-for-license-step6-english {
+    .slds-grid {
+        .slds-grid {
+            padding: 0;
+            .omniscript-article {
+                padding: 0;
+                .omniscript-body {
+                    padding: 0;
+                    border: none;
+                    margin-top: 0;
+                }
+            }
+        }
+    }
+}
+omnistudio-omniscript-edit-block[data-omni-key="FeesSummary"] {
+    padding: 0;
+    .slds-border_top.slds-border_bottom.slds-border_left.slds-border_right.slds-grid.slds-p-vertical_xx-small{
+        padding: 0.625rem 0;
+        background: $background-light;
+        border: none;
+    }
+    .omni-editblock-table-row{
+        border-bottom: 0.063rem solid $input-border !important;
+        border-right: none;
+        border-left: none;
+        border-top: none;
+    }
+    .slds-text-title_caps,.slds-truncate{
+        font-size: 0.875rem;
+        letter-spacing: 0;
+        text-transform: capitalize;
+        color: $secondary-main;
+    }
+    .slds-text-title_caps{
+        font-weight: 600;
+    }
+    .omni-editblock-table-row:hover[omnistudio-omniscriptEditBlock_omniscriptEditBlock]{
+        background-color: none;
+    }
+    .slds-m-bottom_x-small.slds-grid.slds-m-top_small{
+        margin: 1.2rem 0;
+    }
+
+
+}
+
+
+omnistudio-omniscript-step[data-omni-key="Payment"] {   
+    .vlc-separator {
+        display: none;
+    }
+    omnistudio-omniscript-edit-block-wrapper {
+        padding-right: 1rem !important;
+    }
+    .slds-grid {
+        .slds-grid {
+            padding: 0;
+        }
+    }
+    .slds-page-header__title {
+        padding-left: 0;
+        margin-bottom: 1rem;
+    }
+    omnistudio-omniscript-block[data-omni-key="Block1"] {
+        .slds-accordion__summary {
+            display: none;
+        }
+        .slds-accordion__content {
+            // border: 0.063rem solid $input-border;
+            border-radius: 0.25rem;
+        }
+        .slds-accordion__section {
+            padding-top: 0;
+        }
+    }
+    omnistudio-omniscript-text-block {
+        &[data-omni-key="TextBlock1"],
+        &[data-omni-key="TextBlock3"] {
+            margin-top: 0;
+            margin-bottom: $large !important;
+            border-bottom: 1px solid $other-divider;
+            padding-bottom: $large;
+        }
+    }
+    .omni-block_content[omnistudio-omniscriptBlock_omniscriptBlock]{
+        padding-left: 1rem;
+        padding-right: 0;
+    }
+    [data-omni-key="cardDetailBlock"]{
+        .slds-accordion__summary{
+            display: none;
+        }
+        .slds-accordion{
+            // border-right: 0.063rem solid $input-border;
+            border-left: 0.063rem solid $input-border;
+        }
+    }
+    .omniscript-step__body,.slds-accordion__section{
+        padding-top: 0;
+    }
+    [data-omni-key="TextBlock2"]{
+        margin: 1rem 0;
+    }
+    omnistudio-omniscript-edit-block-wrapper{
+        [name="label"]{
+            display: none;
+        }
+    }
+
+}
+omnistudio-omniscript-step[data-omni-key="Step1"] {
+    .vlc-separator {
+        display: none;
+    }
+    .omniscript-step__body {
+        padding-top: 0;
+    }
+    omnistudio-omniscript-navigate-action[data-omni-key="submit-btn"] {
+        display: flex;
+        width: 100%;
+        justify-content: flex-end;
+        button {
+            width: 7.5rem;
+            background: $primary-main;
+            border-radius: 0.25rem;
+            padding: 0.25rem;
+            color: $white;
+            top: 1.7rem;
+        }
+    }
+}
+omnistudio-omniscript-step[data-omni-key="FeeSummary"] {
+    margin-top: 1rem;
+    margin-left: 1rem;
+    border: 0.063rem solid $input-border;
+    border-radius: 0.25rem;
+    height: 30.938rem;
+    h1 {
+        margin-top: 1rem !important;
+        padding: 0.85rem !important;
+    }
+    omnistudio-omniscript-block[data-omni-key="Block1"] {
+        padding-right: 0;
+        .slds-accordion__section {
+            padding: 0;
+        }
+        .slds-accordion__summary {
+            display: none;
+        }
+        .slds-accordion__content {
+            padding: 0.5rem;
+        }
+    }
+    omnistudio-omniscript-block[data-omni-key="Block2"] {
+        padding-right: 0;
+    }
+    omnistudio-omniscript-block[data-omni-key="Block3"] {
+        display: flex;
+        justify-content: flex-end;
+        padding-right: 0;
+        .slds-accordion__content {
+            width: 12.5rem;
+        }
+    }
+    omnistudio-omniscript-text-block {
+        &[data-omni-key="TextBlock2"],
+        &[data-omni-key="TextBlock3"] {
+            background: $background-light;
+        }
+        &[data-omni-key="TextBlock3"],
+        &[data-omni-key="TextBlock5"],
+        &[data-omni-key="TextBlock7"],
+        &[data-omni-key="TextBlock9"] {
+            text-align: right;
+        }
+        &[data-omni-key="TextBlock9"] {
+            padding-right: 0;
+            width: 60%;
+            color: $text-secondary;
+            font-size: $font-size-14;
+        }
+        &[data-omni-key="TextBlock2"],
+        &[data-omni-key="TextBlock3"],
+        &[data-omni-key="TextBlock4"],
+        &[data-omni-key="TextBlock5"],
+        &[data-omni-key="TextBlock6"],
+        &[data-omni-key="TextBlock7"] {
+            padding: 0.85rem;
+            font-size: $font-size-14;
+        }
+        &[data-omni-key="TextBlock4"],
+        &[data-omni-key="TextBlock5"],
+        &[data-omni-key="TextBlock6"],
+        &[data-omni-key="TextBlock7"] {
+            border-bottom: 0.063rem solid $input-border;
+        }
+        &[data-omni-key="TextBlock5"],
+        &[data-omni-key="TextBlock7"],
+        &[data-omni-key="TextBlock1"] {
+            font-weight: 700;
+        }
+        &[data-omni-key="TextBlock1"] {
+            font-size: $font-size-16;
+            text-align: right;
+            padding-right: 0;
+            width: 35%;
+        }
+    }
+}
+.success-icon {
+    // display: flex;
+    // justify-content: center;
+    margin-top: 0;
+    img {
+        width: 4.5rem !important;
+        height: 4.5rem !important;
+    }
+}
+// .success-text {
+//     text-align: center;
+//     font-size: $font-size-11;
+//     letter-spacing: 0.00498rem;
+//     font-weight: 600;
+//     margin-top: 1.875rem;
+// }
+.application-container {
+    // justify-content: center;
+    // display: flex;
+    // margin-top: 3.125rem;
+    .application-label {
+        // background: $background-light;
+        // text-align: center;
+        // padding-top: 1rem;
+        // padding-bottom: 0.5rem;
+        // border-radius: $border-radius-large $border-radius-large 0 0;
+        font-size: $font-size-20;
+        font-weight: $font-weight-bold;
+        line-height: 150%;
+        margin-top: $large;
+    }
+    .application-number {
+        font-size: $font-size-10;
+        color: $primary-main;
+        background: $background-light;
+        text-align: center;
+        padding-bottom: 1rem;
+        border-radius: 0 0 $border-radius-large $border-radius-large;
+        &.exit-application-Number{
+            a{
+                font-size: $font-size-10;
+                font-weight: 700;
+            }
+        }
+    }
+}
+c-cf-save-exit-sucess-page{
+    .application-container{
+        margin-bottom: 3.125rem;
+    }
+    .success-container {
+        padding: 6rem 6rem;
+    }
+    .success-icon{
+        margin-top: 0;
+    }
+    .success-text{
+        font-size: $font-size-10;
+    }
+}
+//Apply for License Modal
+c-cf-landing-apply,c-cf-landing-apply-clone,
+c-cf-amendments-license-details {
+    .slds-modal_medium .slds-modal__container {
+        max-width: 43.75rem;
+    }
+    .slds-modal__content {
+        padding: 0;
+    }
+}
+c-apply-for-license-modal-questions-english, 
+c-amendments-amendment-type-english {
+    .omniscript-article.slds-card {
+        padding: 0;
+        .heading {
+            padding-top: 0.625rem;
+        }
+        .omniscript-body {
+            padding: 0;
+            margin-top: 0;
+            border-right: none !important;
+            .vlc-separator {
+                width: 100% !important;
+                border: 1px solid $input-border !important;
+                margin-top: 1rem;
+                margin-left: 0 !important;
+                margin-right: 0 !important;
+            }
+        }
+        .os-step-label {
+            padding: 0 1.5rem;
+            font-size: $font-size-16;
+            font-weight: $font-weight-semi-bold;
+        }
+        .omniscript-step__body {
+            padding: 1rem 0.6rem;
+        }
+        .slds-grid.slds-wrap.slds-show_medium {
+            align-items: unset !important;
+            width: 100% ;
+        }
+    }
+}
+c-user-access-personal-info-english {
+    .omniscript-body {
+        border-right: none !important;
+        padding: 0;
+    }
+    article.omniscript-article.slds-card.slds-grid.slds-wrap.slds-grid_vertical-stretch {
+        padding: 0;
+        box-shadow: none;
+        background: $background-light;
+    }
+    omnistudio-omniscript-step[data-omni-key="PersonalInformation"] {
+        .omniscript-step__body {
+            padding: 1rem;
+            margin-top: 2rem;
+            background-color: $white;
+            box-shadow: 0 0 toRem(2) rgba(0, 0, 0, 0.1);
+            border-radius: $border-radius-medium;
+        }
+    }
+    omnistudio-omniscript-navigate-action[data-omni-key="NavigateAction1"] {
+        .slds-button_neutral {
+            top: -5rem !important;
+            left: 1.5rem;
+        }
+    }
+}
+[data-omni-key="EducationHistoryStep"],[data-omni-key="LicensureInOtherStatesStep"],
+[data-omni-key="AuthorizedContacts"],[data-omni-key="EmployeeInformation"]{
+    omnistudio-omniscript-edit-block-wrapper {
+        border-bottom:none;
+        margin-bottom:0;
+        padding-bottom: 0;
+    }
+}
+omnistudio-omniscript-edit-block-wrapper {
+    border-bottom: 1px solid $other-divider;
+    margin-bottom: $medium;
+    padding-bottom: $medium;
+    [name="label"]{
+        display: none;
+    }
+    h2{
+        font-size: $font-size-20;
+    }
+    .omni-editblock-table-row{
+        &.slds-cont-wrapper{
+            border-right: none;
+            border-left: none;
+            [role="cell"]{
+                font-size: $font-size-14;
+                color: $text-primary;
+            }
+        }
+        .slds-size_1-of-12{
+            .slds-col_bump-left{
+                .slds-dropdown{
+                    padding: 0.75rem;
+                    min-width: 8rem;
+                    .slds-dropdown__list{
+                        .slds-dropdown__item{
+                            &:nth-child(1){
+                                a{
+                                    color: $primary-main;
+                                    &:hover{
+                                        background: $background-light !important;
+                                    }
+                                    &:before {
+                                        content: "\ea20";
+                                        font-family: "material-icon";
+                                        margin-right: 0.5rem;
+                                    }
+                                }
+                            }
+                            &:nth-child(2){
+                                a{
+                                    color: $error-main !important;
+                                    &:hover{
+                                        background: $background-light !important;
+                                    }
+                                    &:before {
+                                        content: "\ea1f";
+                                        font-family: "material-icon";
+                                        margin-right: 0.5rem;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .slds-col_bump-left{
+        justify-content: end;
+        .slds-button.editblock-new{
+            background: $white !important;
+            color: $primary-main;
+            width: max-content;
+            &::before{
+                content: "\ea15";
+                font-family: "material-icon";
+                margin-right: 0.5rem;
+            }
+            &:hover{
+                color: $primary-dark;
+                border-color: $primary-dark;
+            }
+        }
+    }
+}
+.slds-modal_custom{
+    omnistudio-omniscript-block{
+        .slds-accordion{
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+    }
+}
+[data-omni-key="LicensedManagingAgenttextLabel"] {
+    padding-bottom: 0.3rem;
+}
+[data-omni-key="LicNo-Block"] .omni-typeahead-container .slds-form-element{
+    padding-bottom: 0.5rem;
+}
+[data-omni-key="MailingAddressTypeAheadTextBlock"] .slds-input{
+    padding-left: 0 !important;
+    padding-bottom:0.3rem
+}
+[data-omni-key="BooksRecordsTextBlock"] {
+    padding-top:1rem;
+}
+
+[data-omni-key="StudentVisaBlock"],[data-omni-key="PIStepConsentBlock"],
+[data-omni-key="AdditionalExaminationCertificationInformationBlock"]
+[data-omni-key*="PostgraduateTrainingHistoryDetails"],
+[data-omni-key="primarySupervisorBlock"],[data-omni-key="AdditionalExaminationCertificationInformationBlock"],
+[data-omni-key="AdditionalExaminationCertificationInformationATBlock"],
+[data-omni-key="HowAreYouAssociatedToThisEntity"],[data-omni-key="HowAreYouAssociatedToThisEntity"],
+[data-omni-key="AddBankAccountBlock"],[data-omni-key="InsuranceInformationBlock"],[data-omni-key="RelationshipDataBLK"],
+[data-omni-key="EFDApplicationPreneedSellerInformationBlock"],[data-omni-key="LPI_FeeDataBlock"]
+{
+    .slds-accordion{
+        border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+}
+
+[data-omni-key*="PostgraduateTrainingHistoryDetails"],
+[data-omni-key="AdditionalExaminationCertificationInformationBlock"],
+[data-omni-key="AdditionalExaminationCertificationInformationATBlock"],[data-omni-key="primarySupervisorBlock"]
+,[data-omni-key="AddBankAccountBlock"],[data-omni-key="InsuranceInformationBlock"],[data-omni-key="primarySupervisorBlock"],
+[data-omni-key="ClassScheduleInfo"],[data-omni-key="CourseDetail"],[data-omni-key="CECourseDetails"],[data-omni-key="StudentDetails"]{
+    .slds-accordion__section.slds-p-horizontal_none{
+        .slds-accordion__summary{
+            display: flex !important;
+            padding: $medium 0;
+            margin: 0;
+            font-size: $font-size-20;
+        }
+    }
+    .slds-accordion__section.slds-p-horizontal_none.slds-is-open{
+        .slds-accordion__summary{
+            display: flex !important;
+            padding: $medium 0;
+            margin: 0;
+            font-size: $font-size-20;
+        }
+    }
+}
+[data-omni-key*="PostgraduateTrainingHistoryDetails"],[data-omni-key="primarySupervisorBlock"]
+,[data-omni-key="AddBankAccountBlock"],[data-omni-key="InsuranceInformationBlock"],
+[data-omni-key="ClassScheduleInfo"],[data-omni-key="CourseDetail"],[data-omni-key="CECourseDetails"],
+[data-omni-key="StudentDetails"]{
+    .slds-accordion{
+        .slds-accordion__list-item{
+            .slds-accordion__section.slds-is-open{
+                .slds-accordion__summary-action-icon{
+                    transform: rotate(180deg);
+                }
+                .slds-accordion__content{
+                    padding: $medium !important;
+                }
+            }
+            .slds-accordion__section{
+                padding: 0 !important;
+                border: 0.063rem solid $primary-shades-12-p;
+                border-radius: 0.25rem;
+                margin-bottom: 1rem;
+                .slds-accordion__summary{
+                    padding: $small $medium;
+                    box-shadow: unset;
+                    border: none;
+                    padding: 1rem;
+                    background: $primary-shades-4-p;
+                    border-bottom: 1px solid $primary-shades-12-p;
+                    border-bottom-right-radius: 0;
+                    border-bottom-left-radius: 0;
+                    h3{
+                        font-weight: $font-weight-semi-bold;
+                    }
+                    .slds-accordion__summary-heading{
+                        .slds-button{
+                            border-right: 1px solid $other-divider;
+                            border-radius: 0;
+                        }
+                    }
+                    .slds-accordion__summary-action-icon{
+                        fill: $primary-main;
+                    }
+                    .slds-button-group{
+                        gap: $small;
+                        padding: 0;
+                        c-button:nth-child(2){
+                            .slds-button{
+                                color: $error-main;
+                                &:hover{
+                                    color: $error-dark;
+                                }
+                            }
+                        }
+                    }
+                }
+                
+            }
+        }
+    }
+}
+
+/* Added for Omniscript Block */
+omnistudio-omniscript-block{
+    // margin-bottom: $medium !important;
+    .slds-accordion {
+            border-bottom: 1px solid $other-divider;
+            margin-bottom: $medium;
+            padding-bottom: $medium;
+            // border: 0.063rem solid $input-border;
+            // border-radius: 0.25rem;
+            .slds-accordion__content{
+                padding: 0 !important;
+            }
+            .slds-accordion__section.slds-p-horizontal_none.slds-is-open{
+                padding: 0;
+                .slds-accordion__summary{
+                    display: none;
+                }
+            }
+  
+
+        .slds-accordion__summary-action {
+            display: flex;
+            flex-direction: row-reverse;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            flex-grow: initial;
+        }
+        
+        .slds-accordion__summary {
+            padding: 1rem 2rem 1rem;
+        }
+        h3{
+            color: $text-primary;
+        }
+        .slds-is-open{
+            h3 {
+                color: $text-primary !important;
+                width: 100%;
+                text-align: left;
+                font-weight: $font-weight-semi-bold;
+            }
+        }
+    }
+}
+
+[data-omni-key="FuneralEstablishmentErrorMessage"]{
+    .slds-accordion {
+        margin-bottom: 0rem;
+        border: none;
+        .slds-accordion__section {
+            padding: 0;
+            .slds-accordion__summary {
+                padding: 0;
+            }
+        }
+    }
+}
+
+[data-omni-key="corporationEditBlock"],[data-omni-key="partnershipBlock"],[data-omni-key="stakeholder"],
+[data-omni-key="SchoolOwnerInfoStep"] [data-omni-key="EditBlock2"]{
+    .slds-dropdown.slds-dropdown_right {
+        top: unset !important;
+        bottom: 100%;
+    }
+}
+[data-omni-key="stakeholder"], [data-omni-key="SchoolOwnerInfoStep"] [data-omni-key="EditBlock2"]{
+    .slds-p-horizontal_small.slds-truncate.slds-size_2-of-12:nth-child(3), .slds-p-horizontal_small.slds-truncate.slds-size_2-of-12:nth-child(5),
+    .slds-p-around_small.slds-truncate.slds-size_2-of-12:nth-child(3), .slds-p-around_small.slds-truncate.slds-size_2-of-12:nth-child(5) {
+        width: 25%;
+    }
+    .slds-p-around_small.slds-truncate.slds-size_2-of-12:nth-child(4) {
+        text-align: center;
+    }
+}
+
+[data-omni-key="Instructors"], [data-omni-key="schoolSchedule"]{
+    [data-omni-key="fullTimeFrom"], [data-omni-key="fullTimeTo"], [data-omni-key="partTimeFrom"], [data-omni-key="partTimeTo"],
+    [data-omni-key="eveningTimeFrom"], [data-omni-key="eveningTimeTo"], [data-omni-key="instructorTrainingTimeFrom"], [data-omni-key="instructorTrainingTimeTo"]{
+        padding-right: 1rem;
+        width: 25%;
+        margin-bottom: 1rem;
+    }
+    [data-omni-key="TextBlock10"], [data-omni-key="TextBlock9"] {
+        display: none;
+    }
+    [data-omni-key="WillSchoolKeepTheRecords"] {
+        margin-top: 1.25rem;
+    }
+}
+.for-intake-forms omnistudio-omniscript-time{
+    padding-right: 1rem;
+    margin-bottom: 1rem;
+}
+
+[data-omni-key="SchoolOwnerType"] legend span {
+    font-size: 0.8125rem;
+    color: $text-primary;
+    font-weight: 600;
+    padding-bottom: 0.3rem;
+}
+c-application-barber-school-english omnistudio-omniscript-edit-block-wrapper [name="label"] {
+    display: none;
+}
+.slds-action_item:focus {
+    @include focus-outline();
+}
+
+/* Payment Step */
+.payment-step{
+    align-items: inherit;
+
+    .detail-summary {
+        background: $white;
+        border-radius: 0.25rem;
+
+        .card-details-head {
+            font-size: $font-size-16;
+            font-weight: $font-weight-semi-bold;
+        }
+
+        .slds-input {
+            font-size: $font-size-13;
+            padding-top: 0.25rem;
+            padding-bottom: 0.25rem;
+        }
+
+        .card-number {
+            position: relative;
+
+            .card-icons {
+                position: absolute;
+                bottom: 1.25rem;
+                right: 1.25rem;
+
+                svg {
+                    margin-right: 0.188rem;
+                    height: 1rem;
+                }
+            }
+        }
+    }    
+    .fees-summary {
+        background: $white;
+        border-radius: 0.25rem;
+        height: 100%;
+
+        .summary-head {
+            font-size: $font-size-16;
+        }
+        .summary-content{
+            &> div {
+                padding: $x-ml-small;
+                font-size: $font-size-14;
+                font-weight: $font-weight-semi-bold;
+                border-bottom: 0.125rem solid $input-border;
+            }
+            .fee-header {
+                background: $background-light;
+                border-bottom: none;
+            }
+            .total-amount {
+                border-bottom: none !important;
+                text-align: right;
+
+                p{
+                    font-size: $font-size-13;
+                    color: $text-secondary;
+                    span.fee-amount {
+                        color: $black;
+                        font-size:$font-size-20;
+                        margin-left: 0.25rem;
+                    }
+                }
+            }
+        }
+    }
+}
+
+c-r-s-brokerage-application-intake-form-english {
+    .vlc-disclosure {
+        .slds-box {
+            border: none;
+            padding: 0;
+            margin: 2rem 0;
+           
+            .slds-form-element__label{
+                font-size: 0.875rem;
+                font-weight: 400 !important;
+                line-height: 1.25rem;
+                color:$text-primary;
+            }
+            
+        }
+    }
+}
+.modpr_search_business_ac {
+       
+        .slds-button_brand {
+            background: $primary-main;
+            padding: 0.375rem 1rem;
+            font-size: $font-size-14;
+            border: 0.125rem solid $primary-main;
+            border-radius: $border-radius-medium;
+            &:focus {
+                outline: toRem(2) dotted $other-divider !important;
+                outline-offset: toRem(10) !important;
+            }
+        }     
+        .slds-button_neutral {
+            color: $primary-main;
+            font-size: $font-size-14;
+            padding: 0.1874rem 1rem;
+            border: toRem(1) solid $primary-main;
+            padding: 0.1875rem; 
+            background: $white;
+            border-radius: $border-radius-medium;
+            &:focus {
+                outline: toRem(2) dotted $other-divider !important;
+                outline-offset: toRem(10) !important;
+            }
+        }
+    
+        .slds-button_neutral, .slds-button_outline-brand {
+            color: $primary-main;
+            font-size: $font-size-14;
+            padding: 0.1874rem 1rem;
+            border: toRem(1) solid $primary-main;
+        }
+
+        .actionFlyout{
+            .slds-modal_medium .slds-modal__container{
+                max-width: 25rem;
+            }
+            .slds-modal__header.slds-modal__header_empty{
+                justify-content: end;
+                padding: 0.5rem;
+            }
+            .slds-modal__content{
+                padding: 0 !important;
+            }
+
+            .business-associated-success-modal{
+                .modal-content{
+                    padding: 2rem 1rem;
+                    text-align: center;
+                }
+                .modal-footer {
+                    padding: 0.75rem 1rem;
+                    border-top: 2px solid $modal-footer-border;
+                }
+            }
+        }
+}
+.license-number {
+    // color: $primary-dark;
+    // font-weight: $font-weight-semi-bold;
+    border: 1px solid $action-disabled-background-12-p;
+    padding: $medium !important;
+    margin: $medium 0;
+    p {
+        color: $primary-main !important;
+        font-weight: $font-weight-bold;
+        font-size: $font-size-18;
+        a {
+            color: $primary-dark !important;
+        }
+    }
+}
+.instruction-contents {
+    font-size: 0.875rem;
+    line-height: $font-size-22;
+}
+.instruction-text{
+    p{
+        font-size: $font-size-16;
+        color: $text-primary;
+        margin-bottom: $medium;
+        line-height: 150%;
+    }
+    ul{
+        margin-bottom: $medium;
+    }
+    a{
+        font-size: $small;
+        margin-left: $xx-small;
+        margin-right: 0.35rem;
+    }
+    ol ol{
+        margin: 0;
+        li{
+            margin: 0;
+        }
+    }
+}
+
+c-modpr-add-mulitple-location{
+    // .householdmem{
+    //     margin-bottom: 1rem;
+    // }
+    .slds-accordion{
+        margin: 0.5rem 0;
+        &__summary-heading{
+            padding-right: 1.2rem;
+            .slds-button {
+                font-size: 1rem;
+            }
+        }
+        .del-btn.house {
+            margin-left: 0.5rem;
+        }
+    }
+}
+c-cf-e-f-d-embalmers-reviewand-summary.via-slds .pillDiv.slds-show button {
+    outline: none !important;
+}
+
+.OptoIndividualAppReview{
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: $grey_badge;
+}
+
+c-d-e-n-permit-application-intake-form-english omnistudio-omniscript-step[data-omni-key=PersonalInformation] omnistudio-omniscript-text-block[data-omni-key=TextBlock1].slds-show_inline-block {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.education-history-review{
+    .label{
+        font-size: 0.875rem;
+        color: $text-primary;
+        font-weight: 600;
+    }
+}
+
+.label{
+    font-size: 0.875rem;
+    color: $text-primary;
+    font-weight: $font-weight-regular;
+    .slds-form-element__label {
+        font-size: 0.875rem;
+        font-weight: $font-weight-regular;
+        color: $text-primary;
+    }
+    .slds-radio{
+        .slds-form-element__label {
+            font-weight: normal !important;
+        }
+    }
+    .slds-combobox__input,
+    .slds-listbox__option {
+        font-weight: normal;
+    }
+}
+
+.msg-block {
+    border: toRem(1) solid $accordion-border;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    margin-bottom: 0;
+}
+
+c-cf-m-o-d-p-r-education-history-review,c-cf-h-a-assistant-physician-license-ques-child,
+c-cf-h-a-assistant-physician-jurisprudence-exam{
+    .slds-col.slds-p-around_x-small.slds-size_12-of-12,.slds-col.slds-p-around_x-small.slds-size_6-of-12{
+        padding: 0 !important;
+        margin-bottom: 1.5rem;
+    }
+}
+
+[data-omni-key=ModprOwnershipInformationStep]{
+    position: relative;
+}
+
+/* Consent For Primary Contact Address START */
+
+[data-omni-key=ConsentForPrimaryContactAddress],
+[data-omni-key=IHerebyAuthorizeAnyIndividual],
+[data-omni-key=OnlyConsentMessageForPrimaryAddress],
+[data-omni-key=registerForNavel],
+[data-omni-key=registerForVTNE],
+[data-omni-key=registerMoExam],
+[data-omni-key=RequestLicenseRCPCheck],
+omnistudio-omniscript-disclosure{
+    .vlc-disclosure{
+        .vlc-slds-box__no-border{
+            border: 0;
+            .slds-box{
+                padding: 0;
+                &:nth-child(1) {
+                    font-weight: $font-weight-bold;
+                    font-size:$font-size-16;
+                    color: $text-dark-blue;
+                    margin-bottom: 0.2rem;
+                }
+                &:nth-child(2) {
+                    padding: 0;
+                }
+                .slds-checkbox{
+                    .slds-checkbox_faux{
+                        border: toRem(1.5) solid $primary-main;
+                    }
+                    .slds-form-element__label{
+                        font-weight: $font-weight-regular;
+                        font-size: $font-size-13;
+                        color: $text-primary;
+                        letter-spacing: 0.005em;
+                    }
+                }
+                abbr.slds-required {
+                    margin-right: 0.35rem;
+                }
+            }
+        }
+    }
+}
+
+[data-omni-key=OnlyConsentMessageForPrimaryAddress] .slds-box:nth-child(3) {
+    display: none;
+}
+
+[data-omni-key=ConsentBlockForAll],
+[data-omni-key=ConsentBlockForPharmacyIndividualLicense]{
+    omnistudio-omniscript-block .slds-accordion {
+        margin-bottom: 0;
+        border: 0;
+    }
+    section.slds-accordion__section {
+        padding: 0;
+    }
+    omnistudio-omniscript-block .slds-accordion .slds-accordion__summary {
+        padding: 0;
+    }
+    .slds-accordion__content.omni-block_content{
+        padding: 0;
+    }
+}
+
+/* Consent For Primary Contact Address END */
+
+/* Start Hide modal window X icon as per functionality requirement */
+
+c-cf-n-u-r-nursing-school-instructions{
+    .slds-modal__close {
+        visibility: hidden;
+    }
+    .slds-modal{
+        .slds-form-element__legend {
+            margin-bottom: 0.75rem;
+            display: block;
+        }
+    }
+}
+/* End Hide modal window X icon as per functionality requirement */
+
+
+.comm-page-custom-apply-for-license .for-intake-forms,
+.comm-page-custom-apply-license .for-intake-forms{
+    .omniscript-article.slds-card {
+        omnistudio-omniscript-navigate-action[data-omni-key="NavigateAction1"] {
+            button {
+                width: 16rem;
+                margin-top: 0.75rem;
+            }
+        }
+    }
+}
+
+.for-intake-forms {
+    .omniscript-article {
+        padding: 0;
+        border-radius: 0;
+        background: transparent;
+        box-shadow: none;
+
+        .omniscript-side-content {
+            width: 18.75rem;
+            padding: 1.75rem 1.25rem;
+            border-radius: 0.25rem;
+            background: $white;
+        }
+
+        .omniscript-body {
+            width: calc(100% - 20.25rem);
+            padding: 1.5rem toRem(42);
+            border-radius: 0.25rem;
+            margin-top: 0.5rem;
+            margin-left: 1.5rem;
+            background: $white;
+            border-left: none !important;
+            padding-bottom: 2rem;
+            margin-bottom: 0.1rem;
+            .omniscript-body {
+                margin: 0;
+                width: 100%;
+                border-radius: 0;
+                height: auto;
+            }
+        }
+    }
+}
+
+.content-container{
+    &.cLpi_theme_forms{ 
+        min-height: 100vh;
+    }
+}
+
+.cLpi_theme_forms{
+    .main-content,.main-content.open-sidebar  {
+        margin: 0 auto;
+        width: 100%;
+    }
+    .lpi-header{
+        .menu {
+            display: none;
+        }    
+    }
+}
+
+.omniscript-body[data-stepborder='right']{
+    [c-nURChangeInProgramLengthApplicationApplicationReviewEnglish_nURChangeInProgramLengthApplicationApplicationReviewEnglish]{
+        border-right: 0;
+    }
+}
+
+[data-omni-key="ApplicationReview"]{
+    [data-omni-key="NavigateAction1"] {
+        text-align: right;
+        padding-right:2.3rem;
+        button {
+            max-width: 19rem;
+        }
+    }
+    @media all and (max-width: 56rem) {
+        [data-omni-key=SCOPAppReviewFC],
+        omnistudio-omniscript-custom-lwc{
+            width: inherit;
+        }
+    }
+}
+[data-omni-key=PCCustomLWCReviewAndSummary]{
+    .slds-form-element__label .slds-required{
+        display: none;
+    }
+}
+
+
+c-n-u-r-application-nursing-school-intake-form-english{
+    [data-omni-key="DesignatedBrokerDetails"]{
+        [data-omni-key="TextBlock1"] {
+            color: $text-primary;
+            font-size:toRem(18);
+        }
+    }
+}
+
+[data-omni-key="NURSponsoringInformation"]{
+    [data-omni-key="SponsoringInfoBlock"]{
+        [data-omni-key="TextBlock2"]{
+            color: $text-primary;
+            font-size: toRem(18);
+        }
+    }
+}
+
+
+[data-omni-key=registerForNavel],
+[data-omni-key=registerForVTNE],
+[data-omni-key=registerMoExam]{
+    .slds-grid.slds-m-vertical_medium{
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+}
+
+[data-omni-key=LicensureInOtherStatesEditBlock] {
+    h2 {
+        &::before {
+            content: "* ";
+            color: $error-dark;
+        }
+    }
+}
+
+c-r-e-a-appraiser-trainee-application-intake-form-english [data-omni-key=LicensureInOtherStatesStep]{
+    [data-omni-key=LicensureInOtherStatesEditBlock] h2::before {
+        content: ' ';
+    }
+}
+
+.MODPRPaymentWarningTextCls{
+    margin-bottom: 1.5rem;
+    .warning-icon {
+        width: auto;
+        padding-left: 0.5rem;
+        padding-right: 1rem;
+    }
+}
+
+[data-omni-key=FeeitemsFC]{
+    .slds-text-heading_small {
+        margin-bottom: 0.5rem;
+        color: $text-dark-blue;
+        font-weight: $font-weight-bold;
+    }
+    .tableHeadCell[data-label="Fee Amount"]{
+        width: 8rem;
+    }
+    .dataTableCell[data-field-name="Fee_Amount"]{
+        text-align: right;
+        padding-right: 1.5rem !important;
+    }
+}
+
+omnistudio-omniscript-text-block[data-omni-key="TB_TotalDueAmt"]{
+    .slds-rich-text-editor__output p {
+        text-align: right;
+        padding-right: 1.9rem;
+    }
+}
+
+[data-omni-key=JetPayInformation]{
+    omnistudio-omniscript-block .slds-accordion{
+        margin-bottom: 0;
+    }
+}
+
+[data-omni-key=InteriorDesignerApplicationReviewFC]{
+    .accordion-subsection {
+        margin-top: 0 !important;
+        border-top: 0 !important;
+    }
+}
+
+c-interior-designer-application-review-english{
+    label.slds-radio__label .slds-form-element__label {
+        font-weight: normal;
+        font-size: 1rem;
+    }
+    .slds-checkbox .slds-form-element__label {
+        font-weight: normal !important;
+        font-size: 1rem !important;
+        color: $text-secondary !important;
+    }    
+}
+
+
+[data-omni-key=setErrorForNavle],
+[data-omni-key=setErrorForMO]{
+    .slds-rich-text-editor__output {
+        line-height: toRem(12);
+    }
+}
+
+[data-omni-key=BusinessNameChangeStep]{
+    .omniscript-step__body {
+        min-height: 10rem !important;
+    }
+}
+
+[data-omni-key=InvestigatorPhysicalCharacteristics]{
+    .omniscript-step__body {
+        min-height: 30rem !important;
+    }
+    [data-omni-key=InvestigatorHairColor],
+    [data-omni-key=InvestigatorEyeColor]{
+        .dropdown-container.listbox{
+            max-height: 12rem;
+        }
+    }
+}
+
+[data-omni-key=LPCASApplicationInstructionFC],
+[data-omni-key=ProfessionalCounselorNewIns],
+[data-omni-key=ProfessionalCounselorRecIns],
+[data-omni-key=CosBarBICICBIInstructionRadioFC],
+c-cf-n-u-r-nursing-school-instructions{
+    .slds-modal__header.slds-modal__header_empty {
+        display: none;
+    }
+    .slds-modal .slds-modal__container .slds-button_outline-brand {
+        padding: 0.1874rem 2rem;
+        font-size: 0.875rem;
+    }
+    .instruction-msg-modal-footer{
+        .slds-grid .slds-grid {
+            justify-content: flex-end;
+            align-items: center;
+            .slds-col {
+                margin-left: 1rem;
+                width: auto;
+            }            
+        }
+    }
+}
+
+.licenseQn{
+    font-size: toRem(14);
+}
+
+[data-omni-key="InsuranceConsultantLQ7TB"] p{
+    &::before {
+        content: "*";
+        color: $error-dark;
+    }
+}
+
+[data-omni-key=ModprOwnershipInformation]{
+    .slds-input[disabled], .slds-input.slds-is-disabled,.slds-input_faux.slds-is-disabled {
+        background-color: $input-bg-disabled;
+        border-color: $input-border-disabled;
+        color: $text-secondary;
+        caret-color: transparent;
+    }
+    
+    .slds-input,.slds-input_faux{
+        border: toRem(1) solid $input-border;
+        color: $text-primary;
+        font-size: 0.875rem;
+    }
+    
+
+    .searchBoxWrapper{
+        .slds-input__icon[data-element-id=searchClear]{
+            top: toRem(1);
+            left: -1.5rem;
+        }
+    }
+    .lookupInputContainer .pillDiv button.slds-button.slds-button_icon.slds-input__icon {
+        width: 1rem;
+        top: 0.6rem;
+    }        
+
+}
+
+.OsteoPhyDO{
+    margin-bottom: 1rem;
+}
+
+[data-omni-key="HISHearingInstSpecRenewalLicenseQuestions5"]{
+    .slds-relative-tooltip.slds-has-error .slds-form-element__help {
+        width: 100%;
+    }
+}
+
+.ElectricalCont{
+    span{
+        font-size: 1rem !important;
+    }
+}
+
+.social-workers {
+    font-size: toRem(14);
+    color: $text-primary;
+    font-weight: bold;
+}
+
+input {
+  &[disabled],
+  fieldset[disabled] {
+    -webkit-text-fill-color: $black-x-dark;
+    opacity: 1;
+}
+}
+
+[data-omni-key=LiabilityInsuranceValue]{
+    .slds-form-element__control {
+        flex-direction: column;
+        .slds-radio:nth-child(2) {
+            order: 3;
+        }
+    }
+}
+
+c-cf-r-s-brokerage-ownership-review-f-c {
+    .slds-grid.slds-wrap.slds-card.slds-m-around_none {
+        padding: 0;
+    }
+}
+
+c-cf-r-s-broker-instructions.via-slds{
+    .accordion-block {
+        margin-top: 0.5rem;
+    }
+}
+
+
+[data-omni-key=feeItemsBlock]{
+    .slds-accordion{
+        border: none !important;
+        .slds-accordion__summary{
+            padding: 0 !important;
+        }
+        .slds-accordion__content{
+            padding-left: 0 !important;
+        }
+    }
+}
+
+[data-omni-key=IsYourProgramClosedWarning]{
+    .slds-rich-text-editor__output{
+        p {
+            background: $error-shades-4-p;
+            border: toRem(1) solid $error-shades-4-p;
+            border-radius: 0.25rem;
+            padding: 1rem;
+            img{
+                width: toRem(26);
+                position: relative;
+                top: toRem(5);
+            }
+        }
+    }
+}
+
+[data-omni-key=BAAttestAndAffirm],
+[data-omni-key=SCIDisclosure]{
+    .slds-checkbox__label {
+        position: relative;
+        &::before{
+            content: "*";
+            color: $error-dark;
+        }
+        .slds-checkbox_faux {
+            margin-left: 0.1rem;
+        }
+    }
+}
+
+.field-value{
+    // word-break: break-all;
+    white-space: normal;
+}
+
+h2.field-value {
+    color: #3f5678;
+}
+
+.InterpretersReinst{
+    font-size: toRem(14);
+}
+
+[data-omni-key=CertificationInformation] .omniscript-step__body {
+    min-height: 40rem;
+}
+
+.DentalReciprocityInst{
+    ul{
+        margin-bottom: 0;
+    }
+    p{
+        padding-left: 1.5rem;
+    }
+}
+
+[data-omni-key=RespiratoryTemporaryPermitInstructions]{
+    [data-omni-key=EligibleCriteria]{
+        legend {
+            margin-bottom: 0.5rem;
+        }
+    }
+}
+
+.info-box{
+    .info-icon {
+        width: auto !important;
+        padding-right: 1rem !important;
+        svg {
+            fill: $warning-main !important;
+        }
+    }
+}
+
+c-upload-document{
+    .other-document-btn button {
+        margin-top: 0.5rem;
+    }
+}
+
+c-cf-l-p-c-license-questions-for-renewal,
+[data-omni-key=ApplicationReview] {
+    .slds-textarea{
+        border: none !important;
+        height: auto !important;
+        resize: none;
+        padding-left: 0;
+        font-size: 1rem;
+        overflow: hidden;
+        min-height: 3rem !important;
+        &:focus {
+            outline: none !important;
+            box-shadow: none;
+        }
+    }
+}
+
+[data-omni-key="REAAppraiserApplyingStatus"],
+[data-omni-key="CollegeLevelEducationForCertifiedResidential"]{
+    .slds-form-element__control {
+        flex-direction: column;
+    }
+}
+
+[data-omni-key="PCAAddressBlock"],
+[data-omni-key="LAAddressBlock"],
+[data-omni-key="PDAAddressBlock"]{
+    .slds-accordion{
+        background: $white;
+        border: 0;
+    }
+}
+
+[data-omni-key="AddMulitpleSupervisonSiteAndSupervisor"],
+[data-omni-key="FuneralEstablishmentRelations"],
+[data-omni-key="CustomLWC1"]{
+    lightning-accordion.slds-accordion {
+        border: toRem(1) solid $input-border;
+        border-radius: toRem(5);
+        .slds-accordion__summary-content {
+            font-size: 1rem;
+        }
+    }
+    lightning-accordion.innerAccordion{
+        margin-bottom: 1rem;
+    }
+}
+
+button.slds-button.slds-button_destructive {
+    padding: 0 1rem !important;
+    font-size: 0.8135rem;
+}
+
+[data-omni-key="InstructionQuestionFC"]{
+    .actionFlyout .slds-modal{
+        .slds-modal__container {
+            max-width: 45rem;
+            .slds-modal__header{
+                border-bottom: 0;
+                padding: 0.5rem;
+            }
+        }
+        .slds-modal__header{
+            .slds-modal__close {
+                top: toRem(-10);
+                right: 0;
+            }
+        }
+    }
+}
+
+[data-omni-key="Modpr_AliasType"]{
+    .dropdown-container{
+        max-height: 9rem !important;
+    }
+}
+
+.bordered-container {
+    border: 0.063rem solid $accordion-border !important;
+    border-radius: 0.25rem !important;
+    margin: 0.5rem 0 !important
+}
+[data-omni-key="PIStepConsentBlock"] {
+    .slds-accordion__summary{
+        padding-top: 0 !important;
+    }
+    [data-omni-key="ConsentCheckboxForMainPIStep"] {
+        .slds-checkbox__label .slds-form-element__label{
+            padding-right: 0 !important;
+        }
+    }
+    [data-omni-key="ConsentCheckboxForMainPIStep"],
+    [data-omni-key="ConsentCheckboxForPIStep"] {
+        width: auto;
+        padding: 0;
+        .vlc-disclosure {
+            padding: 0 !important;
+            border: none !important;
+            background: none !important;
+            .slds-box {
+                margin: 0 !important;
+            }
+        }
+        .slds-form-element__help {
+            position: absolute;
+            top: 1.75rem;
+            color: $white;
+            background-color: $error-dark;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            width: 16rem;
+            text-align: center;
+            z-index: 1;
+            &::after {
+                position: absolute;
+                height: 0.5rem;
+                width: 0.5rem;
+                content: '';
+                left: 0.5rem;
+                top: -0.5rem;
+                border-bottom: 0.25rem solid $error-dark;
+                border-left: 0.25rem solid transparent;
+                border-right: 0.25rem solid transparent;
+            }
+        }
+    }
+}
+
+.Supervisor_Approval_Info{
+    border: toRem(1) solid $input-border;
+    border-radius: toRem(5);
+}
+
+[data-omni-key="CustomLWC1"]{
+    .accordion-subsection{
+        .slds-p-top_medium, 
+        .slds-p-around_x-small{
+            padding-top: 0;
+        }
+    }
+}
+
+.listOfQuestn {
+    // margin-left: -1.3rem;
+    font-size: $small;
+    color: $text-primary;
+    font-weight: $font-weight-regular;
+    white-space: normal;
+    word-break: break-word;
+    .slds-rich-text-editor__output p span {
+        color: $text-primary !important;
+        font-weight: $font-weight-regular;
+        font-size: 1rem !important;
+    }
+}
+
+.slds-card .CourseInfo{
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+.CourseInfo{
+    .block-header{
+        padding-top: 0 !important;
+    }
+}
+
+c-cf-cos-bar-b-i-c-i-c-b-i-instruction-radio-f-c{
+    .label .slds-form-element__label{
+        font-weight: normal;
+    }
+    c-radio-group .slds-radio {
+        border: toRem(1) solid $input-border;
+        padding: 0.375rem 0.625rem;
+        border-radius: 0.25rem;
+        margin-right: 0.5rem;
+        width: auto;
+    }
+} 
+
+[data-omni-key="ExpandedFunctionsAppReview"]{
+    width: 100%;
+}
+
+[data-omni-key="CourseInformation"]{
+    omnistudio-omniscript-edit-block-wrapper {
+        padding: 0;
+        margin-top: -1.5rem;
+    }
+}
+
+c-modpr-decision-tree-questions{
+    lightning-base-combobox.slds-combobox_container {
+        min-width: 16rem;
+    }
+    .slds-listbox__option .slds-truncate{
+        white-space: normal;
+    }
+}
+
+c-cf-s-c-o-p-supervisor-approval-f-c{
+    .slds-is-relative{
+        border: toRem(1) solid $input-border;
+        border-radius: toRem(5);
+    }
+}
+
+[data-omni-key=PHPharmacistInstructionsNABPEProfileId]{
+    input {
+        border: toRem(1) solid $input-color-2 !important;
+    }
+}
+
+[data-omni-key="AdditionalExaminationInformation"],
+[data-omni-key="OutofStateApplicantsOnly"]{
+    .slds-has-error{
+        padding-top: 1rem;
+        margin-left: 1.3rem;
+    }
+}
+
+[data-omni-key="HISHearingInstSpecRenewalLicenseQuestions6"] {
+    //max-width: 1.75rem;
+   .vlc-disclosure{
+        .vlc-slds-box__no-border{
+            display: flex;
+            flex-direction: row-reverse;
+            .slds-checkbox{
+                display: flex;
+                .slds-checkbox_faux{
+                    margin-right: 0;
+                }
+            }
+        }
+   }
+    .slds-grid.slds-m-vertical_medium {
+        margin: 0;
+    }
+}
+
+[data-omni-key="HISHearingInstSpecRenewalLicenseQuestionsTextBlock"],
+.HISHearingInst-custom-checkbox_label{
+    lightning-formatted-rich-text {
+        font-size: .875rem;
+        font-weight: 600;
+        color: $text-primary !important;
+        span {
+            font-family: $font-family !important;
+        }
+    }
+}
+
+.HISHearingInst-custom-checkbox{
+    width: 1.75rem;
+    .slds-checkbox .slds-checkbox__label .slds-form-element__label {
+        display: none;
+    }
+}
+
+[data-omni-key=labelIfCitizenshipIsForeign] {
+    margin-bottom: 0.25rem;
+    p {
+        font-size: .875rem;
+        color: $text-primary;
+        font-weight: $font-weight-semi-bold !important;
+        margin-bottom: $medium;
+        margin-top: $x-m-small;
+    }
+}
+
+
+[data-omni-key="CosBarSchoolAppAuthorize"],
+[data-omni-key="AuthorizeToReleaseExamAppStatus"]{
+    .slds-checkbox_faux{
+        margin-left: toRem(5);
+    }
+}
+
+[data-omni-key="ExamAndScoreEndorsementBlock"]{
+    [data-omni-key="WrittenScore"],
+    [data-omni-key="PracticalScore"]{
+        .slds-has-error {
+            padding-top: 0 !important;
+            margin-left: 0 !important;
+        }
+    }
+}
+
+[data-omni-key="NURRNLPNApplicationLicenseQuestionsPrimaryState"]{
+    .slds-radio {
+        width: auto !important;
+    }
+}
+
+.label.no-word-break{
+    .slds-rich-text-editor__output div {
+        word-wrap: normal;
+    }
+}
+
+[data-omni-key="LandSurveyorInternIns"]{
+    .slds-card {
+        padding-top: 0;
+    }
+}
+
+[data-omni-key="TextBlockVetLicenseQuestion1"],
+[data-omni-key="TextBlockVetLicenseQuestion2"]{
+    .slds-text-block{
+        font-size: 0.875rem;
+        color: $text-primary !important;
+        font-weight: 600;
+        p>span>span{
+            color: $text-primary !important;
+        }
+    }
+}
+
+@media all and (max-width: 78.125rem) {
+    [data-omni-key=FC_FeeData],
+    [data-omni-key=JetPayInformation]{
+        width: 100%;
+    }
+}
+
+@media all and (max-width: 64rem) {
+    .fee-mob-section{
+        .slds-size_6-of-12{
+            width: 50%;
+        }
+        .totalDue{
+            margin: 0;
+        }
+    }
+}
+
+@media all and (max-width: 48rem) {
+    .approval-request-btn,
+    .add-supervisor-information-btn{
+        margin-top: 0.25rem;
+        .slds-button{
+            margin-top: 0.25rem;
+        }
+    }
+    [data-omni-key=SubmitApprovalRequest]{
+        .slds-is-relative {
+            padding: 0 1rem;
+        }
+    }
+}
+
+[data-omni-key=SelectReasonforRequest]{
+    .slds-form-element__control {
+        flex-direction: column;
+        row-gap: 0;
+    }
+}
+
+.picMicSignature input,
+.licenseeComments textarea {
+    min-width: 12rem;
+}
+
+
+.licenseeComments,
+.picMicSignature{
+    .slds-form-element__label {
+        display: none;
+    }
+}
+
+[data-omni-key=TBPBPortalApprovalBlock]{
+    .slds-accordion{
+        border: 0;
+    }
+}
+
+.slds-card.info-box-container,
+.info-box-container {
+    padding: 1rem;
+    font-size: $font-size-16;
+    font-weight: $font-weight-regular;
+    color: $warning-main !important;
+    border: toRem(1) solid $warning-main;
+    border-radius: $border-radius-medium;
+    background: $warning-shades-4-p;
+    .info-box .slds-wrap {
+        align-items: center;
+    }
+}
+
+.county-search{
+    position: relative;
+    input[type="search"] {
+        padding-left: 2rem !important;
+    }
+    button.slds-button.slds-button_icon {
+        width: 0.875rem;
+        margin-top: -0.4375rem;
+    }
+    .slds-gropdown{
+        position: absolute;
+    }
+}
+
+[data-omni-key=AmendmentDetails]{
+    .slds-rich-text-editor__output h2 {
+        margin-bottom: 0;
+    }
+}
+
+@media all and (max-width: 48rem) {
+    [data-omni-key=E-mailAddress]{
+        .tooltipSection{
+            max-width: 14rem !important;
+        }
+    }
+    [data-omni-key=UpdateSSNIfNoApplicationSubmittedFromAccountRO],
+    [data-omni-key=UpdateSSNIfNoApplicationSubmittedFromAccount]{
+        .tooltipSection[omnistudio-tooltip_tooltip]{
+            left: -11rem !important;
+        }
+    }
+    [data-omni-key=CitizinshipStatus]{
+        .tooltipSection[omnistudio-tooltip_tooltip]{
+            left: -7rem !important;
+        }
+    }
+    [data-omni-key=BusinessName]{
+        .tooltipSection[omnistudio-tooltip_tooltip]{
+            left: -8rem !important;
+        }
+    }
+    [data-omni-key=FEIN]{
+        .tooltipSection[omnistudio-tooltip_tooltip]{
+            left: -15rem !important;
+        }
+    }
+    [data-omni-key=MOStateRegistrationNumber]{
+        .tooltipSection[omnistudio-tooltip_tooltip]{
+            left: -18rem !important;
+        }
+    }
+}
+
+@media all and (max-width: 35rem) {
+    .tooltipSection[omnistudio-tooltip_tooltip]{
+        white-space: normal !important;
+    }
+}
+
+
+// [data-omni-key=ThreeExamination],
+[data-omni-key=ThreeExaminationRO],
+[data-omni-key=ThreeReciprocity],
+[data-omni-key=ThreeReciprocityRO],
+[data-omni-key=APEPLSPLAProfLandArchiExamination],
+[data-omni-key=APEPLSPLAProfLandArchiExaminationRO],
+[data-omni-key=APEPLSPLAProfLandArchiReciprocity],
+[data-omni-key=APEPLSPLAProfLandArchiReciprocityRO],
+[data-omni-key=APEPLSPLAArchitectReciprocity],
+[data-omni-key=APEPLSPLAArchitectReciprocityRO]{
+    position: relative;
+    left: toRem(10);
+    &:before {
+        left: toRem(-10);
+        position: absolute;
+        content: '*';
+        top: toRem(3);
+        color: $error-dark;
+    }
+}
+
+[data-omni-key=FormulaToDisplayCollaboratingAddress] input {
+    background: $white !important;
+    border: 0 !important;
+    color: $secondary-main;
+    font-family: $font-family !important;
+    font-size: 1.2rem !important;
+    font-weight: bold !important;
+    padding-left: 0 !important;
+}
+
+[data-omni-key=APEPLSPLAModprProLandSurveyStateExamInstructionQuesCmp]{
+    .slds-form-element__label {
+        font-size: 0.875rem !important;
+        color: $text-primary;
+    }
+    .radio-group .slds-form-element__legend{
+        font-size: 0.875rem !important;
+        color: $text-primary;
+        font-weight: bold !important;
+    }
+    fieldset {
+        //display: flex;
+        margin-bottom: 1rem;
+    }
+    .slds-form-element__control{
+        flex-direction: column;
+        row-gap: 0.5rem;
+    }
+}
+
+.application-review-block{
+    .slds-required{
+        display: none;
+    }
+}
+
+[data-omni-key=PharmacyTechnicianInstructions]{
+    a span {
+        font-size: 1rem !important;
+    }
+}
+
+[data-omni-key=PHPharmacistInternFlexcard]{
+    .actionFlyout .slds-modal__content {
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+    }
+}
+
+.temp-pharmacist-info-child-popup {
+    &.slds-card{
+        padding: 0;
+    }
+    .temp-pharmacist-info-child-popup-footer{
+        .slds-grid {
+            justify-content: end;
+            .cancel-btn{
+                width: 7rem;
+            }
+            .ok-btn{
+                width: 5rem;
+                margin-left:0.5rem
+            }
+        }
+    }
+}
+
+[data-omni-key=PHClassQError1QR],
+[data-omni-key=PHClassQError2QR],
+[data-omni-key=PHClassQError3QR],
+[data-omni-key=PHClassRError1QR],
+[data-omni-key=PHClassRError2QR]{
+    .slds-media__body {
+        font-weight: bold;
+    }
+}
+
+.comm-page-custom-apply-license{
+    .slds-popover__body {
+        font-size: 1rem !important;
+    }
+}
+
+c-r-s-brokerage-application-intake-form-english {
+    .vlc-disclosure {
+        .slds-box {
+            margin: 0;     
+        }
+    }
+}
+omnistudio-omniscript-edit-block{	    
+    .slds-is-absolute {
+        width: auto !important;
+        height: auto !important;
+    }
+}
+c-modpr-payment-detail-page {
+    button{
+        min-width: 15rem;
+    }
+} 
+.flex-radio {
+    min-width: 6rem;
+    max-width: 6rem;
+    .slds-radio {
+        label {
+            span {
+                color: $text-primary;
+            }
+        }
+        border: toRem(1) solid $input-border;
+        padding: 0.375rem 0.625rem;
+        border-radius: 0.25rem;
+        margin-right: 0;
+        min-width: 5rem;
+    }
+}
+
+.CEPInstruction-radio{
+    min-width: fit-content;
+    max-width: 5rem;
+}
+
+@media all and (max-width: 48rem){
+    .slds-m-bottom_xx-small.CEPInstruction-radio {
+        margin-left: 0;
+    }
+}
+
+[data-omni-key=VFInstructionNotifyBoardOffice]{
+    .slds-form-element__control{
+        min-height: 0;
+        height: 0;
+    }
+    .slds-input {
+        border: 0;
+        padding-left: 0;
+        font-weight: bold;
+        color: $text-primary;
+        pointer-events: none;
+        min-height: 0;
+        padding: 0;
+    }
+}
+
+[data-omni-key=EmbalmersApplicationLicenseQuestionsContainer]{
+    .slds-accordion{
+        border: 0;
+        margin-bottom: 0;
+        .slds-accordion__summary {
+            padding: 0 !important;
+        }
+        section.slds-accordion__section.slds-p-horizontal_none{
+            padding: 0;
+        }
+    }
+    .omni-block_content {
+        padding-left: 0 !important;
+    }
+}
+
+@media all and (max-width:64rem) {
+    .mobile-full-width{
+        width: 100%;
+    }
+}
+
+.label-bold-text{
+    .slds-form-element__label{
+        font-size: $font-size-14;
+        color: $text-primary;
+        font-weight: $font-weight-semi-bold !important;
+    }
+}
+
+.lq-hypen-alignment{
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+[data-omni-key="PharmacyTechnicianInstructions"] a {
+    font-size: 1rem;
+}
+
+[data-omni-key=EFDFuneralCheckBox]{
+    position: relative;
+    padding-left: 1rem;
+    &:before {
+        left: 0.25rem;
+        position: absolute;
+        content: "*";
+        top: 1rem;
+        color: $error-dark;
+    }
+}
+
+[data-omni-key=Ownerstxt] button.slds-button_reset {
+    padding: 0.25rem;
+    border: toRem(1) solid $outline-border;
+    height: 1.5rem;
+    width: 1.5rem;
+    display: flex;
+    justify-content: center; 
+}
+fieldset.slds-accordion__content {
+    width: auto;
+    min-inline-size: auto;
+}
+
+[data-omni-key=LicensureHistoryStep]{
+    [data-omni-key=LicensureHistoryEditBlock] {
+        margin-top: -2rem;
+        margin-bottom: 1rem;
+    }
+}
+
+[data-omni-key=ConsentCheckboxForMainPIStep]{
+    position: relative;
+    padding-left: 1rem;
+    &:before {
+        left: -0.75rem;
+        position: absolute;
+        content: "*";
+        top: 0rem;
+        color: $error-dark;
+    }
+}
+
+.veterinaryFacilityLicenseQuestionsReviewChildCls,
+.veterinaryFacilityLicenseQuestionsReviewChild1Cls,
+.veterinaryFacilityLicenseQuestionsReviewChild2Cls{
+    padding: 0;
+}
+.VeterinaryFacilityLQAnswer{
+    margin-left: 1rem;
+}
+
+[data-omni-key=AttendanceFormula1] .slds-input,
+[data-omni-key=MailingAddressTypeAheadTextBlock] .slds-input{
+    background: $white !important;
+    border: none;
+    font-weight: bold;
+    color: $text-primary;
+    font-family: $font-family !important;
+    padding: 0;
+    font-size: 1.125rem !important;
+}
+
+.docName[c-uploadDocument_uploadDocument] {
+    display: flex !important;
+    lightning-helptext {
+        margin-left: 0.25rem;
+    }
+}
+
+[data-omni-key=FromYear1], [data-omni-key=FromYear2], [data-omni-key=FromYear3], [data-omni-key=FromYear4] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: toRem(37);
+}
+
+.year-cls{
+    font-weight: normal !important;
+    font-size: 1rem !important;
+}
+
+/* Personal Info ADDRESS BLOCK STYLE START */
+
+[data-omni-key=PharmacyRenewalAppLQBlock1],
+[data-omni-key=PharmacyRenewalAppLQBlock2],
+[data-omni-key=PharmacyRenewalAppLQBlock3],
+[data-omni-key=DrugOutsourcerLQBlock],
+[data-omni-key=LQWarningBlock1],
+[data-omni-key=PharmacyRenewalAppLQ16Block],
+[data-omni-key=PharmacyRenewalAppLQ18Block],
+[data-omni-key=AllLQErrorMessageBlock],
+[data-omni-key=ResidanceAddressLeftBlockPI],
+[data-omni-key=MailingAddrEditBlock],
+[data-omni-key=BusinessInfoBusinessAddressSubBlock],
+[data-omni-key=BusinessInfoMailingAddressSubBlock],
+[data-omni-key=DBMailingAddressBlock],
+[data-omni-key=PCAAddressBlock],
+[data-omni-key=LAAddressBlock],
+[data-omni-key=PDAAddressBlock],
+[data-omni-key=SchoolAddressBlock],
+[data-omni-key=AdminStreetStateDetails],
+[data-omni-key=PCAAddressSecondBlock],
+[data-omni-key=BusinessInfoBusinessAddressSecondSubBlock],
+[data-omni-key=BusinessInfoMailingAddressSecondSubBlock],
+[data-omni-key=NewAdminAmendmentAddress]{
+    .slds-accordion {
+        border: 0;
+        .slds-accordion__content{
+            padding-left: 0;
+        }
+    }
+}
+
+[data-omni-key=PharmacyRenewalAppLQ8TextBlock2],
+[data-omni-key=PharmacyRenewalAppLQ2BlockText],
+[data-omni-key=PharmacyRenewalAppLQ3BlockText],
+[data-omni-key=PharmacyRenewalAppLQ5BlockText],
+[data-omni-key=LQWarningBlock1]{
+    .slds-accordion__content {
+        background-color: $error-shades-4-p;
+        padding: 1rem;
+        padding-left: 1rem !important;
+    }
+}
+
+[data-omni-key=DrugOutsourcerLQBlock] [data-omni-key=TextBlock1],
+[data-omni-key=DrugOutsourcerLQBlock] [data-omni-key=TextBlock2]{
+    background-color: $error-shades-4-p;
+    padding: 1rem;
+    padding-left: 1rem !important;
+}
+
+.PI-NewCountyZipPrePopulation{
+    .slds-form-element{
+        margin-bottom: 1rem;
+        .slds-form-element__label{
+            padding-bottom: 0.3rem;
+        }
+        .slds-input,.slds-combobox__input{
+            padding: 0.2rem $x-m-small;
+            border: toRem(1) solid $other-outlined-border-23-p;
+            color: $text-primary;
+            // font-size: $font-size-14 !important;
+            font-size: $font-size-16 !important;
+            font-weight: $font-weight-semi-bold;
+            &::placeholder {
+                font-size: $font-size-16;
+                font-weight: $font-weight-regular;
+                color: $text-secondary;
+            }
+        }
+    }
+}
+
+/* Personal Info ADDRESS BLOCK STYLE END */
+.slds-rich-text-editor__output h2{
+    font-size: $font-size-20;
+}
+[data-omni-key="ResidanceAddressEditBlock"],[data-omni-key="MailingAddressBlock"]{
+   [data-omni-key="TextBlock14"]{
+        @extend .m-b-medium;
+    }   
+}
+[data-omni-key="ResidenceAddressAmendMsg"]{
+    @extend .m-b-medium,.m-t-small;
+}
+omnistudio-omniscript-multiselect{
+    @extend .m-b-medium;
+    c-checkbox-group{
+        .slds-form-element{
+            .slds-checkbox {
+                margin-bottom: $x-small;
+                font-size: $font-size-14;
+            }
+        }
+    }
+}
+
+.omni-editblock-table-row {
+    background: $white;
+    padding: 0 0.625rem;
+}
+
+omnistudio-omniscript-edit-block>div>div:nth-child(2) {
+    // background: $background-extra-light;
+    background: $background-light !important;
+    padding: 0.625rem;
+    font-weight: 600;
+    border-right: 0;
+    border-left: 0;
+    border-color: $other-divider-23-p;
+}
+
+c-radio-group{
+    margin-bottom: $medium;
+    display: block;
+    .slds-form-element{
+        margin-bottom: 0 !important;
+    }
+}
+
+.warning-message-box_cool .material-icon-info_outline {
+    color: $primary-main;
+    margin-right: 1rem; 
+    font-weight: bold;
+}
+.warning-message-box_cool{
+    .slds-media__body{
+        flex: 1 1 auto !important;
+        &>div{
+            color: $primary-main;
+            font-weight: bold;
+        }
+    }
+}
+.warning-message-box{
+    .slds-media__body{
+        flex: 1 1 auto !important;
+        &>div{
+            color: $warning-main;
+            font-weight: bold;
+        }
+    }
+}
+[data-omni-key="DegreeBlock"],[data-omni-key="WorkHistoryBlock"]{
+    .slds-m-bottom_x-small.slds-grid.slds-m-top_small{
+        .slds-text-heading_small.slds-text{
+            display: none;
+        }
+    }
+}
+
+c-cf-p-o-t-a-registration-review-and-summary,c-cf-program-info-step,c-cf-staff-info-step{
+    .accordion-block{
+        .block-header{
+            margin-bottom: 1rem;
+            border: 0.063rem solid rgba(14, 102, 231, 0.12);
+            border-radius: 0.25rem;
+        }
+    }
+    .accordion-block .accordion .blockSlot .data-interpolatedLabel .slds-col.slds-size_12-of-12.slds-p-around_x-small .block-container slot .slds-col.slds-size_12-of-12 {
+        font-size: 1rem;
+        font-weight: 600;
+        color: #000814;
+    }
+    .blockSlot .slds-grid.slds-wrap {
+        .slds-col.slds-p-around_x-small.slds-size_4-of-12,.slds-col.slds-p-around_x-small.slds-size_12-of-12{
+            margin-bottom:1rem;
+       }
+       .slds-col.slds-size_12-of-12[data-style-id="state0element0block_element1"],.slds-col.slds-size_12-of-12[data-style-id="state0element0block_element7"],.slds-col.slds-size_12-of-12[data-style-id="state0element1block_element1"],.slds-col.slds-size_12-of-12[data-style-id="state0element1block_element7"],
+       .slds-col.slds-size_12-of-12[data-style-id="state0element2block_element3"]{
+            margin-bottom:1rem;
+            padding-left: var(--lwc-spacingXSmall, 0.5rem);
+            padding-right: var(--lwc-spacingXSmall, 0.5rem);
+       }
+    }
+    .slds-grid.slds-wrap.data-interpolatedLabel{
+        .slds-col.slds-size_1-of-12[data-style-id="state0element0block_element0block_element1"],
+        .slds-col.slds-size_1-of-12[data-style-id="state0element0block_element0block_element2"]{
+            font-weight: 600;
+        }
+        .slds-col.slds-size_1-of-1{
+            slot{
+                .slds-grid.slds-wrap{
+                    .slds-col.slds-size_12-of-12:nth-child(2){
+                        font-weight: 600;
+                    }
+                }
+            }
+        }
+        .slds-col.slds-size_12-of-12{
+            &[data-style-id="state0element0block_element2block_element1"],
+            &[data-style-id="state0element0block_element3block_element1"]
+            {
+                font-weight: 600;
+            }
+        }
+    }
+    .accordion a{
+        color: $primary-main !important;
+    }
+}
+c-cf-program-info-step,c-cf-staff-info-step{
+    .slds-table{
+        width: 99% !important;
+        margin-bottom: 2rem;
+    }
+}
+.criminial_modal .slds-button.slds-button_neutral {
+    color: white !important;
+    border-color: #12635a !important;
+    background: #024946 !important;
+}
+.criminial_modal .slds-button.slds-button_neutral:hover {
+    color: white !important;
+    border-color: #024946 !important;
+    background: #024946 !important;
+}
+button.slds-button.slds-button_neutral.ok.desktop.uiButton--default.uiButton--brand.uiButton:hover {
+    color: white !important;
+    border-color: #024946 !important;
+    background: #024946 !important;
+}
+
+
+[data-omni-key="Service/FeeReference"]{
+
+    margin-bottom: 0;
+    [role="columnheader"]{
+        padding: 0.5rem;
+    }
+    [aria-level="3"]{
+        font-size: 18px;
+        font-weight: 600;
+    }
+}

@@ -1,0 +1,35 @@
+<!--
+  @description       : 
+  @author            : Amit Agrawal
+  @group             : 
+  @last modified on  : 06-18-2024
+  @last modified by  : Bharath Kumar M
+-->
+<aura:component implements="forceCommunity:themeLayout" description="A custom theme for NYC LPI" access="global">
+    <aura:attribute name="newHeader" type="Aura.Component[]" />
+    <aura:attribute name="showSidebar" type="Boolean" default="true" />
+    <aura:attribute name="headerHide" type="Boolean" default="true" />
+    <aura:attribute name="landingHeader" type="Boolean" default="false" />
+    <aura:attribute name="newFooter" type="Aura.Component[]" />
+    <ltng:require styles="{!join(',',$Resource.LPI_Design_old + '/main.css')}" />
+    <ltng:require styles="{!join(',',$Resource.LPI_Design + '/styles/main.css')}" />
+    <div class="content-container">
+        <header class="newHeader">
+            <a class="skip-link" tabindex="0" href="#main-content-1">Skip to main content</a>
+            <c:lpiHeader></c:lpiHeader>
+        </header>
+        <div class="content lpiContent for-intake-forms" id="main-content-1" role="main">
+            <div class="slds-grid body-content">
+                <!-- Gaurav ==== Add "notification-bar-open" class to show the correct width after adding notification sidebar -->
+                <div class="instructions-link">
+                   <c:lpiInstructionLink></c:lpiInstructionLink>
+                </div>
+                <div class="main-content" id="main-content-1-0">
+                    {!v.body}
+                    <!-- <c:alphaFooter></c:alphaFooter> -->
+                </div>
+
+            </div>
+        </div>
+    </div>
+</aura:component>

@@ -1,0 +1,564 @@
+<!--
+  @description       : This page is used to generate PDF for Copy of Complaints submitted
+  @author            : Nandirudra
+  @group             : 
+  @last modified on  : 05-24-2024
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
+<apex:page showHeader="false" sidebar="false" standardStylesheets="false" standardController="PublicComplaint" extensions="LPI_CopyComplaintRespondentController" applyHtmlTag="false" applyBodyTag="false" renderAs="pdf">
+    <apex:variable var="recordId" value="{!$CurrentPage.parameters.recordId}" />
+    <html>
+      <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />    
+            <style type="text/css" media="print">
+                @page {
+                    padding-top: 50px;
+                    @top-center {
+                        content: element(header);
+                    }
+                }
+        
+                .header {
+                    margin-top : 20px;
+                    padding: 10px;
+                    position: running(header);
+                }
+                
+                .table-container {
+                   width: 100%;
+                   overflow-x: auto;
+                 }
+
+                .pdf-heading {
+                  font-size: 24px;
+                  text-align: center;
+                  background-color: #304A6E;
+                  color: #ffffff;
+                  padding: 10px;
+                }
+
+                .heading-text-color {
+                  color: #1e3a62;
+                }
+
+                .table-border {
+                  width: 100%; 
+                  border:1px solid rgb(197, 192, 192);
+                }
+
+                .table-width {
+                  width: 100%;
+                }
+
+                .thead-style {
+                  background-color: #d7e6f5;
+                }
+
+                .tr-font-weight {
+                  font-weight: bold;
+                }
+
+                .section-style {
+                  border: 1px solid #ccc; 
+                  margin-top: 20px;
+                  padding: 10px;
+                }
+
+                .complaint-textarea {
+                  width: 100%; 
+                  height: auto;
+                  min-height: 100px; 
+                  border: 1px solid #ccc; 
+                  padding: 2px;
+                  box-sizing: border-box;
+                }
+
+                .td-width-forty {
+                  width: 40%;
+                }
+
+                .td-width-thirty {
+                  width: 30%;
+                }
+
+                .td-width-thirtythree {
+                  width: 33%;
+                }
+
+                .image-style {
+                  width: 12px;
+                  height: 12px;
+                }
+
+                .incident-div {
+                  border: 1px solid #ccc; 
+                  margin-top: 20px; 
+                  padding:10px;
+                }
+
+                .incident-table {
+                  border-collapse: collapse; 
+                  width=100%; 
+                  margin-bottom:10px;
+                }
+
+            </style>
+      </head>
+      <body>
+        <h1 class="pdf-heading">COPY OF COMPLAINT</h1>
+        <p class='heading-text-color'><strong><apex:outputText value="Complaint Number : "/></strong>
+          <apex:outputText value="{!publicComplaintRecord.complaintName}"/><br/></p>
+        <!--Respondent Details-->
+        <h3 class='heading-text-color'>Subject(s) of your Complaint</h3>
+        <table class='table-border'>
+          
+            <thead class='thead-style'>
+              <tr class='tr-font-weight'>
+                <td>S.NO.</td>
+                <td>Entity Name</td>
+                <td>Selected Board</td>
+                <td>Selected Profession</td>
+                <td>License Number</td>
+                <td>Address</td>
+                <td>Telephone Number</td>
+              </tr>
+          </thead>
+          <tbody>
+            <apex:repeat value="{!publicComplaintRecord.respWrapList}" var="respRec">
+              <tr>
+                <td>01</td>
+                <td>{!respRec.respEntityName}</td>
+                <td>{!respRec.respBoradName}</td>
+                <td>{!respRec.respProf}</td>
+                <td>{!respRec.respLicenseNo}</td>
+                <td>{!respRec.respAddress}</td>
+                <td>{!respRec.respTeleNo}</td>
+              </tr>
+            </apex:repeat>
+          </tbody>
+        </table>
+        <!--Incident-->
+        <apex:outputPanel rendered="{!OR(publicComplaintRecord.inscStartDate != null,publicComplaintRecord.inscEndDate != null,publicComplaintRecord.inscLocName != null)}">
+        <div class='incident-div'>
+          <h3 class='heading-text-color'>Incident Details</h3>
+         <p><strong class='heading-text-color'>Date(s) of alleged violation</strong><br/></p>
+          <div>
+            <table class='incident-table'>
+                <tr>
+                    <td class='heading-text-color td-width-forty'>
+                      <apex:outputPanel rendered="{!publicComplaintRecord.inscStartDate != null}">
+                      <strong>
+                        <apex:outputText value="Start Date"/><br/></strong>
+                        <apex:outputText value="{!publicComplaintRecord.inscStartDate}"/>
+                      </apex:outputPanel>
+                    </td>
+                    <td class='heading-text-color td-width-forty'>
+                      <apex:outputPanel rendered="{!publicComplaintRecord.inscEndDate != null}">
+                      <strong>
+                        <apex:outputText value="End Date"/></strong><br/>
+                        <apex:outputText value="{!publicComplaintRecord.inscEndDate}"/>
+                      </apex:outputPanel>
+                    </td>
+                </tr>
+            </table>
+            </div>
+            <apex:outputPanel rendered="{!publicComplaintRecord.inscLocName != null}">
+            <table class='table-width'>
+              <thead class='thead-style'>
+                <tr class='tr-font-weight'>
+                  <td>S.NO.</td>
+                  <td>Name Of The Location</td>
+                  <td>Address</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                  <td>01</td>
+                  <td>{!publicComplaintRecord.inscLocName}</td>
+                  <td>{!publicComplaintRecord.inscLocation}</td>
+                </tr>
+            </tbody>
+          </table>
+          </apex:outputPanel>
+        </div>
+        </apex:outputPanel>
+        <!--Complaint Details-->
+      <div class='section-style'>
+        <h3 class='heading-text-color'>Complaint Details</h3>
+        <p class='complaint-textarea'>{!publicComplaintRecord.complaintDesc}</p>
+      </div>
+      <!--Complainant Details-->
+      <div class='section-style'>
+          <h3 class='heading-text-color'>Your Information</h3>
+          <table class='table-width'>
+            <tr>
+              <td class='td-width-thirtythree'><b>First Name</b></td>
+              <td class='td-width-thirtythree'><b>Middle Name</b></td>
+              <td class='td-width-thirtythree'><b>Last Name</b></td>
+            </tr>
+            <tr>
+              <td>{!publicComplaintRecord.complaintWrapList[0].compFirstName}</td>
+              <td>{!publicComplaintRecord.complaintWrapList[0].compMiddleName}</td>
+              <td>{!publicComplaintRecord.complaintWrapList[0].compLastName}</td>
+            </tr>
+              <tr></tr>
+            <tr>
+              <td class='td-width-forty'><b>Email Address</b></td>
+              <td class='td-width-thirty'><b>Telephone Number</b></td>
+              <td class='td-width-thirty'><b>Cell Phone Number</b></td>
+            </tr>
+            <tr>
+              <td>{!publicComplaintRecord.complaintWrapList[0].compEmail}</td>
+              <td>{!publicComplaintRecord.complaintWrapList[0].compTeleNo}</td>
+              <td >{!publicComplaintRecord.complaintWrapList[0].compCellPhone}</td>
+            </tr>
+            <tr></tr>
+            <tr>
+              <td class='td-width-forty'><b>Street Address</b></td>
+            </tr>
+            <tr>
+              <td>{!publicComplaintRecord.complaintWrapList[0].compStreet}</td>
+            </tr>
+            <tr></tr>
+            <tr>
+              <td class='td-width-thirtythree'><b>City</b></td>
+              <td class='td-width-thirtythree'><b>State</b></td>
+              <td class='td-width-thirtythree'><b>Zip Code</b></td>
+            </tr>
+            <tr>
+              <td>{!publicComplaintRecord.complaintWrapList[0].compCity}</td>
+              <td>{!publicComplaintRecord.complaintWrapList[0].compState}</td>
+              <td>{!publicComplaintRecord.complaintWrapList[0].compZipCode}</td>
+            </tr>
+          </table>
+      </div>
+      <!--Witness Details-->
+      <apex:outputPanel rendered="{!publicComplaintRecord.witnessWrapList.size > 0}">
+      <div class='section-style'>
+        <h3 class='heading-text-color'>Witness Details</h3>
+          <table class='table-border'>
+              <thead class='thead-style'>
+                <tr class='tr-font-weight'>
+                  <td>S.NO.</td>
+                  <td>Witness Name</td>
+                  <td>Address</td>
+                  <td>Email</td>
+                  <td>Telephone Number</td>
+                </tr>
+            </thead>
+            <tbody>
+              <apex:variable var="rowNum" value="{!1}" />
+              <apex:repeat value="{!publicComplaintRecord.witnessWrapList}" var="witRec">
+                <tr>
+                  <td>0{!rowNum}</td>
+                  <td>{!witRec.witName}</td>
+                  <td>{!witRec.witAddress}</td>
+                  <td>{!witRec.witEmail}</td>
+                  <td>{!witRec.witTeleNo}</td>
+                </tr>
+                <apex:variable var="rowNum" value="{!rowNum + 1}" />
+              </apex:repeat>
+            </tbody>
+          </table>
+      </div>
+      </apex:outputPanel>
+      <!--Attorney Details-->
+      <div class='section-style'>
+        <h3 class='heading-text-color'>Attorney Information</h3>
+          <p class='heading-text-color'><strong><apex:outputText value="Have you contacted an attorney?"/></strong><br/>
+          <apex:outputText value="{!publicComplaintRecord.contactedAttorney}"/><br/></p>
+          <apex:outputPanel rendered="{!publicComplaintRecord.filledLawsuit != null}">
+          <p class='heading-text-color'><strong><apex:outputText value="Has a lawsuit been filed?"/></strong><br/>
+          <apex:outputText value="{!publicComplaintRecord.filledLawsuit}"/><br/></p>
+          </apex:outputPanel>
+          <apex:outputPanel rendered="{!publicComplaintRecord.filledLawsuit == 'Yes'}">
+            <p class='heading-text-color'><strong><apex:outputText value="Lawsuit Case Number"/></strong><br/>
+            <apex:outputText value="{!publicComplaintRecord.lawsuitCaseNo}"/><br/></p>
+            <p class='heading-text-color'><strong><apex:outputText value="Lawsuit Jurisdiction"/></strong><br/>
+            <apex:outputText value="{!publicComplaintRecord.lawsuitJuri}"/></p>
+          </apex:outputPanel>
+          <apex:outputPanel rendered="{!publicComplaintRecord.contactedAttorney == 'Yes'}">
+            <apex:outputPanel rendered="{!publicComplaintRecord.attWrapList.size > 0}">
+            <h3 class='heading-text-color'>Attorney Details</h3>
+            <table class='table-border'>
+                <thead class='thead-style'>
+                  <tr class='tr-font-weight'>
+                    <td>S.NO.</td>
+                    <td>Attorney Name</td>
+                    <td>Address</td>
+                    <td>Telephone Number</td>
+                    <td>Email</td>
+                  </tr>
+              </thead>
+              <tbody>
+                <apex:variable var="rowNum" value="{!1}" />
+                <apex:repeat value="{!publicComplaintRecord.attWrapList}" var="attRec">
+                  <tr>
+                    <td>0{!rowNum}</td>
+                    <td>{!attRec.attName}</td>
+                    <td>{!attRec.attAddress}</td>
+                    <td>{!attRec.attTeleNo}</td>
+                    <td>{!attRec.attEmail}</td>
+                  </tr>
+                  <apex:variable var="rowNum" value="{!rowNum + 1}" />
+                </apex:repeat>
+              </tbody>
+            </table>
+            </apex:outputPanel>
+          </apex:outputPanel>
+      </div>
+      <!--Entity Details-->
+      <apex:outputPanel rendered="{!publicComplaintRecord.complReportedToOtherAgency == 'Yes'}">
+        <apex:outputPanel rendered="{!publicComplaintRecord.entityWrapList.size > 0}">
+          <div class='section-style'>
+            <h3 class='heading-text-color'>Other Entities</h3>
+            <p class='heading-text-color'><strong><apex:outputText value="Has this complaint been reported to any other agency, court, or other entity? If yes, please provide the name of those entities and contact information."/></strong></p>
+              <apex:outputText value="{!publicComplaintRecord.complReportedToOtherAgency}"/><br/><br/>
+              <table class='table-border'>
+                  <thead class='thead-style'>
+                    <tr class='tr-font-weight'>
+                      <td>S.NO.</td>
+                      <td>Name of Entity</td>
+                      <td>Address</td>
+                      <td>Email</td>
+                      <td>Telephone Number</td>
+                      <td>Entity Representative Contacted</td>
+                    </tr>
+                </thead>
+                <tbody>
+                  <apex:variable var="rowNum" value="{!1}" />
+                  <apex:repeat value="{!publicComplaintRecord.entityWrapList}" var="entRec">
+                    <tr>
+                      <td>0{!rowNum}</td>
+                      <td>{!entRec.entName}</td>
+                      <td>{!entRec.entAddress}</td>
+                      <td>{!entRec.entTeleNo}</td>
+                      <td>{!entRec.entEmail}</td>
+                      <td>{!entRec.entRepresentative}</td>
+                    </tr>
+                    <apex:variable var="rowNum" value="{!rowNum + 1}" />
+                  </apex:repeat>
+                </tbody>
+              </table>
+          </div>
+      </apex:outputPanel>
+      </apex:outputPanel>
+      <!--Document Section-->
+      <apex:outputPanel rendered="{!publicComplaintRecord.documentWrapList.size > 0}">
+        <div class='section-style'>
+          <h3 class='heading-text-color'>Documents Uploaded</h3>
+            <table class='table-border'>
+              <thead class='thead-style'>
+                <tr class='tr-font-weight'>
+                  <td>S.NO.</td>
+                  <td>Document Name</td>
+                </tr>
+            </thead>
+            <tbody>
+              <apex:variable var="rowNum" value="{!1}" />
+              <apex:repeat value="{!publicComplaintRecord.documentWrapList}" var="docRec">
+                <tr>
+                  <td>0{!rowNum}</td>
+                  <td>{!docRec.documentName}</td>
+                </tr>
+                <apex:variable var="rowNum" value="{!rowNum + 1}" />
+              </apex:repeat>
+            </tbody>
+          </table>
+        </div>
+      </apex:outputPanel>
+      <!--Additional Questions-->
+      <div class='section-style'>
+       <h3 class='heading-text-color'>Additional Questions</h3>
+            <p><strong class='heading-text-color'>Have you contacted licensee or unlicensed individual about your complaint?</strong><br/>
+                <apex:outputText value="{!publicComplaintRecord.contactedRespondent}"/>
+            </p>
+            <apex:outputPanel rendered="{!publicComplaintRecord.contactedRespondent == 'Yes'}">
+                <strong class='heading-text-color'><apex:outputText value="If yes, please provide the date(s) related to your contact."/></strong><br/>
+                <apex:outputText value="{!publicComplaintRecord.contactedRespondentDate}"/>
+            </apex:outputPanel>
+            <p><strong class='heading-text-color'>Have you had a personal or social relationship with the person you are filing the complaint against?</strong><br/>
+                <apex:outputText value="{!publicComplaintRecord.relToRespondent}"/>
+            </p>
+            <apex:outputPanel rendered="{!publicComplaintRecord.relToRespondent == 'Yes'}">
+                <strong class='heading-text-color'><apex:outputText value="If so, please explain"/></strong><br/>
+                <apex:outputText value="{!publicComplaintRecord.relationDetails}"/>
+            </apex:outputPanel>
+            <p><strong class='heading-text-color'>It may be necessary for you to testify at a hearing. Are you willing to testify?</strong><br/>
+                <apex:outputText value="{!publicComplaintRecord.willingToTestify}"/>
+            </p>
+      </div>
+      <!--Board Spectific Questions-->
+      <apex:outputPanel rendered="{!publicComplaintRecord.isBoardSpecific}">
+        <div class='section-style'>
+          <h3 class='heading-text-color'>Board Specific Questions</h3>
+          <apex:outputPanel rendered="{!publicComplaintRecord.selectedBoardName == 'Pharmacy'}">
+              <p><strong class='heading-text-color'>Do you possess evidence in the form of documents or photos?</strong><br/>
+                  <apex:outputText value="{!publicComplaintRecord.boardSpecficQues.docEvidence}"/>
+              </p>
+              <p><strong class='heading-text-color'>Do you possess evidence in the form of drugs or prescription labels, bottles, or containers?</strong><br/>
+                  <apex:outputText value="{!publicComplaintRecord.boardSpecficQues.prescriptionLabelEvidence}"/>
+              </p>
+          </apex:outputPanel>
+          <apex:outputPanel rendered="{!publicComplaintRecord.selectedBoardName == 'Architects, Engineers, Land Surveryors, and Landscape Architects'}">
+              <apex:pageBlock >
+                  <div><strong class='heading-text-color'>The complaint deal with the practice of :</strong>
+                  </div>
+                  <apex:pageBlockTable value="{!publicComplaintRecord.boardSpecficQues.complaintPractice}" var="prac">
+                      <apex:column >
+                          {!prac}
+                      </apex:column>
+                  </apex:pageBlockTable>
+              </apex:pageBlock><br/>
+              <apex:pageBlock >
+                  <div><strong class='heading-text-color'>The nature of the complaint is :</strong>
+                  </div>
+                  <apex:pageBlockTable value="{!publicComplaintRecord.boardSpecficQues.complaintNature}" var="nature">
+                      <apex:column >
+                          {!nature}
+                      </apex:column>
+                  </apex:pageBlockTable>
+              </apex:pageBlock>
+          </apex:outputPanel>
+          <apex:outputPanel rendered="{!publicComplaintRecord.selectedBoardName == 'Optometry'}">
+              <p><strong class='heading-text-color'>Do you presently have an outstanding bill from the optometrist against whom you are complaining?</strong><br/>
+                  <apex:outputText value="{!publicComplaintRecord.boardSpecficQues.outstandingBill}"/>
+                  <apex:outputPanel rendered="{!publicComplaintRecord.boardSpecficQues.outstandingBill == 'Yes'}">
+                      <p><strong class='heading-text-color'>If yes, list the amount.</strong><br/>
+                          <apex:outputText value="{!publicComplaintRecord.boardSpecficQues.outstandingBillAmount}"/>
+                      </p>
+                  </apex:outputPanel>
+              </p>
+              <p><strong class='heading-text-color'>Have you seen and/or been treated by a different optometrist before or after the treatment rendered by the optometrist against whom you are complaining?</strong><br/>
+                  <apex:outputText value="{!publicComplaintRecord.boardSpecficQues.treatmentByDiffOpto}"/>
+              </p>
+              <p><strong class='heading-text-color'>Do you know of any other patients who have had similar problems with the optometrist against whom you are complaining?</strong><br/>
+                  <apex:outputText value="{!publicComplaintRecord.boardSpecficQues.optoSimiliarPatients}"/>
+              </p>
+          </apex:outputPanel>
+          <apex:outputPanel rendered="{!publicComplaintRecord.selectedBoardName == 'Dental'}">
+              <p><strong class='heading-text-color'>Were you seen or treated by any other dentist(s) prior to and/or after treatment was rendered by the dentist referred to in your complaint?</strong><br/>
+                  <apex:outputText value="{!publicComplaintRecord.boardSpecficQues.treatedByDifferentDentist}"/>
+              </p>
+          </apex:outputPanel>
+        </div>
+      </apex:outputPanel>
+      <!--Hippa Section-->
+      <apex:outputPanel rendered="{!publicComplaintRecord.isHippaSectionAvailable}">
+        <div class='section-style'>
+          <h3 class='heading-text-color'>HIPAA Release Authorization and Questions</h3>
+          <p><strong class='heading-text-color'>Authorization to use and disclose protected health information pursuant to the Health Insurance Portability and Accountability Act of 1996 (HIPAA)</strong><br/></p>
+          <apex:outputPanel rendered="{!publicComplaintRecord.coverageOption != null}">
+            <p><strong class='heading-text-color'><apex:outputText value="Coverage Periods"/></strong><br/>
+            <apex:outputText value="{!publicComplaintRecord.coverageOption}"/></p>
+          </apex:outputPanel>
+          <apex:outputPanel rendered="{!publicComplaintRecord.coverageOption == 'Covering the period of health care from'}">
+            <table class='table-width'>
+              <tr>
+                <td class='heading-text-color td-width-forty'><strong>Coverage Start Date</strong></td>
+                <td class='heading-text-color td-width-forty'><strong>Coverage End Date</strong></td>
+              </tr>
+              <tr>
+                <td>{!publicComplaintRecord.coverageStartDate}</td>
+                <td>{!publicComplaintRecord.coverageEndDate}</td>
+              </tr>
+            </table>
+          </apex:outputPanel>
+          <apex:outputPanel rendered="{!publicComplaintRecord.hippaAuthExpDate != null}">
+          <strong class='heading-text-color'><apex:outputText value="Authorization Expiration Date (Update if less than one year from today)" /></strong><br/>
+          <apex:outputText value="{!publicComplaintRecord.hippaAuthExpDate}"/>
+          </apex:outputPanel>
+          <p><apex:outputPanel rendered="{!publicComplaintRecord.hippaConsent}">
+            <apex:image value="{!$Resource.checkboxTrue}" styleClass="image-style"/>
+            <strong>I hereby attest under penalty of perjury that I have read and understand the Authorization to Use and Disclose Protected Health Information Pursuant To The Health Insurance Portability and Accountability Act of 1996 (HIPAA) for the protected health information of the individual identified in the complaint I am filing. I also hereby attest that I am authorized to complete the HIPAA Authorization for the individual identified in the complaint.</strong><br/>
+            </apex:outputPanel>
+          </p>
+          <apex:outputPanel rendered="{!publicComplaintRecord.eSign != null}">
+          <strong class='heading-text-color'><apex:outputText value="Please provide your signature"/></strong><br/>
+          <apex:outputText value="{!publicComplaintRecord.eSign}"/>
+          </apex:outputPanel>
+        
+        <apex:outputPanel rendered="{!publicComplaintRecord.isPatientRelatedToComplaint == 'No'}">
+          <apex:outputPanel rendered="{!publicComplaintRecord.patientWrapList.size > 0}">
+            <div class='section-style'>
+              <h3 class='heading-text-color'>Patient Information</h3>
+              <table class='table-width'>
+                <tr>
+                  <td class='td-width-thirtythree'><b>First Name</b></td>
+                  <td class='td-width-thirtythree'><b>Middle Name</b></td>
+                  <td class='td-width-thirtythree'><b>Last Name</b></td>
+                </tr>
+                <tr>
+                  <td>{!publicComplaintRecord.patientWrapList[0].patientFirstName}</td>
+                  <td>{!publicComplaintRecord.patientWrapList[0].patientMiddleName}</td>
+                  <td>{!publicComplaintRecord.patientWrapList[0].patientLastName}</td>
+                </tr>
+                  <tr></tr>
+                <tr>
+                  <td class='td-width-forty'><b>Email Address</b></td>
+                  <td class='td-width-thirty'><b>Telephone Number</b></td>
+                </tr>
+                <tr>
+                  <td>{!publicComplaintRecord.patientWrapList[0].patientEmail}</td>
+                  <td>{!publicComplaintRecord.patientWrapList[0].patientTeleNo}</td>
+                </tr>
+                <tr></tr>
+                <tr>
+                  <td class='td-width-forty'><b>Street Address</b></td>
+                </tr>
+                <tr>
+                  <td>{!publicComplaintRecord.patientWrapList[0].patientStreet}</td>
+                </tr>
+                <tr></tr>
+                <tr>
+                  <td class='td-width-thirtythree'><b>City</b></td>
+                  <td class='td-width-thirtythree'><b>State</b></td>
+                  <td class='td-width-thirtythree'><b>Zip Code</b></td>
+                </tr>
+                <tr>
+                  <td>{!publicComplaintRecord.patientWrapList[0].patientCity}</td>
+                  <td>{!publicComplaintRecord.patientWrapList[0].patientState}</td>
+                  <td>{!publicComplaintRecord.patientWrapList[0].patientZipCode}</td>
+                </tr>
+                <tr></tr>
+                <tr>
+                  <td class='td-width-thirtythree'><b>Social Security Number</b></td>
+                  <td class='td-width-thirtythree'><b>Date of Birth</b></td>
+                </tr>
+                <tr>
+                  <td>{!publicComplaintRecord.patientWrapList[0].patientSSN}</td>
+                  <td>{!publicComplaintRecord.patientWrapList[0].patientDOB}</td>
+                </tr>
+              </table>
+            </div>
+        </apex:outputPanel>
+        </apex:outputPanel>
+        <apex:outputPanel rendered="{!publicComplaintRecord.isPatientRelatedToComplaint == 'Yes'}">
+          <apex:outputPanel rendered="{!OR(publicComplaintRecord.complaintWrapList[0].compSSN != null,publicComplaintRecord.complaintWrapList[0].compSSN != null)}">
+          <p><strong class='heading-text-color'>If you will be providing HIPAA Release Authorization, please provide the following additional information.</strong><br/></p>
+            <table class='table-width'>
+              <tr>
+                <td class='heading-text-color td-width-forty'><strong>Social Security Number</strong></td>
+                <td class='heading-text-color td-width-forty'><strong>Date of Birth</strong></td>
+              </tr>
+              <tr>
+                <td>{!publicComplaintRecord.complaintWrapList[0].compSSN}</td>
+                <td>{!publicComplaintRecord.complaintWrapList[0].compDOB}</td>
+              </tr>
+            </table>
+          </apex:outputPanel>
+        </apex:outputPanel>
+       </div>
+      </apex:outputPanel>
+      <div class='section-style'>
+        <h3 class='heading-text-color'>Attestation</h3>
+        <p>
+          <apex:image value="{!$Resource.checkboxTrue}" styleClass="image-style"/>
+          <strong>I hereby attest under penalty of perjury that all statements in my complaint and its additional documents and information are true and accurate to the best of my knowledge, information, and belief.</strong><br/>
+        </p>
+        <strong class='heading-text-color'><apex:outputText value="Reported Date"/></strong><br/>
+        <apex:outputText value="{!publicComplaintRecord.reportedDate}"/>
+      </div>
+      </body>
+      </html>
+</apex:page>

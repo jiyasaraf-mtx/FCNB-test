@@ -1,0 +1,139 @@
+<!--
+  @description       : 
+  @author            : Vamsi Mudaliar
+  @group             : 
+  @last modified on  : 05-29-2024
+  @last modified by  : Bharath Kumar M
+-->
+<template>
+        <h2 class="bold-24 m-b-xms">{setSectionLabel}</h2>
+        <div class="slds-m-bottom_medium text-secondary" if:true={isPatientInfo}>
+            <p>Please type <strong>Unknown</strong> for required fields if you do not know the details.</p>
+        </div>
+        <div class="slds-grid slds-gutters">
+            <div class="slds-col slds-size_4-of-12">
+                
+                    <lightning-input required type="text" pattern={patternObj.text} name="firstName"
+                        label={labels.complaintFirstName} disabled={isFieldReadOnly} value={inputWrapper.firstName}
+                        aria-label={inputWrapper.firstNameAriaLabel} placeholder={labels.complaintEnterFirstName}
+                        max-length="40" onchange={handleInputChange} onblur={handleElementFocusChange} message-when-value-missing="First Name is required.">
+                    </lightning-input>
+                
+            </div>
+            <div class="slds-col slds-size_4-of-12">
+                
+                    <lightning-input type="text" pattern={patternObj.text} label={labels.complaintMiddleName}
+                        name="middleName" aria-label={inputWrapper.middleNameAriaLabel}
+                        disabled={isFieldReadOnly} value={inputWrapper.middleName} placeholder={labels.complaintEnterMiddleName}
+                        max-length="40" onchange={handleInputChange} onblur={handleElementFocusChange}>
+                    </lightning-input>
+                
+            </div>
+            <div class="slds-col slds-size_4-of-12">
+                
+                    <lightning-input required type="text" pattern={patternObj.text} placeholder={labels.complaintEnterLastName}
+                        label={labels.complaintLastName} name="lastName" disabled={isFieldReadOnly} aria-label={inputWrapper.lastNameAriaLabel}
+                        value={inputWrapper.lastName} max-length="80" onchange={handleInputChange} onblur={handleElementFocusChange} message-when-value-missing="Last Name is required.">
+                    </lightning-input>
+                
+            </div>
+        </div>
+        <div class="slds-grid slds-gutters slds-wrap">
+            <div class="slds-col slds-size_4-of-12">
+                
+                    <lightning-input type="email" aria-label={inputWrapper.emailAriaLabel} name="email" label={labels.complaintEmailAddress}
+                        disabled={isFieldReadOnly} value={inputWrapper.email} max-length="80" placeholder={labels.complaintEnterEmailAddress}
+                        pattern={patternObj.email} onchange={handleInputChange} onblur={handleElementFocusChange}>
+                    </lightning-input>
+                
+            </div>
+            <div class="slds-col slds-size_4-of-12">
+                
+                    <lightning-input required={isComplainant} class="phoneNumberField" type="tel"
+                        label={labels.complaintTelephoneNumber} disabled={isFieldReadOnly} name="telephone" placeholder={labels.complaintEnterTelephoneNumber}
+                        value={inputWrapper.telephone} max-length="14" onchange={handleInputChange}
+                        pattern={patternObj.digits} aria-label={inputWrapper.telephoneAriaLabel}
+                        message-when-pattern-mismatch="Your Entry does not match the pattern" onblur={handleElementFocusChange} message-when-value-missing="Telephone Number is required.">
+                    </lightning-input>
+                
+            </div>
+            <div class="slds-col slds-size_4-of-12" if:false={isPatientInfo}>
+                
+                    <lightning-input class="phoneNumberField" type="tel"
+                        label={labels.complaintCellPhoneNumber} disabled={isFieldReadOnly} name="cellPhone" placeholder={labels.complaintEnterCellPhoneNumber}
+                        value={inputWrapper.cellPhone} max-length="14" onchange={handleInputChange}
+                        pattern={patternObj.digits} aria-label={inputWrapper.cellPhoneAriaLabel}
+                        message-when-pattern-mismatch="Your Entry does not match the pattern" onblur={handleElementFocusChange} message-when-value-missing="Cell Phone Number is required.">
+                    </lightning-input>
+                
+            </div>
+        </div>
+        <div class="slds-grid slds-gutters">
+            <div class="slds-col slds-size_12-of-12">
+                    <lightning-input type="text" pattern={patternObj.text} placeholder={labels.complaintEnterStreetAddress}
+                        label={labels.complaintStreetAddress} aria-label={inputWrapper.streetAddressAriaLabel} name="streetOne" disabled={isFieldReadOnly}
+                        data-address="true" value={inputWrapper.complainantAddressData.streetOne}
+                        max-length="255" onchange={handleInputChange} onblur={handleElementFocusChange}>
+                        </lightning-input>
+            </div>
+        </div>
+        <div class="slds-grid slds-gutters">
+            <div class="slds-col slds-size_4-of-12">
+                
+                    <lightning-input type="text" pattern={patternObj.text} label={labels.complaintCityTown} aria-label={inputWrapper.cityAriaLabel}
+                        value={inputWrapper.complainantAddressData.city} name="city" data-address="true" placeholder={labels.complaintEnterCityTown}
+                        disabled={isFieldReadOnly} max-length="40" onchange={handleInputChange} onblur={handleElementFocusChange}>
+                    </lightning-input>
+                
+            </div>
+            <div class="slds-col slds-size_4-of-12">
+                
+                    <lightning-combobox
+                        if:false={inputWrapper.complainantAddressData.otherState} label={labels.complaintState} placeholder={labels.complaintSelectState} aria-label={inputWrapper.stateAriaLabel}
+                        options={stateOptions} value={inputWrapper.complainantAddressData.state}
+                        name="state" data-address="true" disabled={isFieldReadOnly}
+                        onchange={handleInputChange} onblur={handleElementFocusChange}>
+                    </lightning-combobox>
+                    <!-- This is Always be Disabled As We are Fetching Existing Other State  -->
+                    <lightning-input if:true={inputWrapper.complainantAddressData.otherState} placeholder={labels.complaintEnterCityTown}
+                        type="text" pattern={patternObj.text} label={labels.complaintCityTown}  aria-label={inputWrapper.cityAriaLabel}
+                        value={inputWrapper.complainantAddressData.otherState} name="otherState"
+                        data-address="true" disabled=true max-length="40">
+                    </lightning-input>
+                
+            </div>
+            <div class="slds-col slds-size_4-of-12">
+                
+                    <lightning-input type="text" label={labels.complaintZipCode} name="zipCode" placeholder={labels.complaintEnterZipCode}
+                        disabled={isFieldReadOnly} data-address="true" aria-label={inputWrapper.zipCodeAriaLabel}
+                        value={inputWrapper.complainantAddressData.zipCode} max-length="10"
+                        pattern={patternObj.zipCode}
+                        message-when-pattern-mismatch="Please enter a valid Canadian Postal Code (e.g. A1A 1A1)."
+                        onchange={handleInputChange} onblur={handleElementFocusChange}>
+                    </lightning-input>
+                
+            </div>
+        </div>    
+        
+        <div class="slds-grid slds-gutters slds-p-vertical_small" if:true={isPatientInfo}>
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                
+                    <lightning-input type="text" pattern={patternObj.ssn} placeholder="Enter Social Security Number"
+                        disabled={isFieldReadOnly} label="Social Security Number" value={inputWrapper.ssn} name="ssn"
+                        max-length="9" min-length="9"  aria-label={inputWrapper.ssnAriaLabel}
+                        message-when-pattern-mismatch="Invalid input. This field only accepts Numbers."
+                        onchange={handleInputChange} onblur={handleElementFocusChange}>
+                    </lightning-input>
+                
+            </div>
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 date-cmp">
+                
+                    <lightning-input type="date" label="Date of Birth" name="dob" placeholder="Enter Date of Birth"  aria-label={inputWrapper.dobAriaLabel}
+                        disabled={isFieldReadOnly} value={inputWrapper.dob} date-style="short"
+                        onchange={handleInputChange} data-section-name="Date of Birth" data-id="dob"
+                        onblur={handleElementFocusChange}>
+                    </lightning-input>
+                
+            </div>
+        </div>
+</template>

@@ -1,0 +1,25 @@
+.pagination{
+    lightning-button-group.slds-button-group {
+        border-radius: toRem(4);
+        box-shadow: 0 toRem(2) toRem(4) rgba(0, 0, 0, 0.1);
+        lightning-button{
+            .slds-button{
+                height: toRem(34);
+                padding: toRem(10) toRem(11);
+                border: none;
+                color: $black;
+            } 
+            &+lightning-button{
+                .slds-button{
+                    border-left: toRem(1) solid $input-border;
+                }
+            }
+            &.selected{ 
+                .slds-button{
+                    background-color: $primary-main;
+                    color: $white;
+                }
+            } 
+        }
+    }
+}

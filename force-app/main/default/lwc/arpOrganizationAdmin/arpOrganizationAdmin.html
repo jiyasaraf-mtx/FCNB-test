@@ -1,0 +1,623 @@
+<template>
+    <div class="arp-admin">
+        <template if:true={showBusyOverlay}>
+            <div class="busy-overlay" role="status">
+                <lightning-spinner alternative-text={spinnerAltText} size="medium"></lightning-spinner>
+            </div>
+        </template>
+
+        <!-- <div class="topbar">
+            <div class="crumb">{crumbLabel}</div>
+            <div class="company-pill">● <b>{companyName}</b></div>
+        </div> -->
+
+        <div class="heading">
+            <div>
+                <h1>{pageTitle}</h1>
+                <p class="subtitle">{pageSubtitle}</p>
+            </div>
+            <template if:true={isBranches}>
+                <button class="btn primary" onclick={handleOpenBranchModal} type="button">{labels.addBranch}</button>
+            </template>
+            <template if:true={isSponsored}>
+                <button class="btn primary" onclick={handleOpenSponsorModal} type="button">{labels.addSponsoredAgent}</button>
+            </template>
+        </div>
+
+        <!-- Organization Dashboard -->
+        <template if:true={isOrgDashboard}>
+            <!-- <div class="stats">
+                <div class="stat"><b>{portalUsers}</b><span>Portal users</span></div>
+                <div class="stat"><b>{activeUsers}</b><span>Active users</span></div>
+                <div class="stat"><b>{branchCount}</b><span>Branches</span></div>
+                <div class="stat"><b>{sponsoredCount}</b><span>Sponsored agents</span></div>
+            </div> -->
+
+            <div class="section">
+                <div class="section-head">
+                    <h3>{labels.accessOverview}</h3>
+                    <span>{labels.clickCardExplore}</span>
+                </div>
+                <div class="tiles">
+                    <button class="tile" type="button" onclick={handleGoOrganization}>
+                        <h4>{labels.adminAccessTitle}</h4>
+                        <p>{labels.adminAccessDesc}</p>
+                    </button>
+                    <button class="tile" type="button" onclick={handleGoDelegate}>
+                        <h4>{labels.delegatedAccessTitle}</h4>
+                        <p>{labels.delegatedAccessDesc}</p>
+                    </button>
+                    <button class="tile" type="button" onclick={handleGoSponsored}>
+                        <h4>{labels.sponsoredAgents}</h4>
+                        <p>{labels.sponsoredTileDesc}</p>
+                    </button>
+                </div>
+            </div>
+
+            <div class="section grid2">
+                <div class="card">
+                    <div class="section-head pad">
+                        <h3>{labels.recentDelegation}</h3>
+                    </div>
+                    <template for:each={recentDelegations} for:item="a">
+                        <div class="list-row" key={a.id}>
+                            <div>⇄</div>
+                            <div>
+                                <b>{a.fromPersonName} → {a.toPersonName}</b>
+                                <small>{a.reason} · {a.dateLabel}</small>
+                            </div>
+                            <span class="status active">{a.statusLabel}</span>
+                        </div>
+                    </template>
+                </div>
+                <div class="card">
+                    <div class="section-head pad"><h3>{labels.quickActions}</h3></div>
+                    <button class="list-row clickable" type="button" onclick={handleGoDelegate}>
+                        <div>⇄</div>
+                        <div>
+                            <b>{labels.delegateAccess}</b>
+                            <small>{labels.delegateAccessHint}</small>
+                        </div>
+                    </button>
+                    <button class="list-row clickable" type="button" onclick={handleGoOrganization}>
+                        <div>▤</div>
+                        <div>
+                            <b>{labels.reviewOrgAccess}</b>
+                            <small>{labels.reviewOrgAccessHint}</small>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </template>
+
+        <!-- Delegate Access -->
+        <template if:true={isDelegate}>
+            <div class="card">
+                <div class="toolbar">
+                    <div class="search">
+                        <lightning-input
+                            type="search"
+                            label={labels.search}
+                            variant="label-hidden"
+                            placeholder={labels.searchSalespersonPlaceholder}
+                            value={searchTerm}
+                            onchange={handleSearch}
+                        ></lightning-input>
+                    </div>
+                    <lightning-combobox
+                        label={labels.status}
+                        variant="label-hidden"
+                        value={statusFilter}
+                        options={statusFilterOptions}
+                        onchange={handleStatusFilter}
+                    ></lightning-combobox>
+                </div>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>{labels.salesperson}</th>
+                                <th>{labels.company}</th>
+                                <th>{labels.licence}</th>
+                                <th>{labels.status}</th>
+                                <th>{labels.accessType}</th>
+                                <th>{labels.lastActivity}</th>
+                                <th>{labels.action}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <template for:each={filteredUsers} for:item="u">
+                                <tr key={u.id}>
+                                    <td data-label={labels.salesperson}>
+                                        <div class="person">
+                                            <div class="avatar">{u.initials}</div>
+                                            <div>
+                                                <div class="name">{u.personName}</div>
+                                                <div class="email">{u.emailAddress}</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td data-label={labels.company}>{u.company}</td>
+                                    <td data-label={labels.licence}><span class="license">{u.license}</span></td>
+                                    <td data-label={labels.status}>
+                                        <lightning-combobox
+                                            label={labels.status}
+                                            variant="label-hidden"
+                                            value={u.status}
+                                            options={statusOptions}
+                                            data-id={u.id}
+                                            onchange={handleStatusComboChange}
+                                        ></lightning-combobox>
+                                    </td>
+                                    <td data-label={labels.accessType}>
+                                        <template if:true={u.isDelegated}>
+                                            <span class="access-delegated">{u.accessTypeLabel}</span>
+                                            <span class="subline">{labels.from} <b>{u.accessFrom}</b></span>
+                                        </template>
+                                        <template if:true={u.isDelegatedOut}>
+                                            <span class="access-delegated">{u.accessTypeLabel}</span>
+                                            <span class="subline">{labels.to} <b>{u.delegationTarget}</b></span>
+                                        </template>
+                                        <template if:true={u.isOwn}>
+                                            <span class="access-own">{u.accessTypeLabel}</span>
+                                        </template>
+                                    </td>
+                                    <td data-label={labels.lastActivity}>{u.lastActivity}</td>
+                                    <td class="actions" data-label={labels.action}>
+                                        <template if:true={u.isDelegatedOut}>
+                                            <button class="btn" type="button" data-id={u.id} onclick={handleViewDelegation}>{labels.view}</button>
+                                            <button class="btn revoke" type="button" data-id={u.id} onclick={handleRevokeAccess}>{labels.revokeAccess}</button>
+                                        </template>
+                                        <template if:true={u.canDelegate}>
+                                            <button class="btn primary" type="button" data-id={u.id} onclick={handleOpenDelegate}>{labels.delegateAccess}</button>
+                                        </template>
+                                        <template if:false={u.canDelegate}>
+                                            <template if:false={u.isDelegatedOut}>
+                                                <span class="muted">{labels.unavailable}</span>
+                                            </template>
+                                        </template>
+                                    </td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="footerbar">
+                    <span>{peopleCountLabel}</span>
+                    <span>{labels.delegateInactiveHint}</span>
+                </div>
+            </div>
+        </template>
+
+        <!-- Delegation Activity -->
+        <template if:true={isActivity}>
+            <div class="card table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>{labels.dateTime}</th>
+                            <th>{labels.delegatedFrom}</th>
+                            <th>{labels.delegatedTo}</th>
+                            <th>{labels.company}</th>
+                            <th>{labels.reason}</th>
+                            <th>{labels.status}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template for:each={activities} for:item="a">
+                            <tr key={a.id}>
+                                <td data-label={labels.dateTime}>{a.dateLabel}</td>
+                                <td data-label={labels.delegatedFrom}><b>{a.fromPersonName}</b></td>
+                                <td data-label={labels.delegatedTo}><b>{a.toPersonName}</b></td>
+                                <td data-label={labels.company}>{a.company}</td>
+                                <td data-label={labels.reason}>{a.reason}</td>
+                                <td data-label={labels.status}><span class="status active">{a.statusLabel}</span></td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </div>
+        </template>
+
+        <!-- Organization Access -->
+        <template if:true={isOrganization}>
+            <div class="card">
+                <div class="toolbar">
+                    <b>{labels.usersAccessRelationships}</b>
+                    <span class="muted">{orgUserSummary}</span>
+                </div>
+                <div class="table-wrap">
+                    <table class="organization-access-table">
+                        <thead>
+                            <tr>
+                                <th>{labels.user}</th>
+                                <th>{labels.role}</th>
+                                <th>{labels.accessSource}</th>
+                                <th>{labels.branch}</th>
+                                <th>{labels.taskPermissions}</th>
+                                <th>{labels.status}</th>
+                                <th>{labels.action}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <template for:each={organizationUsers} for:item="u">
+                                <tr key={u.id}>
+                                    <td data-label={labels.user}>
+                                        <div class="name">{u.personName}</div>
+                                        <div class="email">{u.emailAddress}</div>
+                                    </td>
+                                    <td data-label={labels.role}>{u.roleLabel}</td>
+                                    <td data-label={labels.accessSource}>
+                                        <template if:true={u.isDelegated}>
+                                            <span class="access-delegated">{u.usingAccessLabel}</span>
+                                        </template>
+                                        <template if:true={u.isDelegatedOut}>
+                                            <span class="access-delegated">{u.delegatedToLabel}</span>
+                                        </template>
+                                        <template if:true={u.isOwn}>
+                                            <span class="access-own">{u.accessTypeLabel}</span>
+                                        </template>
+                                    </td>
+                                    <td data-label={labels.branch}>{u.branch}</td>
+                                    <td data-label={labels.taskPermissions}>
+                                        <div class="permission-chips">
+                                            <template for:each={u.permissionChips} for:item="chip">
+                                                <span class="permission-chip" key={chip.key}>{chip.label}</span>
+                                            </template>
+                                        </div>
+                                    </td>
+                                    <td data-label={labels.status}>
+                                        <span class={u.statusBadgeClass}>{u.statusLabel}</span>
+                                    </td>
+                                    <td data-label={labels.action}>
+                                        <button
+                                            class="btn primary ghost"
+                                            type="button"
+                                            data-id={u.id}
+                                            onclick={handleOpenPermissionsModal}
+                                            disabled={isSaving}
+                                        >
+                                            {labels.managePermissions}
+                                        </button>
+                                    </td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </template>
+
+        <!-- Branches -->
+        <template if:true={isBranches}>
+            <div class="tiles">
+                <template for:each={branches} for:item="b">
+                    <div class="tile static branch-tile" key={b.id}>
+                        <div class="branch-tile-head">
+                            <h4>⌖ {b.name}</h4>
+                            <button
+                                class="btn danger ghost"
+                                type="button"
+                                data-id={b.id}
+                                onclick={handleRemoveBranch}
+                                disabled={isSaving}
+                            >
+                                {labels.removeBranch}
+                            </button>
+                        </div>
+                        <p>{b.address}</p>
+                        <p>{b.description} · <b>{b.userLabel}</b></p>
+                    </div>
+                </template>
+            </div>
+        </template>
+
+        <!-- Sponsored Agents -->
+        <template if:true={isSponsored}>
+            <div class="card table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>{labels.agent}</th>
+                            <th>{labels.sponsoredBy}</th>
+                            <th>{labels.branch}</th>
+                            <th>{labels.permissions}</th>
+                            <th>{labels.status}</th>
+                            <th>{labels.action}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template for:each={sponsoredAgents} for:item="s">
+                            <tr key={s.id}>
+                                <td>
+                                    <div class="person">
+                                        <div class="avatar">{s.initials}</div>
+                                        <div>
+                                            <b>{s.personName}</b>
+                                            <span class="subline">{labels.sponsoredAgentLabel}</span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>{companyName}</td>
+                                <td>{s.branch}</td>
+                                <td>
+                                    <div class="permission-chips">
+                                        <template for:each={s.permissionChips} for:item="chip">
+                                            <span class="permission-chip" key={chip.key}>{chip.label}</span>
+                                        </template>
+                                    </div>
+                                </td>
+                                <td><span class={s.statusBadgeClass}>{s.statusLabel}</span></td>
+                                <td>
+                                    <button
+                                        class="btn primary ghost"
+                                        type="button"
+                                        data-id={s.id}
+                                        onclick={handleOpenPermissionsModal}
+                                    >
+                                        {labels.managePermissions}
+                                    </button>
+                                </td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </div>
+        </template>
+
+        <!-- Delegate modal -->
+        <template if:true={showDelegateModal}>
+            <section class="modal-backdrop" role="dialog" aria-modal="true">
+                <div class="modal">
+                    <div class="modal-head">
+                        <h2>{labels.delegateReviewerAccess}</h2>
+                        <button class="close" type="button" onclick={handleCloseDelegate} aria-label={labels.close}>×</button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="step">{labels.currentAccessHolder}</p>
+                        <div class="selected" if:true={fromUser}>
+                            <div class="avatar">{fromUser.initials}</div>
+                            <div>
+                                <b>{fromUser.personName}</b>
+                                <small class="subline">{fromUser.company} · {fromUser.license}</small>
+                            </div>
+                        </div>
+                        <p class="step">{labels.delegateAccessTo}</p>
+                        <lightning-combobox
+                            label={labels.salesperson}
+                            value={toUserId}
+                            options={toUserOptions}
+                            onchange={handleToUserChange}
+                        ></lightning-combobox>
+                        <lightning-input
+                            class="slds-m-top_small"
+                            label={labels.reasonOptional}
+                            value={reason}
+                            onchange={handleReasonChange}
+                        ></lightning-input>
+                        <div class="info slds-m-top_medium">
+                            <b>{labels.important}:</b> {labels.delegateImportantText}
+                        </div>
+                    </div>
+                    <div class="modal-foot">
+                        <button class="btn" type="button" onclick={handleCloseDelegate}>{labels.cancel}</button>
+                        <button class="btn primary" type="button" onclick={handleConfirmDelegate}>{labels.confirmDelegation}</button>
+                    </div>
+                </div>
+            </section>
+        </template>
+
+        <!-- Success modal -->
+        <template if:true={showSuccessModal}>
+            <section class="modal-backdrop" role="dialog" aria-modal="true">
+                <div class="modal small">
+                    <div class="success">
+                        <div class="success-icon">✓</div>
+                        <h2>{labels.accessDelegatedSuccess}</h2>
+                        <p>{labels.accessRelationshipUpdated}</p>
+                        <div class="transfer">
+                            <div>
+                                <small>{labels.originalUser}</small>
+                                <strong>{successFrom}</strong>
+                                <span class="subline">{labels.statusInactive}</span>
+                            </div>
+                            <div class="arrow">→</div>
+                            <div>
+                                <small>{labels.receivingUser}</small>
+                                <strong>{successTo}</strong>
+                                <span class="subline">{labels.statusActiveDelegated}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-foot">
+                        <button class="btn primary" type="button" onclick={handleCloseSuccess}>{labels.done}</button>
+                    </div>
+                </div>
+            </section>
+        </template>
+
+        <!-- View delegation modal -->
+        <template if:true={showViewModal}>
+            <section class="modal-backdrop" role="dialog" aria-modal="true">
+                <div class="modal small">
+                    <div class="modal-head">
+                        <h2>{labels.delegationDetails}</h2>
+                        <button class="close" type="button" onclick={handleCloseView} aria-label={labels.close}>×</button>
+                    </div>
+                    <div class="modal-body" if:true={viewUser}>
+                        <div class="selected">
+                            <div class="avatar">{viewUser.initials}</div>
+                            <div>
+                                <b>{viewUser.personName}</b>
+                                <small class="subline">{viewUser.emailAddress}</small>
+                            </div>
+                        </div>
+                        <div class="info">
+                            <div><b>{labels.delegatedToColon}</b> {viewUser.delegationTarget}</div>
+                            <div><b>{labels.currentStatusColon}</b> <span class="status inactive">{labels.inactive}</span></div>
+                        </div>
+                    </div>
+                    <div class="modal-foot">
+                        <button class="btn" type="button" onclick={handleCloseView}>{labels.close}</button>
+                    </div>
+                </div>
+            </section>
+        </template>
+
+        <!-- Branch modal -->
+        <template if:true={showBranchModal}>
+            <section class="modal-backdrop" role="dialog" aria-modal="true">
+                <div class="modal small modal-dropdown-safe">
+                    <div class="modal-head">
+                        <h2>{labels.addBranch}</h2>
+                        <button class="close" type="button" onclick={handleCloseBranchModal} aria-label={labels.close}>×</button>
+                    </div>
+                    <div class="modal-body">
+                        <template if:true={formError}>
+                            <div class="form-error">{formError}</div>
+                        </template>
+                        <div class="field">
+                            <label for="branch-name">{labels.branchName}</label>
+                            <input id="branch-name" type="text" value={branchName} data-field="branchName" onchange={handleBranchField} placeholder={labels.branchNamePlaceholder} />
+                        </div>
+                        <div class="field">
+                            <label for="branch-address">{labels.address}</label>
+                            <input id="branch-address" type="text" value={branchAddress} data-field="branchAddress" onchange={handleBranchField} placeholder={labels.streetAddress} />
+                        </div>
+                        <div class="field">
+                            <label for="branch-description">{labels.description}</label>
+                            <input id="branch-description" type="text" value={branchDescription} data-field="branchDescription" onchange={handleBranchField} placeholder={labels.optionalDescription} />
+                        </div>
+                    </div>
+                    <div class="modal-foot">
+                        <button class="btn" type="button" onclick={handleCloseBranchModal} disabled={isSaving}>{labels.cancel}</button>
+                        <button class="btn primary" type="button" onclick={handleSaveBranch} disabled={isSaving}>
+                            {saveBranchLabel}
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </template>
+
+        <!-- Sponsor modal -->
+        <template if:true={showSponsorModal}>
+            <section class="modal-backdrop" role="dialog" aria-modal="true">
+                <div class="modal small modal-dropdown-safe">
+                    <div class="modal-head">
+                        <h2>{labels.addSponsoredAgent}</h2>
+                        <button class="close" type="button" onclick={handleCloseSponsorModal} aria-label={labels.close}>×</button>
+                    </div>
+                    <div class="modal-body">
+                        <template if:true={formError}>
+                            <div class="form-error">{formError}</div>
+                        </template>
+                        <div class="field">
+                            <label for="sponsor-first">{labels.firstName}</label>
+                            <input id="sponsor-first" type="text" value={sponsorFirstName} data-field="sponsorFirstName" onchange={handleSponsorField} />
+                        </div>
+                        <div class="field">
+                            <label for="sponsor-last">{labels.lastName}</label>
+                            <input id="sponsor-last" type="text" value={sponsorLastName} data-field="sponsorLastName" onchange={handleSponsorField} />
+                        </div>
+                        <div class="field">
+                            <label for="sponsor-email">{labels.email}</label>
+                            <input id="sponsor-email" type="email" value={sponsorEmail} data-field="sponsorEmail" onchange={handleSponsorField} />
+                        </div>
+                        <div class="field">
+                            <label for="sponsor-branch">{labels.branch}</label>
+                            <select id="sponsor-branch" data-field="sponsorBranchId" onchange={handleSponsorField}>
+                                <template for:each={branchOptions} for:item="opt">
+                                    <option key={opt.value} value={opt.value}>{opt.label}</option>
+                                </template>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-foot">
+                        <button class="btn" type="button" onclick={handleCloseSponsorModal} disabled={isSaving}>{labels.cancel}</button>
+                        <button class="btn primary" type="button" onclick={handleSaveSponsor} disabled={isSaving}>
+                            {saveSponsorLabel}
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </template>
+
+        <!-- Manage Permissions modal -->
+        <template if:true={showPermissionsModal}>
+            <section class="modal-backdrop" role="dialog" aria-modal="true">
+                <div class="modal small">
+                    <div class="modal-head">
+                        <h2>{labels.managePermissionsTitle}</h2>
+                        <button class="close" type="button" onclick={handleClosePermissionsModal} aria-label={labels.close}>×</button>
+                    </div>
+                    <div class="modal-body">
+                        <template if:true={permissionsUser}>
+                            <div class="selected">
+                                <div class="avatar">{permissionsUser.initials}</div>
+                                <div>
+                                    <b>{permissionsUser.personName}</b>
+                                    <small class="subline">{permissionsUserRoleLabel}</small>
+                                </div>
+                            </div>
+                        </template>
+                        <p class="permissions-help">{labels.managePermissionsHelp}</p>
+                        <template if:true={formError}>
+                            <div class="form-error">{formError}</div>
+                        </template>
+                        <div class="permission-checklist">
+                            <template for:each={permissionEditorOptions} for:item="opt">
+                                <label class="permission-check" key={opt.value} for={opt.inputId}>
+                                    <input
+                                        id={opt.inputId}
+                                        type="checkbox"
+                                        value={opt.value}
+                                        checked={opt.checked}
+                                        onchange={handlePermissionToggle}
+                                    />
+                                    <span>{opt.label}</span>
+                                </label>
+                            </template>
+                        </div>
+                    </div>
+                    <div class="modal-foot">
+                        <button class="btn" type="button" onclick={handleClosePermissionsModal} disabled={isSaving}>{labels.cancel}</button>
+                        <button class="btn primary" type="button" onclick={handleSavePermissions} disabled={isSaving}>
+                            {savePermissionsLabel}
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </template>
+
+        <!-- Remove branch confirmation modal -->
+        <template if:true={showRemoveBranchModal}>
+            <section class="modal-backdrop" role="dialog" aria-modal="true">
+                <div class="modal small">
+                    <div class="modal-head">
+                        <h2>{labels.removeBranchTitle}</h2>
+                        <button class="close" type="button" onclick={handleCloseRemoveBranchModal} aria-label={labels.close} disabled={isSaving}>×</button>
+                    </div>
+                    <div class="modal-body">
+                        <template if:true={formError}>
+                            <div class="form-error">{formError}</div>
+                        </template>
+                        <p class="remove-branch-copy">{labels.confirmRemoveBranch}</p>
+                        <template if:true={branchToRemoveName}>
+                            <div class="selected">
+                                <div>
+                                    <b>{branchToRemoveName}</b>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                    <div class="modal-foot">
+                        <button class="btn" type="button" onclick={handleCloseRemoveBranchModal} disabled={isSaving}>{labels.cancel}</button>
+                        <button class="btn danger" type="button" onclick={handleConfirmRemoveBranch} disabled={isSaving}>
+                            {removeBranchConfirmLabel}
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </template>
+    </div>
+</template>

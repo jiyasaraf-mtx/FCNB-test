@@ -1,0 +1,234 @@
+<template>
+    <template if:true={resultData}>
+    <lightning-accordion class="example-accordion" onsectiontoggle={handleToggleSection} >
+        <lightning-accordion-section name="A" label="Transaction Suitability Question">
+            <div class="slds-grid slds-gutters slds-wrap">
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_12-of-12 m-b-medium">
+                    <div class="cc-col-field-values">
+                        <label class="cc-field-value-label">Request issuance of Provisional License -  Is one of the following true?</label>
+                        <p class="cc-field-value">{resultData.TransactioSuitabilityQuestion}</p>
+                    </div>
+                </div>
+            </div>
+        </lightning-accordion-section>
+        <lightning-accordion-section name="A" label="Personal Information">
+            <div class="slds-grid slds-gutters slds-wrap">
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12 m-b-medium">
+                    <div class="cc-col-field-values">
+                        <label class="cc-field-value-label">Legal First Name</label>
+                        <p class="cc-field-value">{resultData.FirstName}</p>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12 m-b-medium">
+                    <div class="cc-col-field-values">
+                        <label class="cc-field-value-label">Legal Last Name</label>
+                        <p class="cc-field-value">{resultData.LastName}</p>
+                    </div>
+                </div>
+               <!-- <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12 m-b-medium">
+                    <div class="cc-col-field-values">
+                        <label class="cc-field-value-label">Legal Last Name</label>
+                        <p class="cc-field-value">{resultData.LastName}</p>
+                    </div>
+                </div>-->
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12 m-b-medium">
+                    <div class="cc-col-field-values">
+                        <label class="cc-field-value-label">Suffix</label>
+                        <p class="cc-field-value">{resultData.Suffix}</p>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12 m-b-medium">
+                    <div class="cc-col-field-values">
+                        <label class="cc-field-value-label">Date of Birth</label>
+                        <p class="cc-field-value">{resultData.DateOfBirth}</p>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12 m-b-medium">
+                    <div class="cc-col-field-values">
+                        <label class="cc-field-value-label">Email</label>
+                        <p class="cc-field-value">{resultData.Email}</p>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12 m-b-medium">
+                    <div class="cc-col-field-values">
+                        <label class="cc-field-value-label">Phone Number</label>
+                        <p class="cc-field-value">{resultData.Phone}</p>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12 m-b-medium">
+                    <div class="cc-col-field-values">
+                        <label class="cc-field-value-label">Social Security Number</label>
+                        <p class="cc-field-value">{resultData.SocialSecurityNumber}</p>
+                    </div>
+                </div>
+                <!-- <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12 m-b-medium">
+                    <div class="cc-col-field-values">
+                        <label class="cc-field-value-label">Confirm Social Security Number</label>
+                        <p class="cc-field-value">{resultData.SocialSecurityNumber}</p>
+                    </div>
+                </div> -->
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_12-of-12 m-b-medium">
+                    <div class="cc-col-field-values">
+                        <label class="cc-field-value-label">Address</label>
+                        <p class="cc-field-value">{resultData.StreetPerson} {resultData.CityPerson} {resultData.StatePerson} {resultData.CountryPerson} {resultData.ZipPostalPerson}</p>
+                    </div>
+                </div>
+            </div>
+        </lightning-accordion-section>
+        <lightning-accordion-section name="B" label="Degree Information">
+            <div class="slds-grid slds-gutters slds-wrap">
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12 m-b-medium">
+                    <div class="cc-col-field-values">
+                        <label class="cc-field-value-label">Institution Name</label>
+                        <p class="cc-field-value">{resultData.InstitudeName}</p>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_12-of-12 m-b-medium">
+                    <div class="cc-col-field-values">
+                        <label class="cc-field-value-label">Address</label>
+                        <p class="cc-field-value">{resultData.InstitudeAddress_Street},{resultData.InstitudeAddress_City},{resultData.InstitudeAddress_State},{resultData.InstitudeAddress_Country}</p>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12 m-b-medium">
+                    <div class="cc-col-field-values">
+                        <label class="cc-field-value-label">Major</label>
+                        <p class="cc-field-value">{resultData.Major}</p>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12 m-b-medium">
+                    <div class="cc-col-field-values">
+                        <label class="cc-field-value-label">  Minor</label>
+                        <p class="cc-field-value">{resultData.Minor}</p>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12 m-b-medium">
+                    <div class="cc-col-field-values">
+                        <label class="cc-field-value-label">  Graduation Date</label>
+                        <p class="cc-field-value">{resultData.GratuatedDate}</p>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12 m-b-medium">
+                    <div class="cc-col-field-values">
+                        <label class="cc-field-value-label">Degree Obtained</label>
+                        <p class="cc-field-value">{resultData.DegreeObtain}</p>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12 m-b-medium">
+                    <div class="cc-col-field-values">
+                        <label class="cc-field-value-label">Attend In WI?</label>
+                        <p class="cc-field-value">{resultData.AttendINwi}</p>
+                    </div>
+                </div>
+            </div>
+        </lightning-accordion-section>
+        <lightning-accordion-section name="C" label="Work History">
+            <div class="slds-grid slds-gutters slds-wrap">
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12 m-b-medium">
+                    <div class="cc-col-field-values">
+                        <label class="cc-field-value-label">School, Agency or Instution</label>
+                        <p class="cc-field-value">{resultData.School_WH}</p>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12 m-b-medium">
+                    <div class="cc-col-field-values">
+                        <label class="cc-field-value-label">Employment City</label>
+                        <p class="cc-field-value">{resultData.EmploymentCity_WH}</p>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12 m-b-medium">
+                    <div class="cc-col-field-values">
+                        <label class="cc-field-value-label">Employment State</label>
+                        <p class="cc-field-value">{resultData.EmploymentState_WH}</p>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12 m-b-medium">
+                    <div class="cc-col-field-values">
+                        <label class="cc-field-value-label">Employment Country</label>
+                        <p class="cc-field-value">{resultData.EmploymentCountry_WH}</p>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12 m-b-medium">
+                    <div class="cc-col-field-values">
+                        <label class="cc-field-value-label">Employment Contact Name</label>
+                        <p class="cc-field-value">{resultData.EmploymentContactName_WH}</p>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12 m-b-medium">
+                    <div class="cc-col-field-values">
+                        <label class="cc-field-value-label">Employer Contact Phone</label>
+                        <p class="cc-field-value">{resultData.EmployerPhone_WH}</p>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12 m-b-medium">
+                    <div class="cc-col-field-values">
+                        <label class="cc-field-value-label">Employment Start Month</label>
+                        <p class="cc-field-value">{resultData.EmployementStartMonth_WH}</p>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12 m-b-medium">
+                    <div class="cc-col-field-values">
+                        <label class="cc-field-value-label">Employment End Month</label>
+                        <p class="cc-field-value">{resultData.EmployementEndMonth_WH}</p>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12 m-b-medium">
+                    <div class="cc-col-field-values">
+                        <label class="cc-field-value-label">
+                            Employment Start Year</label>
+                        <p class="cc-field-value">{resultData.EmployementStartYear_WH}</p>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12 m-b-medium">
+                    <div class="cc-col-field-values">
+                        <label class="cc-field-value-label">
+                            Employment End Year</label>
+                        <p class="cc-field-value">{resultData.EmployementEndyear_WH}</p>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_12-of-12 m-b-medium">
+                    <div class="cc-col-field-values">
+                        <label class="cc-field-value-label">
+                            Position(s) or Subject(s) Taught</label>
+                        <p class="cc-field-value">{resultData.Position}</p>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_12-of-12 m-b-medium">
+                    <div class="cc-col-field-values">
+                        <label class="cc-field-value-label">
+                            Bilingual Assignment</label>
+                        <p class="cc-field-value">{resultData.BilingualAssigment}</p>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12 m-b-medium">
+                    <div class="cc-col-field-values">
+                        <label class="cc-field-value-label">
+                            Low Grade</label>
+                        <p class="cc-field-value">{resultData.LowGrade}</p>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12 m-b-medium">
+                    <div class="cc-col-field-values">
+                        <label class="cc-field-value-label">
+                            High Grade</label>
+                        <p class="cc-field-value">{resultData.HighGrade}</p>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12 m-b-medium">
+                    <div class="cc-col-field-values">
+                        <label class="cc-field-value-label">
+                            Long Term Substitute</label>
+                        <p class="cc-field-value">{resultData.LongTermSubstitute}s</p>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12 m-b-medium">
+                    <div class="cc-col-field-values">
+                        <label class="cc-field-value-label">
+                            Full-Time / Part-Time Percentage</label>
+                        <p class="cc-field-value">{resultData.FullTimePercentage}</p>
+                    </div>
+                </div>
+            </div>
+        </lightning-accordion-section>
+    </lightning-accordion>
+    </template>
+</template>

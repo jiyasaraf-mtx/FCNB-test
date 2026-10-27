@@ -1,0 +1,389 @@
+// .slds-card.lpi-card {
+//     padding: 0.5rem;
+
+//     .slds-card__header.card-header {
+//         font-size:$font-size-20;
+//         font-weight: $font-weight-bold;
+//         color: $text-primary;
+//     }
+// }
+
+// .license-overview {
+//     .answer {
+//         padding-bottom: $x-small;
+//         padding-left: $large;
+
+//         ul {
+//             list-style-type: disc;
+//         }
+//     }
+// }
+
+// .fees-structure {
+//     .time-period {
+//         background-color: $background-light;
+//         color: $text-primary;
+//     }
+
+//     th .slds-truncate {
+//         font-size: $font-size-13;
+//         font-weight: $font-weight-semi-bold;
+//         color: $text-primary;
+//     }
+
+//     tr {
+//         border-top: none;
+//     }
+
+//     .call-us span {
+//         color: $text-primary;
+//     }
+
+//     .email span,
+//     .link a {
+//         color: $primary-main;
+//     }
+// }
+
+// .notification-card,
+// .profile-status,
+// .license-card {
+
+//     a,
+//     a span {
+//         color: $primary-main !important;
+//     }
+// }
+
+// .application-details-card {
+//     .card-header {
+//         padding-top: $x-small !important;
+//     }
+
+//     .primary-button {
+//         .slds-button_brand {
+//             width: 100%;
+//         }
+//     }
+
+//     .secondary-button {
+//         .slds-button_neutral {
+//             width: 100%;
+
+//             &:hover {
+//                 background: $primary-main;
+//                 color: $white;
+//             }
+//         }
+//     }
+
+//     .slds-table_cell-buffer tr>td {
+//         padding: $medium 0;
+//     }
+
+//     .slds-table_cell-buffer tr>td:first-child {
+//         padding-left: 0;
+//     }
+
+//     .slds-table_cell-buffer tr>td:last-child {
+//         text-align: center;
+//         color: $text-primary;
+//         font-weight: $font-weight-semi-bold;
+//     }
+
+//     .revision {
+//         font-size: $font-size-13;
+//         border-radius: $border-radius-medium;
+//         padding: 0.125rem $xx-small;
+//         background-color: $warning-lyt;
+//         color: $warning;
+//         font-weight: $font-weight-semi-bold;
+//         width: fit-content;
+//         margin-left: 3.2rem;
+//     }
+// }
+
+// .license-details {
+//     .header-grid .domain {
+//         margin-left: 0;
+//     }
+// }
+
+// .information-card {
+//     background: $white;
+//     border-radius: $xx-small;
+
+//     .grey-text {
+//         color: $text-secondary;
+//         font-size: $font-size-14;
+//     }
+
+//     .warning-card {
+//         border: 0.063rem solid $warning-text;
+//         background: $warning-background;
+
+//         .warning-text {
+//             color: $warning-text;
+//             line-height: 1.2;
+//         }
+//     }
+
+//     .card-form {
+//         .slds-col {
+//             padding: 0 0.625rem;
+
+//             input,
+//             .slds-combobox__input {
+//                 font-size: $font-size-14;
+//                 padding: $xx-small 0;
+//             }
+//         }
+//     }
+// }
+
+// .OptoInstructions {
+//     padding: $xx-medium 0rem !important;
+// }
+
+// /* Aplha Design */
+// .horizantle-scroll {
+//     width: auto;
+//     overflow-x: scroll;
+//     overflow-y: hidden;
+// }
+
+// .application-card {
+//     background-color: $background-light;
+//     width: 17.4375rem;
+//     margin-left: auto;
+//     margin-right: auto;
+// }
+
+// .display-cards {
+//     .slds-card__body {
+//         margin: 0;
+//     }
+// }
+
+// .slds-card__header-title {
+//     font-weight: $font-weight-semi-bold;
+//     color: $text-primary;
+// }
+
+// .slds-card {
+//     box-shadow: $box-shadow-1;
+//     border-radius: $border-radius-medium;
+//     border: none;
+//     padding: $xx-medium $medium;
+
+//     &.landing-card {
+//         padding: 0;
+//         overflow: hidden;
+//         align-items: center;
+//         background: $bg-grey;
+//         border-radius: $border-radius-medium;
+
+//         .slds-wrap {
+//             align-items: center;
+//         }
+//     }
+
+//     .slds-card__header {
+//         padding-top: 0;
+//         margin-top: 0;
+//     }
+
+//     &.login-card {
+//         width: 33%;
+//     }
+// }
+
+// .card-heading {
+//     color: $text-color
+// }
+
+// .slds-text-body_regular {
+//     color: $text-color;
+//     font-size: $font-size-13;
+//     font-weight: $font-weight-semi-bold;
+//     line-height: $x-l-small;
+// }
+
+// .box {
+//     .sub-heading-box {
+//         color: $primary-main;
+//         font-size: $font-size-10;
+//         font-weight: $font-weight-bold;
+//     }
+
+// }
+
+// .card-sub_heading {
+//     color: $text-dark;
+// }
+
+// .status-card {
+//     border-radius: $border-radius-medium;
+//     background-color: $white;
+//     box-shadow: $box-shadow-1;
+//     margin-right: 0.625rem;
+//     padding: 0.9375rem;
+
+//     &.last-card {
+//         margin-right: 0;
+//     }
+
+// }
+
+// .open-sidebar .status-card {
+//     min-height: toRem(190);
+// }
+
+// .slds-tabs_default__nav {
+//     border-bottom-width: 0 !important;
+// }
+
+// .slds-tabs_default__item.slds-is-active {
+//     color: $primary-main !important;
+
+//     .slds-tabs_default__link {
+//         font-weight: $font-weight-bold;
+//         text-decoration: none;
+//     }
+// }
+
+
+// .slds-tabs_default__item:focus:after {
+//     height: toRem(6) !important;
+//     background-color: $primary-main;
+// }
+
+// .slds-tabs_default__item.slds-is-active:after {
+//     background-color: $primary-main;
+//     height: toRem(6);
+//     border-radius: 0 0 toRem(4) toRem(4);
+// }
+
+// .slds-tabs_default__item:hover:after,
+// .slds-tabs--default__item:hover:after {
+//     height: toRem(6px) !important;
+//     background-color: $primary-main;
+//     border-radius: 0 0 toRem(4) toRem(4);
+// }
+
+// .slds-align--absolute-center {
+//     justify-content: flex-end;
+// }
+
+// .slds-tabs_default__content {
+//     padding: 0;
+// }
+
+// .domain {
+//     width: max-content;
+
+//     &.info-card {
+//         margin-left: 0;
+//         margin-bottom: 0.625rem;
+//         width: fit-content;
+//     }
+
+//     &.bg-green {
+//         background-color: $success_badge-bg;
+//         margin-left: 0;
+//         color: $success_badge;
+//         text-align: center;
+//     }
+
+//     &.bg-orange {
+//         background-color: $warning_badge-bg;
+//         color: $warning;
+//         text-align: center;
+//     }
+// }
+
+// .account_wrap {
+//     .card-container {
+//         .card-details {
+//             padding: $xx-medium;
+//         }
+
+//         .heading {
+//             font-size: 1.125rem;
+//         }
+
+//         .paragraph {
+//             padding-bottom: 0.8rem;
+//         }
+//     }
+// }
+
+// // for Licensing Cards
+// .rec-lic-container {
+//     padding: $small 0;
+// }
+
+// .card-title {
+//     font-size: 0.875rem;
+//     font-weight: 600;
+//     color: $text-secondary;
+//     margin-bottom: $medium;
+// }
+
+// .card-wrapper {
+//     .card-container {
+//         padding: 0 0.8rem;
+
+//         &:last-child {
+//             padding-right: 0.8rem;
+//         }
+
+//         &:nth-child(4n) {
+//             padding-right: 0;
+//         }
+
+//         &:nth-child(4n+1) {
+//             padding-left: 0;
+//             padding-right: 0.8rem;
+//         }
+//     }
+// }
+
+// .card-details {
+//     padding: 2rem;
+//     background: $white;
+
+//     &_wrap {
+//         padding: 0 2rem;
+//         background-color: $white;
+//         border-radius: $border-radius-medium;
+
+//         .card-details {
+//             padding-left: 0;
+//             padding-right: 0;
+//         }
+//     }
+
+//     &_block:not(:first-child) {
+//         border-top: toRem(1) solid $input-border;
+//     }
+
+//     .block-divider {
+//         margin-top: $large;
+//         padding-top: $large;
+//         border-top: toRem(1) solid $input-border;
+//     }
+
+//     .label {
+//         text-transform: uppercase;
+//         font-size: $font-size-14;
+//         margin-bottom: 0.3rem;
+//         color: $text-secondary;
+//     }
+
+//     .text-input {
+//         font-size: $font-size-16;
+//         font-weight: $font-weight-regular;
+//         color: $text-primary;
+//     }
+// }

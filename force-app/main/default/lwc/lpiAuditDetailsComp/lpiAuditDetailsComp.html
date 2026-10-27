@@ -1,0 +1,449 @@
+<!-- sldsValidatorIgnore -->
+<!--
+  @description       :
+  @author            : Vamsi Mudaliar
+  @group             :
+  @last modified on  : 10-24-2023
+  @last modified by  : Ranjitha M U
+-->
+<template>
+    <div class="slds-grid slds-gutters slds-wrap audit-details slds-grid_vertical ce-audit">
+        <div
+            class="slds-col slds-large-size_1-of-1 slds-medium-size_1-of-1 slds-size_1-of-1 slds-var-p-bottom_medium slds-var-m-top_large">
+            <div class="slds-card">
+                <lightning-spinner if:true={showSpinner} size="medium" alternative-text="Loading...">
+                </lightning-spinner>
+                <template if:true={ceAudit}>
+                    <div class="slds-grid slds-grid--align-spread slds-grid--vertical-align-center slds-wrap m-b-medium">
+                        <h1 class="bold-24">
+                            Complete CE Audit
+                        </h1>
+                        <lightning-button label="Add Course" title="Add Course" onclick={addCourseButton}
+                            aria-label="Add Course Information" icon-name="utility:add" icon-position="left"
+                            variant="brand-outline" class="addCourseFocus">
+                        </lightning-button>
+                    </div>
+
+                    <div class="all-data-table">
+                        <table
+                            class="slds-table slds-table_bordered slds-no-row-hover alpha-table-layout dashboard-table">
+                            <caption class="sr-only">Complete CE Audit Course table</caption>
+                            <thead>
+                                <tr class="slds-line-height_reset">
+                                    <th scope="col" >
+                                        <div class="slds-truncate" title="Course">Course</div>
+                                    </th>
+                                    <th scope="col" >
+                                        <div class="slds-truncate" title="CE Hours">CE Hours</div>
+                                    </th>
+                                    <th scope="col" >
+                                        <div class="slds-truncate" title="Date">Date</div>
+                                    </th>
+                                    <th scope="col">
+                                        <div class="slds-truncate" title="Action">Action</div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template if:true={displayCourseInfoList}>
+                                    <template for:each={courseInfoList} for:item="courseInfo" for:index="index">
+                                        <tr key={courseInfo.index} class="slds-hint-parent">
+                                            <td data-label="Course">
+                                                <div style="white-space:normal; word-break: break-all;"
+                                                    title={courseInfo.course}>
+                                                    {courseInfo.course}
+                                                </div>
+                                            </td>
+                                            <td data-label="CE Hours">
+                                                <div class="slds-truncate" title={courseInfo.hours}>
+                                                    {courseInfo.hours}
+                                                </div>
+                                            </td>
+                                            <td data-label="Date">
+                                                <lightning-formatted-date-time value={courseInfo.endDate} year="numeric"
+                                                    month="numeric" day="numeric" title={courseInfo.date}
+                                                    time-zone="UTC">
+                                                </lightning-formatted-date-time>
+                                            </td>
+
+                                            <td data-label="Action" class="table-action">
+                                                <template if:true={courseInfo.editRequired}>
+                                                    <lightning-button-menu alternative-text="Show menu">
+                                                        <lightning-menu-item value="MenuItemOne"  onclick={handleCourseInfoEdit} data-index={index}   aria-label={courseInfo.editButtonAriaLabel} aria-live="assertive" class="base-link-btn base-edit-btn editFocus" label="Edit"></lightning-menu-item>
+                                                        <lightning-menu-item value="MenuItemTwo" label="Delete" data-index={index} aria-live="assertive" aria-label={courseInfo.deleteButtonAriaLabel} class="base-delete-btn file-delete-btn deleteFocus" onclick={handleCourseInfoDelete}></lightning-menu-item>
+                                                    </lightning-button-menu>
+                                                </template>
+                                            </td>
+                                            <!-- <td data-label="Action">
+                                                <template if:true={courseInfo.editRequired}>
+                                                    <div class="slds-truncate p-horizontal-5">
+                                                        <lightning-button-icon variant="brand-outline"
+                                                            class="buttonBorder editFocus" title="edit"
+                                                            icon-name="utility:edit" data-index={index}
+                                                            onclick={handleCourseInfoEdit} aria-live="assertive"
+                                                            aria-label={courseInfo.editButtonAriaLabel}></lightning-button-icon>
+                                                        <lightning-button-icon variant="brand-outline"
+                                                            class="buttonBorder slds-m-left_small deleteFocus delete-btn"
+                                                            title="delete" icon-name="utility:delete" data-index={index}
+                                                            aria-live="assertive"
+                                                            aria-label={courseInfo.deleteButtonAriaLabel}
+                                                            onclick={handleCourseInfoDelete}></lightning-button-icon>
+                                                    </div>
+                                                </template>
+                                            </td> -->
+                                        </tr>
+                                    </template>
+                                </template>
+                                <template if:false={displayCourseInfoList}>
+                                    <tr>
+                                        <td colspan="4">
+                                            <div class="slds-illustration slds-illustration_small">
+                                                <img alt="No Records Found"  src={noRecord}>
+                                                <div class="slds-text-longform m-t-medium">
+                                                    <h3 class="slds-text-heading_medium">No Records Found</h3>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                        <template if:true={courseDetailPopupOpen}>
+                            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-03" aria-modal="true"
+                                aria-describedby="modal-content-id-3"
+                                class="slds-modal slds-fade-in-open slds-modal_small lpi-modal" onkeydown={handleEscCloseModal}>
+                                <div class="slds-modal__container">
+                                    <header class="slds-modal__header">
+                                        <button
+                                            class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                                            title="Close" onclick={closeModelAuthContact}>
+                                            <lightning-icon icon-name="utility:close" alternative-text="close"
+                                                variant="inverse" size="small"></lightning-icon>
+                                            <span class="slds-assistive-text">Close Add Course</span>
+                                        </button>
+                                        <h1 id="modal-heading-003" class="section-heading slds-m-bottom_x-small">
+                                            Add Course
+                                        </h1>
+                                    </header>
+                                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-3">
+                                        <p class="asterisk-caption m-b-medium">Asterisk (<span class="c-red">*</span>) indicates required field</p>
+                                        <div class="slds-grid slds-wrap slds-gutters slds-p-bottom--large">
+                                            <!-- Course -->
+                                            <div
+                                                class="slds-col slds-large-size_4-of-12 slds-medium-size_4-of-12 slds-size--12-of-12 m-b-medium">
+                                                <lightning-input class="auditDetailValidate" type="text" label="Course"
+                                                    placeholder="Enter Course" name="course" maxlength="40"
+                                                    value={courseDetailData.course} onchange={handleCourseInfoInputs}
+                                                    required message-when-value-missing="Error: Course is required."
+                                                    pattern="^((?!(<)|(>)).)*$"
+                                                    message-when-pattern-mismatch="HTML tags are not allowed.">
+                                                </lightning-input>
+                                            </div>
+                                            <!-- CE Hours -->
+                                            <div
+                                                class="slds-col slds-large-size_4-of-12 slds-medium-size_4-of-12 slds-size--12-of-12 m-b-medium">
+                                                <lightning-input class="auditDetailValidate" type="number"
+                                                    label="CE Hours" placeholder="Enter CE Hours" name="hours"
+                                                    step=".01" min="0" maxlength="9" value={courseDetailData.hours}
+                                                    onchange={handleCourseInfoInputs} required
+                                                    disabled={isBoardNameAccountancy}
+                                                    message-when-value-missing="Error: CE Hours is required.">
+                                                </lightning-input>
+                                            </div>
+                                            <!-- Date -->
+                                            <div
+                                                class="slds-col slds-large-size_4-of-12 slds-medium-size_4-of-12 slds-size--12-of-12 m-b-medium">
+                                                <lightning-input class="auditDetailValidate" type="date" label="Date"
+                                                    placeholder="MM/DD/YYYY" name="endDate" required
+                                                    message-when-value-missing="Error: Date is required."
+                                                    value={courseDetailData.endDate} onchange={handleCourseInfoInputs}
+                                                    date-style="short"
+                                                    message-when-pattern-mismatch="Special characters are not allowed">
+                                                </lightning-input>
+                                            </div>
+                                            <!-- Notes -->
+                                            <div
+                                                class="slds-col slds-large-size--12-of-12 slds-medium-size--12-of-12 slds-size--12-of-12 m-b-medium">
+                                                <lightning-textarea class="auditDetailValidateNotes" type="textarea"
+                                                    label="Notes" placeholder="Enter Notes" name="notes"
+                                                    onchange={handleCourseInfoInputs} value={courseDetailData.notes}>
+                                                </lightning-textarea>
+                                            </div>
+                                            <template if:true={isBoardNamePsychologists}>
+                                                <div
+                                                    class="slds-col slds-large-size_6-of-12 slds-medium-size_6-of-12 slds-size--12-of-12 m-b-medium">
+                                                    <lightning-combobox class="auditDetailValidate"
+                                                        label="Course Category" required
+                                                        placeholder="Enter Course Category" name="courseCategory"
+                                                        options={options} onchange={handleCourseInfoInputs}
+                                                        value={courseDetailData.courseCategory}>
+                                                    </lightning-combobox>
+                                                </div>
+                                            </template>
+                                            <template if:true={isBoardNameAccountancy}>
+                                                <div
+                                                    class="slds-col slds-large-size_6-of-12 slds-medium-size_6-of-12 slds-size--12-of-12 m-b-medium">
+                                                    <lightning-input class="auditDetailValidate" type="text"
+                                                        label="Year CE Hours associated with"
+                                                        placeholder="Enter Year CE Hours associated with"
+                                                        name="yearCEHours" required value={courseDetailData.yearCEHours}
+                                                        onchange={handleCourseInfoInputs}
+                                                        message-when-value-missing="Error: Year CE Hours associated with is required."
+                                                        pattern="^[1-9]\d{3}$"
+                                                        message-when-pattern-mismatch="Valid year is required.">
+                                                    </lightning-input>
+                                                </div>
+                                            </template>
+                                        </div>
+                                        <template if:true={isBoardNameAccountancy}>
+                                            <h1 class="section-heading slds-var-m-bottom_x-small slds-var-m-left_small">
+                                                Add Subject Areas
+                                            </h1>
+                                            <!-- a repeat block to enter multiple subject areas-->
+                                            <template for:each={courseDetailData.subjectAreaList}
+                                                for:item="subjectAreaItem" for:index="subjectIndex">
+                                                <div key={subjectAreaItem.index}>
+                                                    <div style="float:right;">
+                                                        <lightning-button-icon variant="brand"
+                                                            class="buttonBorder editFocus" title="Add"
+                                                            icon-name="utility:add" data-index={subjectIndex}
+                                                            onclick={addSubjectArea}
+                                                            if:true={subjectAreaItem.showAddButton}></lightning-button-icon>
+                                                        <lightning-button-icon variant="brand-outline"
+                                                            class="buttonBorder slds-m-left_small" title="Delete"
+                                                            icon-name="utility:delete" data-index={subjectIndex}
+                                                            onclick={deleteSubjectArea}
+                                                            if:true={showDeleteButton}></lightning-button-icon>
+                                                    </div>
+                                                    <div
+                                                        class="slds-grid slds-wrap slds-gutters slds-var-p-bottom_large">
+                                                        <!-- Subject Area -->
+                                                        <div
+                                                            class="slds-col slds-large-size_1-of-2 slds-medium-size_1-of-2 slds-size_1-of-1 m-b-medium">
+                                                            <lightning-input class="auditDetailValidate" type="text"
+                                                                label="Subject Area" required
+                                                                placeholder="Enter Subject Area" name="subjectArea"
+                                                                value={subjectAreaItem.subjectArea}
+                                                                onchange={handleSubjectInfoInput}
+                                                                message-when-value-missing="Error: Subject Area is required."
+                                                                pattern="^((?!(<)|(>)).)*$" data-index={subjectIndex}
+                                                                message-when-pattern-mismatch="HTML tags are not allowed.">
+                                                            </lightning-input>
+                                                        </div>
+                                                        <!-- reported Hours-->
+                                                        <div
+                                                            class="slds-col slds-large-size_1-of-2 slds-medium-size_1-of-2 slds-size_1-of-1 m-b-medium">
+                                                            <lightning-input class="auditDetailValidate" type="number"
+                                                                label="Reported Hours"
+                                                                placeholder="Enter Reported Hours" name="reportedHours"
+                                                                step=".01" min="0" maxlength="9"
+                                                                value={subjectAreaItem.reportedHours}
+                                                                onchange={handleSubjectInfoInput} required
+                                                                data-index={subjectIndex}
+                                                                message-when-value-missing="Error: Reported Hours is required.">
+                                                            </lightning-input>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </template>
+                                        </template>
+                                        <template if:true={ceAudit}>
+                                            <div class="slds-var-p-top_medium">
+
+                                                <!-- <c-lpi-audit-upload-document record-id={recordId} is-ce-audit={isCeAudit} ondocumentuploaded={getAppDocId} course-id={courseDetailData.courseId} ondeletedoc={removeIdFromList}></c-lpi-audit-upload-document> -->
+                                            </div>
+                                        </template>
+
+                                    </div>
+                                    <footer class="slds-modal__footer">
+                                        <button class="slds-button slds-button_neutral" onclick={closeModelAuthContact}
+                                            title="Cancel">Cancel</button>
+                                        <button class="slds-button slds-button_brand" onclick={saveCourseInfo}
+                                            title="Save">Save</button>
+                                    </footer>
+                                </div>
+                            </section>
+                            <div class="slds-backdrop slds-backdrop_open"></div>
+                        </template>
+                    </div>
+                    <!-- Button for Adding Course Info -->
+                    <!-- <div class="slds-p-top_small slds-clearfix">
+                        <lightning-button label="Add Course" title="Add Course"
+                            onclick={addCourseButton} aria-label="Add Course Information" icon-position="right" variant="brand-outline"
+                            class="addCourseFocus">
+                        </lightning-button>
+                    </div> -->
+                    <!-- Model PopUp for Delete-->
+                    <template if:true={openConfirmationModal}>
+                        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                            aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open"
+                            onkeydown={handleEscKeyDown}>
+                            <div class="slds-modal__container">
+                                <header class="slds-modal__header">
+                                    <button
+                                        class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                                        title="Close" onclick={handleCancelConfirmation}
+                                        aria-label="Close delete modal">
+                                        <lightning-icon icon-name="utility:close" alternative-text="close"
+                                            variant="inverse" size="small"></lightning-icon>
+                                        <span class="slds-assistive-text">Close</span>
+                                    </button>
+                                    <h1 id="modal-heading-03" class="slds-text-heading_medium slds-hyphenate">
+                                        Confirmation Required
+                                    </h1>
+                                </header>
+                                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-03">
+                                    <p>{modalHeading}</p>
+                                </div>
+                                <footer class="slds-modal__footer">
+                                    <button class="slds-button slds-button_neutral" onclick={handleCancelConfirmation}
+                                        title="Cancel">Cancel</button>
+                                    <button class="slds-button slds-button_destructive"
+                                        onclick={handleDeleteConfirmation} title="Save">Delete</button>
+                                </footer>
+                            </div>
+                        </section>
+                        <div class="slds-backdrop slds-backdrop_open"></div>
+                    </template>
+                    <template if:true={isBoardNameAccountancy}>
+                        <div>
+                            <div
+                                class="slds-m-top_x-small slds-large-size--1-of-2 slds-medium-size--1-of-2 slds-size--1-of-1">
+                                <lightning-input type="checkbox" label="Grace Period" placeholder="Enter Grace Period "
+                                    name="gracePeriod" checked={auditData.gracePeriod} onchange={handleAuditDataChange}
+                                    message-when-value-missing="Error: Grace Period is required.">
+                                </lightning-input>
+                            </div>
+                        </div>
+                    </template>
+                </template>
+                <template if:true={certificationAudit}>
+                    <h1 class="bold-24 slds-m-bottom_x-small">
+                        Complete Certification Audit
+                    </h1>
+                    <p class="asterisk-caption m-b-medium">Asterisk (<span class="c-red">*</span>) indicates required field</p>
+                    <div class="slds-grid slds-wrap slds-gutters slds-p-bottom--small">
+                        <!-- Certification Name -->
+                        <div class="slds-col slds-large-size_1-of-2 slds-medium-size--1-of-2 slds-size--1-of-1 m-b-medium">
+                            <lightning-input class="certificationValidate" type="text" label="Certification Name"
+                                placeholder="Enter Certification Name" name="name" maxlength="40"
+                                value={certificationData.name} onchange={handleCertificationInputs} required
+                                message-when-value-missing="Error: Certification Name is required."
+                                pattern="^((?!(<)|(>)).)*$" message-when-pattern-mismatch="HTML tags are not allowed.">
+                            </lightning-input>
+                        </div>
+                        <!-- Certification Authority -->
+                        <div class="slds-col slds-large-size--1-of-2 slds-medium-size--1-of-2 slds-size--1-of-1 m-b-medium">
+                            <lightning-input class="certificationValidate" type="text" label="Certification Authority"
+                                placeholder="Enter Certification Authority" name="authority" required maxlength="80"
+                                value={certificationData.authority} onchange={handleCertificationInputs}
+                                message-when-value-missing="Error: Certification Authority is required."
+                                pattern="^((?!(<)|(>)).)*$" message-when-pattern-mismatch="HTML tags are not allowed.">
+                            </lightning-input>
+                        </div>
+                        <!-- Date -->
+                        <div class="slds-col slds-large-size--1-of-2 slds-medium-size--1-of-2 slds-size--1-of-1 m-b-medium">
+                            <lightning-input class="certificationValidate certificationValidateStartDate" type="date"
+                                label="Certification Start Date" placeholder="MM/DD/YYYY" name="startDate" required
+                                message-when-value-missing="Error: Certification Start Date is required."
+                                value={certificationData.startDate} onchange={handleCertificationInputs}
+                                pattern='^[A-Za-z0-9 ]+$'
+                                message-when-pattern-mismatch="Special characters are not allowed" max={endDate}
+                                date-style="short">
+                            </lightning-input>
+                        </div>
+                        <!-- Date -->
+                        <div class="slds-col slds-large-size--1-of-2 slds-medium-size--1-of-2 slds-size--1-of-1 m-b-medium">
+                            <lightning-input class="certificationValidate" type="date" label="Certification End Date"
+                                placeholder="MM/DD/YYYY" name="endDate" required
+                                message-when-value-missing="Error: Certification End Date is required."
+                                value={certificationData.endDate} onchange={handleCertificationInputs}
+                                pattern='^[A-Za-z0-9 ]+$' min={startDate}
+                                message-when-pattern-mismatch="Special characters are not allowed" max={todayDate}
+                                date-style="short">
+                            </lightning-input>
+                        </div>
+                    </div>
+                </template>
+                <template if:true={insuranceAudit}>
+                    <h1 class="bold-24 slds-m-bottom_x-small">
+                        Complete Insurance Audit
+                    </h1>
+                    <p class="asterisk-caption m-b-medium">Asterisk (<span class="c-red">*</span>) indicates required field</p>
+                    <div class="slds-grid slds-wrap slds-gutters slds-p-bottom--small">
+                        <!-- Insurance Company -->
+                        <div class="slds-col slds-large-size--1-of-2 slds-medium-size--1-of-2 slds-size--1-of-1 m-b-medium">
+                            <lightning-input class="insuranceValidate" type="text" label="Insurance Company Name"
+                                placeholder="Enter Insurance Company" name="name" maxlength="40"
+                                value={insuranceData.name} onchange={handleInsuranceInputs} required
+                                message-when-value-missing="Error: Insurance Company is required."
+                                pattern="^((?!(<)|(>)).)*$" message-when-pattern-mismatch="HTML tags are not allowed.">
+                            </lightning-input>
+                        </div>
+                        <!-- Insurance Number -->
+                        <div class="slds-col slds-large-size--1-of-2 slds-medium-size--1-of-2 slds-size--1-of-1 m-b-medium">
+                            <lightning-input class="insuranceValidate" type="text" label="Insurance Number"
+                                placeholder="Enter Insurance Number" name="insuranceNumber" required
+                                value={insuranceData.insuranceNumber} onchange={handleInsuranceInputs}
+                                message-when-value-missing="Error: Insurance Number is required." maxlength="30"
+                                pattern="^[a-zA-Z0-9]*$"
+                                message-when-pattern-mismatch="Only Alphanumeric Characters are allowed.">
+                            </lightning-input>
+                        </div>
+                    </div>
+                </template>
+                <template if:true={cdrAudit}>
+                    <h1 class="section-heading slds-m-bottom_x-small">
+                        Complete CDR Audit
+                    </h1>
+                </template>
+                <!-- DOCUMENT UPLOAD FUNCTIONALITY - ADDED BY PIYUSH ANEJA -->
+                <div class="slds-var-p-top_medium">
+                    <template if:false={ceAudit}>
+                        <!-- <c-lpi-audit-upload-document record-id={recordId}></c-lpi-audit-upload-document> -->
+                    </template>
+                </div>
+                <!-- DOCUMENT UPLOAD FUNCTIONALITY - ENDED BY PIYUSH ANEJA -->
+                <!--<div class="slds-p-around_medium">
+                    <c-modpr-pharmacist-disciplinary-action-report></c-modpr-pharmacist-disciplinary-action-report>
+                </div> -->
+                <div class="slds-p-top_small slds-clearfix">
+                    <lightning-button label="Cancel" title="Cancel" variant="brand-outline" >
+                </lightning-button>
+                    <lightning-button variant="brand" label="Submit" title="Submit" aria-label="Submit"
+                        onclick={handleClickSubmit} class="slds-float_right submitBtnFocus" icon-position="right">
+                    </lightning-button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Model PopUp for Submit-->
+    <!-- added for 58678 -->
+    <template if:true={openSubmitConfirmationModal}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+            aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open" onkeydown={handleEscCloseModal}>
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                        onclick={handleCancelAppConfirmation}>
+                        <lightning-icon icon-name="utility:close" title="Close" variant="inverse"
+                            size="small"></lightning-icon>
+                        <span class="slds-assistive-text">delete modal</span>
+                    </button>
+                    <h1 id="modal-heading-04" class="section-heading slds-hyphenate">
+                        Submit</h1>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-04">
+                    <p>{modalHeadingSubmit}</p>
+                </div>
+                <footer class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" onclick={handleCancelAppConfirmation}
+                        title="Cancel">Cancel</button>
+                    <button class="slds-button slds-button_brand" onclick={handleSubmitConfirmation}
+                        title="Submit">Submit</button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>

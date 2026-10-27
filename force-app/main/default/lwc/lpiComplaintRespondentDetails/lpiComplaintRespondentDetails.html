@@ -1,0 +1,599 @@
+<!--
+  @description       :
+  @author            : Vamsi Mudaliar
+  @group             :
+  @last modified on  : 06-03-2024
+  @last modified by  : Uzma Md
+-->
+<template>
+    <div if:true={showSpinner}>
+        <lightning-spinner size="medium" alternative-text="Loading..."></lightning-spinner>
+    </div>
+    <div class="slds-grid slds-grid--align-spread slds-grid--vertical-align-center m-b-medium">
+        <h2 class="bold-24">{labels.complaintSubjectOfComplaint}</h2>
+        <lightning-button class="initialButton add-btn" label={labels.complaintAddSubject} title="Add Subject"
+        aria-label="Subject of complaint, Add Subject" onclick={handleAdditionalResp}>
+        </lightning-button>
+    </div>
+    <p class="m-b-medium text-secondary">
+        {labels.complaintSubjectLicenceInstructionPrefix} <a class="slds-text-link" href="/s/license-search" target="_blank" rel="noopener noreferrer">{labels.complaintCheckLicenceAndRegistration}</a> {labels.complaintSubjectLicenceInstructionSuffix}
+    </p>
+<!-- added initialButton - Ayman - S-56033 -->
+<!-- disabled={disableAddRespondentButton}> -->
+<!-- onclick={handleAdditionalResp} -->
+
+    <template if:true={isModalOpen}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+            aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal_small lpi-modal" onkeydown={handleEscKeyDown}>
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                        aria-label="Close Add or Edit Subject Modal" onclick={closeModalRespondent}>
+                        <lightning-icon icon-name="utility:close" variant="inverse" size="small"></lightning-icon>
+                    </button>
+                    <h1 id="modal-heading-01" class="section-heading slds-m-bottom_x-small">
+                        {labels.complaintAddEditSubject}</h1>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <!-- We will be adding Two Questions Separtely.  -->
+                    <div class="slds-text-heading_small slds-m-bottom_medium mandatory-text">
+                        <p class="asterisk-caption m-b-medium">{labels.complaintAsterisk} (<span class="c-red">*</span>) {labels.complaintAsteriskRequiredField}</p>
+                        <p>{labels.complaintPleaseType} <strong>{labels.complaintUnknown}</strong> {labels.complaintRequiredFieldsUnknown}</p>
+                    </div>
+                    <!-- Step 1 -->
+                    <!-- <lightning-combobox required
+                        label="Do you know the Agency of the respondent you are complaining against?"
+                        options={yesNoOptions} class="knowProfessionQues"
+                        value={respondentDetails.professionDetails.knowsRespondentProfession}
+                        name="knowsRespondentProfession" onchange={handleInputChange} data-profession="true"
+                        message-when-value-missing="Error: Do you know the profession of the respondent your complaining against is Required"
+                        data-index="0">
+                    </lightning-combobox> -->
+                    <lightning-radio-group required
+                        label={labels.complaintKnowRespondentBoard}
+                        class="radio-group"
+                        name="knowsRespondentProfession" options={yesNoOptions}
+                        value={respondentDetails.professionDetails.knowsRespondentProfession} type="radio"
+                        data-profession="true" onchange={handleInputChange}
+                        message-when-value-missing={labels.complaintKnowRespondentBoardRequiredError}
+                        data-index="0">
+                    </lightning-radio-group>
+                    <lightning-radio-group required
+                        label={labels.complaintAddRespondentInformation}
+                        class="radio-group"
+                        name="entityOrIndividual" options={entityIndividualOptions}
+                        value={respondentDetails.professionDetails.entityOrIndividual} type="radio"
+                        data-profession="true" onchange={handleInputChange}
+                        message-when-value-missing={labels.complaintBusinessIndividualRequiredError}>
+                    </lightning-radio-group>
+                    <template if:true={showInitalDetails}>
+                        <template if:true={showLicenseStatusQuestion}>
+                            <lightning-radio-group required label={labels.complaintSubjectLicenseStatus}
+                                class="radio-group respondentWitness"
+                                name="licensedUnlicensed" options={licensedUnlicensedOptions}
+                                value={respondentDetails.professionDetails.licensedUnlicensed} type="radio"
+                                data-profession="true" onchange={handleInputChange}
+                                message-when-value-missing={labels.complaintSubjectLicenseStatusRequiredError}>
+                            </lightning-radio-group>
+                        </template>
+
+                        <template if:true={showAgencyIndustrySection}>
+                            <!-- Agency / Industry / Facility: only after Business/Individual + license status -->
+                            <div class="slds-grid slds-gutters slds-wrap">
+                                <div class="slds-col slds-large-size--1-of-1 slds-medium-size--1-of-1 slds-size--1-of-1 slds-m-top_small">
+                                    <lightning-combobox
+                                        label={labels.complaintSelectSubject}
+                                        options={subjectOptions}
+                                        placeholder={labels.complaintSelectSubjectPlaceholder}
+                                        class="complaintSubject"
+                                        value={selectedSubject}
+                                        name="subject"
+                                        onchange={handleInputChange}>
+                                    </lightning-combobox>
+                                </div>
+                                <template if:true={showOtherSubjectInput}>
+                                    <div class="slds-col slds-large-size--1-of-1 slds-medium-size--1-of-1 slds-size--1-of-1 slds-m-top_small">
+                                        <lightning-input
+                                            type="text"
+                                            label={labels.complaintOtherSubject}
+                                            placeholder={labels.complaintEnterOtherSubject}
+                                            class="complaintSubject"
+                                            value={otherSubject}
+                                            name="otherSubject"
+                                            required
+                                            max-length="255"
+                                            autocomplete="off"
+                                            onchange={handleInputChange}
+                                            message-when-value-missing={labels.complaintOtherSubjectRequiredError}>
+                                        </lightning-input>
+                                    </div>
+                                </template>
+                                <div class="slds-col slds-large-size--1-of-1 slds-medium-size--1-of-1 slds-size--1-of-1">
+                                    <lightning-combobox label={labels.complaintSelectBoard} options={professionRecords}
+                                    class="respondentWitness" value={respondentDetails.professionDetails.profession}
+                                    name="profession" data-profession="true" placeholder={labels.complaintChooseBoard}
+                                    onchange={handleInputChange} required
+                                    message-when-value-missing={labels.complaintBoardRequiredError}>
+                                </lightning-combobox>
+                                </div>
+                                <div class="slds-col slds-large-size--1-of-1 slds-medium-size--1-of-1 slds-size--1-of-1 slds-m-top_small">
+                                    <lightning-combobox label={labels.complaintSelectProfession} options={licenseTypeOptions}
+                                    class="respondentWitness"
+                                    value={respondentDetails.professionDetails.licenseTypeSelected}
+                                    name="licenseTypeSelected" data-profession="true" placeholder={labels.complaintChooseProfession}
+                                    onchange={handleInputChange} disabled={disableLicenseType}
+                                    message-when-value-missing={labels.complaintProfessionRequiredError}>
+                                </lightning-combobox>
+                                </div>
+                            </div>
+                        </template>
+                    </template>
+
+
+                    <template if:true={showRespondentDetails}>
+                        <div class="divider"></div>
+                        <div class="slds-col slds-size_12-of-12">
+                            <h2 id="modal-heading-06" class="bold-20 m-b-small m-t-small">
+                                {labels.complaintSubjectInformation}
+                            </h2>
+                        </div>
+
+                        <div class="slds-col slds-size_12-of-12">
+                            <!-- <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_12-of-12"> -->
+
+                                    <template if:true={isLicensed}>
+                                        <div class="slds-combobox_container search-inputs">
+                                            <div id="box" class={boxClass} aria-expanded="true" aria-haspopup="listbox"
+                                                role="combobox">
+                                                <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right"
+                                                    style="font-weight: bold;font-size:0.8rem;" role="none">
+                                                    <template if:true={isLicenseSelected}>
+                                                        <div id="lookup-pill" class="slds-pill-container">
+                                                            <lightning-pill class="pillSize"
+                                                                label={respondentDetails.licenseDetails.pillName}
+                                                                name={respondentDetails.licenseDetails.entityName}
+                                                                data-id={respondentDetails.licenseDetails.businessId}
+                                                                onremove={handleRemovePill} data-index={index}>
+                                                                <lightning-icon icon-name="standard:person_account"
+                                                                    class="slds-icon--medium"
+                                                                    alternative-text="person_account">
+                                                                </lightning-icon>
+                                                            </lightning-pill>
+                                                        </div>
+                                                    </template>
+                                                    <template if:false={isLicenseSelected}>
+                                                        <div class="slds-p-top_none">
+                                                            <lightning-input class="respondentWitness" type="search"
+                                                                id="input" lwc:ref="licenseSearchLookup"
+                                                                value={respondentDetails.licenseDetails.searchTerm}
+                                                                onclick={handleClick}
+                                                                onchange={handleChangeBusinessLicense}
+                                                                placeholder={labels.complaintSearchByLicenseNumberOrName}
+                                                                label={labels.complaintLicenseNumberOrName} autocomplete="off"
+                                                                data-index={index} disabled={disableLicenseSearch}
+                                                                message-when-value-missing="Error: License Number or Name is required.">
+                                                            </lightning-input>
+                                                        </div>
+                                                    </template>
+                                                </div>
+                                                <div id="listbox-id-1" role="listbox " if:false={isLicenseSelected}>
+                                                    <ul class="slds-listbox slds-listbox_vertical" role="presentation">
+                                                        <template if:true={licenseRecords} for:each={licenseRecords}
+                                                            for:item="record">
+                                                            <li key={record.licenseDetails.businessId}
+                                                                onclick={handeBusinessSelect}
+                                                                data-id={record.licenseDetails.businessId}
+                                                                role="presentation" data-name={record.entityName}
+                                                                data-index={index}>
+                                                                <span
+                                                                    class="slds-lookup__item-action slds-lookup__item-action--label"
+                                                                    role="option">
+                                                                    <lightning-icon class="slds-icon slds-icon--medium"
+                                                                        icon-name="standard:person_account"
+                                                                        alternative-text="person_account" size="small">
+                                                                    </lightning-icon>
+                                                                    <span class="slds-media__body"
+                                                                        data-id={record.licenseDetails.businessId}>
+                                                                        <span class=" slds-listbox__option-text_entity"
+                                                                            data-id={record.licenseDetails.businessId}>
+                                                                            {record.entityName}
+                                                                            <span lwc:if={record.hasAddress}
+                                                                                data-id={record.licenseDetails.businessId}>
+                                                                                - {record.addressData.city}
+                                                                            </span>
+                                                                            <span lwc:if={record.hasCounty}
+                                                                                data-id={record.licenseDetails.businessId}>
+                                                                                - {record.addressData.county}
+                                                                            </span>
+
+                                                                        </span>
+
+                                                                        <template
+                                                                            lwc:if={record.licenseDetails.licenseeAccountInfo}>
+
+                                                                            <span lwc:if={record.hasDBAName}
+                                                                                class=" slds-listbox__option-text_entity"
+                                                                                data-id={record.licenseDetails.businessId}>
+                                                                                DBA Name :
+                                                                                {record.licenseDetails.licenseeAccountInfo.dbaName}</span>
+
+                                                                            <span lwc:if={record.hasCorporateName}
+                                                                                class=" slds-listbox__option-text_entity"
+                                                                                data-id={record.licenseDetails.businessId}>
+                                                                                Corporate Name :
+                                                                                {record.licenseDetails.licenseeAccountInfo.corporateName}</span>
+
+                                                                        </template>
+
+                                                                        <span class="slds-listbox__option-meta"
+                                                                            data-id={record.licenseDetails.businessId}>{record.licenseDetails.profession}</span>
+                                                                    </span>
+
+
+                                                                </span>
+                                                            </li>
+                                                        </template>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <!-- </div>
+                                            </div> -->
+                                    </div>
+                                </template>
+                            <div class="slds-grid slds-gutters slds-wrap">
+
+                                <template if:true={isFromLicenseSearch}>
+                                    <div class="slds-col slds-size_12-of-12" if:true={respondentDetails.hasDBAName}>
+                                        <span>
+                                            <lightning-input type="text" class="respondentWitness" placeholder={labels.complaintEnterDbaName}
+                                                pattern={patternObj.text} label={labels.complaintDbaName} autocomplete="off"
+                                                value={respondentDetails.licenseDetails.licenseeAccountInfo.dbaName}
+                                                name="dbaName" max-length="255" disabled=true data-index={index}>
+                                            </lightning-input>
+                                        </span>
+                                    </div>
+                                    <div class="slds-col slds-size_12-of-12"
+                                        if:true={respondentDetails.hasCorporateName}>
+                                        <span>
+                                            <lightning-input type="text" class="respondentWitness" placeholder={labels.complaintEnterCorporateName}
+                                                pattern={patternObj.text} label={labels.complaintCorporateName} autocomplete="off"
+                                                value={respondentDetails.licenseDetails.licenseeAccountInfo.corporateName}
+                                                name="corporateName" max-length="255" disabled=true data-index={index}>
+                                            </lightning-input>
+                                        </span>
+                                    </div>
+                                </template>
+
+                                <div class="slds-col slds-size_12-of-12" if:true={isBusinessEntity}>
+                                    <span>
+                                        <lightning-input required type="text" class="respondentWitness" placeholder={labels.complaintEntityName}
+                                            pattern={patternObj.text} label={labels.complaintEntityName} autocomplete="off"
+                                            value={respondentDetails.entityName} name="entityName" max-length="255"
+                                            onchange={handleInputChange} disabled={isFromLicenseSearch}
+                                            data-index={index}
+                                            message-when-value-missing={labels.complaintEntityNameRequiredError}>
+                                        </lightning-input>
+                                    </span>
+                                </div>
+                                <div class="slds-col slds-size_12-of-12" if:false={isBusinessEntity}>
+                                    <div class="slds-grid slds-wrap slds-gutters">
+
+                                        <div class="slds-col slds-size_4-of-12">
+                                            <span>
+                                                <lightning-input required type="text" class="respondentWitness" placeholder={labels.complaintEnterFirstName}
+                                                    pattern={patternObj.text} label={labels.complaintFirstName} autocomplete="off"
+                                                    value={respondentDetails.firstName} name="firstName" max-length="40"
+                                                    onchange={handleInputChange} disabled={isFromLicenseSearch}
+                                                    data-index={index}
+                                                    message-when-value-missing={labels.complaintFirstNameRequiredError}>
+                                                </lightning-input>
+                                            </span>
+                                        </div>
+                                        <div class="slds-col slds-size_4-of-12">
+                                            <span>
+                                                <lightning-input type="text" class="respondentWitness" placeholder={labels.complaintEnterMiddleName}
+                                                    pattern={patternObj.text} label={labels.complaintMiddleName} autocomplete="off"
+                                                    value={respondentDetails.middleName} name="middleName"
+                                                    max-length="40" onchange={handleInputChange}
+                                                    disabled={isFromLicenseSearch} data-index={index}>
+                                                </lightning-input>
+                                            </span>
+                                        </div>
+                                        <div class="slds-col slds-size_4-of-12">
+                                            <span>
+                                                <!-- required message added by Ayman - S-56033-->
+                                                <lightning-input required type="text" class="respondentWitness" placeholder={labels.complaintEnterLastName}
+                                                    pattern={patternObj.text} label={labels.complaintLastName} autocomplete="off"
+                                                    value={respondentDetails.lastName} name="lastName" max-length="80"
+                                                    onchange={handleInputChange} disabled={isFromLicenseSearch}
+                                                    data-index={index}
+                                                    message-when-value-missing={labels.complaintLastNameRequiredError}>
+                                                </lightning-input>
+                                            </span>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="slds-col slds-size_6-of-12">
+                                    <span>
+                                        <!-- required={isLicensed} -->
+                                        <lightning-input type="email" class="respondentWitness" placeholder={labels.complaintEnterRespondentEmail}
+                                            pattern={patternObj.email} label={labels.complaintRespondentEmail} autocomplete="off"
+                                            value={respondentDetails.email} name="email" max-length="80"
+                                            onchange={handleInputChange} data-index={index} if:false={isLicensed}>
+                                        </lightning-input>
+                                    </span>
+                                </div>
+                                <div class="slds-col slds-size_6-of-12">
+                                    <span>
+                                        <lightning-input class="phoneNumberField respondentWitness" type="tel" placeholder={labels.complaintEnterTelephoneNumber}
+                                            label={labels.complaintTelephoneNumber} value={respondentDetails.telephone} max-length="14"
+                                            onchange={handleInputChange} name="telephone" data-index={index}
+                                            if:false={isLicensed} pattern={patternObj.digits} autocomplete="off"
+                                            message-when-pattern-mismatch={labels.complaintEntryDoesNotMatchPattern}>
+                                        </lightning-input>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="slds-grid slds-gutters" >
+
+                                <div class="slds-col slds-size_12-of-12">
+                                    <span>
+                                        <!-- required message added by Ayman - S-56033-->
+                                        <lightning-input type="text" pattern={patternObj.text} label={labels.complaintStreetAddress} placeholder={labels.complaintEnterStreetAddress}
+                                            class="respondentWitness" value={respondentDetails.addressData.streetOne}
+                                            max-length="255"
+                                            onchange={handleInputChange} name="streetOne" autocomplete="off"
+                                            data-address="true" disabled={isFromLicenseSearch} data-index={index}>
+                                        </lightning-input>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="slds-grid slds-gutters">
+
+                                <div class="slds-col slds-size_6-of-12" >
+                                    <template if:true={countryOptions}>
+                                        <span>
+                                            <!-- required message added by Ayman - S-56033-->
+                                            <lightning-combobox label={labels.complaintCountry} options={countryOptions} placeholder={labels.complaintSelectCountry}
+                                                class="respondentWitness" value={respondentDetails.addressData.country}
+                                                name="country" data-address="true" max-length="80"
+                                                onchange={handleInputChange} disabled={isFromLicenseSearch}
+                                                data-index={index}
+                                                message-when-value-missing={labels.complaintCountryRequiredError}>
+                                            </lightning-combobox>
+
+                                        </span>
+                                    </template>
+                                </div>
+
+                                <div class="slds-col slds-size_6-of-12" >
+                                    <span>
+                                        <!-- required message added by Ayman - S-56033-->
+                                        <template if:false={showOtherStateField}>
+                                            <lightning-combobox label={labels.complaintState} options={stateOptions} placeholder={labels.complaintSelectState}
+                                                class="respondentWitness" value={respondentDetails.addressData.state}
+                                                name="state" data-address="true" onchange={handleInputChange}
+                                                disabled={isFromLicenseSearch} data-index={index}>
+                                            </lightning-combobox>
+                                        </template>
+                                        <template if:true={showOtherStateField}>
+                                            <lightning-input type="text" pattern={patternObj.text} label={labels.complaintState} placeholder={labels.complaintSelectState}
+                                                value={respondentDetails.addressData.otherState} name="otherState"
+                                                data-address="true" onchange={handleInputChange}
+                                                disabled={isFromLicenseSearch} max-length="40" autocomplete="off">
+                                            </lightning-input>
+                                        </template>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="slds-grid slds-wrap slds-gutters">
+                                <div class="slds-col slds-size_6-of-12">
+                                    <span>
+                                        <!-- required message added by Ayman - S-56033-->
+                                        <lightning-input type="text" class="respondentWitness" pattern={patternObj.text} placeholder={labels.complaintEnterCityTown}
+                                            label={labels.complaintCityTown} value={respondentDetails.addressData.city} name="city"
+                                            data-address="true" max-length="40" onchange={handleInputChange}
+                                            disabled={isFromLicenseSearch} data-index={index} autocomplete="off">
+                                        </lightning-input>
+                                    </span>
+                                </div>
+
+                                <div class="slds-col slds-size_6-of-12" >
+                                    <span>
+                                        <!-- required message added by Ayman - S-56033-->
+                                        <lightning-input type="text" label={labels.complaintZipCode} name="zipCode" data-address="true" placeholder={labels.complaintEnterZipCode}
+                                            value={respondentDetails.addressData.zipCode} max-length="10"
+                                            pattern={patternObj.zipCode} class="respondentWitness"
+                                            message-when-pattern-mismatch={labels.complaintZipCodePatternError}
+                                            onchange={handleInputChange} disabled={isFromLicenseSearch}
+                                            data-index={index}
+                                            autocomplete="off">
+                                        </lightning-input>
+                                    </span>
+                                </div>
+                                <div class="slds-col slds-size_6-of-12">
+                                    <span>
+                                        <lightning-input type="text" class="respondentWitness" pattern={patternObj.text} placeholder={labels.complaintSelectCountry}
+                                            label={labels.complaintCountry} value={respondentDetails.addressData.county} name="county"
+                                            data-address="true" max-length="60" onchange={handleInputChange}
+                                            autocomplete="off" disabled={isFromLicenseSearch} data-index={index}>
+                                        </lightning-input>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_6-of-12">
+                                    <span>
+                                        <!-- required message added by Ayman - S-56033-->
+                                        <lightning-input if:true={isFromLicenseSearch} type="text" placeholder={labels.complaintEnterProfession}
+                                            pattern={patternObj.text} label={labels.complaintSelectProfession} autocomplete="off"
+                                            value={respondentDetails.licenseDetails.profession} name="profession"
+                                            class="respondentWitness" max-length="255" disabled data-index={index}
+                                            message-when-value-missing={labels.complaintProfessionRequiredError}>
+                                        </lightning-input>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_6-of-12" if:true={isIndividualUnlicensed}>
+                                    <lightning-input type="text" pattern={patternObj.text} label={labels.complaintOtherLicenseNumber} placeholder={labels.complaintEnterOtherLicenseNumber}
+                                        value={respondentDetails.licenseDetails.licenseNumberText}
+                                        name="licenseNumberText" class="respondentWitness" data-license="true" onchange={handleInputChange}
+                                        max-length="80"
+                                        message-when-value-missing={labels.complaintOtherLicenseNumberRequiredError}>
+                                    </lightning-input>
+                                </div>
+                                <div class="slds-col slds-size_6-of-12" if:true={isIndividualUnlicensed}>
+                                    <lightning-input type="text" pattern={patternObj.text} label={labels.complaintOtherLicenseState} placeholder={labels.complaintEnterOtherLicenseState}
+                                        value={respondentDetails.licenseDetails.otherLicenseState}
+                                        name="otherLicenseState" class="respondentWitness" data-license="true" onchange={handleInputChange}
+                                        max-length="80"
+                                        message-when-value-missing={labels.complaintOtherLicenseStateRequiredError}>
+                                    </lightning-input>
+                                </div>
+                            </div>
+
+                            <!-- <div if:true={isLicensed} class="slds-col slds-size_6-of-12">
+                                    <span>
+                                       
+                                        <lightning-input type="text" pattern={patternObj.text}
+                                            label="License Number"
+                                            value={respondentDetails.licenseDetails.licenseNum} name="licenseNum"
+                                            class="respondentWitness" disabled={isFromLicenseSearch} message-when-value-missing="Error: License Number is required.">
+                                        </lightning-input>
+                                    </span>
+                                </div> -->
+
+                        </div>
+
+                        <!-- Adding Employer Details Sub Section Starts- - Vamsi  -->
+                        <template if:true={showCurrentEmployerSection}>
+                            <div class="slds-grid slds-grid_vertical">
+                                <div class="divider"></div>
+                                <div class="slds-col slds-size_12-of-12">
+                                    <h2 id="modal-heading-04" class="bold-20 m-b-small m-t-small">
+                                       {labels.complaintCurrentEmployerInformation}
+                                    </h2>
+                                </div>
+
+                                <div class="slds-col slds-size_12-of-12">
+                                    <!-- required message added by Ayman - S-56033-->
+                                    <lightning-input type="text" pattern={patternObj.text}
+                                        label={labels.complaintEmployerNameIfKnown} placeholder={labels.complaintEnterEmployerNameIfKnown}
+                                        value={respondentDetails.employerInfo.employerName} name="employerName"
+                                        class="respondentWitness" data-employer="true" max-length="255"
+                                        data-index={index} onchange={handleInputChange} disabled={isFromLicenseSearch}
+                                        autocomplete="off"
+                                        message-when-value-missing={labels.complaintEmployerNameRequiredError}>
+                                    </lightning-input>
+                                </div>
+                                <div class="divider"></div>
+                                <div class="slds-col slds-size_12-of-12">
+                                    <h2 id="modal-heading-05" class="bold-20 m-b-small m-t-small">
+                                        {labels.complaintEmployerAddress}
+                                    </h2>
+                                </div>
+
+                                <div class="slds-col slds-size_12-of-12">
+                                    <lightning-input type="text" pattern={patternObj.text} label={labels.complaintStreetAddress}
+                                        data-address="true" data-employer="true" disabled={isFromLicenseSearch}
+                                        autocomplete="off" placeholder={labels.complaintEnterStreetAddress}
+                                        value={respondentDetails.employerInfo.employerAddress.streetOne}
+                                        name="streetOne" class="respondentWitness" data-index={index}
+                                        onchange={handleInputChange} max-length="255"
+                                        message-when-value-missing={complaintStreetAddressRequiredError}>
+                                    </lightning-input>
+                                </div>
+                                <div class="slds-col slds-size_12-of-12">
+                                    <div class="slds-grid slds-gutters">
+                                        <div class="slds-col slds-size_6-of-12">
+                                            <!-- required message added by Ayman - S-56033-->
+                                            <lightning-input type="text" data-address="true" data-employer="true"
+                                                pattern={patternObj.text} label={labels.complaintCityTown} max-length="40" placeholder={labels.complaintEnterCityTown}
+                                                value={respondentDetails.employerInfo.employerAddress.city} name="city"
+                                                onchange={handleInputChange} class="respondentWitness"
+                                                data-index={index} autocomplete="off" disabled={isFromLicenseSearch}
+                                                message-when-value-missing={labels.complaintCityRequiredError}>
+                                            </lightning-input>
+                                        </div>
+                                        <div class="slds-col slds-size_6-of-12">
+                                            <!-- required message added by Ayman - S-56033-->
+                                            <lightning-combobox label={labels.complaintState} options={stateOptions}
+                                                data-employer="true" placeholder={labels.complaintSelectState}
+                                                value={respondentDetails.employerInfo.employerAddress.state}
+                                                name="state" data-address="true" class="respondentWitness"
+                                                onchange={handleInputChange} disabled={isFromLicenseSearch}
+                                                message-when-value-missing={labels.complaintStateRequiredError}>
+                                            </lightning-combobox>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-col slds-size_6-of-12">
+                                    <!-- required message added by Ayman - S-56033-->
+                                    <lightning-input type="text" label={labels.complaintZipCode} name="zipCode" data-address="true"
+                                        value={respondentDetails.employerInfo.employerAddress.zipCode} max-length="10"
+                                        pattern={patternObj.zipCode} disabled={isFromLicenseSearch}
+                                        data-employer="true" autocomplete="off" placeholder={labels.complaintEnterZipCode}
+                                        message-when-pattern-mismatch={labels.complaintZipCodePatternError}
+                                        class="respondentWitness" onchange={handleInputChange}>
+                                    </lightning-input>
+
+                                </div>
+
+                                <div class="slds-col slds-size_12-of-12">
+                                    <!-- required message added by Ayman - S-56033-->
+                                    <lightning-combobox label={labels.complaintEmploymentStatus} options={employmentStatusOptions}
+                                        data-employer="true" value={respondentDetails.employerInfo.employmentStatus}
+                                        name="employmentStatus" max-length="80" class="respondentWitness"
+                                        onchange={handleInputChange} disabled={isFromLicenseSearch} placeholder={labels.complaintSelectEmploymentStatus}
+                                        message-when-value-missing={labels.complaintEmploymentStatusRequiredError}>
+                                    </lightning-combobox>
+                                </div>
+                                <div class="slds-col">
+                                    <div class="slds-grid slds-gutters">
+                                        <!-- required message added by Ayman - S-56033-->
+                                        <div class="slds-col slds-size_6-of-12">
+                                            <lightning-input class="phoneNumberField respondentWitness" type="tel"
+                                                label={labels.complaintTelephoneNumber} autocomplete="off"
+                                                value={respondentDetails.employerInfo.telephone} name="telephone"
+                                                max-length="14" onchange={handleInputChange} pattern={patternObj.digits}
+                                                data-employer="true" disabled={isFromLicenseSearch} placeholder={labels.complaintEnterTelephoneNumber}
+                                                message-when-pattern-mismatch="Your Entry does not match the pattern"
+                                                message-when-value-missing={labels.complaintTelephoneNumberRequiredError}>
+                                            </lightning-input>
+                                        </div>
+
+                                        <div class="slds-col slds-size_6-of-12">
+                                            <lightning-input type="email" name="email" label={labels.complaintEmailAddress}
+                                                value={respondentDetails.employerInfo.email} max-length="80"
+                                                data-employer="true" pattern={patternObj.email}
+                                                disabled={isFromLicenseSearch} autocomplete="off" placeholder={labels.complaintEnterEmailAddress}
+                                                class="respondentWitness" onchange={handleInputChange}>
+                                            </lightning-input>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </template>
+
+                        <!-- Adding Employer Details Sub Section Ends- - Vamsi  -->
+                
+    </template>
+
+    </div>
+    <footer class="slds-modal__footer">
+        <button class="slds-button slds-button_neutral" onclick={closeModalRespondent} title="Cancel">{labels.complaintCancel}</button>
+        <button class="slds-button slds-button_brand" onclick={saveRespondentDetails} title="Save">{labels.complaintSave}</button>
+    </footer>
+    </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+</template>
+</template>

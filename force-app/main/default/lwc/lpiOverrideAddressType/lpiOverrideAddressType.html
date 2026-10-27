@@ -1,0 +1,22 @@
+<!--
+ @author            : Saurabh singh 
+ @description       : custom LWC for address type field in Personal Information step
+ @createdDate       : 17 Nov 2023
+ @last modified on  : 07-05-2024
+ @last modified by  : MTX Group Inc
+-->
+<template>
+	<div class="slds-form-element slds-has-error label slds-m-bottom_medium" >
+		<lightning-combobox
+		name="AddressType"
+		label="Address Type"
+		value={value}
+		placeholder="Select Address Type"
+		options={options}
+		onchange={handleChange}
+		readonly={showedit}
+		message-when-value-missing="Error: Address Type is required."
+		required
+		></lightning-combobox>
+	</div>
+</template>

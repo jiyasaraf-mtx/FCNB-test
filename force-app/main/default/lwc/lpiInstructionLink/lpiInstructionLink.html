@@ -1,0 +1,32 @@
+<!--
+  @description       : 
+  @author            : Bharath Kumar M
+  @group             : 
+  @last modified on  : 07-03-2024
+  @last modified by  : MTX Group Inc
+-->
+<template>
+    <div class="slds-grid slds-grid--align-spread">
+        <div class="bold-18">New License Application
+            <template if:true={isTypeRenewalOrAmend}>
+                <div class="slds-m-left_small">
+                    <b>License Number:</b> {licenseNumber}
+                </div>
+                <div class="slds-m-left_small">
+                    <b>Application SubType:</b> {subType}
+                </div>
+            </template>
+        </div>
+        <a tabindex="0" class=" link-text" href="javascript:void(0);" onclick={handleLinkClick} if:true={showInstruction}
+         aria-label="Open Instructions in New Tab, this link will open in new tab">
+            <span>Open Instructions in New Tab &nbsp;</span>
+            <lightning-icon icon-name="utility:new_window"  alternative-text="new window" variant="inverse" size="x-small">
+            </lightning-icon>
+        </a>
+    </div>
+    <!-- <div class="d-flex center start warning-message-box slds-m-top_medium" aria-label="Important Reminder: You can navigate to the previous page in the application flow by clicking the 'Previous' button or selecting completed steps on the left-hand bar. However, please be aware that if you go to the previous step without clicking 'Save and Next,' any changes made will not be saved. In such cases, you will need to re-enter the details on that page">
+        <span aria-label="Important Reminder: You can navigate to the previous page in the application flow by clicking the 'Previous' button or selecting completed steps on the left-hand bar. However, please be aware that if you go to the previous step without clicking 'Save and Next,' any changes made will not be saved. In such cases, you will need to re-enter the details on that page" >
+            <b>Important Reminder:</b> You can navigate to the previous page in the application flow by clicking the 'Previous' button or selecting completed steps on the left-hand bar. However, please be aware that if you go to the previous step without clicking 'Save and Next,' any changes made will not be saved. In such cases, you will need to re-enter the details on that page.
+        </span>
+    </div> -->
+</template>

@@ -1,0 +1,281 @@
+<!--
+	@description       : 
+	@author            : Mohit Karani
+	@group             : 
+	@last modified on  : 05-23-2024
+	@last modified by  : Mounika Dasari
+-->
+<template>
+	<div if:true={showSpinner}>
+		<lightning-spinner size="medium" alternative-text={labels.lsLoading}></lightning-spinner>
+	</div>
+	<template if:false={showLicenseResult}>
+		<div
+			class="search-banner-main slds-container--center slds-container--x-large p-t-small container-padding license-results">
+			<div class="search-banner">
+				<h1 class="text-white bold-32">{labels.lsTitle}</h1>
+				<p class="text-white">{labels.lsSubtitle}</p>
+				<div class="slds-card m-t-medium">
+					<div class="slds-col bordered_radio">
+						<lightning-radio-group options={options} value={status} label={labels.lsSelectDropdown}
+							class="firstInteractiveElement" onchange={handleChangeActiveInactive}
+							aria-label={labels.lsSelectDropdown} variant="label-hidden" required>
+						</lightning-radio-group>
+					</div>
+					<div class="slds-m-vertical_medium">
+						<h2 class="bold-16 p-b-small">{licenseMessage}</h2>
+						<p class="text-primary p-b-medium">{labels.lsIntro}</p>
+
+					</div>
+					<!-- <div class="slds-m-bottom_large info-message">
+							<lightning-icon icon-name="utility:info_alt" alternative-text="info" title="info"></lightning-icon>
+							<span class="slds-m-left_small">You must choose at least one criteria <b>(County, Profession, Name or License Number)</b></span>
+						</div> -->
+
+					<div class="slds-grid slds-gutters slds-wrap">
+						<div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+							<lightning-combobox label={labels.lsSelectDropdown} required
+								value={professionName} placeholder={labels.lsSelectPlaceholder}
+								options={professionList} onchange={handleChangeProfession}>
+							</lightning-combobox>
+						</div>
+						<div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+							<lightning-input label={labels.lsCountyName} value={countyName} placeholder={labels.lsCountyPlaceholder}
+								options={countyNames} onchange={handleChangeCounty}>
+							</lightning-input>
+						</div>
+
+					</div>
+
+					<div class="p-t-medium bordered_radio">
+						<lightning-radio-group label={labels.lsSearchCriteria} options={searchOptions} value={searchCriteria}
+							onchange={handleChangeCriteria}>
+						</lightning-radio-group>
+					</div>
+					<div class="slds-grid slds-gutters p-b-medium p-t-medium">
+						<div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+							<lightning-input type="text"
+								label={labels.lsPartialLabel}
+								placeholder={labels.lsPartialPlaceholder} required minlength="2"
+								message-when-pattern-mismatch={labels.lsPartialMismatch}
+								value={partialRequires} disabled={disablePartialText} onchange={handelPartialTextInput}
+								max-length="255"></lightning-input>
+						</div>
+					</div>
+
+					<div slot="footer m-t-medium">
+						<div class="slds-text-align_right">
+							<lightning-button variant="brand-outline" label={labels.lsReset} title={labels.lsReset}
+								class="slds-m-right_medium" onclick={resetButtonHandler}>
+							</lightning-button>
+							<lightning-button variant="brand" label={labels.lsSearch} title={labels.lsSearch}
+								onclick={submitButtonHandler} icon-name="utility:search">
+							</lightning-button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="slds-container--center slds-container--x-large p-t-small container-padding">
+			<template if:true={isNursing}>
+				<lightning-card title={labels.lsResult}>
+					<div style="overflow:auto;" class="slds-border_top">
+						<p>
+							<a href="https://www.nursys.com/LQC/LQCTerms.aspx" target="_blank">Click Here</a> to Verify
+							An Individual License using Nursys Licensure Quick Confirm.
+						</p>
+						<p>
+							<a href="https://www.nursys.com/EN/ENDefault.aspx" target="_blank">Click Here</a> to Verify
+							A List Licenses and Receive Real Time Notifications using Nursys e-Notify.
+						</p>
+					</div>
+				</lightning-card>
+			</template>
+			<template if:false={isNursing}>
+				<div class="resultCard slds-card">
+					<div class="resultFound" title={licenseRecordsSize} aria-label={licenseRecordsSize}
+						aria-live="assertive">
+						<!-- <a title="View All" slot="actions">View All</a> -->
+						<div class="bold-18 p-b-xms">{licenseRecordsSize}</div>
+						<div style="overflow:auto;" class="slds-border_bottom">
+							<table
+								class="slds-table slds-table_bordered slds-no-row-hover alpha-table-layout licensee-table license-results-table">
+								<caption class="sr-only">Licensee Search Results Table</caption>
+								<thead>
+									<tr>
+										<!-- <th>S.NO.</th> -->
+										<th>{labels.lsProfessionName}</th>
+										<th>{labels.lsLicenseeName}</th>
+										<th>{labels.lsAddress}</th>
+										<!-- <th>State</th> -->
+										<th>{labels.lsStatus}</th>
+										<th>{labels.lsAction}</th>
+									</tr>
+								</thead>
+								<tbody>
+									<template for:each={displayedData} for:item="licenseData" for:index="index">
+										<tr key={licenseData.businessLicenseId}>
+											<!-- <td>{licenseData.sNo}</td> -->
+											<td>{licenseData.rat}</td>
+											<td>{licenseData.licenseeName}</td>
+											<td>{licenseData.city}</td>
+											<!-- <td>{licenseData.state}</td> -->
+											<td>
+												<div class="slds-badge slds-theme_success">{labels.lsActive}</div>
+											</td>
+											<td>
+												<lightning-button variant="bare" icon-name="utility:preview"
+													data-id={licenseData.businessLicenseId}
+													data-addid={licenseData.addressId} label={labels.lsView}
+													alternative-text={labels.lsView} onclick={openDetailPage}
+													aria-label={licenseData.viewlicenseeName}
+													title={labels.lsView}></lightning-button>
+											</td>
+										</tr>
+									</template>
+								</tbody>
+							</table>
+						</div>
+						<!-- <div class="slds-text-align--center slds-p-around--large">
+                            <img src={norecords} alt="No records Exist">
+                            <div class=" bold-20 text-brand p-t-small">No Records Exist</div>
+                        </div> -->
+						<lightning-layout>
+							<lightning-layout-item size="6">
+								<div class="slds-p-top_small pageCount">
+									{labels.lsPage} {currentPage} {labels.lsOf} {totalPages}
+								</div>
+							</lightning-layout-item>
+							<lightning-layout-item size="6">
+								<div class="slds-p-top_small slds-text-align_right">
+									<lightning-button-group>
+										<lightning-button-icon icon-name="utility:chevronleft"
+											class="previousButtonClass" onclick={previousPage}
+											disabled={disablePreviousbutton} title="previous"
+											alternative-text="previous button for Licensee Search Results Table records"></lightning-button-icon>
+										<lightning-button-icon icon-name="utility:chevronright" class="nextButtonClass"
+											onclick={nextPage} disabled={disableNextButton} title="next"
+											alternative-text="next button for Licensee Search Results Table records"></lightning-button-icon>
+									</lightning-button-group>
+								</div>
+							</lightning-layout-item>
+						</lightning-layout>
+					</div>
+				</div>
+
+			</template>
+		</div>
+	</template>
+	<div class="slds-container--center slds-container--x-large p-t-small container-padding">
+		<template if:true={showLicenseResult}>
+			<div class="slds-grid slds-gutters slds-wrap licenses-details">
+				<div class="slds-col slds-size_3-of-3 licenses-details__left">
+					
+					<div class="slds-card">
+						<template if:true={showErrorForNoLicense}>
+							<span style="color:red">{labels.lsInvalidLicense}</span>
+						</template>
+						<template if:false={showErrorForNoLicense}>
+							<div class="slds-m-bottom_large">
+								<lightning-button variant="base" icon-name="utility:back" label={labels.lsBack}
+									title={labels.lsBack} onclick={handleBackToLicenseSearch}>
+								</lightning-button>
+							</div>
+							<div class="slds-grid slds-grid_align-spread slds-grid_vertical-align-center slds-m-bottom_medium">
+								<div class="bold-24">{labels.lsLicenseeDetails}</div>
+								<lightning-button variant="brand-outline" label={labels.lsPrintLicense}
+									title={labels.lsPrintLicense} icon-name="utility:print"
+									onclick={handlePrintLicense}>
+								</lightning-button>
+							</div>
+							<ul class="slds-accordion">
+								<li class="slds-accordion__list-item">
+									<section class="slds-accordion__section slds-is-open">
+										<div class="slds-accordion__summary">
+											<h2 class="slds-accordion__summary-heading">
+												<button
+													class="slds-button slds-button_reset slds-accordion__summary-action">
+													<lightning-icon  icon-name="utility:chevrondown"
+														size="xx-small"></lightning-icon>&nbsp;
+														<span class="slds-accordion__summary-content bold-20">{labels.lsLicenseeDetails}</span>
+												</button>
+												
+											</h2>
+										</div>
+										<div class="slds-accordion__content">
+											<template for:each={jsonData} for:item="section" for:index="ind">
+												<div key={section.sectionKey}>
+													<hr if:true={ind} />
+													<h3 if:true={section.showHeading}
+														class="bold-16 slds-m-top_x-small slds-m-bottom_small">
+														{section.displayHeading}
+													</h3>
+													<div
+														class="slds-grid slds-gutters slds-wrap slds-m-bottom_small slds-m-top_small">
+														<template for:each={section.headingFieldValue} for:item="fields"
+															for:index="fieldIndex">
+															<template if:true={fields.isCoverCompleteWidth}>
+																<div key={fields.fieldKey}
+																	class="slds-col slds-large-size_4-of-12 slds-medium-size_4-of-12 slds-small-size_12-of-12 slds-size_12-of-12 slds-m-bottom_medium">
+																	<div class="slds-grid slds-wrap slds-gutters">
+																		<div
+																			class="slds-col label slds-large-size_12-of-12 slds-medium-size_12-of-12 slds-small-size_12-of-12 slds-size_12-of-12">
+																			<span>
+																				<div>{fields.label}</div>
+																			</span>
+																		</div>
+																		<div
+																			class="slds-col value text-input slds-size_12-of-12">
+																			<div>
+																				<span if:true={fields.value}>
+																					<div>{fields.value}</div>
+																				</span>
+																				<span if:false={fields.value}>
+																					<div>-</div>
+																				</span>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</template>
+															<template if:false={fields.isCoverCompleteWidth}>
+																<div key={fields.fieldKey}
+																	class="slds-col slds-large-size_4-of-12 slds-medium-size_4-of-12 slds-small-size_12-of-12 slds-size_12-of-12 slds-m-bottom_medium">
+																	<div class="slds-grid slds-wrap slds-gutters">
+																		<div
+																			class="slds-col label slds-large-size_12-of-12 slds-medium-size_12-of-12 slds-small-size_12-of-12 slds-size_12-of-12">
+																			<span>
+																				<div>{fields.label}</div>
+																			</span>
+																		</div>
+																		<div
+																			class="slds-col value text-input slds-size_12-of-12">
+																			<div>
+																				<span if:true={fields.value}>
+																					<div>{fields.value}</div>
+																				</span>
+																				<span if:false={fields.value}>
+																					<div>-</div>
+																				</span>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</template>
+														</template>
+													</div>
+												</div>
+											</template>
+										</div>
+									</section>
+								</li>
+							</ul>
+
+						</template>
+					</div>
+				</div>
+			</div>
+		</template>
+	</div>
+
+</template>

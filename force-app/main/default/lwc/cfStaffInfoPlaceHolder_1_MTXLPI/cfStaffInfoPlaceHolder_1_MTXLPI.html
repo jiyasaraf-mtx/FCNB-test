@@ -1,0 +1,57 @@
+<template>
+            <div class="slds-grid slds-wrap slds-is-relative ">
+            <div style="position: fixed;z-index: 999999;top: 0;right: 0;">
+  <omnistudio-toast class="flexcard-toast-element" theme="slds" title="" message="" styletype=""> </omnistudio-toast>
+</div>
+            <div if:true={showLoader} class="slds-is-absolute vloc-loader_override" style="height: 100%; width: 100%; min-height:50px; background: transparent; z-index: 99;">
+  <div>
+   <omnistudio-spinner
+      variant="brand"
+      alternative-text="Loading content..."
+      size="medium"
+      theme="slds"
+      ></omnistudio-spinner>
+  </div>
+</div>
+            <template if:false={hasPermission}>
+              You don't have required permissions to view this card.
+            </template>
+            <template if:true={hasPermission}>
+              <template if:true={hasRecords}>
+                      <omnistudio-flex-card-state   data-statue="true"  data-index="0" data-rindex={rindex} class="cf-vlocity-state-0 cf-vlocity-state slds-size_12-of-12"  tracking-obj={_childCardTrackingObj} >
+      <div if:true={cardLoaded} class="slds-grid slds-wrap slds-card slds-p-around_x-small slds-m-bottom_x-small" style="">
+          <div data-style-id="state0element0" class="slds-col   slds-p-around_x-small slds-size_12-of-12 " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element0_child"  card={card}  record={record}  label="Staff Information"  collapsible="true"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element0" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-flex-datatable data-style-id="state0element0block_element0_child"   card={card}  record={record}  issearchavailable="false"  issortavailable="true"  cell-level-edit="true"  pagelimit="3"  group-order="asc"  columns='\[{"fieldName":"StaffFirstName","label":"Staff Name","searchable":true,"sortable":true,"type":"text","editable":"false","visible":"true"},{"fieldName":"StaffLastName","label":"Staff Last Name","searchable":true,"sortable":true,"type":"text","editable":"false","visible":"true"},{"fieldName":"StaffPosition","label":"Staff Poistion","searchable":true,"sortable":true,"type":"text","editable":"false","visible":"true"},{"fieldName":"StaffProgramName","label":"Staff Program Name","searchable":true,"sortable":true,"type":"text","editable":"false","visible":"true"}]'  records={records}  theme="slds"  ></omnistudio-flex-datatable>
+      </div>
+        </div></omnistudio-block>
+    </div>
+        </div>
+      </omnistudio-flex-card-state>
+                </template>
+                <template if:false={hasRecords}>
+                      <omnistudio-flex-card-state   data-statue="false"  data-index="0" data-rindex={rindex} class="cf-vlocity-state-0 cf-vlocity-state slds-size_12-of-12"  tracking-obj={_childCardTrackingObj} >
+      <div if:true={cardLoaded} class="slds-grid slds-wrap slds-card slds-p-around_x-small slds-m-bottom_x-small" style="">
+          <div data-style-id="state0element0" class="slds-col   slds-p-around_x-small slds-size_12-of-12 " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element0_child"  card={card}  record={record}  label="Staff Information"  collapsible="true"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element0" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-flex-datatable data-style-id="state0element0block_element0_child"   card={card}  record={record}  issearchavailable="false"  issortavailable="true"  cell-level-edit="true"  pagelimit="3"  group-order="asc"  columns='\[{"fieldName":"StaffFirstName","label":"Staff Name","searchable":true,"sortable":true,"type":"text","editable":"false","visible":"true"},{"fieldName":"StaffLastName","label":"Staff Last Name","searchable":true,"sortable":true,"type":"text","editable":"false","visible":"true"},{"fieldName":"StaffPosition","label":"Staff Poistion","searchable":true,"sortable":true,"type":"text","editable":"false","visible":"true"},{"fieldName":"StaffProgramName","label":"Staff Program Name","searchable":true,"sortable":true,"type":"text","editable":"false","visible":"true"}]'  records={records}  theme="slds"  ></omnistudio-flex-datatable>
+      </div>
+        </div></omnistudio-block>
+    </div>
+        </div>
+      </omnistudio-flex-card-state>
+                </template>
+            </template>
+            <template if:true={hasError}>
+            {error}
+            </template>
+            
+      <omnistudio-action action-wrapperclass="slds-hide" re-render-flyout class="action-trigger slds-col" onupdateos={updateOmniscript} onselectcards={updateSelectedCards} onsetvalue={updateAction} onfireactionevent={actionEvtHandler}>
+      
+      </omnistudio-action>
+  
+            <omnistudio-action class="execute-action" re-render-flyout action-wrapperclass="slds-hide" onupdateos={updateOmniscript} onselectcards={updateSelectedCards} onsetvalue={updateAction} onfireactionevent={actionEvtHandler}>
+            
+            </omnistudio-action>
+            </div>
+          </template>

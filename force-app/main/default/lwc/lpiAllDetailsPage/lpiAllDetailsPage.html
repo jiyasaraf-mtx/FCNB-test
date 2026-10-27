@@ -1,0 +1,21 @@
+<!--
+  @description       : This component is to show All Licenses, All Applications, All Payments on MO Pro Dashboard
+  @author            : Neeraj Avadhanam
+  @group             : 
+  @last modified on  : 28 Nov 2023
+  @last modified by  : 
+-->
+<template>
+    <lightning-radio-group name="radioGroup" class="radio-group" 
+                options={allDetailsOptions} type="radio" onchange={onOptionChange} value={selectedOption}>
+    </lightning-radio-group>
+    <template if:true={showApplicationsPage}>
+        <c-lpi-all-application-detail-page show-applications="true"></c-lpi-all-application-detail-page>
+    </template>
+    <template if:true={showLicensesPage}>
+      <c-lpi-all-license-detail-page show-licenses ="true"></c-lpi-all-license-detail-page>
+    </template>
+    <template if:true={showPaymentsPage}>
+      <c-lpi-all-payment-detail-page show-payments="true"></c-lpi-all-payment-detail-page>
+    </template>
+</template>

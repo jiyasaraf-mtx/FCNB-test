@@ -1,0 +1,9 @@
+.lpi-footer {
+    color: $text-primary;
+    font-size: $font-size-13;
+    font-weight: $font-weight-semi-bold;
+    border-top: toRem(1) solid $border-lyt-blue;
+    .text{
+        padding: 1.5rem 0;
+    }
+}

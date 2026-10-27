@@ -1,0 +1,90 @@
+c-cf-sucess-page{
+    .download-app-container,
+    .download-pdf-btn{
+        .sub-heading{
+           color: $text-dark-blue;
+           text-align: left;
+        }
+        .slds-icon{
+            fill: $text-dark-blue !important;
+        }
+        .blue-text{
+            text-align: left;
+            a {
+                color: $text-dark-blue !important;
+            }
+        }
+    }
+    @media all and (max-width: 64rem) {
+        .download-app-container,
+        .download-pdf-btn{
+            padding-left: 3rem;
+            .sub-heading{
+                text-align: center;
+             }
+             .blue-text{
+                text-align: center;
+            }
+            .slds-col {
+                width: 100%;
+            }
+        }
+    }
+}
+@media all and (max-width: 30rem) {
+    .sub-heading ,.blue-text {
+    
+            text-align: left !important;
+    }
+    
+}
+
+// .application_status{
+//     max-width: 30rem;
+//     margin: 0 auto;
+// }
+
+.success-container{
+    .blue-text{
+        span.slds-action_text {
+            font-size: 1rem;
+            font-weight: $font-weight-semi-bold;
+        }
+    }
+}
+
+.success-text{
+font-size: $large;
+font-weight: $font-weight-bold;
+line-height: 150%;
+color: $success-main;
+// margin-bottom: 5rem;
+}
+
+.download-app-container,.download-pdf-btn {
+    margin-bottom: 2rem;
+}
+.blue-text{
+    .slds-icon{
+        height: $small;
+        width: $small;
+        margin-right: $x-small;
+        fill: $primary-main !important;
+    }
+}
+
+.payment-heading-2{
+    font-size: $font-size-20;
+    font-weight: $font-weight-bold;
+    line-height: 150%;
+}
+.success-next-step{
+    margin-bottom: $large;
+    .slds-rich-text-editor__output{
+        div{
+            font-size: $font-size-20;
+            font-weight: $font-weight-bold;
+            margin-bottom: $small;
+        }
+    }
+}

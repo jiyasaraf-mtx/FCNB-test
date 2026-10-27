@@ -1,0 +1,206 @@
+<!--
+  @description       : This page is used to generate PDF for Inspection Report
+  @author            : Ankit Bansal
+  @group             : 
+  @last modified on  : 06-24-2024
+  @last modified by  : Bharath Kumar M
+-->
+<apex:page renderAs="pdf" showHeader="false" applyHtmlTag="false" standardController="Visit" extensions="LPI_InspectionReportController">
+    <html>
+        <head>
+            <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />    
+            <style type="text/css" media="print">
+                @page {
+                    padding-top: 100px;
+                    @top-center {
+                        content: element(header);
+                    }
+                }
+        
+                .header {
+                    margin-top : 20px;
+                    padding: 10px;
+                    position: running(header);
+                }
+                
+                .table-container {
+                   width: 100%;
+                   overflow-x: auto;
+                 }
+            </style>
+        </head>
+        <body>
+            <div class="header">
+            <table style="width: 100%; border-collapse: collapse; margin-bottom :100px">
+                <tr>
+                    <td style="width: 10%; vertical-align: top;">
+                        <c:LPI_PDFLogo />
+                        <!-- <apex:image id="theImage" value="{!URLFOR($Resource.LPI_Design,'/media/images/logo.png')}" width="200" /> -->
+                        <apex:outputText value="{!inspectionDetail.professionCaps}"/><br/>
+                        <apex:outputText value="INSPECTION REPORT"/>
+                    </td>
+                        <td style="width: 50%; text-align: right; vertical-align: top;">
+                         <apex:outputText value="BOARD OF {!inspectionDetail.boardName}"></apex:outputText>
+                            <br/>
+                            <apex:outputText value="{!inspectionDetail.boardPOBox}, JEFFERSON CITY, MO 65102"/><br/>
+                            <apex:outputText >(573) 751-1052</apex:outputText><br/>
+                        </td>
+                </tr>
+            </table>
+            </div>
+                <table  border ="1px solid black" style="border-collapse : collapse;width:100%">
+                    <tr >
+                        <td class="headerClass" >
+                            Establishment License Number
+                        </td>
+                        <td>{!inspectionDetail.licenseNum}</td>
+                    </tr>
+                    <tr >
+                        <td >
+                            Establishment Name
+                        </td>
+                        <td>
+                            {!inspectionDetail.entityName}</td>
+                    </tr>
+                    <tr >
+                        <td> Owner Name</td>
+                        <td>{!inspectionDetail.ownerName}</td>
+                    </tr>
+                    <tr >
+                        <td> Address</td>
+                        <td>{!inspectionDetail.street}</td>
+                    </tr>
+                    <tr >
+                        <td>City</td>
+                        <td>{!inspectionDetail.city}</td>
+                    </tr>
+                    <tr >
+                        <td>Zip</td>
+                        <td>{!inspectionDetail.zip}</td>
+                    </tr>
+                    <tr >
+                        <td>Phone</td>
+                        <td>{!inspectionDetail.accPhone}</td>
+                    </tr>
+                    <tr >
+                        <td>Email</td>
+                        <td>{!inspectionDetail.businessEmail}</td>
+                    </tr>
+                    <tr >
+                        <td>Current Inspection Date</td>
+                        <td>{!inspectionDetail.inspectionDate}</td>
+                    </tr>
+                    <tr >
+                        <td>Last Inspection Date</td>
+                        <td>{!inspectionDetail.lastInspectionDate}</td>
+                    </tr>
+                    <tr >
+                        <td>Inspector</td>
+                        <td>{!inspectionDetail.inspector}</td>
+                    </tr>
+                    <tr >
+                        <td> Profession</td>
+                        <td>{!inspectionDetail.profession}</td>
+                    </tr>
+                    <tr >
+                        <td>Inspection Type</td>
+                        <td>{!inspectionDetail.inspectionType}</td>
+                    </tr>
+                    <tr >
+                        <td>Establishment Type</td>
+                        <td>{!inspectionDetail.establishmentType}</td>
+                    </tr>
+                    
+                </table>
+                
+                <table style="margin-top:2rem;">
+                    <apex:repeat value="{!sectionsList}" var="key1">
+                        <tr>
+                            <td><b>{!key1}</b></td>
+                        </tr>
+                        <br/>
+                        <apex:repeat value="{!headingToQuesMap[key1]}" var="value">
+                            <tr>
+                                <td>
+                                    <apex:outputText value="Question: {!value.question}"/><br/>
+                                    <apex:outputText value="Answer: {!value.answer}"/><br/>
+                                    <apex:outputText value="Comments: {!value.comments}"/><br/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                            </tr>
+                        </apex:repeat>
+                        <br/>
+                    </apex:repeat>
+                </table>
+            	<div style="margin-top:20px">
+                <table class="table-container" border ="1px solid black" style="border-collapse : collapse;width:100%">
+                    <tr>
+                        <th colspan="{!questionNameList.size}">
+                        <apex:outputPanel rendered="{!inspectionDetail.header != ''}">
+                             {!inspectionDetail.header}<br/>
+                         </apex:outputPanel>
+                        </th>
+                  </tr>
+                    <tr>
+                       <apex:repeat value="{!questionNameList}" var="column">
+                             <th style="font-size:14px">{!column}</th>
+                       </apex:repeat>
+                    </tr>
+                    <apex:repeat value="{!wrapperList}" var="row">
+                    <tr>
+                       <apex:repeat value="{!row.insColumnClassList}" var="column">
+                       <td>{!column.insConFieldValue}</td>
+                       </apex:repeat>
+                    </tr>
+    				</apex:repeat>
+                    <tr>
+                        <th colspan="{!questionNameList.size}">
+                        <apex:outputPanel rendered="{!inspectionDetail.footer != ''}">
+                             {!inspectionDetail.footer}<br/>
+                         </apex:outputPanel>
+                        </th>
+                  </tr>
+                </table>
+            </div>
+               <div style="margin-top:10px">
+                    <label> 
+                        <img src="/img/checkbox_checked.gif" alt="Checked" style="vertical-align: middle;" />
+                        &nbsp;
+                        I attest that I am requesting to receive email notification from the Board of Cosmetology and Barber Examiners
+                        ("Board") regarding the outcome of Board conducted inspections and any follow-up notice of violation(s).
+                   </label><br/><br/>
+                   <label> 
+                        <img src="/img/checkbox_checked.gif" alt="Checked" style="vertical-align: middle;" />
+                        &nbsp;
+                        I attest that, by entering my name in the "Signed By" field it is to be viewed as my legal
+                   </label><br/><br/>
+                    <table width="100%">
+                       <tr>
+                        <td width="40%"><b>SIGNED BY</b></td>
+                        <td width="30%"><b>TITLE</b></td>
+                        <td width="30%"><b>DATE</b></td>
+                      </tr>
+                      <tr>
+                        <td>{!inspectionDetail.licenseeName}</td>
+                        <td>{!inspectionDetail.title}</td>
+                        <td>{!inspectionDetail.licenseeSignedDate}</td>
+                      </tr>
+                        <tr></tr>
+                       <tr>
+                        <td width="40%"><b>INSPECTOR'S SIGNATURE</b></td>
+                        <td width="30%"></td>
+                        <td width="30%"><b>DATE</b></td>
+                      </tr>
+                        <tr>
+                        <td>{!inspectionDetail.inspectorName}</td>
+                        <td></td>
+                        <td >{!inspectionDetail.inspectorSingnedByDate}</td>
+                      </tr>
+                      
+                    </table>
+               </div>
+        </body>
+    </html>
+</apex:page>

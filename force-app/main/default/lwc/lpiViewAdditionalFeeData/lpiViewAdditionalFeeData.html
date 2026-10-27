@@ -1,0 +1,59 @@
+<!--
+  @description       : 
+  @author            : Sudhanshu Jain
+  @group             : 
+  @last modified on  : 22-02-2024
+-->
+<template>
+    <template if:true={feeData}>
+        <!-- <lightning-card> -->
+            <div class="slds-clearfix">
+                <h2 class="slds-float_left heading-small">
+                    Fee Information
+                </h2>
+            </div>
+            <div class="section-header">
+                <table
+                    class="slds-m-top_medium slds-table slds-table_bordered slds-no-row-hover document-upload_table alpha-table-layout">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="slds-is-resizable cl_one"> Fee Name</th>
+                            <th scope="col" class="slds-is-resizable cl_two"> Amount </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template iterator:it={feeData}>
+                            <tr key={it.value.feeName}>
+                                <td>
+                                    <div class="slds-cell-wrap ">
+                                        <p>{it.value.feeName}</p>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="slds-cell-wrap ">
+                                        <p>${it.value.feeAmount}</p>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr key={it.value.feeName} if:true={it.last}>
+                                <td>
+                                    <div class="slds-cell-wrap ">
+                                        <p>Total Amount</p>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="slds-cell-wrap ">
+                                        <p>${getTotalAmount}</p>
+                                    </div>
+                                </td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </div>
+            <div slot="footer" class="m-t-large">
+                <slot name="paymentButton"></slot>
+            </div>
+        <!-- </lightning-card> -->
+    </template>
+</template>

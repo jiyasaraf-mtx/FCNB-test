@@ -1,0 +1,109 @@
+:host {
+    display: block;
+    --ink: #172033;
+    --muted: #667085;
+    --brand: #1261c9;
+    --line: #dfe4ea;
+    --green: #137333;
+}
+
+.success-page {
+    padding: 0.5rem 0 2rem;
+    color: var(--ink);
+    max-width: 1100px;
+}
+
+.success-container {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 13px;
+    padding: 1.75rem 1.5rem;
+    box-shadow: 0 5px 20px #1018280a;
+    align-items: flex-start;
+}
+
+.success-title {
+    margin: 0 0 0.75rem;
+    font-size: 1.75rem;
+    font-weight: 800;
+    line-height: 1.25;
+    color: var(--ink);
+}
+
+.success-body {
+    margin: 0 0 1.25rem;
+    color: var(--muted);
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.application-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem 2rem;
+    margin-bottom: 1.5rem;
+    padding: 1rem 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+}
+
+.application-label {
+    font-size: 1rem;
+}
+
+.label-text {
+    font-weight: 600;
+    color: var(--ink);
+    margin-right: 0.35rem;
+}
+
+.value-text {
+    color: var(--brand);
+    font-weight: 700;
+}
+
+.status-pill {
+    color: var(--green);
+}
+
+.next-steps {
+    margin-bottom: 1.75rem;
+}
+
+.next-steps-title {
+    font-weight: 700;
+    font-size: 1.05rem;
+    margin-bottom: 0.5rem;
+}
+
+.next-steps ul {
+    margin: 0;
+    padding-left: 1.25rem;
+    color: var(--muted);
+    line-height: 1.55;
+}
+
+.next-steps li {
+    margin-bottom: 0.4rem;
+}
+
+.actions {
+    margin-top: 0.5rem;
+}
+
+.success-visual {
+    min-height: 140px;
+    padding-top: 0.5rem;
+}
+
+@media (max-width: 768px) {
+    .success-title {
+        font-size: 1.4rem;
+    }
+
+    .success-visual {
+        order: -1;
+        min-height: 90px;
+        margin-bottom: 0.5rem;
+    }
+}

@@ -1,0 +1,23 @@
+<!--
+  @description       : It is used in Quick Action of Individual Application of Approve PLS State Exam Button
+  @author            : Sudhanshu Jain
+  @group             : 
+  @last modified on  : 10-10-2023
+  @last modified by  : 
+-->
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickActionWithoutHeader" controller="LPI_ProLandSurveyController">
+  <aura:attribute name="hideModal" type="boolean" default="true"/>
+  <aura:attribute name="recordId" type="String" />
+  <aura:handler name="init" value="{!this}" action="{!c.callBackendFunction}" description="Trigger backend function on initialization"/>
+
+  <aura:html tag="style">
+    <aura:if isTrue="{!v.hideModal}">
+    .slds-modal {
+    visibility: hidden;
+    display: none;
+    } 
+  </aura:if> 
+  </aura:html>
+  <aura:handler name="init" value="{!this}" action="{!c.handleClose}"/>
+  <c:lpiProLandSurveyStateExam recordId ="{!v.recordId}" hideModal = "{!v.hideModal}" buttonName="Approve_PLS_State_Exam" onmodalclose="{!c.handleClose}"/>
+</aura:component>

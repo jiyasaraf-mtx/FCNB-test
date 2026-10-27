@@ -1,0 +1,55 @@
+<template>
+            <div class="slds-grid slds-wrap slds-is-relative ">
+            <div style="position: fixed;z-index: 999999;top: 0;right: 0;">
+  <omnistudio-toast class="flexcard-toast-element" theme="slds" title="" message="" styletype=""> </omnistudio-toast>
+</div>
+            <div if:true={showLoader} class="slds-is-absolute vloc-loader_override" style="height: 100%; width: 100%; min-height:50px; background: transparent; z-index: 99;">
+  <div>
+   <omnistudio-spinner
+      variant="brand"
+      alternative-text="Loading content..."
+      size="medium"
+      theme="slds"
+      ></omnistudio-spinner>
+  </div>
+</div>
+            <template if:false={hasPermission}>
+              You don't have required permissions to view this card.
+            </template>
+            <template if:true={hasPermission}>
+              <template if:true={hasRecords}>
+                        <template for:each={_records} for:item="record" for:index="rindex">
+                            <omnistudio-flex-card-state if:true={record}  key={record._flex.uniqueKey} data-recordid={record.Id} record={record} data-statue="true"  data-index="0" data-rindex={rindex} class="cf-vlocity-state-0 cf-vlocity-state slds-size_12-of-12"  tracking-obj={_childCardTrackingObj} >
+      <div if:true={cardLoaded} class="slds-grid slds-wrap slds-card slds-p-around_x-small slds-m-bottom_x-small" style="">
+          <div data-style-id="state0element0" class="slds-col   slds-size_12-of-12 condition-element" data-rindex={rindex} style=""  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-0","field":"Parent.licenseType","operator":"==","value":"Preneed Agent","type":"custom","hasMergeField":false},{"id":"state-new-condition-25","field":"Parent.licenseType","operator":"==","value":"Preneed Agent Funeral Director","type":"custom","hasMergeField":false,"logicalOperator":"||"}]}' ><omnistudio-output-field data-style-id="state0element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3EList%20each%20preneed%20seller%20for%20whom%20you%20are%20authorized%20to%20sell,%20negotiate,%20or%20solicit%20the%20sale%20for%20preneed%20contracts%20once%20registered.%3C/div%3E"  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-0","field":"Parent.licenseType","operator":"==","value":"Preneed Agent","type":"custom","hasMergeField":false},{"id":"state-new-condition-25","field":"Parent.licenseType","operator":"==","value":"Preneed Agent Funeral Director","type":"custom","hasMergeField":false,"logicalOperator":"||"}]}'  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element1" class="slds-col   slds-size_12-of-12 condition-element" data-rindex={rindex} style=""  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-7","field":"Parent.licenseType","operator":"==","value":"Preneed Provider","type":"custom","hasMergeField":false}]}' ><omnistudio-output-field data-style-id="state0element1_child"   card={card}  record={record}  merge-field="%3Cdiv%3EIdentify%20the%20name%20and%20address%20of%20each%20seller%20authorized%20by%20the%20provider%20to%20sell%20preneed%20contracts%20in%20which%20the%20provider%20is%20designated%20or%20obligated%20as%20the%20provider.%20(Please%20do%20not%20list%20each%20individual%20person,%20list%20the%20firm(s)%20authorized%20to%20sell%20preneed%20contracts%20for%20your%20establishment.)%3C/div%3E"  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-7","field":"Parent.licenseType","operator":"==","value":"Preneed Provider","type":"custom","hasMergeField":false}]}'  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element2" class="slds-col   slds-size_12-of-12 condition-element" data-rindex={rindex} style=""  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-14","field":"Parent.licenseType","operator":"==","value":"Preneed Seller","type":"custom","hasMergeField":false}]}' ><omnistudio-output-field data-style-id="state0element2_child"   card={card}  record={record}  merge-field="%3Cdiv%3EList%20the%20name%20and%20address%20of%20each%20preneed%20provider%20that%20is%20authorized%20to%20sell%20preneed%20contracts%20under%20which%20the%20preneed%20provider%20is%20or%20may%20be%20designated%20as%20the%20contracts%20provider.%3C/div%3E"  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-14","field":"Parent.licenseType","operator":"==","value":"Preneed Seller","type":"custom","hasMergeField":false}]}'  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div>
+      </omnistudio-flex-card-state>
+                        </template>
+                      </template>
+                      <template if:false={hasRecords}>
+                            <omnistudio-flex-card-state  record={record} data-statue="false"  data-index="0" data-rindex={rindex} class="cf-vlocity-state-0 cf-vlocity-state slds-size_12-of-12"  tracking-obj={_childCardTrackingObj} >
+      <div if:true={cardLoaded} class="slds-grid slds-wrap slds-card slds-p-around_x-small slds-m-bottom_x-small" style="">
+          <div data-style-id="state0element0" class="slds-col   slds-size_12-of-12 condition-element" data-rindex={rindex} style=""  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-0","field":"Parent.licenseType","operator":"==","value":"Preneed Agent","type":"custom","hasMergeField":false},{"id":"state-new-condition-25","field":"Parent.licenseType","operator":"==","value":"Preneed Agent Funeral Director","type":"custom","hasMergeField":false,"logicalOperator":"||"}]}' ><omnistudio-output-field data-style-id="state0element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3EList%20each%20preneed%20seller%20for%20whom%20you%20are%20authorized%20to%20sell,%20negotiate,%20or%20solicit%20the%20sale%20for%20preneed%20contracts%20once%20registered.%3C/div%3E"  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-0","field":"Parent.licenseType","operator":"==","value":"Preneed Agent","type":"custom","hasMergeField":false},{"id":"state-new-condition-25","field":"Parent.licenseType","operator":"==","value":"Preneed Agent Funeral Director","type":"custom","hasMergeField":false,"logicalOperator":"||"}]}'  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element1" class="slds-col   slds-size_12-of-12 condition-element" data-rindex={rindex} style=""  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-7","field":"Parent.licenseType","operator":"==","value":"Preneed Provider","type":"custom","hasMergeField":false}]}' ><omnistudio-output-field data-style-id="state0element1_child"   card={card}  record={record}  merge-field="%3Cdiv%3EIdentify%20the%20name%20and%20address%20of%20each%20seller%20authorized%20by%20the%20provider%20to%20sell%20preneed%20contracts%20in%20which%20the%20provider%20is%20designated%20or%20obligated%20as%20the%20provider.%20(Please%20do%20not%20list%20each%20individual%20person,%20list%20the%20firm(s)%20authorized%20to%20sell%20preneed%20contracts%20for%20your%20establishment.)%3C/div%3E"  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-7","field":"Parent.licenseType","operator":"==","value":"Preneed Provider","type":"custom","hasMergeField":false}]}'  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element2" class="slds-col   slds-size_12-of-12 condition-element" data-rindex={rindex} style=""  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-14","field":"Parent.licenseType","operator":"==","value":"Preneed Seller","type":"custom","hasMergeField":false}]}' ><omnistudio-output-field data-style-id="state0element2_child"   card={card}  record={record}  merge-field="%3Cdiv%3EList%20the%20name%20and%20address%20of%20each%20preneed%20provider%20that%20is%20authorized%20to%20sell%20preneed%20contracts%20under%20which%20the%20preneed%20provider%20is%20or%20may%20be%20designated%20as%20the%20contracts%20provider.%3C/div%3E"  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-14","field":"Parent.licenseType","operator":"==","value":"Preneed Seller","type":"custom","hasMergeField":false}]}'  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div>
+      </omnistudio-flex-card-state>
+                      </template>
+            </template>
+            <template if:true={hasError}>
+            {error}
+            </template>
+            
+      <omnistudio-action action-wrapperclass="slds-hide" re-render-flyout class="action-trigger slds-col" onupdateos={updateOmniscript} onselectcards={updateSelectedCards} onsetvalue={updateAction} onfireactionevent={actionEvtHandler}>
+      
+      </omnistudio-action>
+  
+            <omnistudio-action class="execute-action" re-render-flyout action-wrapperclass="slds-hide" onupdateos={updateOmniscript} onselectcards={updateSelectedCards} onsetvalue={updateAction} onfireactionevent={actionEvtHandler}>
+            
+            </omnistudio-action>
+            </div>
+          </template>

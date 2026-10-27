@@ -1,0 +1,193 @@
+<template>
+    <div class="backdrop" if:true={showSpinner}>
+        <div class="spinner">
+            <lightning-spinner alternative-text="Loading refund request details"></lightning-spinner>
+        </div>
+    </div>
+
+    <div class="refund-page slds-card">
+        <div class="m-b-medium">
+            <lightning-button
+                variant="base"
+                class="base-link-btn"
+                label="Back"
+                onclick={handleBack}
+            ></lightning-button>
+        </div>
+
+        <h1 class="page-heading m-b-medium">Refund Request</h1>
+
+        <template if:true={hasError}>
+            <div class="slds-notify slds-notify_alert slds-alert_error slds-m-bottom_medium" role="alert">
+                <span class="slds-assistive-text">error</span>
+                <h2>{errorMessage}</h2>
+            </div>
+        </template>
+
+        <template if:false={hasError}>
+            <section class="refund-section slds-m-bottom_large" aria-labelledby="applicant-info-heading">
+                <h2 id="applicant-info-heading" class="section-heading">Applicant Information</h2>
+                <div class="slds-grid slds-wrap slds-gutters">
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-m-bottom_medium">
+                        <lightning-input
+                            type="text"
+                            label="Name"
+                            value={applicantName}
+                            readonly
+                        ></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-m-bottom_medium">
+                        <lightning-input
+                            type="email"
+                            label="Email"
+                            value={email}
+                            readonly
+                        ></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-m-bottom_medium">
+                        <lightning-input
+                            type="tel"
+                            label="Phone No."
+                            value={phone}
+                            readonly
+                        ></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-m-bottom_medium">
+                        <lightning-input
+                            type="date"
+                            label="Date of Birth"
+                            value={dateOfBirth}
+                            readonly
+                        ></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-m-bottom_medium">
+                        <lightning-textarea
+                            label="Street Address"
+                            value={streetAddress}
+                            readonly
+                        ></lightning-textarea>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3 slds-m-bottom_medium">
+                        <lightning-input
+                            type="text"
+                            label="City"
+                            value={city}
+                            readonly
+                        ></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3 slds-m-bottom_medium">
+                        <lightning-input
+                            type="text"
+                            label="State"
+                            value={state}
+                            readonly
+                        ></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3 slds-m-bottom_medium">
+                        <lightning-input
+                            type="text"
+                            label="Zip Code"
+                            value={zipCode}
+                            readonly
+                        ></lightning-input>
+                    </div>
+                </div>
+            </section>
+
+            <section class="refund-section slds-m-bottom_large" aria-labelledby="application-details-heading">
+                <h2 id="application-details-heading" class="section-heading">Application Details</h2>
+                <div class="slds-grid slds-wrap slds-gutters">
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-m-bottom_medium">
+                        <lightning-input
+                            type="text"
+                            label="Application Number"
+                            value={applicationNumber}
+                            readonly
+                        ></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-m-bottom_medium">
+                        <lightning-input
+                            type="text"
+                            label="State or Board"
+                            value={stateOrBoard}
+                            readonly
+                        ></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-m-bottom_medium">
+                        <lightning-input
+                            type="text"
+                            label="License Type"
+                            value={licenseType}
+                            readonly
+                        ></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-m-bottom_medium">
+                        <lightning-input
+                            type="text"
+                            label="Application Payment Transaction ID"
+                            value={paymentTransactionId}
+                            readonly
+                        ></lightning-input>
+                    </div>
+                </div>
+            </section>
+
+            <section class="refund-section slds-m-bottom_large" aria-labelledby="reason-heading">
+                <h2 id="reason-heading" class="section-heading">Reason for Refund Request</h2>
+                <fieldset class="slds-form-element">
+                    <legend class="slds-form-element__legend slds-assistive-text">
+                        Select one or more reasons for the refund request
+                    </legend>
+                    <div class="slds-form-element__control">
+                        <lightning-input
+                            type="checkbox"
+                            label="Change of Plan"
+                            checked={reasonChangeOfPlan}
+                            data-field="changeOfPlan"
+                            onchange={handleReasonChange}
+                        ></lightning-input>
+                        <lightning-input
+                            type="checkbox"
+                            label="Double or Duplicate Payment – Include proof of payment"
+                            checked={reasonDuplicatePayment}
+                            data-field="duplicatePayment"
+                            onchange={handleReasonChange}
+                        ></lightning-input>
+                        <lightning-input
+                            type="checkbox"
+                            label="Deceased – Must provide death certificate"
+                            checked={reasonDeceased}
+                            data-field="deceased"
+                            onchange={handleReasonChange}
+                        ></lightning-input>
+                        <lightning-input
+                            type="checkbox"
+                            label="Other"
+                            checked={reasonOther}
+                            data-field="other"
+                            onchange={handleReasonChange}
+                        ></lightning-input>
+                    </div>
+                </fieldset>
+                <template if:true={showOtherText}>
+                    <div class="slds-m-top_medium">
+                        <lightning-textarea
+                            label="Other"
+                            value={otherReasonText}
+                            onchange={handleOtherReasonChange}
+                            required
+                        ></lightning-textarea>
+                    </div>
+                </template>
+            </section>
+
+            <div class="slds-m-top_medium">
+                <lightning-button
+                    variant="brand"
+                    label="Submit Refund Request"
+                    onclick={handleSubmit}
+                ></lightning-button>
+            </div>
+        </template>
+    </div>
+</template>

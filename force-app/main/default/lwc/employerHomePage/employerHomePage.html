@@ -1,0 +1,216 @@
+<!--
+  @description       : 
+  @author            : MTX Group Inc
+  @group             : 
+  @last modified on  : 07-24-2024
+  @last modified by  : Uzma Md
+-->
+<template>
+    <div class="homepage">
+        <template if:true={isDashboardMode}>
+            <div class="slds-card m-b-medium">
+                <div class="slds-grid slds-wrap slds-gutters slds-grid_vertical-align-center">
+                    <div class="slds-col slds-large-size_9-of-12 slds-medium-size_12-of-12 slds-size_12-of-12">
+                        <h1 class="bold-32 m-b-xms">Welcome to Employer Portal</h1>
+                        <p>Welcome to Employer Portal. Here you can apply online for a new license, renew a current license, and file a complaint, among other actions related to professional registration and licensure.</p>
+                        <div class="divider"></div>
+                        <div class="slds-grid banner-btns">
+                            <lightning-button variant="base" label="Apply for License" title="Apply for License" onclick={navigateToApplyForLicense} class="base-link base-apply-btn m-r-xl"></lightning-button>
+                            <lightning-button variant="base" label="Renew License" title="Renew License" onclick={navigateToRenewLicense} class="base-link base-renew-btn m-r-xl"></lightning-button>
+                            <lightning-button variant="base" label="File Complaint" title="File Complaint" onclick={navigateToFileComplaints} class="base-link base-file-btn"></lightning-button>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-large-size--3-of-12 slds-medium-size_12-of-12 slds-size--12-of-12">
+                        <div class="slds-grid slds-grid--align-center slds-grid_vertical-align-center">
+                            <img src={dashboardImg} alt="" srcset="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="">
+                <c-lpi-need-attention></c-lpi-need-attention>
+                <c-emp-dashboard-detail-container></c-emp-dashboard-detail-container>
+                <div id="sponsoring-insurer-review" class="slds-m-top_large">
+                    <c-emp-sponsoring-insurer-review page-mode={pageMode} show-header></c-emp-sponsoring-insurer-review>
+                </div>
+            </div>
+        </template>
+        <template if:true={isQueueMode}>
+            <div id="sponsoring-insurer-review-queue">
+                <c-emp-sponsoring-insurer-review page-mode={pageMode} show-header></c-emp-sponsoring-insurer-review>
+            </div>
+        </template>
+        <!-- <div class="homepage_banner">
+            <h1>Welcome to MTX LPI!</h1>
+            <p>Welcome to MTX LPI Home Page.  Here you can apply online for a new license, renew a current license, 
+                and file a complaint, among other actions related to professional registration and licensure.</p>
+        </div> -->
+        <!-- <div class="homepage_content">
+            <div class="slds-grid slds-wrap slds-gutters slds-grid_align-center licenses-card">
+                <div class="slds-col slds-size_1-of-3">
+                    <lightning-card class="apply-license-card">
+                        <div class="slds-align_absolute-center">
+                            <lightning-button label="APPLY FOR LICENSE" slot="actions" onclick={navigateToApplyForLicense}></lightning-button>
+                            
+                        </div>
+                    </lightning-card>
+                </div>
+                <div class="slds-col slds-size_1-of-3">
+                    <lightning-card class="renew-license-card">
+                        <div class="slds-align_absolute-center">
+                            <lightning-button label="RENEW A LICENSE" slot="actions" onclick={navigateToRenewLicense}></lightning-button>
+                           
+                        </div>
+                    </lightning-card>
+                </div>
+                <div class="slds-col slds-size_1-of-3">
+                    <lightning-card class="file-complaint-card">
+                        <div class="slds-align_absolute-center">
+                            <lightning-button label="FILE A COMPLAINT" slot="actions" onclick={navigateToFileComplaints}></lightning-button>
+                            
+                        </div>
+                    </lightning-card>
+                </div>
+            </div>
+            <div class="slds-grid slds-wrap slds-gutters slds-grid_align-center slds-m-top_medium dashboard-card">
+                <div class="slds-col slds-size_1-of-3">
+                    <lightning-card>
+                        <div class="slds-align_absolute-center dashboard-card__body">
+                            <img src={homepageDashboad} alt="Dashboard">
+                            <p class="slds-m-vertical_small">View your license history and notifications.</p>
+                            <lightning-button
+                                variant="base"
+                                slot="actions"
+                                label="Dashboard"
+                                icon-name="utility:forward"
+                                icon-position="right"
+                                onclick={navigateToDashboard}
+                            >
+                            </lightning-button>
+                            
+                        </div>
+                    </lightning-card>
+                </div>
+                <div class="slds-col slds-size_1-of-3">
+                    <lightning-card>
+                        <div class="slds-align_absolute-center dashboard-card__body">
+                            <img src={homepageApplications} alt="My applications">
+                            <p class="slds-m-vertical_small">View your applications.</p>
+                            <lightning-button
+                                variant="base"
+                                slot="actions"
+                                label="My Applications"
+                                icon-name="utility:forward"
+                                icon-position="right"
+                                onclick={navigateToMyApplications}
+                            >
+                            </lightning-button>
+                        </div>
+                    </lightning-card>
+                </div>
+                <div class="slds-col slds-size_1-of-3">
+                    <lightning-card>
+                        <div class="slds-align_absolute-center dashboard-card__body">
+                            <img src={homepageLicense} alt="My licenses">
+                            <p class="slds-m-vertical_small">View your licenses.</p>
+                            <lightning-button
+                                variant="base"
+                                slot="actions"
+                                label="My Licenses"
+                                icon-name="utility:forward"
+                                icon-position="right"
+                                onclick={navigateToMyLicenses}
+                            >
+                            </lightning-button>
+                            
+                        </div>
+                    </lightning-card>
+                </div>
+            </div>
+        </div> -->
+    </div>
+     <!--  Start S-44731 Business Account Modal window Code Start  -->
+     <template if:true={openBusinessModal}>
+        <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01"
+            class="slds-modal slds-fade-in-open lpi-modal slds-modal_medium">
+            <div class="slds-modal__container">
+                <!-- Modal header  -->
+                <div class="slds-modal__header">
+                    <h1 id="modal-heading-02" class="slds-modal__title slds-hyphenate">Account Selection</h1>
+                </div>
+                <!-- Modal body  -->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+                    <p class="asterisk-caption m-b-medium">Asterisk (<span class="c-red">*</span>) indicates required field</p>
+                    <!-- <p>For individual licenses or applications, choose "<b>Personal Account</b>". If you're dealing with business licenses or applications for existing Business accounts, select "<b>Existing Business Account</b>". To apply for a new Business license, pick the "<b>New Business Account</b>" option.</p> -->
+                    <div class="slds-grid homepage slds-gutters slds-wrap">
+                        <div class="slds-col slds-size_12-of-12 slds-medium-size_4-of-12 slds-large-size_4-of-12 anchor-card m-b-large">
+                            <a href="Javascript:void(0);" class="selectPersonal" label="Personal Account" data-name="Personal Account" onclick={handleAccount}>
+                                <div class="anchor-card-body">
+                                    <i class="material-icon material-icon-select"></i>
+                                    <h2 class="m-t-large bold-24">Personal Account</h2>
+                                    <p class="text-secondary m-t-xs">For Individual licenses or applications, choose this.</p>
+                                    <i class="material-icon material-icon-arrow_forward"></i>
+                                </div>            
+                            </a>
+                        </div>
+                    <div class="slds-col slds-size_12-of-12 slds-medium-size_4-of-12 slds-large-size_4-of-12 anchor-card m-b-large">
+                            <a href="Javascript:void(0);" class="selectBusiness" label="Existing Business Account" data-name="Business Account" onclick={handleBusinessAccount}>
+                                <div class="anchor-card-body" >
+                                    <i class="material-icon material-icon-select"></i>
+                                    <h2 class="m-t-large bold-24">Existing Business Account</h2>
+                                    <p class="text-secondary m-t-xs">Select from the dropdown pre-existing Business accounts.</p>
+                                    <i class="material-icon material-icon-arrow_forward"></i>
+                                </div>            
+                            </a>
+                    </div>
+                        <div class="slds-col slds-size_12-of-12 slds-medium-size_4-of-12 slds-large-size_4-of-12 anchor-card m-b-large">
+                            <a href="Javascript:void(0);" class="selectNewBusiness" label="New Business Account" data-name="New Business Account" onclick={handleNewBusiness}>
+                                <div class="anchor-card-body">
+                                    <i class="material-icon material-icon-select"></i>
+                                    <h2 class="m-t-large bold-24">New Business Account</h2>
+                                    <p class="text-secondary m-t-xs">Apply for a new Business license, pick this option.</p>
+                                    <i class="material-icon material-icon-arrow_forward"></i>
+                                </div>            
+                            </a>
+                        </div>
+                    </div>
+                    <!-- <lightning-radio-group name="selectType"
+                                        data-id="selecttype"
+                                        label="Select Account Type"
+                                        options={selectedAccountList}
+                                        value={selectedType}
+                                        type="radio"
+                                        onchange={handleChangeAccount} 
+                                        class="bordered_radio"
+                                        required>
+                    </lightning-radio-group> -->
+                    <template if:true={showBusinessAccountList}>
+                        <label for="FieldSelect" class="slds-form-element__label slds-no-flex">
+                            <abbr title="required" class="slds-required">*</abbr>
+                            Select Business Account
+                        </label>
+                        <select class="slds-select homepage-select-box" name = "optionSelect" onchange={handleBusinessChange}>
+                            <option value="">Please Select Account</option>
+                            <template for:each={acrList} for:item="item">
+                                <option key={item} value={item.Id}>{item.Name}</option>
+                            </template>
+                        </select> 
+                        <!-- Display the custom error message if it Business Account is empty -->
+                        <template if:true={isSelectBusinessTypeAvailable}>
+                            <p class="slds-text-color_error">{selectBusinessTypeErrorMessage}</p>
+                        </template>
+                    </template>
+                </div>
+                <div class="slds-modal__footer">
+                    <lightning-button 
+                    variant="brand"
+                    label="Continue"
+                    onclick={handleConfirm}
+                ></lightning-button>
+                    </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+    </template>
+     <!-- END S-44731 Business Account Modal window Code END  -->
+</template>

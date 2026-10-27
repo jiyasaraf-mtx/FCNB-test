@@ -1,0 +1,15 @@
+<!--
+  @description       : 
+  @author            : Adarsh Singh
+  @group             : 
+  @last modified on  : 08-24-2023
+  @last modified by  : 
+-->
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:lightningQuickActionWithoutHeader,force:hasRecordId">
+    <aura:attribute name="isLwcVisible" type="Boolean" default="true"/>     
+    <aura:handler event="aura:locationChange" action="{!handleLocationChange}"/>
+    <aura:if isTrue="{!v.isLwcVisible}">         
+       <c:lpiCrrApplicationActions recordId ="{!v.recordId}" onclose="{!c.closeQuickAction}"/>         
+    </aura:if> 
+    
+</aura:component>

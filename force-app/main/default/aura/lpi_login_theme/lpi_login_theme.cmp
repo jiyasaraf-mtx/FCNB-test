@@ -1,0 +1,49 @@
+<!--
+  @description       : 
+  @author            : Bharath Kumar M
+  @group             : 
+  @last modified on  : 06-18-2024
+  @last modified by  : Bharath Kumar M
+-->
+<aura:component implements="forceCommunity:themeLayout">
+    <aura:attribute name="newHeader" type="Aura.Component[]" />
+    <!-- <aura:attribute name="showSidebar" type="Boolean" default="false" /> -->
+    <!-- <aura:attribute name="headerHide" type="Boolean" default="false" />
+    <aura:attribute name="landingHeader" type="Boolean" default="false" /> -->
+    <!-- <aura:attribute name="guestClass" type="Boolean" default="false" />
+    <aura:attribute name="userVar" type="Boolean" default="false" /> -->
+    <aura:attribute name="newFooter" type="Aura.Component[]" />
+    <!-- <aura:attribute name="usertype" type="String" description="Type of user" /> -->
+    <ltng:require styles="{!join(',',$Resource.LPI_Design_old + '/main.css')}" />
+    <!-- <ltng:require styles="{!join(',',$Resource.Alpha_Design + '/main.css')}" /> -->
+    <!-- <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>  -->
+    <!-- <aura:attribute name="currentUserName" type="String"/> -->
+    <div class="content-container">
+        <!-- <aura:if isTrue="{!v.headerHide}">
+            <header class="newHeader" role="banner">
+                <a class="skip-link" tabindex="0" href="#main-content-1">Skip to main content</a>
+                <c:lpiHeader></c:lpiHeader>
+            </header>
+        </aura:if>
+        <aura:if isTrue="{!v.userVar}">
+            <header class="newHeader" role="banner">
+                <a class="skip-link" tabindex="0" href="#main-content-1">Skip to main content</a>
+                <c:lpiLandingHeader></c:lpiLandingHeader>
+            </header>
+        </aura:if> -->
+        <div class="content lpiContent" id="main-content-1">
+            <div class="slds-grid body-content">
+                <!-- Gaurav ==== Add "notification-bar-open" class to show the correct width after adding notification sidebar -->
+            
+                <!-- <div class="{! if ( v.test, 'main-content' , 'full-content' ) }" role="main" id="main-content-1-0"> -->
+                <div class="{! if ( v.guestClass, 'main-content' , 'main-content public-page' ) }" role="main" id="main-content">
+                    {!v.body}
+                    <!-- <c:alphaFooter></c:alphaFooter> -->
+                </div>
+                <div class="slds-col notification-sidebar slds-hide">
+                    <!--<c:alphaSidebarRight></c:alphaSidebarRight>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</aura:component>

@@ -1,0 +1,150 @@
+// //input boxes and combobox
+// .input-box, fieldset legend,
+// omnistudio-omniscript-text,
+// omnistudio-omniscript-select,
+// omnistudio-omniscript-number,
+// omnistudio-omniscript-date,
+// omnistudio-omniscript-textarea,
+// omnistudio-omniscript-email,
+// omnistudio-base-input-element,
+// omnistudio-base-input-element,
+// omnistudio-omniscript-telephone,
+// omnistudio-omniscript-password,
+// omnistudio-omniscript-typeahead-block, 
+// omnistudio-omniscript-url,
+// omnistudio-omniscript-time{
+//     &.slds-p-right_small {
+//         padding-right: $small;
+//         padding-bottom: $x-small;
+//     }
+//     .slds-form-element__legend,
+//     .slds-form-element__label {
+//         font-size: $font-size-14;
+//         color: $text-primary;
+//         font-weight: $font-weight-semi-bold !important;
+//         padding-bottom: 0.3rem;
+//         white-space: normal !important;
+//         word-break: auto-phrase;
+//     }
+//     .slds-input,
+//     .slds-combobox__input,.slds-textarea {
+//         padding: 0.2rem $small;
+//         border: toRem(1) solid $input-border;
+//         color: $text-primary;
+//         font-size: $font-size-14 !important;
+//         &::placeholder {
+//             font-size: $font-size-14;
+//             font-weight: $font-weight-regular;
+//             color: $text-secondary;
+//         }
+//     }
+// }
+// .check-box,
+// omnistudio-omniscript-checkbox,
+// omnistudio-base-input-element {
+//     .slds-checkbox [type="checkbox"] + .slds-checkbox__label .slds-checkbox_faux {
+//         &::after {
+//             border-color: $primary-main;
+//         }
+//     }
+//     .slds-checkbox .slds-checkbox_faux {
+//         width: 1.2rem;
+//         height: 1.2rem;
+//         border-color: $primary-main;
+//     }
+//     .slds-form-element__label {
+//         font-size: $font-size-14;
+//         font-weight: $font-weight-regular;
+//         color: $text-primary;
+//     }
+// }
+// c-masked-input{
+//     label{
+//         font-size: $font-size-14 !important;
+//         color: $text-primary !important;
+//         font-weight: $font-weight-semi-bold !important;
+//         padding-bottom: 0.3rem !important;
+//     }
+//     .slds-input{
+//         padding: 0.2rem 1rem;
+//         border: 0.063rem solid $input-border;
+//         color: $text-primary;
+//         font-size: $font-size-14 !important;
+//     }
+
+//     label.slds-form-element__label[omnistudio-maskedInput_maskedInput_slds] {
+//         white-space: normal;
+//     }
+// }
+// .slds-datepicker__filter_month h2{
+// 	font-size: initial !important;
+// }
+
+// omnistudio-omniscript-multiselect,
+// lightning-primitive-input-simple{
+//     .slds-form-element__label{
+//         color: $text-primary;
+//         font-size: $font-size-14;
+//     }
+// }
+
+// .ownershipInfo, 
+// .householdmem,
+// .ce-audit,
+// lightning-input-rich-text{
+//     .slds-form-element__label {
+//         font-size: $font-size-14;
+//         color: $text-primary;
+//         font-weight: $font-weight-semi-bold !important;
+//         padding-bottom: 0.3rem;
+//         white-space: normal !important;
+//     }
+// }
+
+// .slds-checkbox{
+//     .slds-checkbox__label{
+//         .slds-form-element__label {
+//             font-size: $font-size-14;
+//             font-weight: normal !important;
+//             color: $text-primary;
+//         }
+//     }
+// }
+
+// .slds-checkbox_faux {
+//     border: toRem(1) solid $text-color-6 !important;
+// }
+
+// c-cf-r-e-a-course-info-review{
+//     omnistudio-base-input-element .slds-input{
+//         border: none !important;
+//     }
+// }
+
+// .CosBarRenLicQtn{
+//     font-size: $font-size-14;
+// }
+
+// .required-cb{
+//     .slds-checkbox__label {
+//         margin-left: 0.188rem;
+//     }
+// }
+
+// lightning-input-rich-text{
+//     .slds-form-element__control {
+//         display: initial !important;
+//     }
+// }
+
+// @media only screen and (max-width: 48rem) {
+//     lightning-datepicker .slds-input {
+//         -webkit-appearance : none;
+//         min-height: 2.75rem;
+//         height: 2.75rem;
+//     }
+// }
+
+// input { 
+//     text-overflow: ellipsis; 
+// }

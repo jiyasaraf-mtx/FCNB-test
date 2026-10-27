@@ -1,0 +1,238 @@
+<!--
+  @description       : 
+  @author            : Mohit Karani
+  @group             : 
+  @last modified on  : 11-14-2023
+  @last modified by  : Mohit Karani
+-->
+<template>
+    <lightning-card>
+        <div class="slds-p-around_large">
+            <div class="slds-p-around_x-small text-bold">Complaint Information
+            </div>
+            <div class="slds-p-top_large case-box-shadow">
+                <div class="slds-p-around_small slds-grid slds-gutters slds-wrap">
+                    <div class="slds-col slds-size_12-of-12">
+                        <span>Complaint Details : {publicComplaintRec.complaintDesc}</span>
+                    </div>
+                </div>
+            </div>
+            <div if:true={caseIncidentDetailsList} class="slds-p-around_x-small text-bold">
+                Incident Details
+            </div>
+            
+            <template for:each={caseIncidentDetailsList} for:item="incident">
+                <div key={incident.incidentId} class="slds-p-top_large case-box-shadow">
+                    <div class="slds-p-around_small slds-grid slds-gutters slds-wrap">
+                        <div class="slds-col slds-size_4-of-12">
+                            <span>Start Date : {incident.startDateString}</span>
+                        </div>
+                        <div class="slds-col slds-size_4-of-12">
+                            <span>End Date : {incident.endDateString}</span>
+                        </div>
+                        <div class="slds-col slds-size_4-of-12">
+                            <span>Address : {incident.addressInfo}</span>
+                        </div>
+                    </div>
+                </div>
+            </template>
+            <div class="slds-p-around_x-small text-bold">Complainant Information
+            </div>
+            <div class="slds-p-top_large case-box-shadow">
+                <div class="slds-p-around_small slds-grid slds-gutters slds-wrap">
+                    <div class="slds-col slds-size_4-of-12">
+                        <span>First Name : {caseParticipantsRec.accFirstName}</span>
+                    </div>
+                    <div class="slds-col slds-size_4-of-12">
+                        <span>Middle Name : {caseParticipantsRec.accMiddleName}</span>
+                    </div>
+                    <div class="slds-col slds-size_4-of-12">
+                        <span>Last Name : {caseParticipantsRec.accLastName}</span>
+                    </div>
+                </div>
+                <div class="slds-p-around_small slds-grid slds-gutters slds-wrap">
+                    <div class="slds-col slds-size_4-of-12">
+                        <span>Email Address : {caseParticipantsRec.accEmail}</span>
+                    </div>
+                    <div class="slds-col slds-size_4-of-12">
+                        <span>Telephone Number : {caseParticipantsRec.accTelephne}</span>
+                    </div>
+                    <div class="slds-col slds-size_4-of-12">
+                        <span>Cellphone Number : {caseParticipantsRec.accCellphone}</span>
+                    </div>
+                </div>
+                <div class="slds-p-around_small slds-grid slds-gutters slds-wrap">
+                    <div class="slds-col slds-size_4-of-12">
+                        <span>Street Address : {caseParticipantsRec.accStreet}</span>
+                    </div>
+                    <div class="slds-col slds-size_4-of-12">
+                        <span>City : {caseParticipantsRec.accCity}</span>
+                    </div>
+                </div>
+                <div class="slds-p-around_small slds-grid slds-gutters slds-wrap">
+                    <div class="slds-col slds-size_4-of-12">
+                        <span>State : {caseParticipantsRec.accState}</span>
+                    </div>
+                    <div class="slds-col slds-size_4-of-12">
+                        <span>Zip Code : {caseParticipantsRec.accZipCode}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-p-around_x-small text-bold">Attorney Details
+            </div>
+            <div class="slds-p-top_large case-box-shadow">
+                <div class="slds-p-around_small slds-grid slds-gutters slds-wrap">
+                    <div class="slds-col slds-size_4-of-12">
+                        <span>Contacted Attorney : {publicComplaintRec.contactedAttorney}</span>
+                    </div>
+                    <div class="slds-col slds-size_4-of-12">
+                        <span>Lawsuit Filed : {publicComplaintRec.lawSuitFiled}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-p-around_x-small text-bold">Other Entities
+            </div>
+            <div class="slds-p-top_large case-box-shadow">
+                <div class="slds-p-around_small slds-grid slds-gutters slds-wrap">
+                    <div class="slds-col slds-size_12-of-12">
+                        <span>Complaint Reported to Other Agencies : {publicComplaintRec.complaintToOtherAgency}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-p-around_x-small text-bold">Additional Information
+            </div>
+            <div class="slds-p-top_large case-box-shadow">
+                <div class="slds-p-around_small slds-grid slds-gutters slds-wrap">
+                    <div class="slds-col slds-size_4-of-12">
+                        <span>Contacted Respondent : {publicComplaintRec.contactedIndividualAboutComplaint}</span>
+                    </div>
+                    <div class="slds-col slds-size_4-of-12">
+                        <span>Relationship to Respondent : {publicComplaintRec.relationshipToRespondent}</span>
+                    </div>
+                    <div class="slds-col slds-size_4-of-12">
+                        <span>Willing to testify : {publicComplaintRec.testifyHearing}</span>
+                    </div>
+                </div>
+                <div class="slds-grid slds-gutters slds-wrap slds-p-around_small">
+                    <div class="slds-col slds-size_4-of-12">
+                        <span>Contacted Date : {publicComplaintRec.contactedIndividualAboutCompDate}</span>
+                    </div>
+                    <div class="slds-col slds-size_8-of-12">
+                        <span>Relationship Details : {publicComplaintRec.relationshipDetails}</span>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="slds-p-around_x-small text-bold">HIPAA Release Authorization and Questions
+            </div>
+            <div class="slds-p-top_large case-box-shadow">
+                <div class="slds-p-around_small slds-grid slds-gutters slds-wrap">
+                    <div class="slds-col slds-size_4-of-12">
+                        <span>Coverage Options : {publicComplaintRec.coverageOption}</span>
+                    </div>
+                    <div class="slds-col slds-size_4-of-12">
+                        <span>Coverage Start Date : {publicComplaintRec.coverageStartDateString}</span>
+                    </div>
+                    <div class="slds-col slds-size_4-of-12">
+                        <span>Coverage End Date : {publicComplaintRec.coverageEndDateString}</span>
+                    </div>
+                </div>
+                <div class="slds-grid slds-gutters slds-wrap slds-p-around_small">
+                    <div class="slds-col slds-size_4-of-12">
+                        <span>Authorization Expiration Date : {publicComplaintRec.authExpirationDateString}</span>
+                    </div>
+                    <div class="slds-col slds-size_6-of-12">
+                        <span>I hereby attest under penalty of perjury that I have read and understand the Authorization to Use and Disclose Protected Health Information Pursuant To The Health Insurance Portability and Accountability Act of 1996 (HIPAA) for the protected health information of the individual identified in the Complaint I am filing. I also hereby attest that I am authorized to complete the HIPAA Authorization for the individual identified in the complaint. : {publicComplaintRec.releaseAuthorization}</span>
+                    </div>
+                </div>
+            </div> -->
+            <div class="slds-p-top_large slds-p-bottom_small text-bold">Respondent Information
+            </div>
+            <b class="slds-align_absolute-center">Personal Information</b>
+            <div class="slds-p-top_large case-box-shadow">
+                <div class="slds-p-around_small slds-grid slds-gutters slds-wrap">
+                    <template if:true={accountRec.lastName}>
+                        <div class="slds-col slds-size_4-of-12">
+                            <span>First Name : {accountRec.firstName}</span>
+                        </div>
+                        <div class="slds-col slds-size_4-of-12">
+                            <span>Middle Name : {accountRec.middleName}</span>
+                        </div>
+                        <div class="slds-col slds-size_4-of-12">
+                            <span>Last Name : {accountRec.lastName}</span>
+                        </div>
+                    </template>
+                    <template if:true={accountRec.name}>
+                        <div class="slds-col slds-size_4-of-12">
+                            <span>Name : {accountRec.name}</span>
+                        </div>
+                    </template>
+
+                </div>
+                <div class="slds-grid slds-gutters slds-wrap slds-p-around_small">
+                    <div class="slds-col slds-size_4-of-12">
+                        <span>DBA Name : {accountRec.dba}</span>
+                    </div>
+                    <div class="slds-col slds-size_4-of-12">
+                        <span>Profession : {accountRec.profession}</span>
+                    </div>
+                    <div class="slds-col slds-size_4-of-12">
+                        <span>License Number : {accountRec.licenseNumber}</span>
+                    </div>
+                </div>
+                <!-- <div class="slds-grid slds-gutters slds-wrap slds-p-around_small">
+                    <div class="slds-col slds-size_4-of-12">
+                        <span>SSN : {accountRec.ssn}</span>
+                    </div>
+                    <div class="slds-col slds-size_4-of-12">
+                        <span>EIN : {accountRec.fein}</span>
+                    </div>
+                </div> -->
+            </div>
+            <div if:true={accountRec.addressRecords} class="slds-p-top_large text-bold">Addresses
+            </div>
+            <template for:each={addressTypeToAddressList} for:item="address">
+                <div class="slds-p-top_large" key={address.addressType}>
+
+                    <div class="slds-p-around_small slds-grid slds-gutters slds-wrap">
+                        <div class="slds-col slds-size_12-of-12">
+                            <span><b>{address.addressType}</b></span>
+                        </div>
+                    </div>
+                    <template for:each={address.addressRecords} for:item="addressRec">
+                        <div key={addressRec.addressId} class="case-box-shadow">
+                            <div class="slds-p-around_small slds-grid slds-gutters slds-wrap ">
+                                <div class="slds-col slds-size_4-of-12">
+                                    <span> Street : {addressRec.streetOne}</span>
+                                </div>
+                                <div class="slds-col slds-size_4-of-12">
+                                    <span>City : {addressRec.city}</span>
+                                </div>
+                                <div class="slds-col slds-size_4-of-12">
+                                    <span>State : {addressRec.state}</span>
+                                </div>
+                            </div>
+
+                            <div class="slds-p-around_small slds-grid slds-gutters slds-wrap">
+                                <div class="slds-col slds-size_4-of-12">
+                                    <span>County : {addressRec.county}</span>
+                                </div>
+                                <div class="slds-col slds-size_4-of-12">
+                                    <span> Zip : {addressRec.zipCode}</span>
+                                </div>
+                                <div class="slds-col slds-size_4-of-12">
+                                    <span>Country : {addressRec.country}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+
+
+
+                </div>
+            </template>
+        </div>
+
+
+    </lightning-card>
+
+</template>

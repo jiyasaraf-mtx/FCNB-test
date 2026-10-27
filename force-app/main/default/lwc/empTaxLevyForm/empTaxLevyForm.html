@@ -1,0 +1,359 @@
+<template>
+    <div class="levy-page">
+        <template if:true={isLoading}>
+            <div class="state"><lightning-spinner alternative-text="Loading" size="small"></lightning-spinner></div>
+        </template>
+
+        <template if:true={errorMessage}>
+            <div class="state error">{errorMessage}</div>
+        </template>
+
+        <template if:false={isLoading}>
+            <template if:false={errorMessage}>
+                <template if:true={hasContext}>
+                <div class="panel">
+                    <div class="panel-hd">
+                        <h2>{formTitle}</h2>
+                    </div>
+
+                    <div class="panel-layout">
+                        <aside class="stepper" aria-label="Form steps">
+                            <template for:each={steps} for:item="step">
+                                <div key={step.key} class={step.className}>
+                                    <span class="step-num">{step.number}</span>
+                                    <span class="step-label">{step.label}</span>
+                                </div>
+                            </template>
+                        </aside>
+
+                        <div class="panel-bd">
+                            <!-- Premium Tax steps -->
+                            <template if:true={showPremiumStep1}>
+                                <div class="grid">
+                                    <div class="field">
+                                        <label>Period <span class="req">*</span></label>
+                                        <select data-field="period" onchange={handleFieldChange}>
+                                            <template for:each={periodOptions} for:item="opt">
+                                                <option key={opt.value} value={opt.value}>{opt.label}</option>
+                                            </template>
+                                        </select>
+                                    </div>
+                                    <div class="field">
+                                        <label>Obligation type</label>
+                                        <input readonly value="Premium Tax (quarterly estimate)" />
+                                    </div>
+                                    <div class="field">
+                                        <label>Period start</label>
+                                        <input type="date" data-field="periodStart" value={periodStart} onchange={handleFieldChange} />
+                                    </div>
+                                    <div class="field">
+                                        <label>Period end</label>
+                                        <input type="date" data-field="periodEnd" value={periodEnd} onchange={handleFieldChange} />
+                                    </div>
+                                    <div class="field">
+                                        <label>Insurer</label>
+                                        <input readonly value={insurerName} />
+                                    </div>
+                                    <div class="field">
+                                        <label>Parent licence</label>
+                                        <input readonly value={parentLicence} />
+                                    </div>
+                                    <div class="field">
+                                        <label>Contact first name <span class="req">*</span></label>
+                                        <input data-field="contactFirstName" value={contactFirstName} onchange={handleFieldChange} />
+                                    </div>
+                                    <div class="field">
+                                        <label>Contact last name <span class="req">*</span></label>
+                                        <input data-field="contactLastName" value={contactLastName} onchange={handleFieldChange} />
+                                    </div>
+                                    <div class="field">
+                                        <label>Email <span class="req">*</span></label>
+                                        <input type="email" data-field="contactEmail" value={contactEmail} onchange={handleFieldChange} />
+                                    </div>
+                                    <div class="field">
+                                        <label>Phone <span class="req">*</span></label>
+                                        <input data-field="contactPhone" value={contactPhone} onchange={handleFieldChange} />
+                                    </div>
+                                </div>
+                            </template>
+
+                            <template if:true={showPremiumStep2}>
+                                <div class="grid">
+                                    <div class="field">
+                                        <label>Taxable premiums (NB) <span class="req">*</span></label>
+                                        <input type="number" step="0.01" data-field="taxablePremiums" value={taxablePremiums} onchange={handleFieldChange} />
+                                    </div>
+                                    <div class="field">
+                                        <label>Exempt premiums</label>
+                                        <input type="number" step="0.01" data-field="exemptPremiums" value={exemptPremiums} onchange={handleFieldChange} />
+                                    </div>
+                                    <div class="field">
+                                        <label>Rate (from Regulatory Authority)</label>
+                                        <input readonly value={rateDisplay} />
+                                    </div>
+                                    <div class="field">
+                                        <label>GL account</label>
+                                        <input readonly value={glAccount} />
+                                    </div>
+                                    <div class="field full">
+                                        <label>Calculated levy</label>
+                                        <div class="calc-box">
+                                            Taxable premiums × rate =
+                                            <strong> {calculatedLevyDisplay}</strong>
+                                        </div>
+                                    </div>
+                                </div>
+                            </template>
+
+                            <template if:true={showPremiumStep3}>
+                                <p class="hint">You already paid the Province. Enter remittance details and upload the receipt.</p>
+                                <div class="grid">
+                                    <div class="field"><label>Paid to</label><input readonly value={paidTo} /></div>
+                                    <div class="field"><label>Amount due (levy)</label><input readonly value={amountDueDisplay} /></div>
+                                    <div class="field">
+                                        <label>Payment date <span class="req">*</span></label>
+                                        <input type="date" data-field="paymentDate" value={paymentDate} onchange={handleFieldChange} />
+                                    </div>
+                                    <div class="field">
+                                        <label>Amount paid <span class="req">*</span></label>
+                                        <input type="number" step="0.01" data-field="amountPaid" value={amountPaid} onchange={handleFieldChange} />
+                                    </div>
+                                    <div class="field">
+                                        <label>Payment method <span class="req">*</span></label>
+                                        <select data-field="paymentMethod" onchange={handleFieldChange}>
+                                            <template for:each={paymentMethodOptions} for:item="opt">
+                                                <option key={opt.value} value={opt.value}>{opt.label}</option>
+                                            </template>
+                                        </select>
+                                    </div>
+                                    <div class="field">
+                                        <label>Provincial remittance / confirmation # <span class="req">*</span></label>
+                                        <input data-field="remittanceReference" value={remittanceReference} onchange={handleFieldChange} />
+                                    </div>
+                                    <div class="field full">
+                                        <label>Proof of payment (receipt) <span class="req">*</span></label>
+                                        <div class="file-box">
+                                            <template if:true={hasDraftRecord}>
+                                                <lightning-file-upload
+                                                    label="Upload Files"
+                                                    name="proofUpload"
+                                                    accept={acceptedFormats}
+                                                    record-id={draftRecordId}
+                                                    onuploadfinished={handleUploadFinished}>
+                                                </lightning-file-upload>
+                                            </template>
+                                            <template if:false={hasDraftRecord}>
+                                                <p class="hint">Preparing record for file upload…</p>
+                                            </template>
+                                            <span class="file-name">{proofFileLabel}</span>
+                                            <p class="hint">Upload the provincial receipt / remittance advice PDF. Files are stored on this record.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </template>
+
+                            <!-- Fire Marshal -->
+                            <template if:true={showFireStep1}>
+                                <div class="grid">
+                                    <div class="field"><label>Insurer</label><input readonly value={insurerName} /></div>
+                                    <div class="field"><label>Parent licence</label><input readonly value={parentLicence} /></div>
+                                    <div class="field">
+                                        <label>Period <span class="req">*</span></label>
+                                        <select data-field="period" onchange={handleFieldChange}>
+                                            <template for:each={periodOptions} for:item="opt">
+                                                <option key={opt.value} value={opt.value}>{opt.label}</option>
+                                            </template>
+                                        </select>
+                                    </div>
+                                    <div class="field"><label>GL account</label><input readonly value={glAccount} /></div>
+                                    <div class="field full">
+                                        <label>Expected amount (calculated by FCNB system)</label>
+                                        <div class="calc-box">
+                                            From annual financial return data + Fire Marshal rules =<br />
+                                            <strong>{expectedAmountDisplay}</strong>
+                                            <p class="hint">Source filing: {sourceFilingRef} · Prior year actual: {priorYearActualDisplay}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </template>
+
+                            <template if:true={showFireStep2}>
+                                <p class="hint">Pay the Province, then record the payment and upload proof for FCNB approval.</p>
+                                <div class="grid">
+                                    <div class="field"><label>Paid to</label><input readonly value={paidTo} /></div>
+                                    <div class="field"><label>Expected amount</label><input readonly value={expectedAmountRaw} /></div>
+                                    <div class="field">
+                                        <label>Payment date <span class="req">*</span></label>
+                                        <input type="date" data-field="paymentDate" value={paymentDate} onchange={handleFieldChange} />
+                                    </div>
+                                    <div class="field">
+                                        <label>Amount paid to Province <span class="req">*</span></label>
+                                        <input type="number" step="0.01" data-field="amountPaid" value={amountPaid} onchange={handleFieldChange} />
+                                    </div>
+                                    <div class="field">
+                                        <label>Payment method <span class="req">*</span></label>
+                                        <select data-field="paymentMethod" onchange={handleFieldChange}>
+                                            <template for:each={paymentMethodOptions} for:item="opt">
+                                                <option key={opt.value} value={opt.value}>{opt.label}</option>
+                                            </template>
+                                        </select>
+                                    </div>
+                                    <div class="field">
+                                        <label>Provincial remittance # <span class="req">*</span></label>
+                                        <input data-field="remittanceReference" value={remittanceReference} onchange={handleFieldChange} />
+                                    </div>
+                                    <div class="field"><label>Variance vs expected</label><input readonly value={fireVarianceDisplay} /></div>
+                                    <div class="field"><label>Match status</label><input readonly value={fireMatchDisplay} /></div>
+                                    <div class="field full">
+                                        <label>Proof of payment <span class="req">*</span></label>
+                                        <div class="file-box">
+                                            <template if:true={hasDraftRecord}>
+                                                <lightning-file-upload
+                                                    label="Upload Files"
+                                                    name="proofUploadFire"
+                                                    accept={acceptedFormats}
+                                                    record-id={draftRecordId}
+                                                    onuploadfinished={handleUploadFinished}>
+                                                </lightning-file-upload>
+                                            </template>
+                                            <template if:false={hasDraftRecord}>
+                                                <p class="hint">Preparing record for file upload…</p>
+                                            </template>
+                                            <span class="file-name">{proofFileLabel}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </template>
+
+                            <!-- Vehicle -->
+                            <template if:true={showVehicleStep1}>
+                                <div class="grid">
+                                    <div class="field"><label>Insurer</label><input readonly value={insurerName} /></div>
+                                    <div class="field"><label>Parent licence</label><input readonly value={parentLicence} /></div>
+                                    <div class="field">
+                                        <label>Assessment period <span class="req">*</span></label>
+                                        <select data-field="period" onchange={handleFieldChange}>
+                                            <template for:each={periodOptions} for:item="opt">
+                                                <option key={opt.value} value={opt.value}>{opt.label}</option>
+                                            </template>
+                                        </select>
+                                    </div>
+                                    <div class="field"><label>Assessed by (FCNB staff)</label><input readonly value={assessedBy} /></div>
+                                    <div class="field full">
+                                        <label>Vehicle Levy amount (entered by FCNB staff)</label>
+                                        <div class="calc-box">
+                                            Staff assessment on insurer record =<br />
+                                            <strong>{assessedAmountDisplay}</strong>
+                                            <p class="hint">GL: {glAccount} · Include shortfall on next quarterly invoice if underpaid</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </template>
+
+                            <template if:true={showVehicleStep2}>
+                                <div class="grid">
+                                    <div class="field"><label>Paid to</label><input readonly value={paidTo} /></div>
+                                    <div class="field"><label>Amount assessed</label><input readonly value={assessedAmountRaw} /></div>
+                                    <div class="field">
+                                        <label>Payment date <span class="req">*</span></label>
+                                        <input type="date" data-field="paymentDate" value={paymentDate} onchange={handleFieldChange} />
+                                    </div>
+                                    <div class="field">
+                                        <label>Amount paid <span class="req">*</span></label>
+                                        <input type="number" step="0.01" data-field="amountPaid" value={amountPaid} onchange={handleFieldChange} />
+                                    </div>
+                                    <div class="field">
+                                        <label>Payment method <span class="req">*</span></label>
+                                        <select data-field="paymentMethod" onchange={handleFieldChange}>
+                                            <template for:each={paymentMethodOptions} for:item="opt">
+                                                <option key={opt.value} value={opt.value}>{opt.label}</option>
+                                            </template>
+                                        </select>
+                                    </div>
+                                    <div class="field">
+                                        <label>Provincial remittance # <span class="req">*</span></label>
+                                        <input data-field="remittanceReference" value={remittanceReference} onchange={handleFieldChange} />
+                                    </div>
+                                    <div class="field"><label>True-up balance</label><input readonly value={vehicleTrueUpBalance} /></div>
+                                    <div class="field"><label>True-up treatment</label><input readonly value={vehicleTrueUpTreatment} /></div>
+                                    <div class="field full">
+                                        <label>Proof of payment <span class="req">*</span></label>
+                                        <div class="file-box">
+                                            <template if:true={hasDraftRecord}>
+                                                <lightning-file-upload
+                                                    label="Upload Files"
+                                                    name="proofUploadVehicle"
+                                                    accept={acceptedFormats}
+                                                    record-id={draftRecordId}
+                                                    onuploadfinished={handleUploadFinished}>
+                                                </lightning-file-upload>
+                                            </template>
+                                            <template if:false={hasDraftRecord}>
+                                                <p class="hint">Preparing record for file upload…</p>
+                                            </template>
+                                            <span class="file-name">{proofFileLabel}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </template>
+
+                            <!-- Shared review -->
+                            <template if:true={showPremiumStep4}>
+                                <div class="review">
+                                    <template for:each={reviewRows} for:item="row">
+                                        <div key={row.key} class="review-row">
+                                            <div class="review-label">{row.label}</div>
+                                            <div class="review-value">{row.value}</div>
+                                        </div>
+                                    </template>
+                                </div>
+                                <label class="attest">
+                                    <input type="checkbox" data-field="attestation" checked={attestation} onchange={handleFieldChange} />
+                                    I confirm the premium amounts, calculated levy, and provincial payment details are true and complete.
+                                </label>
+                            </template>
+
+                            <template if:true={showFireStep3}>
+                                <div class="review">
+                                    <template for:each={reviewRows} for:item="row">
+                                        <div key={row.key} class="review-row">
+                                            <div class="review-label">{row.label}</div>
+                                            <div class="review-value">{row.value}</div>
+                                        </div>
+                                    </template>
+                                </div>
+                                <label class="attest">
+                                    <input type="checkbox" data-field="attestation" checked={attestation} onchange={handleFieldChange} />
+                                    I confirm this Fire Marshal Levy payment was made to the Province and the details are accurate.
+                                </label>
+                            </template>
+
+                            <template if:true={showVehicleStep3}>
+                                <div class="review">
+                                    <template for:each={reviewRows} for:item="row">
+                                        <div key={row.key} class="review-row">
+                                            <div class="review-label">{row.label}</div>
+                                            <div class="review-value">{row.value}</div>
+                                        </div>
+                                    </template>
+                                </div>
+                                <label class="attest">
+                                    <input type="checkbox" data-field="attestation" checked={attestation} onchange={handleFieldChange} />
+                                    I confirm this Vehicle Levy payment was made to the Province and the details are accurate.
+                                </label>
+                            </template>
+                        </div>
+                    </div>
+
+                    <div class="footer-actions">
+                        <button type="button" class={backClass} onclick={handleBack}>Back</button>
+                        <button type="button" class={nextClass} onclick={handleNext} disabled={isSubmitting}>
+                            {nextLabel}
+                        </button>
+                    </div>
+                </div>
+                </template>
+            </template>
+        </template>
+    </div>
+</template>

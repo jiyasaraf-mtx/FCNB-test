@@ -1,0 +1,155 @@
+<!--
+  @description       : 
+  @author            : Juhi Goel
+  @group             : 
+  @last modified on  : 09-17-2026
+  @last modified by  : Juhi Goel
+-->
+
+<template>
+    <div class="slds-theme_default">
+        <!-- Main Component Header -->
+        <template lwc:if={hasTitle}>
+            <div class="slds-p-bottom_small slds-m-bottom_medium slds-border_bottom">
+                <h2 class="slds-text-heading_medium slds-font-weight_bold slds-text-color_default">{title}</h2>
+            </div>
+        </template>
+
+        <!-- Loading State -->
+        <template lwc:if={isLoading}>
+            <div class="slds-align_absolute-center slds-p-around_large slds-is-relative" style="min-height: 120px;">
+                <lightning-spinner alternative-text="Loading..." size="medium"></lightning-spinner>
+            </div>
+        </template>
+
+        <!-- Error State -->
+        <template lwc:if={hasError}>
+            <div class="slds-notify slds-notify_alert slds-alert_error slds-m-bottom_medium slds-radius_medium" role="alert">
+                <lightning-icon icon-name="utility:error" variant="inverse" size="small" class="slds-m-right_x-small"></lightning-icon>
+                <h2 class="slds-text-body_regular">{errorMessage}</h2>
+            </div>
+        </template>
+
+        <!-- Main Content -->
+        <template lwc:if={showContent}>
+            <template lwc:if={hasSections}>
+                <template for:each={processedSections} for:item="section">
+                    <div key={section.id} class="slds-section slds-is-open slds-m-bottom_large slds-border_bottom slds-p-bottom_small">
+                        
+                        <!-- Collapsible Accordion Header -->
+                        <h3 class="slds-section__title">
+                            <button 
+                                type="button"
+                                class="slds-button slds-section__title-action slds-p-vertical_x-small slds-theme_shade slds-radius_medium" 
+                                data-section-id={section.id} 
+                                onclick={handleSectionToggle}
+                                onkeydown={handleSectionKeydown}
+                                aria-expanded={section.isExpanded}
+                                aria-controls={section.contentId}>
+                                <lightning-icon 
+                                    icon-name={section.chevronIcon}
+                                    size="x-small" 
+                                    class="slds-section__title-action-icon slds-button__icon_left slds-m-right_x-small"
+                                    aria-hidden="true">
+                                </lightning-icon>
+                                <span class="slds-truncate slds-text-heading_small slds-font-weight_bold" title={section.title}>{section.title}</span>
+                            </button>
+                        </h3>
+
+                        <!-- Accordion Content -->
+                        <template lwc:if={section.isExpanded}>
+                            <div class="slds-section__content slds-p-top_small slds-p-horizontal_x-small" id={section.contentId}>
+                                
+                                <!-- Top-level Fields Grid -->
+                                <template lwc:if={section.hasFields}>
+                                    <div class="field-grid slds-m-left--xx-small slds-m-bottom_small">
+                                        <template for:each={section.fields} for:item="field">
+                                            <div key={field.id} class={field.spanClass}>
+                                                <div class="slds-text-title_bold slds-text-color_weak slds-m-bottom_xx-small">{field.label}</div>
+                                                <div class="slds-text-body_regular slds-text-color_default slds-m-bottom_small">{field.displayValue}</div>
+                                            </div>
+                                        </template>
+                                    </div>
+                                </template>
+
+                                <!-- Sub-blocks (e.g., Agency/Account Details, Address) -->
+                                <template for:each={section.blocks} for:item="block">
+                                    <div key={block.id} class="slds-box slds-box_small slds-theme_shade slds-m-bottom_medium slds-radius_medium">
+                                        
+                                        <!-- Sub-block Title -->
+                                        <div class="slds-text-title_caps slds-font-weight_bold slds-text-color_default slds-m-bottom_small slds-border_bottom slds-p-bottom_xx-small">
+                                            {block.title}
+                                        </div>
+                                        
+                                        <!-- Repeatable Array Block (Table) -->
+                                        <template lwc:if={block.isArray}>
+                                            <div class="slds-scrollable_x">
+                                                <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped" role="grid" aria-label={block.title}>
+                                                    <thead>
+                                                        <tr class="slds-line-height_reset">
+                                                            <th scope="col" class="slds-text-title_caps" style="width: 50px;">#</th>
+                                                            <template for:each={block.columns} for:item="col">
+                                                                <th key={col.fieldName} scope="col" class="slds-text-title_caps">{col.label}</th>
+                                                            </template>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <template for:each={block.items} for:item="item">
+                                                            <tr key={item.id} class="slds-hint-parent">
+                                                                <td class="slds-font-weight_bold">{item.index}</td>
+                                                                <template for:each={item.fields} for:item="itemField">
+                                                                    <td key={itemField.id}>{itemField.displayValue}</td>
+                                                                </template>
+                                                            </tr>
+                                                        </template>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </template>
+
+                                        <!-- Regular Fields Block -->
+                                        <template lwc:else>
+                                            <div class="field-grid slds-m-left--xx-small">
+                                                <template for:each={block.fields} for:item="blockField">
+                                                    <div key={blockField.id} class={blockField.spanClass}>
+                                                        <div class="slds-text-title_bold slds-text-color_weak slds-m-bottom_xx-small">{blockField.label}</div>
+                                                        <div class="slds-text-body_regular slds-text-color_default slds-m-bottom_x-small">{blockField.displayValue}</div>
+                                                    </div>
+                                                </template>
+                                            </div>
+
+                                            <!-- Nested Blocks (e.g. Sub-addresses) -->
+                                            <template for:each={block.nestedBlocks} for:item="nestedBlock">
+                                                <div key={nestedBlock.id} class="slds-box slds-box_x-small slds-theme_default slds-m-top_small slds-radius_medium">
+                                                    <div class="slds-text-title_caps slds-font-weight_bold slds-text-color_weak slds-m-bottom_x-small">{nestedBlock.title}</div>
+                                                    <div class="field-grid slds-m-left--xx-small slds-m-bottom_small">
+                                                        <template for:each={nestedBlock.fields} for:item="nestedField">
+                                                            <div key={nestedField.id} class={nestedField.spanClass}>
+                                                                <div class="slds-text-title_bold slds-text-color_weak slds-m-bottom_xx-small">{nestedField.label}</div>
+                                                                <div class="slds-text-body_regular slds-text-color_default">{nestedField.displayValue}</div>
+                                                            </div>
+                                                        </template>
+                                                    </div>
+                                                </div>
+                                            </template>
+                                        </template>
+                                    </div>
+                                </template>
+                            </div>
+                        </template>
+                    </div>
+                </template>
+            </template>
+
+            <!-- Empty State -->
+            <template lwc:else>
+                <div class="slds-illustration slds-illustration_small slds-p-around_large">
+                    <div class="slds-align_absolute-center slds-text-color_weak">
+                        <lightning-icon icon-name="utility:info" size="small" class="slds-m-right_x-small"></lightning-icon>
+                        <span class="slds-text-heading_small">No data available to display.</span>
+                    </div>
+                </div>
+            </template>
+        </template>
+    </div>
+</template>

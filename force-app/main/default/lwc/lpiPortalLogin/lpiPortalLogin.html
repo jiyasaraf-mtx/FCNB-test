@@ -1,0 +1,86 @@
+<template>
+    <div class="portal-login" style={loginBackgroundStyle}>
+        <header class="portal-login__brand">
+            <img src={logoUrl} alt={labels.loginBrandAlt} onclick={handleLogoClick} class="portal-login__logo" />
+        </header>
+
+        <div class="portal-login__language">
+            <lightning-combobox
+                name="portalLanguage"
+                label={labels.language}
+                value={selectedLanguage}
+                placeholder={labels.language}
+                options={languageOptions}
+                onchange={handleLanguageChange}
+                variant="label-hidden"
+            ></lightning-combobox>
+        </div>
+
+        <div class="portal-login__stage">
+            <div class="portal-login__card" role="main">
+                <h1 class="portal-login__title">{labels.loginTitle}</h1>
+                <p class="portal-login__subtitle">{labels.loginSubtitle}</p>
+                <p class="portal-login__hint">{labels.loginRequiredHint}</p>
+
+                <div class="portal-login__field">
+                    <lightning-input
+                        type="text"
+                        label={labels.loginUsername}
+                        name="username"
+                        value={username}
+                        required
+                        autocomplete="username"
+                        onchange={handleUsernameChange}
+                        onkeydown={handleKeyDown}
+                    ></lightning-input>
+                </div>
+
+                <div class="portal-login__field">
+                    <lightning-input
+                        type="password"
+                        label={labels.loginPassword}
+                        name="password"
+                        value={password}
+                        required
+                        autocomplete="current-password"
+                        onchange={handlePasswordChange}
+                        onkeydown={handleKeyDown}
+                    ></lightning-input>
+                </div>
+
+                <div class="portal-login__row">
+                    <lightning-input
+                        type="checkbox"
+                        label={labels.loginRememberMe}
+                        checked={rememberMe}
+                        onchange={handleRememberMe}
+                    ></lightning-input>
+                    <div class="portal-login__links">
+                        <a href={forgotUsernameUrl}>{labels.loginForgotUsername}</a>
+                        <a href={forgotPasswordUrl}>{labels.loginForgotPassword}</a>
+                    </div>
+                </div>
+
+                <template if:true={errorMessage}>
+                    <div class="portal-login__error" role="alert" aria-live="assertive">{errorMessage}</div>
+                </template>
+
+                <button
+                    type="button"
+                    class="portal-login__submit"
+                    onclick={handleLogin}
+                    disabled={isSubmitting}
+                >
+                    {submitLabel}
+                </button>
+
+                <template if:true={showRegister}>
+                    <p class="portal-login__register">
+                        {labels.loginNoAccount}
+                        <a href={registerUrl}>{labels.loginRegisterLink}</a>
+                    </p>
+                </template>
+            </div>
+        </div>
+    </div>
+</template>

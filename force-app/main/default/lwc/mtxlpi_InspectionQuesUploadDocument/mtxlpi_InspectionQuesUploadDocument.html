@@ -1,0 +1,108 @@
+<template>
+    <div if:true={showSpinner}>
+        <lightning-spinner size="medium" alternative-text="Loading"></lightning-spinner>
+    </div>
+    <div class="question-upload-popup-header slds-card__header-title slds-m-bottom--medium slds-text-align--left">
+        <h2>Upload Documents</h2>
+    </div>
+    <lightning-file-upload label="Upload Document" name="fileUploader" record-id={recordId}
+        onuploadfinished={handleUploadFinished} disabled={disableUpload}>
+    </lightning-file-upload>
+
+    <div class="question-upload">
+        <div class="question-document-table-header slds-m-top--medium slds-grid slds-p-vertical--small">
+            <div
+                class="slds-col slds-size_6-of-12 slds-p-horizontal--x-large slds-text-align--left">
+                <div class="slds-truncate">
+                    Document Name
+                </div>
+            </div>
+            <div class="slds-col slds-grid slds-size_4-of-12 slds-p-horizontal--x-large">
+                <div class="">
+                    Uploaded By
+                </div>
+            </div>
+
+            <div class="slds-col slds-grid slds-size_2-of-12 slds-p-horizontal--x-large">
+                <div class="slds-col slds-text-align_center">
+                    Actions
+                </div>
+            </div>
+        </div>
+        <template if:true={documentData}>
+            <template for:each={documentList} for:item="data">
+                <div key={data.contentDocumentLinkId}>
+                    <div class="box-container slds-grid slds-p-vertical--small">
+                        <div
+                            class="slds-col slds-size_6-of-12 slds-p-horizontal--x-large slds-text-align--left">
+                            <div class="slds-truncate">
+                                {data.contentDocumentTitle}.{data.contentDocumentFileExtension}</div>
+                        </div>
+                        <div
+                            class="slds-col slds-size_4-of-12 slds-p-horizontal--x-large slds-text-align--left">
+                            <div class="slds-truncate">
+                                {data.uploadBy}</div>
+                        </div>
+
+                        <div
+                            class="document-actions slds-col slds-grid slds-grid--align-center slds-size_2-of-12 slds-p-horizontal--x-large">
+                            <div class="slds-col slds-text-align_center remove-icon">
+                                <template if:true={data.showDelete}>
+                                    <lightning-button-icon if:true={data.contentDocumentId} variant="bare" size="small"
+                                        icon-name="utility:delete" aria-label={data.ariaLabelForDelete}
+                                        label={data.contentDocumentTitle}
+                                        alternative-text="Delete" title="Delete" data-id={data.contentDocumentId}
+                                        onclick={handleDeleteConfirmationModal} class="document-delete">
+                                    </lightning-button-icon>
+                                </template>
+                            </div>
+                            <div
+                                class="slds-col slds-grid slds-wrap slds-grid_align-center slds-grid_vertical-align-center">
+                                <div class="slds-col" if:true={data.contentDocumentId}>
+                                    <lightning-button-icon icon-name="utility:download"
+                                        aria-label={data.ariaLabelForDownload} class="download-btn" size="small"
+                                        label={data.contentDocumentTitle} title="Download" variant="bare" alternative-text="Download"
+                                        data-contentid={data.contentDocumentId} onclick={handleDownload}>
+                                    </lightning-button-icon>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </template>
+        <template if:false={documentData}>
+            <div class="slds-text-align--center no-record-block">
+                <div class="slds-p-bottom--medium slds-p-top--medium no-document-image"></div>
+                <div class="no-record-content">No Document Uploaded</div>
+            </div>
+        </template>
+    </div>
+
+    <!-- show confirm delete modal start -->
+    <template if:true={isShowConfirmDeleteModal}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open upload-modal">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideConfirmDeleteModalBox}>
+                    <lightning-icon icon-name="utility:close"
+                        alternative-text="close"
+                        variant="inverse"
+                        size="small" ></lightning-icon>
+                    <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h1 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">Delete a Document</h1>
+                </header>
+                <p>Are you sure you want to remove this file?</p>
+                <footer class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" onclick={hideConfirmDeleteModalBox}>Cancel</button>
+                    <button class="slds-button slds-button_brand" onclick={handleFileDelete}>Confirm</button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+    <!-- show confirm delete modal end -->
+
+
+</template>

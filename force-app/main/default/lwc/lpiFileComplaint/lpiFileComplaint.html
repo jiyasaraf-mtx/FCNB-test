@@ -1,0 +1,791 @@
+<!--
+    @description       : Component to create Public Complaints records for FCNB Portal and Guest users.
+    @author            : Mohit Karani
+    @group             : 
+    @last modified on  : 08-27-2026
+    @last modified by  : Juhi Goel
+  -->
+<template>
+
+    <div if:true={showSpinner}>
+        <lightning-spinner class="spins" size="medium" data-text={spinnerText}
+            alternative-text="Loading..."></lightning-spinner>
+    </div>
+    <div class="slds-container--center slds-container--x-large">
+        <span class="slds-assistive-text">{announceMsg}</span>
+        <template if:true={isSupportStaff}>
+            <lightning-card>
+                <h2 slot="title">{labels.complaintActionNotAllowed}</h2>
+            </lightning-card>
+        </template>
+        
+        <template if:false={isSupportStaff}>
+            <div class="fileComplainSucessTable">
+                <div class="complaint-form">
+                    <template if:false={displayComplaintDetails}>
+                            <div class="complaint-form__banner slds-p-around_x-large">
+                                <h1 class="m-b-medium bold-32 text-white">{labels.complaintFormHeader}</h1>
+                                <div if:true={ShowLessText} class="text-white">
+                                    <p>{labels.complaintInstructions1}</p>
+                                    <a class="base-link-downarrow text-white" href="javascript:void(0);" onclick={ShowMore}>{labels.complaintSeeMore}</a>
+                                </div>
+                                <div if:true={ShowMoreText} class="text-white">
+                                    <p class="m-b-small">{labels.complaintInstructions1}</p>
+                                    <p class="m-b-small">{labels.complaintInstructions2}</p>
+                                    <p class="m-b-small">{labels.complaintInstructionsRemember}</p>
+                                    <ul class="slds-list_dotted slds-m-bottom_small">
+                                        <li>{labels.complaintInstructionsBullet1}</li>
+                                        <li>{labels.complaintInstructionsBullet2}</li>
+                                        <li>{labels.complaintInstructionsBullet3}</li>
+                                        <li>{labels.complaintInstructionsBullet4}</li>
+                                    </ul>
+                                    <a class="base-link-downarrow text-white" href="javascript:void(0);" onclick={ShowLess}>{labels.complaintSeeLess}</a>
+                                </div>
+                            </div>
+                        <div class="complaint-form__content slds-card">
+                            <div class="m-b-large">
+                                <p class="asterisk-caption">{labels.complaintAsterisk}(<span class="c-red">*</span>) {labels.complaintAsteriskRequiredField}</p>
+                            </div>
+                            <div>
+                                <c-lpi-complaint-respondent-details onsave={saveRespondentDetailsNew} onfocuseditbutton={focusOnMenuButton}
+                                    selected-business-ids={selectedBusinessIds}>
+                                </c-lpi-complaint-respondent-details>
+                                <template if:true={dispalyRespondentTable}>
+                                    <div class="table-container m-b-medium overflow-auto">
+                                        <table class="slds-table slds-table_bordered slds-no-row-hover alpha-table-layout licensee-table">
+                                            <caption class="sr-only">{labels.complaintSubjectOfComplaint}</caption>
+                                            <thead>
+                                                <tr class="slds-line-height_reset">
+                                                    <th scope="col"><div class="slds-truncate" title="S.NO.">S.NO.</div></th>
+                                                    <th scope="col"><div class="slds-truncate" title="Entity / Individual Name">Entity / Individual Name</div></th>
+                                                    <th scope="col"><div class="slds-truncate" title="Regulated Division / Sector">Regulated Sector</div></th>
+                                                    <th scope="col"><div class="slds-truncate" title="License Type">License / Registration Type</div></th>
+                                                    <th scope="col"><div class="slds-truncate" title="License Number">License / Registration Number</div></th>
+                                                    <th scope="col"><div class="slds-truncate" title="Address">Address</div></th>
+                                                    <th scope="col"><div class="slds-truncate" title="Telephone Number">Telephone Number</div></th>
+                                                    <th scope="col"><div class="slds-truncate" title="Action">Action</div></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <template for:each={respondentListToDisplay} for:item="respondent" for:index="index">
+                                                    <tr key={respondent.sNoDisplayVal} class="slds-hint-parent">
+                                                        <td data-label="S.NO.">
+                                                            <div class="slds-truncate" title={index}>{respondent.sNoDisplayVal}</div>
+                                                        </td>
+                                                        <td data-label="Entity / Individual Name">
+                                                            <div style="white-space:normal; word-break: break-all;" title={respondent.combinedName}>
+                                                                {respondent.combinedName}
+                                                            </div>
+                                                        </td>
+                                                        <td data-label="Regulated Sector">
+                                                            <div style="white-space:normal; word-break: break-all;" title={respondent.professionDetails.profession}>
+                                                                {respondent.professionDetails.profession}
+                                                            </div>
+                                                        </td>
+                                                        <td data-label="License / Registration Type">
+                                                            <div style="white-space:normal; word-break: break-all;" title={respondent.professionDetails.licenseTypeSelected}>
+                                                                {respondent.professionDetails.licenseTypeSelected}
+                                                            </div>
+                                                        </td>
+                                                        <td data-label="License Number">
+                                                            <div class="slds-truncate" title={respondent.licenseDetails.licenseNum}>
+                                                                {respondent.licenseDetails.licenseNum}
+                                                            </div>
+                                                        </td>
+                                                        <td data-label="Address">
+                                                            <div style="white-space:normal; word-break: break-all;" title={respondent.addressValue}>
+                                                                {respondent.addressValue}
+                                                            </div>
+                                                        </td>
+                                                        <td data-label="Telephone Number">
+                                                            <div class="slds-truncate" title={respondent.telephone}>
+                                                                {respondent.telephone}
+                                                            </div>
+                                                        </td>
+                                                        <td data-label="Action" class="table-action">
+                                                            <lightning-button-menu class="initial" aria-label={respondent.newCombinedName}
+                                                                title="actions" variant="border-filled" menu-alignment="auto" data-subjectindex={index}>
+                                                                <lightning-menu-item value="Edit" data-index={index}
+                                                                    onclick={handleRespEditNew} class="base-link-btn base-edit-btn" label="Edit" aria-label={respondent.editName}>
+                                                                </lightning-menu-item>
+                                                                <lightning-menu-item value="Delete" class="base-delete-btn file-delete-btn" data-index={index}
+                                                                    onclick={handleRespDelete} label="Delete" aria-label={respondent.deletName}>
+                                                                </lightning-menu-item>
+                                                            </lightning-button-menu>
+                                                        </td>
+                                                    </tr>
+                                                </template>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </template>
+                                <div class="divider"></div>
+
+                                <!-- Incident Location Details -->
+                                <div class="slds-p-bottom_medium slds-m-top_large">
+                                    <h2 class="bold-24 m-b-medium">{labels.complaintIncidentDetails}</h2>
+                                    <p class="bold-16 m-b-medium">{labels.complaintIncidentWhen}</p>
+                                    <div class="slds-grid slds-gutters">
+                                        <div class="slds-col slds-size_4-of-12 date-cmp">
+                                            <lightning-input label={labels.complaintStartDate} name="incidentStartDate"
+                                                value={dataObj.incidentStartDate} type="date" date-style="short"
+                                                data-id="incidentStartDate" onchange={handleInputChange} placeholder={labels.complaintDateFormat}
+                                                onblur={handleDateValidation} data-section-name="Incident"
+                                                data-is-start-date="true" aria-live="assertive" role="alert">
+                                            </lightning-input>
+                                        </div>
+                                        <div class="slds-col slds-size_4-of-12 date-cmp">
+                                            <lightning-input label={labels.complaintEndDate} name="incidentEndDate"
+                                                value={dataObj.incidentEndDate} type="date" date-style="short" placeholder={labels.complaintDateFormat}
+                                                data-id="incidentEndDate" data-section-name="Incident"
+                                                onchange={handleInputChange} onblur={handleDateValidation}
+                                                aria-live="assertive" role="alert">
+                                            </lightning-input>
+                                        </div>
+                                    </div>
+                                    <p class="bold-16 m-b-medium m-t-medium">{labels.complaintIncidentWhere}</p>
+                                    <div class="slds-grid slds-gutters slds-wrap">
+                                        <div class="slds-col slds-large-size--12-of-12 slds-medium-size--12-of-12 slds-size--12-of-12">
+                                            <lightning-input label={labels.complaintStreetAddress} name="incidentStreetAddress"
+                                                type="text" placeholder={labels.complaintEnterStreetAddress}>
+                                            </lightning-input>
+                                        </div>
+                                        <div class="slds-col slds-large-size--4-of-12 slds-medium-size--4-of-12 slds-size--12-of-12">
+                                            <lightning-input label={labels.complaintCityTown} name="incidentCity"
+                                                type="text" placeholder={labels.complaintEnterCityTown}>
+                                            </lightning-input>
+                                        </div>
+                                        <div class="slds-col slds-large-size--4-of-12 slds-medium-size--4-of-12 slds-size--12-of-12">
+                                            <lightning-combobox label={labels.complaintProvinceTerritory} options={stateOptions}
+                                                placeholder={labels.complaintSelectProvince}
+                                                name="state" data-address="true" onchange={handleInputChange}
+                                                message-when-value-missing="Error: Province is required.">
+                                            </lightning-combobox>
+                                        </div>
+                                        <div class="slds-col slds-large-size--4-of-12 slds-medium-size--4-of-12 slds-size--12-of-12">
+                                            <lightning-input label={labels.complaintPostalCode} name="incidentPostalCode"
+                                                type="text" placeholder="A1A 1A1">
+                                            </lightning-input>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="divider"></div>
+                                <div>
+                                    <h2 class="bold-24">{labels.complaintComplaintDetails}</h2>
+                                    <p class="text-secondary m-b-medium">{labels.complaintFullDetailsInstructions}</p>
+                                    <lightning-textarea required name="complaintDesc" placeholder={labels.complaintEnterFullDetails} label={labels.complaintDescription}
+                                        value={dataObj.complaintDesc} onchange={handleInputChange} max-length="65000"
+                                        message-when-value-missing="Error: Description is required.">
+                                    </lightning-textarea>
+                                </div>
+
+                                <div class="divider"></div>
+                                <!-- Complainant Information -->
+                                <div class="">
+                                    <c-lpi-patient-complaint-info section-name="Complainant"
+                                        is-field-read-only={isFieldReadOnly} onfocuschange={handleChildFieldChange}
+                                        state-options={stateOptions} input-wrapper={dataObj} user-id={userId}>
+                                    </c-lpi-patient-complaint-info>
+                                </div>
+
+                                <div class="divider"></div>
+                                <div class="">
+                                    <div if:true={showSpinner}>
+                                        <lightning-spinner size="medium" alternative-text="Loading..."></lightning-spinner>
+                                    </div>
+                                    <div class="slds-grid slds-grid--align-spread slds-grid--vertical-align-center">
+                                        <h2 class="bold-24">{labels.complaintWitnessInformation}</h2>
+                                        <lightning-button class="add-btn witnessBtnFocus" label={labels.complaintAddWitness}
+                                            title="Add Witness" onclick={handleAdditionalWitness}
+                                            aria-label="Witness Information, Add Witness">
+                                        </lightning-button>
+                                    </div>
+                                    <template if:true={displayWitnessTable}>
+                                        <div class="overflow-auto m-t-medium">
+                                            <table class="slds-table slds-table_bordered slds-no-row-hover alpha-table-layout licensee-table"
+                                               aria-label="Witness Information Table">
+                                                <caption class="sr-only">Witness Information Table</caption>
+                                                <thead>
+                                                    <tr class="slds-line-height_reset">
+                                                        <th scope="col"><div class="slds-truncate" title="S.NO.">S.NO.</div></th>
+                                                        <th scope="col"><div class="slds-truncate" title="Witness Name">Witness Name</div></th>
+                                                        <th scope="col" style="width:40%"><div class="slds-truncate" title="Address">Address</div></th>
+                                                        <th scope="col"><div class="slds-truncate" title="Telephone Number">Telephone Number</div></th>
+                                                        <th scope="col"><div class="slds-truncate" title="Email">Email</div></th>
+                                                        <th scope="col"><div class="slds-truncate" title="Action">Action</div></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <template for:each={witnessData} for:item="witness" for:index="index">
+                                                        <tr key={witness.sNoValue} class="slds-hint-parent">
+                                                            <td data-label="S.NO.">
+                                                                <div class="slds-truncate" title={index}>{witness.sNoValue}</div>
+                                                            </td>
+                                                            <td data-label="Witness Name">
+                                                                <div style="white-space:normal; word-break: break-all;" title={witness.entityName}>
+                                                                    {witness.entityName}
+                                                                </div>
+                                                            </td>
+                                                            <td data-label="Address">
+                                                                <div style="white-space:normal; word-break:break-all;" title={witness.addressValue}>
+                                                                    {witness.addressValue}
+                                                                </div>
+                                                            </td>
+                                                            <td data-label="Telephone">
+                                                                <div class="slds-truncate" title={witness.telephone}>
+                                                                    {witness.telephone}
+                                                                </div>
+                                                            </td>
+                                                            <td data-label="Email">
+                                                                <div class="slds-truncate" title={witness.email}>
+                                                                    {witness.email}
+                                                                </div>
+                                                            </td>
+                                                            <td data-label="Action" class="table-action">
+                                                                <lightning-button-menu alternative-text="Show actions"
+                                                                    title="actions" variant="border-filled" menu-alignment="auto"
+                                                                    aria-label={witness.witnessActionAriaLabel} aria-live="assertive">
+                                                                    <lightning-menu-item value="Edit" data-index={index}
+                                                                        onclick={handleWitnessEdit} label="Edit"
+                                                                        aria-label={witness.witnessActionEditLabel} class="base-link-btn base-edit-btn"
+                                                                        aria-live="assertive">
+                                                                    </lightning-menu-item>
+                                                                    <lightning-menu-item value="Delete" data-index={index}
+                                                                        onclick={handleWitnessDelete} label="Delete" class="base-delete-btn file-delete-btn"
+                                                                        aria-label={witness.witnessActionDeleteLabel} aria-live="assertive">
+                                                                    </lightning-menu-item>
+                                                                </lightning-button-menu>
+                                                            </td>
+                                                        </tr>
+                                                    </template>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </template>
+                                    <template if:true={isWitnessModalOpen}>
+                                        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01"
+                                            aria-modal="true" aria-describedby="modal-content-id-1"
+                                            class="slds-modal slds-fade-in-open add-witness-modal slds-modal_small"
+                                            onkeydown={handleEscKeyDown}>
+                                            <div class="slds-modal__container">
+                                                <header class="slds-modal__header">
+                                                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                                                        title="Close" onclick={closeModalWitness}>
+                                                        <lightning-icon icon-name="utility:close" variant="inverse" size="small"></lightning-icon>
+                                                        <span class="slds-assistive-text">Close Modal</span>
+                                                    </button>
+                                                    <h1 id="modal-heading-02" class="section-heading slds-m-bottom_x-small">{labels.complaintAddEditWitness}</h1>
+                                                </header>
+                                                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+                                                    <div class="slds-text-heading_small slds-m-bottom_medium mandatory-text">
+                                                        <p class="asterisk-caption">{labels.complaintAsterisk} (<span class="c-red">*</span>) {labels.complaintAsteriskRequiredField}</p>
+                                                    </div>
+                                                    <div class="slds-grid slds-gutters">
+                                                        <div class="slds-col slds-size_4-of-12">
+                                                            <lightning-input type="text" pattern={patternObj.text}
+                                                                label={labels.complaintFirstName} placeholder={labels.complaintEnterFirstName}
+                                                                value={selectedWitnessData.firstName} name="firstName" max-length="40"
+                                                                class="respondentWitness" onchange={handleWitnessData} required
+                                                                message-when-value-missing="Error: First Name is required">
+                                                            </lightning-input>
+                                                        </div>
+                                                        <div class="slds-col slds-size_4-of-12">
+                                                            <lightning-input type="text" pattern={patternObj.text}
+                                                                label={labels.complaintMiddleName} placeholder={labels.complaintEnterMiddleName}
+                                                                value={selectedWitnessData.middleName} name="middleName" max-length="40"
+                                                                class="respondentWitness" onchange={handleWitnessData}>
+                                                            </lightning-input>
+                                                        </div>
+                                                        <div class="slds-col slds-size_4-of-12">
+                                                            <lightning-input type="text" pattern={patternObj.text}
+                                                                label={labels.complaintLastName} value={selectedWitnessData.lastName} name="lastName"
+                                                                max-length="80" class="respondentWitness" placeholder={labels.complaintEnterLastName}
+                                                                onchange={handleWitnessData} required
+                                                                message-when-value-missing="Error: Last Name is required">
+                                                            </lightning-input>
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-grid slds-gutters slds-wrap">
+                                                        <div class="slds-col slds-size_4-of-12">
+                                                            <lightning-input class="phoneNumberField respondentWitness"
+                                                                type="tel" label={labels.complaintTelephoneNumber} placeholder={labels.complaintEnterTelephoneNumber}
+                                                                value={selectedWitnessData.telephone} name="telephone" max-length="14"
+                                                                onchange={handleWitnessData} pattern={patternObj.digits}
+                                                                message-when-pattern-mismatch="Invalid phone number format">
+                                                            </lightning-input>
+                                                        </div>
+                                                        <div class="slds-col slds-size_4-of-12">
+                                                            <lightning-input class="phoneNumberField respondentWitness"
+                                                                type="tel" label={labels.complaintCellPhoneNumber} placeholder={labels.complaintEnterCellPhoneNumber}
+                                                                value={selectedWitnessData.cellPhone} name="cellPhone" max-length="14"
+                                                                onchange={handleWitnessData} pattern={patternObj.digits}
+                                                                message-when-pattern-mismatch="Invalid phone number format">
+                                                            </lightning-input>
+                                                        </div>
+                                                        <div class="slds-col slds-size_4-of-12">
+                                                            <lightning-input type="email" name="email" label={labels.complaintEmailAddress} placeholder={labels.complaintEnterEmailAddress}
+                                                                value={selectedWitnessData.email} max-length="80"
+                                                                class="respondentWitness" pattern={patternObj.email} onchange={handleWitnessData}>
+                                                            </lightning-input>
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-grid slds-gutters">
+                                                        <div class="slds-col slds-size_12-of-12">
+                                                            <lightning-input type="text" pattern={patternObj.text}
+                                                                label={labels.complaintStreetAddress} placeholder={labels.complaintEnterStreetAddress}
+                                                                value={selectedWitnessData.addressData.streetOne} max-length="255"
+                                                                class="respondentWitness" onchange={handleWitnessData} name="streetOne" data-address="true"
+                                                                message-when-value-missing="Error: Street Address is required">
+                                                            </lightning-input>
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-grid slds-gutters">
+                                                        <div class="slds-col slds-size_4-of-12">
+                                                            <lightning-input type="text" pattern={patternObj.text}
+                                                                label={labels.complaintCityTown} placeholder={labels.complaintEnterCityTown}
+                                                                value={selectedWitnessData.addressData.city} name="city" data-address="true" max-length="40"
+                                                                class="respondentWitness" onchange={handleWitnessData}
+                                                                message-when-value-missing="Error: City is required">
+                                                            </lightning-input>
+                                                        </div>
+                                                        <div class="slds-col slds-size_4-of-12">
+                                                            <lightning-combobox label={labels.complaintProvinceTerritory} options={stateOptions}
+                                                                value={selectedWitnessData.addressData.state} name="state" data-address="true" max-length="80"
+                                                                class="respondentWitness" placeholder={labels.complaintSelectProvince} onchange={handleWitnessData}
+                                                                message-when-value-missing="Error: Province is required">
+                                                            </lightning-combobox>
+                                                        </div>
+                                                        <div class="slds-col slds-size_4-of-12">
+                                                            <lightning-input type="text" label={labels.complaintPostalCode}
+                                                                name="zipCode" data-address="true" placeholder="A1A 1A1"
+                                                                value={selectedWitnessData.addressData.zipCode} max-length="10"
+                                                                pattern={patternObj.zipCode}
+                                                                message-when-pattern-mismatch="Please enter a valid Canadian Postal Code (e.g. A1A 1A1)."
+                                                                class="respondentWitness" onchange={handleWitnessData}>
+                                                            </lightning-input>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <footer class="slds-modal__footer">
+                                                    <button class="slds-button slds-button_neutral" onclick={closeModalWitness} title="Cancel">Cancel</button>
+                                                    <button class="slds-button slds-button_brand" onclick={saveWitnessDetails} title="Save">Save</button>
+                                                </footer>
+                                            </div>
+                                        </section>
+                                        <div class="slds-backdrop slds-backdrop_open"></div>
+                                    </template>
+                                </div>
+
+                                <div class="divider"></div>
+                                <!-- Legal Representation -->
+                                <div class="">
+                                    <h2 class="bold-24 m-b-medium">{labels.complaintLegalRepresentation}</h2>
+
+                                    <lightning-radio-group label={labels.complaintLegalCounselContacted} required
+                                        class="radio-group" name="contactedAttorney"
+                                        options={yesNoOptions} value={dataObj.contactedAttorney} type="radio"
+                                        onchange={handleInputChange}
+                                        message-when-value-missing="Error: Please specify if you have contacted legal counsel.">
+                                    </lightning-radio-group>
+                                    <c-lpi-complaint-attorney-details lwc:if={hasALawyer} state-options={stateOptions}
+                                        pattern-obj={patternObj} onsave={handleAttorneySave} onfocuseditbutton={focusOnMenuButton}>
+                                    </c-lpi-complaint-attorney-details>
+
+                                    <template if:true={displayAttorneyTable}>
+                                        <div class="overflow-auto m-b-small m-t-medium">
+                                          <table class="slds-table slds-table_bordered slds-no-row-hover alpha-table-layout licensee-table"
+                                               aria-label="Legal Counsel Table">
+                                              <caption class="sr-only">Legal Counsel Information</caption>
+                                              <thead>
+                                                  <tr class="slds-line-height_reset">
+                                                      <th scope="col"><div class="slds-truncate" title="S.NO.">S.NO.</div></th>
+                                                      <th scope="col"><div class="slds-truncate" title="Counsel Name">Legal Counsel Name</div></th>
+                                                      <th scope="col" style="width:40%"><div class="slds-truncate" title="Address">Address</div></th>
+                                                      <th scope="col"><div class="slds-truncate" title="Telephone Number">Telephone Number</div></th>
+                                                      <th scope="col"><div class="slds-truncate" title="Email">Email</div></th>
+                                                      <th scope="col"><div class="slds-truncate" title="Action">Action</div></th>
+                                                  </tr>
+                                              </thead>
+                                              <tbody>
+                                                  <template for:each={attorneyInfoList} for:item="attorney" for:index="index">
+                                                      <tr key={attorney.sNoValue} class="slds-hint-parent">
+                                                          <td data-label="S.NO.">
+                                                              <div class="slds-truncate" title={index}>{attorney.sNoDisplayVal}</div>
+                                                          </td>
+                                                          <td data-label="Counsel Name">
+                                                              <div style="white-space:normal; word-break: break-all;" title={attorney.combinedName}>
+                                                                  {attorney.combinedName}
+                                                              </div>
+                                                          </td>
+                                                          <td data-label="Address">
+                                                              <div style="white-space:normal; word-break:break-all;" title={attorney.addressValue}>
+                                                                  {attorney.addressValue}
+                                                              </div>
+                                                          </td>
+                                                          <td data-label="Telephone">
+                                                              <div class="slds-truncate" title={attorney.attorneyPhone}>
+                                                                  {attorney.attorneyPhone}
+                                                              </div>
+                                                          </td>
+                                                          <td data-label="Email">
+                                                              <div class="slds-truncate" title={attorney.attorneyEmail}>
+                                                                  {attorney.attorneyEmail}
+                                                              </div>
+                                                          </td>
+                                                          <td data-label="Action" class="table-action">
+                                                              <lightning-button-menu alternative-text="Show actions"
+                                                                  title="actions" variant="border-filled" menu-alignment="auto"
+                                                                  aria-live="assertive" aria-label={attorney.newCombinedName} data-attorneyindex={index}>
+                                                                  <lightning-menu-item value="Edit" data-index={index}
+                                                                      onclick={handleAttorneyDetailsEdit} label="Edit" class="base-link-btn base-edit-btn"
+                                                                      aria-label={attorney.editName} aria-live="assertive">
+                                                                  </lightning-menu-item>
+                                                                  <lightning-menu-item value="Delete" data-index={index}
+                                                                      onclick={handleAttorneyDetailsDelete} label="Delete" class="base-delete-btn file-delete-btn"
+                                                                      aria-label={attorney.deletName} aria-live="assertive">
+                                                                  </lightning-menu-item>
+                                                              </lightning-button-menu>
+                                                          </td>
+                                                      </tr>
+                                                  </template>
+                                              </tbody>
+                                          </table>
+                                      </div>
+                                    </template>
+
+                                    <div class="initial2">
+                                        <lightning-radio-group label={labels.complaintLegalActionInitiated}
+                                            class="radio-group" name="lawSuitFiled"
+                                            options={yesNoOptions} value={dataObj.lawSuitFiled} type="radio"
+                                            onchange={handleInputChange}>
+                                        </lightning-radio-group>
+                                    </div>
+                                    <template lwc:if={hasLawSuitFiled}>
+                                        <div class="slds-grid slds-wrap slds-gutters">
+                                            <div class="slds-col slds-large-size--1-of-2 slds-medium-size--1-of-2 slds-size--1-of-1">
+                                                <lightning-input type="text" class="respondentWitness" pattern={patternObj.text}
+                                                    label={labels.complaintCourtFileDocketNumber} value={dataObj.lawsuitcasenumber} placeholder={labels.complaintEnterFileNumber}
+                                                    name="lawsuitcasenumber" max-length="80" onchange={handleInputChange}>
+                                                </lightning-input>
+                                            </div>
+                                            <div class="slds-col slds-large-size--1-of-2 slds-medium-size--1-of-2 slds-size--1-of-1">
+                                                <lightning-input type="text" class="respondentWitness" pattern={patternObj.text}
+                                                    label={labels.complaintCourtJurisdictionJudicialDistrict} value={dataObj.lawsuitJury} name="lawsuitJury" placeholder={labels.complaintCourtJurisdictionExample}
+                                                    max-length="80" onchange={handleInputChange}>
+                                                </lightning-input>
+                                            </div>
+                                        </div>                  
+                                    </template>
+                                </div>
+
+                                <div class="divider"></div>
+                                <!-- Other Agencies / Regulatory Bodies -->
+                                <div class="">
+                                    <h2 class="bold-24 m-b-medium">{labels.complaintOtherRegulatoryBodiesAgencies}</h2>
+                                    <lightning-radio-group label={labels.complaintOtherReportingBodies}
+                                        class="radio-group" name="complaintReported"
+                                        options={yesNoOptions} value={dataObj.complaintReported} type="radio"
+                                        onchange={handleInputChange}>
+                                    </lightning-radio-group>
+
+                                    <c-lpi-file-compliant-accordion if:true={showAddEntitySection}
+                                        section-name="Other Entities" is-entity="true" pattern-obj={patternObj}
+                                        onsave={handleAccModalData} get-back-my-focus={getBackMyFocus}
+                                        onretainfocus={handleFocusRetainOnCancel} onfocuseditbutton={focusOnMenuButton}>
+                                    </c-lpi-file-compliant-accordion>
+
+                                    <template if:true={displayEntityTable}>
+                                        <div class="overflow-auto m-t-medium">
+                                            <table class="slds-table slds-table_bordered slds-no-row-hover alpha-table-layout licensee-table"
+                                                 aria-label="Other Agencies Table">
+                                                 <caption class="sr-only">Other Agencies / Organizations Table</caption>
+                                                <thead>
+                                                    <tr class="slds-line-height_reset">
+                                                        <th scope="col"><div class="slds-truncate" title="S.NO.">S.NO.</div></th>
+                                                        <th scope="col"><div class="slds-truncate" title="Agency Name">Name of Agency / Entity</div></th>
+                                                        <th scope="col" style="width: 30%;"><div class="slds-truncate" title="Address">Address</div></th>
+                                                        <th scope="col"><div class="slds-truncate" title="Telephone Number">Telephone Number</div></th>
+                                                        <th scope="col"><div class="slds-truncate" title="Email">Email</div></th>
+                                                        <th scope="col"><div class="slds-truncate" title="Contact Person">Representative Contacted</div></th>
+                                                        <th scope="col"><div class="slds-truncate" title="Action">Action</div></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <template for:each={entityList} for:item="entity" for:index="index">
+                                                        <tr key={entity.sNo} class="slds-hint-parent">
+                                                            <td data-label="S.NO.">
+                                                                <div class="slds-truncate" title={index}>{entity.sNo}</div>
+                                                            </td>
+                                                            <template if:true={entity.entityName}>
+                                                                <td data-label="Agency Name">
+                                                                    <div style="white-space:normal; word-break: break-all;" title={entity.entityName}>
+                                                                        {entity.entityName}
+                                                                    </div>
+                                                                </td>
+                                                            </template>
+                                                            <template if:false={entity.entityName}>
+                                                                <td data-label="Agency Name">
+                                                                    <div style="white-space:normal; word-break: break-all;" title={entity.combinedName}>
+                                                                        {entity.combinedName}
+                                                                    </div>
+                                                                </td>
+                                                            </template>
+                                                            <td data-label="Address">
+                                                                <div style="white-space: normal; word-break: break-all;" title={entity.addressValue}>
+                                                                    {entity.addressValue}
+                                                                </div>
+                                                            </td>
+                                                            <td data-label="Telephone Number">
+                                                                <div class="slds-truncate" title={entity.telephone}>{entity.telephone}</div>
+                                                            </td>
+                                                            <td data-label="Email">
+                                                                <div class="slds-truncate" title={entity.email}>{entity.email}</div>
+                                                            </td>
+                                                            <td data-label="Contact Person">
+                                                                <div class="slds-truncate" title={entity.entityRepresentative}>{entity.entityRepresentative}</div>
+                                                            </td>
+                                                            <td data-label="Action">
+                                                                <lightning-button-menu alternative-text="Show Actions"
+                                                                    title="actions" variant="border-filled" menu-alignment="auto"
+                                                                    class="otherEntityActionBtn" aria-label={entity.actionAriaLabel}
+                                                                    aria-live="assertive" data-otherindex={index}>
+                                                                    <lightning-menu-item value="Edit" data-index={index}
+                                                                        data-section-name="Entity" class="base-link-btn base-edit-btn"
+                                                                        onclick={handleEditAction} label="Edit" aria-label={entity.entityName}
+                                                                        aria-live="assertive">
+                                                                    </lightning-menu-item>
+                                                                    <lightning-menu-item value="Delete" data-index={index}
+                                                                        data-section-name="Entity" onclick={handleDeleteAction}
+                                                                        label="Delete" class="base-delete-btn file-delete-btn"
+                                                                        aria-label={entity.entityName} aria-live="assertive">
+                                                                    </lightning-menu-item>
+                                                                </lightning-button-menu>
+                                                            </td>
+                                                        </tr>
+                                                    </template>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </template>
+                                </div>
+
+                                <c-lpi-complaints-file-upload is-internal-user={isInternalUser}
+                                    respondent-list={licensedRespondentForDocUpload} is-portal-user={portalUser}
+                                    selected-board-name={selectedBoardName} complaint-details={dataObj.complaintDesc}
+                                    onfileupload={handleFileUploadCntrl} onsetdraft={setDraftComplaint}
+                                    onvalidatefilecount={handleUploadEligiblity}
+                                    onunselect={handleFileDeleteConfirmation} set-agree-to-upload={setAgreeToUpload}
+                                    ondraftcomplaintcreate={handleDraftComplaintCreation}>
+                                </c-lpi-complaints-file-upload>
+                                <template if:true={dispalyFileTable}>
+                                    <div class="overflow-auto">
+                                        <table class="slds-table slds-table_bordered slds-no-row-hover alpha-table-layout licensee-table m-t-medium"
+                                            aria-label="Uploaded Documents Table">
+                                            <caption class="sr-only">Uploaded Documents Table</caption>
+                                            <thead>
+                                                <tr class="slds-line-height_reset">
+                                                    <th scope="col"><div class="slds-truncate" title="Document Number">Document Number</div></th>
+                                                    <th scope="col"><div class="slds-truncate" title="Document Name">Document Name</div></th>
+                                                    <th scope="col"><div class="slds-truncate" title="Document Type">Document Type</div></th>
+                                                    <th scope="col"><div class="slds-truncate" title="Document Status">Document Status</div></th>
+                                                    <th scope="col"><div class="slds-truncate" title="Submitted Against">Submitted Against</div></th>
+                                                    <th scope="col"><div class="slds-truncate" title="Action">Action</div></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <template if:true={filesList} for:each={filesList} for:item="file" for:index="index">
+                                                    <tr class="slds-hint-parent" key={file.documentId}>
+                                                        <td data-label="S.NO."><div class="slds-truncate">{file.sNoValue}</div></td>
+                                                        <td data-label="File Name"><div style="white-space:normal; word-break: break-all;">{file.fileName}</div></td>
+                                                        <td data-label="Type"><div class="slds-truncate">{file.fileType}</div></td>
+                                                        <td data-label="File Status"><div style="white-space:normal; word-break: break-all;">{file.fileStatus}</div></td>
+                                                        <td data-label="Submitted Against"><div style="white-space:normal; word-break: break-all;">{file.submittedAgainst}</div></td>
+                                                        <td data-label="Delete">
+                                                            <lightning-button-icon size="small" class="base-delete-btn delete-btn file-delete-btn"
+                                                                data-selected-index={index} data-app-doc-id={file.appDocId}
+                                                                data-request-id={file.requestId} variant="bare" aria-label="Delete"
+                                                                data-draft-comp-id={file.draftComplaintId} onclick={handleFileDelete}>
+                                                            </lightning-button-icon>
+                                                        </td>
+                                                    </tr>
+                                                </template>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </template>
+                                <div class="divider"></div>
+
+                                <!-- Additional Questions -->
+                                <div class="">
+                                    <h2 class="bold-24 m-b-medium">{labels.complaintAdditionalQuestions}</h2>
+                                    <div class="slds-grid slds-gutters slds-grid_vertical slds-wrap">
+                                        <div class="slds-col slds-size_12-of-12">
+                                            <lightning-radio-group required
+                                                label={labels.complaintContactedBusinessDirectly}
+                                                class="radio-group"
+                                                name="contactedIndividualAboutComplaint" options={yesNoOptions}
+                                                value={dataObj.contactedIndividualAboutComplaint} type="radio"
+                                                onchange={handleInputChange}
+                                                message-when-value-missing="Error: Please indicate if you have contacted the individual or business directly.">
+                                            </lightning-radio-group>
+                                        </div>
+                                        <div class="slds-col slds-size_12-of-12" if:true={showIndividualComplaintDate}>
+                                            <lightning-input type="text" placeholder={labels.complaintSpecifyDatesTimeframe}
+                                                label={labels.complaintDirectContactDates}
+                                                name="contactedIndividualAboutCompDate" max-length="100"
+                                                value={dataObj.contactedIndividualAboutCompDate}
+                                                onchange={handleInputChange}>
+                                            </lightning-input>
+                                        </div>
+                                    </div>
+                                    <div class="slds-grid slds-gutters slds-grid_vertical slds-wrap">
+                                        <div class="slds-col slds-size_12-of-12">
+                                            <lightning-radio-group required
+                                                label={labels.complaintRelationshipWithSubject}
+                                                class="radio-group"
+                                                name="socialOrProfessionalRelation" options={yesNoOptions}
+                                                value={dataObj.socialOrProfessionalRelation} type="radio"
+                                                onchange={handleInputChange}
+                                                message-when-value-missing="Error: Please specify if you have a personal or professional relationship.">
+                                            </lightning-radio-group>
+                                        </div>
+                                        <div class="slds-col slds-size_12-of-12" if:true={showExplainationForSocOrProfRelation}>
+                                            <lightning-input type="text" required label={labels.complaintIfSoExplain} placeholder={labels.complaintEnterExplanation}
+                                                name="explainSocProfRelation" value={dataObj.explainSocProfRelation}
+                                                onchange={handleInputChange} max-length="1000" pattern={patternObj.text}
+                                                message-when-value-missing="Error: Explanation is required.">
+                                            </lightning-input>
+                                        </div>
+                                        <div class="slds-col slds-size_12-of-12">
+                                            <lightning-radio-group required
+                                                label={labels.complaintWillingToTestify}
+                                                class="radio-group"
+                                                name="testifyHearing" options={yesNoOptions}
+                                                value={dataObj.testifyHearing} type="radio" onchange={handleInputChange}
+                                                message-when-value-missing="Error: Please indicate if you are willing to testify.">
+                                            </lightning-radio-group>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="divider"></div>
+
+                            <!-- Sector Specific Questions -->
+                            <c-lpi-board-specific-complaint-ques board-name={selectedBoardName}
+                                onfocuschange={handleChildFieldChange} if:true={showBSQSection}>
+                            </c-lpi-board-specific-complaint-ques>
+                            <div class="divider" if:true={showBSQSection}></div>
+
+                            <!-- Attestation Section -->
+                            <div>
+                                <h2 class="bold-24 m-b-medium">{labels.complaintDeclarationAttestation}</h2>
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_12-of-12 slds-m-top_medium required-cb">
+                                        <lightning-input type="checkbox" required
+                                            label={labels.complaintDeclarationAttestationStatement}
+                                            name="I am here by reviewing all the above details and accept to the Terms and Conditions of the service."
+                                            checked={dataObj.isChecked} onchange={handleInputChange}
+                                            message-when-value-missing="Error: Attestation is required to submit your complaint.">
+                                        </lightning-input>
+                                    </div>
+                                </div>
+
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_4-of-12 date-cmp">
+                                        <lightning-input type="date" required label={labels.complaintDateFiled}
+                                            name="reportedDate" onblur={handleDateValidation}
+                                            data-section-name="Reported Date" value={dataObj.reportedDate}
+                                            onchange={handleInputChange} data-id="reportedDate" date-style="short"
+                                            disabled=true
+                                            message-when-value-missing="Error: Date is required.">
+                                        </lightning-input>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="divider"></div>
+
+                            <template if:false={isInternalUser}>
+                                <div class="slds-grid slds-wrap slds-grid--align-spread">
+                                    <div class="">
+                                        <lightning-button variant="brand-outline" label={labels.complaintCancel}
+                                            title="Cancel" onclick={checkCancel} class="m-r-small"> 
+                                        </lightning-button>
+                                        <lightning-button variant="brand-outline" label={labels.complaintSaveAsDraft}
+                                            title="Save as Draft" onclick={checkDraft}>
+                                        </lightning-button>
+                                    </div>
+                                    <lightning-button variant="brand" label={labels.complaintSubmitComplaint}
+                                        title="Submit Complaint" onclick={checkAutomationAndNext} class="submit-button">
+                                    </lightning-button>
+                                </div>
+                            </template>
+                            <template if:true={isInternalUser}>
+                                <div class="slds-text-align_right slds-m-top_large">
+                                    <lightning-button variant="brand" label="Submit"
+                                        title="Submit" onclick={handleSubmitInternalUser} class="submit-button"
+                                        disabled={submitDisabled}>
+                                    </lightning-button>
+                                </div>
+                            </template>
+                    </div>
+
+                    <template if:true={openConfirmationModal}>
+                        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01"
+                            aria-modal="true" aria-describedby="modal-content-id-1"
+                            class="slds-modal slds-fade-in-open" onkeydown={handleEscKeyDown}>
+                            <div class="slds-modal__container">
+                                <header class="slds-modal__header">
+                                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                                        onclick={handleCancelConfirmation}>
+                                        <lightning-icon icon-name="utility:close" variant="inverse" size="small" title="Close"></lightning-icon>
+                                        <span class="slds-assistive-text">Close Delete {modalHeader}</span>
+                                    </button>
+                                    <h1 id="modal-heading-03" class="section-heading slds-hyphenate">
+                                        Delete {modalHeader}</h1>
+                                </header>
+                                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-03">
+                                    <p>{modalHeading}</p>
+                                </div>
+                                <footer class="slds-modal__footer">
+                                    <button class="slds-button slds-button_neutral" onclick={handleCancelConfirmation} title="Cancel">Cancel</button>
+                                    <button class="slds-button slds-button_destructive" onclick={handleDeleteConfirmation} title="Delete">Delete</button>
+                                </footer>
+                            </div>
+                        </section>
+                        <div class="slds-backdrop slds-backdrop_open"></div>
+                    </template>
+                    <div class="recaptchaCheckbox2" style={recaptchaDivStyle} tabindex={recaptchaDivTabIndex}>
+                    </div>
+                </template>
+
+                <template if:true={displayComplaintDetails}>
+                    <h1 class="bold-32 m-b-medium">Complaint Submission Confirmation</h1>
+                    <div class="section-heading complaint-form__content slds-p-around_x-large success-msg">
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_12-of-12 slds-medium-size_9-of-12 slds-large-size_9-of-12">
+                                <div class="success-icon m-b-large">
+                                    <span class="slds-icon_container slds-icon-utility-success" title="success">
+                                        <i class="material-icon material-icon-check_circle_outline"></i>
+                                    </span>
+                                    <div class="success-text" aria-live="assertive" role="alert">Your complaint has been successfully submitted.</div>
+                                </div>
+                                <p class="m-b-large text-primary">Thank you for contacting the Financial and Consumer Services Commission of New Brunswick (FCNB). Your submission has been logged and assigned for initial review. We will contact you if additional details or clarification are required.</p>
+                                <p class="m-b-large">Reference Number(s): <b>{complaintName}</b></p>
+                            </div>
+                            <div class="slds-col slds-size_12-of-12 slds-medium-size_3-of-12 slds-large-size_3-of-12">
+                                <div class="">
+                                    <img src={SuccessImg} alt="Submission Successful" srcset="">
+                                </div>
+                            </div>
+                        </div>
+                        <lightning-button variant="brand-outline" class="btn-right-arrow" label="Return to Home"
+                            title="Return to Home" onclick={navigateHome}>
+                        </lightning-button>
+                    </div>
+                </template>
+            </div>
+        </div>
+        </template>
+    </div>
+</template>

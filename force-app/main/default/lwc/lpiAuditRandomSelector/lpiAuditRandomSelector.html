@@ -1,0 +1,250 @@
+<template>
+	<div>
+		<lightning-card  title="Audit Licenses" heading-level="3" class="audit-main" icon-name="custom:custom85" >
+			<lightning-spinner variant="brand" class="slds-align_absolute-center" if:true={isProcessing}></lightning-spinner>
+			<!-- <div class="slds-p-around_medium slds-col slds-size_1-of-1 audit-content"> -->
+				<!--First Step Start-->
+				<template if:true={showFirstStep}>
+					<div class="slds-p-around_medium slds-col slds-size_1-of-1 audit-content">
+						<div class="slds-grid slds-wrap slds-gutters">
+							<div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12 m-b-medium">
+								<lightning-combobox
+									options={auditTypeOptions}
+									label="Audit Type"
+									name="auditType"
+									onchange={handleChange}
+									value={auditType}
+									required
+									class="validate"
+								></lightning-combobox>
+							</div>
+							<div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12 m-b-medium">
+								<lightning-combobox
+									options={professionOptions}
+									label="Profession"
+									name="profession"
+									onchange={handleChange}
+									value={selectedProfessionValue}
+									required
+									class="validate"
+								></lightning-combobox>
+							</div>
+						</div>
+						<div class="slds-grid slds-wrap slds-gutters">
+							<template if:true={showSubProfessions}>
+								<div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12 m-b-medium">
+									<lightning-combobox
+										options={subProfessionOptions}
+										label="Sub Profession"
+										name="subProfession"
+										value={selectedSubProfession}
+										onchange={handleChange}
+										class="validate"
+										required
+									></lightning-combobox>
+								</div>
+							</template>
+							<div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_12-of-12 m-b-medium">
+								<lightning-dual-listbox
+									options={disciplinaryActionOptions}
+									label="Licensees with current disciplinary action"
+									name="discAction"
+									onchange={handleChange}
+									value={selectedDiscAction}
+									class="validate"
+									multi-select
+								></lightning-dual-listbox>
+							</div>
+							<template if:true={showYearPickList}>
+								<div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_12-of-12 m-b-medium">
+									<lightning-dual-listbox
+										options={yearOptions}
+										label="Select Audit Year"
+										name="auditYear"
+										onchange={handleChange}
+										value={selectedAuditYears}
+										class="validate"
+										required
+										multi-select
+									></lightning-dual-listbox>
+								</div>
+							</template>
+						</div>
+						<div class="slds-grid slds-wrap slds-gutters">
+							<div class="slds-col slds-size_1-of-1 slds-medium-size_6of-12 slds-large-size_6-of-12">
+								<div class="slds-grid slds-wrap slds-gutters">
+									<div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12 m-b-medium">
+										<lightning-input
+										label="Issuance Date"
+										name="issuanceDateFrom"
+										type="Date"
+										onchange={handleChange}
+										value={selectedIssueDateFrom}
+										max={selectedIssueDateTo}
+										message-when-range-overflow="Issuance from date cannot be greater than issuance to date"
+										class="error-msg-absolute"
+										></lightning-input>
+									</div>
+									<div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12 m-b-medium">
+										<lightning-input
+										label=""
+										name="issuanceDateTo"
+										type="Date"
+										onchange={handleChange}
+										value={selectedIssueDateTo}
+										min={selectedIssueDateFrom}
+										message-when-range-underflow="Issuance to date cannot be less than issuance from date"
+										class="error-msg-absolute slds-m-top--xx-small"
+									></lightning-input>
+									</div>
+								</div>
+							</div>
+							<div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+								<lightning-input
+									label="Expiration Date"
+									name="expDate"
+									type="Date"
+									onchange={handleChange}
+									value={selectedExpDate}
+								></lightning-input>
+							</div>
+						</div>
+					</div>
+				</template>
+				<!--First Step End-->
+
+				<!--Second Step Start-->
+				<template if:true={showSecondStep} >
+					<div class="slds-p-around_medium slds-col slds-size_1-of-1 audit-content" style="height: 465px;">
+						<div if:true={filteredRecordCount}>
+							<div class="slds-grid slds-gutters slds-wrap">
+								<div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-1 slds-text-title_bold m-b-medium">
+									Total License: {filteredRecordCount}
+								</div>
+							</div>
+							<div class="slds-grid slds-gutters slds-wrap">
+								<div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12 m-b-medium">
+									<lightning-radio-group
+										options={auditLicensesByOptions}
+										label="Audit Licenses by"
+										name="auditLicensesBy"
+										type="radio"
+										onchange={handleChange}
+										value={auditLicensesBy}
+										required
+										class="validate internal-radio"
+									></lightning-radio-group>
+								</div>
+							</div>
+							<div class="slds-grid slds-gutters slds-wrap" if:true={auditByPercentage}>
+								<div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12 m-b-medium">
+									<lightning-input 
+										name="recordsPercentage" 
+										label="Choose the percentage of the total licenses to be picked for audit" 
+										type="number" 
+										min="0" 
+										max="100" 
+										formatter="percent-fixed" 
+										step="0.01"
+										value={recordsPercentage}
+										onchange={handleChange}
+										required
+										class="validate"
+									></lightning-input>
+								</div>
+							</div>
+							<div class="slds-grid slds-gutters slds-wrap" if:true={auditByCount}>
+								<div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12 m-b-medium">
+									<lightning-input 
+									name="recordsCount" 
+									label="Choose the exact count of the total licenses to be picked for audit" 
+									type="number" 
+									value={recordsCount}
+									onchange={handleChange}
+									required
+									class="validate"
+									></lightning-input>
+								</div>
+							</div>
+						</div>
+						<div if:false={filteredRecordCount}>
+							<div class="slds-illustration slds-illustration_large">
+								<div class="slds-text-longform">
+									<img src={noDataFound} alt="">
+									<h3 class="slds-text-heading_medium">No records found with current filter.</h3>
+								  </div>
+							</div>
+						</div>
+					</div>
+				</template>
+				<!--Second Step End-->
+
+				<!--Third Step Start-->
+				<template if:true={showThiredStep}>
+					<div class="slds-p-around_medium slds-col slds-size_1-of-1 audit-content audit-step-3">
+						<div class="slds-grid slds-gutters slds-wrap slds-var-p-around_large">
+							<div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12 slds-text-title_bold">
+								Total Business License Selected for Audit : {auditLicenseRecordsCount}
+							</div>
+						</div>
+						<div style="height: 465px;" class="slds-var-m-around_small">
+							<lightning-datatable
+									key-field="Id"
+									data-id="table"
+									data={data}
+									columns={tableColumns}
+									hide-checkbox-column
+							></lightning-datatable>
+						</div>
+						<div class="slds-m-top_small">
+							<div class="slds-grid slds-grid--align-end">
+								<lightning-button icon-name="utility:chevronleft" onclick={previousHandler}>
+								</lightning-button>
+								<p class="slds-m-horizontal--large slds-m-top_x-small">Page {page} of {totalPage}</p>
+								<lightning-button icon-name="utility:chevronright" icon-position="right"
+										onclick={nextHandler}>
+									</lightning-button>
+							</div>
+							<!-- <lightning-layout>
+								<lightning-layout-item flexibility="auto">
+									<lightning-button label="Previous Page" variant="label-hidden" icon-name="utility:chevronleft" onclick={previousHandler} class="slds-m-right_xx-large">
+									</lightning-button>
+								</lightning-layout-item>
+								<lightning-layout-item flexibility="auto" class="slds-m-horizontal_xx-large slds-m-top_x-small">
+									Page {page} of {totalPage}
+								</lightning-layout-item>
+								<lightning-layout-item flexibility="auto">
+									<lightning-button label="Next Page" variant="label-hidden" icon-name="utility:chevronright" icon-position="right" class="slds-m-left_xx-large"
+										onclick={nextHandler}>
+									</lightning-button>
+								</lightning-layout-item>
+							</lightning-layout> -->
+						</div>
+					</div>
+				</template>
+				<!--Third Step End-->
+			<!-- </div> -->
+			<div class="slds-modal__footer">
+				<lightning-button
+					if:true={showPreviousButton}
+					label="Previous"
+					variant="Neutral"
+					onclick={handlePrevButton}
+					class="slds-float_left"
+				></lightning-button>
+				<lightning-button
+					if:true={showNextButton}
+					label="Next"
+					variant="brand"
+					onclick={handleNextButton}
+				></lightning-button>
+				<lightning-button
+					if:false={showNextButton}
+					label="Audit Selected Licenses"
+					variant="brand"
+					onclick={handleAuditLicenses}
+				></lightning-button>
+			</div>
+		</lightning-card>
+	</div>
+</template>

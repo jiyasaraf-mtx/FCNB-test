@@ -1,0 +1,366 @@
+
+////Temporary color code starts//
+$bg-blue:                   #f1f5fa;
+$btn-grey:                  #e4e4e4;
+$notification-background:   #d13a3a;
+$input-bg-disabled:         #dbdbdb;
+$inpur-read-only-bg:        #f3f3f3;
+$table-bg:                  rgba(69, 91, 151, 0.1);
+$warning-background:        rgba(195, 111, 11, 0.06);
+$file-upload-background:    rgba(11, 81, 183, 0.06);
+$success-block-bg:          rgba(57, 181, 74, 0.03);
+    
+
+// //Badges Color 
+$grey_badge-bg :            #edeef0;
+$blue_badge :               #5168E9 ;
+$blue_badge-bg :            #eaedfc;
+$pink_badge :               #DB247A;
+$pink_badge-bg :            #fce5ef;
+
+
+
+$border-blue:               #4c77c1;
+$border-lyt-blue:           #e3e7ef;
+$input-border-disabled:     #b5b5b5;
+$note-bg:                   #FBF6F0;
+$success-block-border:      rgb(57 181 74 / 26%);
+
+// //Box Shadow Colors
+$sidebar-boxshadow:         #E3E3E3;
+
+
+// //Others
+$label-background:          #dfe9f7;
+$error:                     #C82D2D;
+$error-light:               #C82D2D1F;
+$bg-gray:                   #f1f5fa;
+$accordion-bg:              #FAFAFB;
+$accordion-border:          #DAE1E6;
+$text-blue:                 #63729A;
+$warning-bg-2:              #F2DEDE;
+$warning-border-2:          #EBCCD1;
+$menu-item-text:            #030000;
+$menu-item-border:          #e5e5e5;
+$input-color-2:             #c9c9c9;
+$case-bg:                   #0B51B7;
+$case-text:                 #6B7280;
+$table-col-border:          #f2f4f8;
+$header-nav-secondary:      #F4F6FB;
+$file-zone-color:           #97999B;
+$input-color-disabled:      #393d3d;
+$destructive:               #ba0516;
+$error-box-bg:              #ffccca;
+$consent-background:      rgba(11,81,183,0.06);
+
+
+// //Indicator
+$red-indicator-bg: #fbd8da;
+$red-indicator-text-color: #fbd8da;
+$yellow-indicator-bg: #fef4cd;
+$yellow-indicator-text-color: #726649;
+$green-indicator-bg: #d5f0dc;
+$green-indicator-text-color: #4a6a4f;
+$blue-bg: #047cf9;
+$indicator-text-color: #0067b8;
+
+// //Box-shadows
+$box-shadow:                0rem 0.125rem 0.25rem rgba(0, 0, 0, 0.1);
+$box-shadow-1:              0 2px 4px 0 #0000001a; //Status Card Box-shadow
+$sidebar-box-shadow:        0.25rem 0.25rem 0.1875rem 0.0625rem $sidebar-boxshadow;
+$notification-container:    0rem 0rem 0.625rem rgba(0, 0, 0, 0.1);
+$stepperNavigation:         inset 0rem 0rem 0.625rem rgba(0, 0, 0, 0.15);
+
+
+//Temporary color code
+$warning-border-2:                  #EBCCD1;
+$warning-bg-2:                      #F2DEDE;
+$warning-2:                 #9f5b09;
+$warning-lyt:               #f6eee3;
+$cool-warning-box-bg:       #e4ebf5;
+$asterisk-color:            #ed0202;
+$text-color-2:              #222222;
+$link-blue:                 #0176d3;
+$blue:                      #075EAF;
+$green:                     #23952F;
+$header-nav-secondary:      #F4F6FB;
+$bg-blue:                   #f1f5fa;
+$box-shadow-1:              0 2px 4px 0 #0000001a; //Status Card Box-shadow
+$input-color-2:             #c9c9c9;
+$case-text:                 #6B7280;
+$modal-footer-border:       #d4d4d4;
+$case-bg:                   #0B51B7;
+$grey_badge :               #50545B;
+$accordion-border:          #DAE1E6;
+$consent-background:      rgba(11,81,183,0.06);
+$text-dark-blue:            #1E3A62;
+$text-color-3:              #333333;
+$input-bg-disabled:         #dbdbdb;
+$input-border-disabled:     #b5b5b5;
+$text-color-4:              #444444;
+// //Black shades
+$black-x-dark:              #3F4444;
+$warning:                   #C36F0B;
+$rejected:                  #ea001f;
+$error-box-bg:              #ffccca;
+$success-block-border:      rgb(57 181 74 / 26%);
+$grey:                      #9CA3AF; 
+$success:                   #37A342;
+$file-name-badge-bg:        #e6f3e6;
+$success_badge :            #23952F;
+$success_badge-bg :         #e5f2e6;
+$bg-gray:$bg-blue;
+$file-upload-background:    rgba(11, 81, 183, 0.06);
+$light-xx-grey:             #E1E1E1;
+$light-x-grey:              #f2f2f2;
+$table-bg:                  rgba(69, 91, 151, 0.1);
+$border-blue-lyt:           #1771B7;  
+$btn-grey:                  #e4e4e4;
+$bg-x-grey:                 #f0f0f0;
+$dark-grey:                 #cccccc;
+$table-border_grey:         #EAF0F7;
+$text-dark-gray:            #6B7280;
+$table-col-border:          #f2f4f8;
+$text-color:                #0D1D35;
+$file-zone-color:           #97999B;
+$destructive:               #ba0516;
+$text-color-6:              #666666;
+$warning-text:              #C36F0B;
+$warning-background:        rgba(195, 111, 11, 0.06);
+$text-dark:                 #303E67;
+$warning_badge-bg :         #fadbc2;
+$input-color-disabled:      #393d3d;
+$note-bg:                   #FBF6F0;
+$table-body_grey:           #50545B;
+$label-background:          #dfe9f7;
+$accordion-bg:              #FAFAFB;
+////Temporary color code Ends//
+
+// Font
+$font-family: 'Open Sans', sans-serif;
+
+$font-size-10:       0.625rem;                 //10px
+$font-size-11:       0.688rem;                 //10px
+$font-size-12:       0.75rem;                  //12px
+$font-size-13:       0.813rem;                 //13px
+$font-size-14:       0.875rem;                 //14px
+$font-size-15:       0.938rem;                 //15px
+$font-size-16:       1rem;                     //16px
+$font-size-18:       1.125rem;                 //18px
+$font-size-20:       1.25rem;                  //20px
+$font-size-22:       1.375rem;                 //22px
+$font-size-24:       1.5rem;                   //24px                  
+$font-size-32:       2rem;                     //32px
+$font-size-40:       2.5rem;                   //40px
+
+
+// Brand Colors
+// $primary-main:                      #007ADE;
+$primary-main:                      #006ec8;
+$primary-dark:                      #00559A;
+$primary-light:                     #3C99E6;
+// $secondary-main:                    #00ABDE;
+$secondary-main:                    #1E3A62;
+$secondary-dark:                    #00ABDE;
+$secondary-light:                   #54C5E9;
+
+//Text Colors
+$text-primary:                      #1F2937;
+$text-secondary:                    #6B7280;
+$text-disabled:                     rgba(0, 0, 0, 0.38);
+$text-medium:                       #ABABAB;
+
+
+// State Colors
+$info-main:                         $primary-main;
+$info-dark:                         #01579B;
+$info-light:                        #03A9F4;
+
+// $error-main:                        #D32F2F;
+// $error-dark:                        #C62828;
+$error-dark:                        #D32F2F;
+$error-main:                        #C62828;
+$error-light:                       #EF5350;
+
+$warning-main:                      #ED6C02;
+$warning-dark:                      #E65100;
+$warning-light:                     #FF9800;
+
+
+$success-main:                      #2E7D32;
+$success-dark:                      #1B5E20;
+$success-light:                     #4CAF50;
+
+
+// Opacity Colors
+$primary-shades-4-p:                rgba(0, 122, 222, 0.04);
+$primary-shades-8-p:                rgba(0, 122, 222, 0.08);
+$primary-shades-12-p:               rgba(0, 122, 222, 0.12);
+$primary-shades-30-p:               rgba(0, 122, 222, 0.30);
+$primary-shades-30-p-ripple:          radial-gradient(36.59% 100.8% at 50% 50%, rgba(0, 122, 222, 0.30) 99.54%, rgba(255, 255, 255, 0.00) 100%);
+$primary-shades-50-p:               rgba(0, 122, 222, 0.50);
+
+$secondary-shades-4-p:              rgba(0, 171, 222, 0.04);
+$secondary-shades-8-p:              rgba(0, 171, 222, 0.08);
+$secondary-shades-12-p:             rgba(0, 171, 222, 0.12);
+$secondary-shades-30-p:             rgba(0, 171, 222, 0.30);
+$secondary-shades-30-p-ripple:        radial-gradient(36.59% 100.8% at 50% 50%, rgba(0, 171, 222, 0.30) 99.54%, rgba(255, 255, 255, 0.00) 100%);
+$secondary-shades-50-p:             rgba(0, 171, 222, 0.50);
+
+$error-shades-4-p:                  rgba(211, 47, 47, 0.04);
+$error-shades-12-p:                 rgba(211, 47, 47, 0.12);
+$error-shades-30-p:                 rgba(211, 47, 47, 0.30);
+$error-shades-30-p-ripple:            radial-gradient(36.59% 100.8% at 50% 50%, rgba(211, 47, 47, 0.30) 99.54%, rgba(255, 255, 255, 0.00) 100%);
+$error-shades-50-p:                 rgba(211, 47, 47, 0.50);
+$error-shades-160-p:                  linear-gradient(0deg, rgba(0, 0, 0, 0.60) 0%, rgba(0, 0, 0, 0.60) 100%), #D32F2F;
+$error-shades-190-p:                  linear-gradient(0deg, rgba(255, 255, 255, 0.90) 0%, rgba(255, 255, 255, 0.90) 100%), #D32F2F;
+
+$warning-shades-4-p:                rgba(237, 108, 2, 0.04);
+$warning-shades-12-p:               rgba(237, 108, 2, 0.12);
+$warning-shades-30-p:               rgba(237, 108, 2, 0.30);
+$warning-shades-30-p-ripple:          radial-gradient(36.59% 100.8% at 50% 50%, rgba(237, 108, 2, 0.30) 99.54%, rgba(255, 255, 255, 0.00) 100%);
+$warning-shades-50-p:               rgba(237, 108, 2, 0.50);
+$warning-shades-160-p:                 linear-gradient(0deg, rgba(0, 0, 0, 0.60) 0%, rgba(0, 0, 0, 0.60) 100%), #ED6C02;
+$warning-shades-190-p:              linear-gradient(0deg, rgba(255, 255, 255, 0.90) 0%, rgba(255, 255, 255, 0.90) 100%), #ED6C02;
+
+$info-shades-4-p:                  rgba(2, 136, 209, 0.04);
+$info-shades-12-p:                 rgba(2, 136, 209, 0.12);
+$info-shades-30-p:                 rgba(2, 136, 209, 0.3);
+$info-shades-30-p-ripple:            radial-gradient(36.59% 100.8% at 50% 50%, rgba(2, 136, 209, 0.30) 99.54%, rgba(255, 255, 255, 0.00) 100%);
+$info-shades-50-p:                 rgba(2, 136, 209, 0.5);
+$info-shades-160-p:                rgba(2, 136, 209, 1);
+$info-shades-190-p:                  linear-gradient(0deg, rgba(255, 255, 255, 0.90) 0%, rgba(255, 255, 255, 0.90) 100%), #0288D1;
+
+$success-shades-4-p:               rgba(46, 125, 50, 0.04);
+$success-shades-12-p:              rgba(46, 125, 50, 0.12);
+$success-shades-30-p:              rgba(46, 125, 50, 0.3);
+$success-shades-30-p-ripple:         radial-gradient(36.59% 100.8% at 50% 50%, rgba(46, 125, 50, 0.30) 99.54%, rgba(255, 255, 255, 0.00) 100%);
+$success-shades-50-p:              rgba(46, 125, 50, 0.5);
+$success-shades-160-p:               linear-gradient(0deg, rgba(0, 0, 0, 0.60) 0%, rgba(0, 0, 0, 0.60) 100%), #2E7D32;
+$success-shades-190-p:               linear-gradient(0deg, rgba(255, 255, 255, 0.90) 0%, rgba(255, 255, 255, 0.90) 100%), #2E7D32;
+
+//Action
+$action-active-54-p:                rgba(0, 0, 0, 0.54);
+$action-hover-4-p:                  rgba(0, 0, 0, 0.04);
+$action-selected-8-p:               rgba(0, 0, 0, 0.08);
+$action-disabled-26-p:              rgba(0, 0, 0, 0.26);
+$action-disabled-background-12-p:   rgba(0, 0, 0, 0.12);
+$action-focus-12-p:                 rgba(0, 0, 0, 0.12);
+$light-white:                       rgba(255, 255, 255, 0.3);
+
+
+
+// Black Colors
+$black:                             #000000;
+$dark:                              #1F2937;
+$gray:                              #43536C;
+$lighter:                           #8B94A5;
+$light:                             #6A768A;
+$extra-light:                       #CDDEEE;
+$white:                             #FFFFFF;
+
+//table
+$table-header:                      #e6eff7;
+$table-border:                      #E3EDFF;
+
+// Generic
+$background-default:                #F0F4F6;
+$background-light:  #F1F4F9;
+$background-extra-light:  #F7F7F7;
+
+
+//need to be removed
+$border-color-dark: #AEB6CF;
+$border-color-light:#EAF0F7;
+
+//misc colors
+$other-divider-23-p:               rgba(0, 0, 0, 0.23);
+$other-outlined-border-23-p:       rgba(0, 0, 0, 0.23);
+$other-blue-outline-border:        #E1EBF2;
+$other-divider:                    rgba(0, 0, 0, 0.12);
+$other-outlined-border-23-p:       rgba(0, 0, 0, 0.23);
+$other-standard-input-line:        rgba(0, 0, 0, 0.42);
+$other-background-drop-overlay:    rgba(0, 0, 0, 0.50);
+$other-rating-active:              #FFB400;
+$other-snackbar:                   #323232;
+$other-gradients:                   linear-gradient(90deg, $primary-main 0%, #00ABDE 100%);
+$other-primary-gradients:           linear-gradient(180deg, rgba(0, 122, 222, 0.40) 0%, rgba(255, 255, 255, 0.40) 100%);
+$other-primary-gradients-60-p:      linear-gradient(90deg, rgba(0, 122, 222, 0.60) -0.87%, rgba(0, 122, 222, 0.00) 82.91%);
+$other-primary-gradients-40-p:      linear-gradient(90deg, rgba(0, 122, 222, 0.40) 0.09%, rgba(0, 122, 222, 0.00) 99.9%);
+$internal-table-header-bg:         #F3F3F3;
+$internal-table-header-icon-bg:    #7F8DE1;
+$internal-table-border:            #DDDBDA;
+$blue-lyt:                         #dbe5f6;
+$outline-border:                   #737373;
+$red:                       #D13A3A;
+$line-seperator-border:     #EAF0F7;
+$input-border:              #E0E3ED;
+$bg-grey:                   #fbfbfb;
+
+// Viewports
+$mobile-start:                        320px;
+$mobile-end:                          767px;
+$tablet-portrait-start:               768px;
+$tablet-portrait-end:                 1023px;
+$tablet-landscape-start:              1024px;
+$tablet-landscape-end:                1280px;
+$desktop-start:                       1281px;
+$desktop-large:                       1400px;
+
+//Percentage
+$percentage-100:            100%;
+$percentage-50:             50%;
+
+//Viewport Size
+$vh-100:                    100vh;
+$vh-50:                     50vh;
+$vw-100:                    100vw;
+$vw-50:                     50vw; 
+
+// metrics
+$xx-small:                            0.25rem;
+$x-small:                             0.5rem;
+$x-ms-small:                            0.625rem;
+$x-m-small:                           0.75rem;
+$x-ml-small:                           0.8125rem;
+$x-l-small:                           0.875rem;    
+$x-l-small-15:                          0.938rem;
+$small:                               1rem;
+$xx-medium:                           1.25rem;
+$medium:                              1.5rem;
+$x-medium:                            1.75rem;
+$large:                               2rem;
+$x-large:                             2.5rem;
+$xx-large:                            3rem;
+$brr-small:                           2px;
+$brr-medium:                          4px;
+$brr-normal:                          6px;
+
+//spacings
+$spacing-xx-small: 0.25rem;
+$spacing-x-small: 0.5rem;
+$spacing-xm-small: 0.75rem;
+$spacing-small: 1rem;
+$spacing-medium: 1.5rem;
+$spacing-large: 2rem;
+$spacing-x-large: 2.5rem;
+
+// Box Shadows
+$box-shadow-regular:                  0px 4px 8px 0px rgba(45, 61, 100, 0.10);
+$box-shadow:                          0px 0px 8px 0px rgba(45, 61, 100, 0.10);
+$box-shadow-dark:                     0px 2px 4px 0px rgba(0, 0, 0, 0.10);
+
+//Font-weight
+$font-weight-light:                     300;
+$font-weight-regular:                   400;
+$font-weight-medium:                    500;
+$font-weight-semi-bold:                 600;
+$font-weight-bold:                      700;
+$font-weight-extra-bold:                800;
+
+
+//Border Radius
+$border-radius-small:       0.125rem;                  //2px
+$border-radius-medium:      0.25rem;                   //4px
+$border-radius-large:       0.5rem;                    //8px                     
+$border-radius-circle:      50%;

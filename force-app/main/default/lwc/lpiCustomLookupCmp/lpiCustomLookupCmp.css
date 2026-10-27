@@ -1,0 +1,5 @@
+.slds-has-focus {
+    outline: 2px dotted #737373 !important;
+    outline-offset: 3px !important;
+    
+}

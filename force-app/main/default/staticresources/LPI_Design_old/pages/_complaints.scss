@@ -1,0 +1,149 @@
+// c-complaint-flow-unauthenticated-english {
+//     .slds-page-header__title {
+//         display: none;
+//     }
+//     .form-blue-heading {
+//         padding-bottom: 0.5rem;
+//     }
+//     omnistudio-omniscript-text-block[data-omni-key="TextBlock7"] {
+//         .form-blue-heading {
+//             padding-top: 2rem;
+//         }
+//     }
+//     .heading {
+//         margin: 1.5rem 0;
+//     }
+//     .omniscript-step__body, .omniscript-article  {
+//         padding-top: 0;
+//     }
+//     omnistudio-omniscript-remote-action[data-omni-key="RemoteActiveGetPublicComplaints"] {
+//         .slds-button_brand {
+//             padding: 0.1874rem;
+//         }
+//     }
+//     omnistudio-omniscript-ip-action[data-omni-key="CancelComplaint"] {
+//         .slds-button_brand {
+//             color: $text-secondary;
+//             font-size: $font-size-14;
+//             padding: 0.1874rem;
+//             border: toRem(1) solid $text-secondary;
+//             background-color: $white;
+//         }
+//     }
+//     omnistudio-omniscript-ip-action[data-omni-key="IntegrationProcedureAction1"] {
+//         .slds-button_brand {
+//             background: $primary-main;
+//             padding: 0.1874rem;
+//             font-size: $font-size-14;
+//             border: toRem(1) solid $primary-main;
+//         }
+//     }
+//     omnistudio-omniscript-checkbox[data-omni-key="Checkbox2"] {
+//         .slds-form-element__control {
+//             padding-top: 1.2rem;
+//         }
+//     }
+//     omnistudio-omniscript-file[data-omni-key="AttachDocuments"] {
+//         .slds-form-element__label {
+//             color: $primary-main;
+//             font-size:$font-size-18;
+//             font-weight: $font-weight-semi-bold;
+//             margin-bottom: 1rem;
+//         }
+//         .slds-form-element {
+//             padding: 1rem;
+//             box-shadow: 0 toRem(2) toRem(4) rgba(0,0,0,0.1);
+//         }
+//         .slds-file-selector__dropzone {
+//             border: toRem(1) dashed $primary-main !important;
+//             padding: 5rem;
+//             display: flex;
+//             justify-content: center;
+//             background-color:$bg-blue;
+//         }
+//     } 
+// }
+// c-cf-complaint-header {
+//     .slds-grid.slds-wrap.slds-p-around_x-small.slds-m-bottom_x-small {
+//         padding-left: 0;
+//         padding-right: 0;
+//     }
+//     .Landing-Apply-container {
+//         &::before {
+//             display: none;
+//         }
+//     }
+// }
+// c-complaint-flow_-v2-complaint-flow_-v2-english, c-complaint-flow-v2-complaint-flow-v2-english{
+//     .omniscript-article{
+//         .omniscript-side-content{
+//             position: sticky;
+//             top: toRem(90);
+//         }
+//         .omniscript-body{
+//             margin-left: 1rem;
+//         }
+//     }
+//     omnistudio-omniscript-step[data-omni-key="Documents"] {
+//         .slds-form-element__label {
+//             color: $primary-main;
+//             font-size:$font-size-18;
+//             font-weight: $font-weight-semi-bold;
+//             margin-bottom: 1rem;
+//         }
+//         .slds-form-element {
+//             padding: 1rem;
+//             box-shadow: 0 toRem(2) toRem(4) rgba(0,0,0,0.1);
+//         }
+//         .slds-file-selector__dropzone {
+//             border: toRem(1) dashed $primary-main !important;
+//             padding: 5rem;
+//             display: flex;
+//             justify-content: center;
+//             background-color:$bg-blue;
+//         }
+//     } 
+//     c-cf-complaint-review{
+//         .form-blue-heading{
+//             font-size: 1rem;
+//             margin: 1.25rem 0 0.625rem;
+//         }
+//     }
+//     .slds-page-header__title{
+//         display: none;
+//     }
+//     [data-omni-key="ComplaintForm"]{
+//         [data-omni-key="TextBlock3"]{
+//             margin-bottom: 1.25rem;
+//         }
+//     }
+//     .omni-vert-stepchart-last{
+//         display: none !important;
+//     }
+//     .slds-progress__list{
+//         li{
+//             &:nth-child(4){
+//                 &::after{
+//                     display: none;
+//                 }
+//             }
+//         }
+//     }
+//     c-cf-public-complaint-sucess-page_1_-gaurav{
+//         .success-text{
+//             font-size: 1.8rem;
+//         }
+//         .back-btn{
+//             margin-top: 2.188rem;
+//         }
+//         .application-container .application-number{
+//             font-size: 1.5rem;
+//         }
+//     }
+// }  
+
+// .validate {
+//     legend {
+//         font-size: toRem(14);
+//     }
+// }

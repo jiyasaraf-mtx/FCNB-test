@@ -1,0 +1,109 @@
+// .downloadable-listings{
+//     .download-parent {
+//         color: $white !important;
+//         text-align: center;
+//     }
+    
+//     .heading-class {
+//         font-size: xx-large;
+//         font-weight: bolder;
+//         @media all and (max-width: 48rem) {
+//             font-size: x-large;
+//         }
+//     }
+    
+//     .combobox-selection {
+//         background-color: $white !important;
+//         @media all and (max-width: 48rem) {
+//             width: 90%;
+//         }
+//         @media all and (max-width: 24rem) {
+//             .slds-grid {
+//                 flex-wrap: wrap;
+//                 .slds-col {
+//                     width: 100%;
+//                     text-align: center;
+//                     margin-bottom: 1rem;
+//                     &:first-child {
+//                         margin-bottom: 0.5rem;
+//                     }
+//                 }
+//             }
+//         }
+//     }
+    
+//     .content-header {
+//         max-height: 24.75rem !important;
+//         display: flex;
+//         flex-direction: column;
+//         align-items: center;
+//         justify-content: center;
+//         padding: 0 3rem;
+//         @media all and (max-width: 24rem) {
+//             max-height: 28.75rem !important;
+//         }
+//     }
+    
+//     .details-section {
+//         box-shadow: toRem(0) toRem(2) toRem(4) toRem(0) rgba(0,0,0,0.1);
+//         border-radius: 0.25rem;
+//         padding: 2rem;
+//     }
+    
+//     .warning-message {
+//         border-radius: 0.25rem;
+//         padding: 1.25rem 1.5rem;
+//         background-color: $warning-bg-2;
+//         border: toRem(1) solid $warning-border-2;
+//     }
+    
+//     .imp-text {
+//         font-weight: bold;
+//         color: $text-dark-blue;
+//         font-size: toRem(14);
+//     }
+
+//     .dl-card-container{
+//         .card-class{
+           
+//             //width: calc(25% - 1rem);
+//             @media all and (max-width:48rem) {
+//                 //width: calc(33.8% - 1rem);
+//             }
+
+//             .slds-card {
+//                 background: $bg-grey;
+//                 box-shadow: 0 0 toRem(1) $primary-main;
+//                 border-radius: toRem(4);
+//                 margin-bottom: 1rem;
+//                 padding: 1rem;
+//                 &__header{
+//                     margin: 0;
+//                 }
+//                 &__body {
+//                     margin: 0;
+//                     p{
+//                         font-weight: 600;
+//                         font-size: toRem(13);
+//                         color: $text-secondary;
+//                         font-family: 'Open Sans';
+//                     }
+//                     .imp-text{
+//                         // display: -webkit-box;
+//                         // -webkit-line-clamp: 2;
+//                         // -webkit-box-orient: vertical;
+//                         // overflow: hidden;
+//                         max-width: 18rem;
+//                         margin-bottom: 1rem;
+//                         min-height: 4.1rem;
+//                         font-weight: 700;
+//                         font-size: toRem(18);
+//                         color: $text-color;
+//                         word-break: break-all;
+//                     }
+//                 }
+//             }
+            
+//         }
+//     }
+// }

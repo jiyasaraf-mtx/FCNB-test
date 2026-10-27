@@ -1,0 +1,50 @@
+<!--
+  @description       : 
+  @author            : Bharath Kumar M
+  @group             : 
+  @last modified on  : 05-21-2024
+  @last modified by  : Bharath Kumar M
+-->
+<template>
+    <div class="payments-details slds-card">
+        <div class="m-b-medium">
+            <lightning-button variant="base" class="base-link-btn"
+            label= "Back"
+            onclick={handleClickBackDashbaord}></lightning-button>  
+        </div>
+        <div class="slds-grid slds-grid--align-spread slds-grid--vertical-align-center m-b-xl">
+            <h1 class="bold-24">Regulatory Transaction Fee</h1>
+            <template if:true={showDownloadButton}>
+                <lightning-button stretch variant="brand" class="brand-download" label="Download Payment Receipt" name="downloadPayReceipt"
+                    onclick={handleAction}>
+                </lightning-button>
+            </template>
+        </div>
+        <template if:true={trxnData}>
+            <div class="slds-grid slds-gutters slds-wrap slds-m-bottom_small">
+                <template for:each={trxnData} for:item="wrapper">
+                    <div class="slds-col slds-large-size_6-of-12 slds-medium-size_6-of-12 slds-small-size_12-of-12 slds-size_12-of-12 slds-m-bottom_medium"
+                        key={wrapper.key}>
+                        <div class="slds-grid slds-wrap slds-gutters">
+                            <div
+                                class="slds-col label slds-large-size_12-of-12 slds-medium-size_12-of-12 slds-small-size_12-of-12 slds-size_12-of-12">
+                                <span>{wrapper.label} </span>
+                            </div>
+                            <div class="slds-col value text-input slds-size_12-of-12">
+                                <span>{wrapper.value}</span>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+            <!-- <div class="slds-m-top_medium slds-size_2-of-12"  >
+                <lightning-button stretch variant="brand" label="Download Payment Receipt" name="downloadPayReceipt"
+                    onclick={handleAction}>
+                </lightning-button>
+            </div> -->
+        </template>
+        <template if:true={error}>
+            {error}
+        </template>
+    </div>
+</template>

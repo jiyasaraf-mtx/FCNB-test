@@ -1,0 +1,107 @@
+<template>
+            <div class="slds-grid slds-wrap slds-is-relative ">
+            <div style="position: fixed;z-index: 999999;top: 0;right: 0;">
+  <omnistudio-toast class="flexcard-toast-element" theme="slds" title="" message="" styletype=""> </omnistudio-toast>
+</div>
+            <div if:true={showLoader} class="slds-is-absolute vloc-loader_override" style="height: 100%; width: 100%; min-height:50px; background: transparent; z-index: 99;">
+  <div>
+   <omnistudio-spinner
+      variant="brand"
+      alternative-text="Loading content..."
+      size="medium"
+      theme="slds"
+      ></omnistudio-spinner>
+  </div>
+</div>
+            <template if:false={hasPermission}>
+              You don't have required permissions to view this card.
+            </template>
+            <template if:true={hasPermission}>
+              <template if:true={hasRecords}>
+                        <template for:each={_records} for:item="record" for:index="rindex">
+                            <omnistudio-flex-card-state if:true={record}  key={record._flex.uniqueKey} data-recordid={record.Id} record={record} data-statue="true"  data-index="0" data-rindex={rindex} class="cf-vlocity-state-0 cf-vlocity-state slds-size_12-of-12 "  tracking-obj={_childCardTrackingObj} >
+      <div if:true={cardLoaded} class="slds-grid slds-wrap slds-m-around_none " style="      
+         ">
+          <div data-style-id="state0element0" class="slds-col   slds-p-around_x-small slds-size_12-of-12 " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element0_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element0block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3EHave%20you%20ever%20been%20finally%20adjudicated%20and%20found%20guilty,%20or%20entered%20a%20plea%20of%20guilty%20or%20nolo%20contendere,%20in%20a%20criminal%20prosecution%20under%20the%20laws%20of%20any%20state%20or%20of%20the%20United%20States%20whether%20or%20not%20sentence%20was%20imposed%20(includes%20suspended%20imposition%20of%20sentence).%20If%20yes,%20explain%20fully%20and%20provide%20certified%20court%20documents%20(i.e.%20docket%20sheet,%20information%20or%20indictment,%20and%20final%20disposition).%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element0block_element1" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element0block_element1_child"   card={card}  record={record}  merge-field="%3Cdiv%3E%7BEFDEmbalmerPracticumLicenseQuestionsHaveYouEverBeenFinally%7D%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element1" class="slds-col   slds-p-around_x-small slds-size_12-of-12 " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element1_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element1block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element1block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3EHave%20you%20ever%20been%20arrested,%20charged%20with%20or%20found%20guilty,%20or%20entered%20a%20plea%20of%20guilty%20or%20nolo%20contendere%20of%20a%20violation%20of%20any%20federal,%20state%20or%20municipal,%20drug%20or%20alcohol%20laws%20or%20rules%20whether%20or%20not%20sentence%20was%20imposed%20(includes%20suspended%20imposition%20of%20sentence).%20If%20yes,%20explain%20fully%20and%20provide%20certified%20court%20documents%20(i.e.%20docket%20sheet,%20information%20or%20indictment,%20and%20final%20disposition).%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element1block_element1" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element1block_element1_child"   card={card}  record={record}  merge-field="%3Cdiv%3E%7BEFDEmbalmerPracticumLicenseQuestionsHaveYouEverBeenArrested%7D%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element2" class="slds-col   slds-p-around_x-small slds-size_12-of-12 " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element2_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element2block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element2block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3EHave%20you%20ever%20been%20addicted%20to%20or%20used%20in%20excess,%20alcohol%20or%20any%20prescription%20drugs%20or%20illegal%20chemical%20substances?%20If%20yes,%20explain%20fully%20and%20provide%20certified%20court%20documents%20(i.e.%20docket%20sheet,%20information%20or%20indictment,%20and%20final%20disposition).%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element2block_element1" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element2block_element1_child"   card={card}  record={record}  merge-field="%3Cdiv%3E%7BEFDEmbalmerPracticumLicenseQuestionsHaveYouEverBeenAddicted%7D%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element3" class="slds-col   slds-p-around_x-small slds-size_12-of-12 " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element3_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element3block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element3block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3EHave%20you%20ever%20been%20arrested,%20charged%20with,%20found%20guilty,%20or%20entered%20a%20plea%20of%20guilty%20or%20nolo%20contendere%20by%20a%20court%20(including%20a%20municipal%20court),%20pled%20guilty%20or%20nolo%20contendere%20to%20any%20traffic%20offense%20resulting%20from%20or%20related%20to%20the%20use%20of%20drugs%20or%20alcohol,%20whether%20sentence%20was%20imposed,%20including%20a%20suspended%20imposition%20of%20sentence%20?%20If%20yes,%20explain%20fully%20and%20provide%20certified%20court%20documents%20(i.e.%20docket%20sheet,%20information%20or%20indictment,%20and%20final%20disposition).%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element3block_element1" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element3block_element1_child"   card={card}  record={record}  merge-field="%3Cdiv%3E%7BEFDEmbalmerPracticumLicenseQuestionsHaveYouEverBeenArrestedMunicipalCourt%7D%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div>
+        </div>
+      </omnistudio-flex-card-state>
+                        </template>
+                      </template>
+                      <template if:false={hasRecords}>
+                            <omnistudio-flex-card-state  record={record} data-statue="false"  data-index="0" data-rindex={rindex} class="cf-vlocity-state-0 cf-vlocity-state slds-size_12-of-12 "  tracking-obj={_childCardTrackingObj} >
+      <div if:true={cardLoaded} class="slds-grid slds-wrap slds-m-around_none " style="      
+         ">
+          <div data-style-id="state0element0" class="slds-col   slds-p-around_x-small slds-size_12-of-12 " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element0_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element0block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3EHave%20you%20ever%20been%20finally%20adjudicated%20and%20found%20guilty,%20or%20entered%20a%20plea%20of%20guilty%20or%20nolo%20contendere,%20in%20a%20criminal%20prosecution%20under%20the%20laws%20of%20any%20state%20or%20of%20the%20United%20States%20whether%20or%20not%20sentence%20was%20imposed%20(includes%20suspended%20imposition%20of%20sentence).%20If%20yes,%20explain%20fully%20and%20provide%20certified%20court%20documents%20(i.e.%20docket%20sheet,%20information%20or%20indictment,%20and%20final%20disposition).%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element0block_element1" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element0block_element1_child"   card={card}  record={record}  merge-field="%3Cdiv%3E%7BEFDEmbalmerPracticumLicenseQuestionsHaveYouEverBeenFinally%7D%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element1" class="slds-col   slds-p-around_x-small slds-size_12-of-12 " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element1_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element1block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element1block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3EHave%20you%20ever%20been%20arrested,%20charged%20with%20or%20found%20guilty,%20or%20entered%20a%20plea%20of%20guilty%20or%20nolo%20contendere%20of%20a%20violation%20of%20any%20federal,%20state%20or%20municipal,%20drug%20or%20alcohol%20laws%20or%20rules%20whether%20or%20not%20sentence%20was%20imposed%20(includes%20suspended%20imposition%20of%20sentence).%20If%20yes,%20explain%20fully%20and%20provide%20certified%20court%20documents%20(i.e.%20docket%20sheet,%20information%20or%20indictment,%20and%20final%20disposition).%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element1block_element1" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element1block_element1_child"   card={card}  record={record}  merge-field="%3Cdiv%3E%7BEFDEmbalmerPracticumLicenseQuestionsHaveYouEverBeenArrested%7D%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element2" class="slds-col   slds-p-around_x-small slds-size_12-of-12 " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element2_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element2block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element2block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3EHave%20you%20ever%20been%20addicted%20to%20or%20used%20in%20excess,%20alcohol%20or%20any%20prescription%20drugs%20or%20illegal%20chemical%20substances?%20If%20yes,%20explain%20fully%20and%20provide%20certified%20court%20documents%20(i.e.%20docket%20sheet,%20information%20or%20indictment,%20and%20final%20disposition).%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element2block_element1" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element2block_element1_child"   card={card}  record={record}  merge-field="%3Cdiv%3E%7BEFDEmbalmerPracticumLicenseQuestionsHaveYouEverBeenAddicted%7D%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element3" class="slds-col   slds-p-around_x-small slds-size_12-of-12 " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element3_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element3block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element3block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3EHave%20you%20ever%20been%20arrested,%20charged%20with,%20found%20guilty,%20or%20entered%20a%20plea%20of%20guilty%20or%20nolo%20contendere%20by%20a%20court%20(including%20a%20municipal%20court),%20pled%20guilty%20or%20nolo%20contendere%20to%20any%20traffic%20offense%20resulting%20from%20or%20related%20to%20the%20use%20of%20drugs%20or%20alcohol,%20whether%20sentence%20was%20imposed,%20including%20a%20suspended%20imposition%20of%20sentence%20?%20If%20yes,%20explain%20fully%20and%20provide%20certified%20court%20documents%20(i.e.%20docket%20sheet,%20information%20or%20indictment,%20and%20final%20disposition).%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element3block_element1" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element3block_element1_child"   card={card}  record={record}  merge-field="%3Cdiv%3E%7BEFDEmbalmerPracticumLicenseQuestionsHaveYouEverBeenArrestedMunicipalCourt%7D%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div>
+        </div>
+      </omnistudio-flex-card-state>
+                      </template>
+            </template>
+            <template if:true={hasError}>
+            {error}
+            </template>
+            
+      <omnistudio-action action-wrapperclass="slds-hide" re-render-flyout class="action-trigger slds-col" onupdateos={updateOmniscript} onselectcards={updateSelectedCards} onsetvalue={updateAction} onfireactionevent={actionEvtHandler}>
+      
+      </omnistudio-action>
+  
+            <omnistudio-action class="execute-action" re-render-flyout action-wrapperclass="slds-hide" onupdateos={updateOmniscript} onselectcards={updateSelectedCards} onsetvalue={updateAction} onfireactionevent={actionEvtHandler}>
+            
+            </omnistudio-action>
+            </div>
+          </template>

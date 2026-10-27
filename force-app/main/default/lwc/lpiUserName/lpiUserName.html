@@ -1,0 +1,362 @@
+<!--
+  @description       : 
+  @author            : Mohit Karani
+  @group             : 
+  @last modified on  : 06-03-2024
+  @last modified by  : Bharath Kumar M
+-->
+<template>
+    <template if:true={showSpinner}>
+        <lightning-spinner class="spins" size="medium" variant="brand" alternative-text="loading.."></lightning-spinner>
+    </template>
+    <div class="forgot-page">
+        <div class="slds-grid">
+            <div class="slds-col slds-m-vertical_xx-large">
+                <div class="brand-name" onclick={handleHome}>
+                        <img src={logo} alt="LPI Logo">
+                </div>
+            </div>
+        </div>
+        <div class="forgot-username-form">
+            <div if:true={showSelection} class="slds-p-bottom--large slds-card">
+                <c-lpi-registration-selection onhideselection={hideselection} is-forgotusername=true></c-lpi-registration-selection>
+            </div>
+            <div if:false={showSelection} >
+                <div class="slds-card">
+                    <template if:true={showGoBackToSelection}>
+                            <div class="slds-grid slds-gutter slds-wrap p-b-large">
+                                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                                    <lightning-button variant="base" label="Go Back To Selection" title="Go Back To Selection"
+                                            onclick={goBackToSelection} class="slds-p-bottom_small base-link-left">
+                                    </lightning-button>
+                                </div>
+                            </div>
+                    </template>
+                    <div class="slds-grid slds-grid_align-center">
+                        <div class="forgot_username slds-col slds-size_1-of-1">
+                            <h1  aria-live="assertive" aria-label="Forgot Username?" class="p-b-xms bold-40">Forgot Username?
+                            </h1>
+                            <template if:false={confirmationPage}>
+                                <p class="p-b-xms">We’ll email your username to you
+                                    after answering a few questions.</p>
+                                <div class="requireMessage">
+                                    <p class="regular-text-14 asterisk-caption">Asterisk
+                                        (<span class="c-red">*</span>) indicates required field
+                                    </p>
+                                </div>
+                            </template>
+                            <!-- Error -->
+                            <template if:true={hasError}>
+                                <div class="form-error slds-var-m-bottom_medium slds-var-m-top_medium p-horizontal-5" aria-live="assertive">
+                                    <div class="errorMessage">
+                                        <lightning-formatted-rich-text value={errorMessage}></lightning-formatted-rich-text>
+                                    </div>
+                                </div>
+                            </template>
+    
+                            <!-- Modal/Popup Box LWC body starts here -->
+                            <div class="p-t-large">
+                                <template if:false={confirmationPage}>
+                                    <!-- Person Account -->
+                                    <template if:true={isIndividualForgotUsername}>
+                                        <div class="slds-grid slds-wrap">
+                                            <div class="slds-col bordered_radio  slds-large-size_12-of-12 slds-medium-size_12-of-12 slds-small-size_12-of-12 slds-size_12-of-12">
+                                                <lightning-radio-group 
+                                                    name="individualOption"
+                                                    label="Select an Option"
+                                                    aria-label="Select an option for validation"
+                                                    options={individualForgotUsernameOption} 
+                                                    onchange={handleRadioChange} 
+                                                    type="'radio" 
+                                                    required
+                                                    style="display:inline-block !important"
+                                                    class="forgotRadioButtonClass">
+                                                </lightning-radio-group>
+                                            </div>
+                                        </div>
+                                        <template if:true={showTextField1}>
+                                            <!-- SSN -->
+                                            <lightning-input 
+                                                class="validateSSN" 
+                                                type="text" 
+                                                placeholder="XXX-XX-XXXX" 
+                                                name="ssn" 
+                                                required 
+                                                label="Social Security Number"
+                                                maxlength="9"
+                                                min-length="9" 
+                                                pattern="^[0-9X\-]{1,}$" 
+                                                onchange={handleInputs}
+                                                value={newSSN}
+                                                onblur={maskingSSN} 
+                                                onclick={recorveringOrginalSSN}
+                                                message-when-pattern-mismatch="Please enter correct Social Social Number only!"
+                                                message-when-value-missing="Error: Social Security Number is required.">
+                                            </lightning-input>
+                                        </template>
+                                        <template if:true={showTextField2}>
+                                            <!-- First Name -->
+                                            <lightning-input  
+                                                type="text" 
+                                                class = "forgotFirstNameClass"
+                                                label="First Name"
+                                                placeholder="Enter First Name" 
+                                                name="firstName" 
+                                                maxlength="40"
+                                                value={dataObj.firstName} 
+                                                onchange={handleInputs} 
+                                                required
+                                                message-when-value-missing="Error: First Name is required."
+                                                pattern="^[A-Za-z0-9 ]+$"
+                                                message-when-pattern-mismatch="Invalid input. This field only accepts letters and numbers. Special characters are not allowed.">
+                                            </lightning-input>
+                                            <!-- Last Name -->
+                                            <lightning-input 
+                                                type="text" 
+                                                label="Last Name"
+                                                placeholder="Enter Last Name" 
+                                                name="lastName" 
+                                                maxlength="80"
+                                                value={dataObj.lastName} 
+                                                onchange={handleInputs} 
+                                                required
+                                                message-when-value-missing="Error: Last Name is required."
+                                                pattern="^[A-Za-z0-9 ]+$"
+                                                message-when-pattern-mismatch="Invalid input. This field only accepts letters and numbers. Special characters are not allowed.">
+                                            </lightning-input>
+                                            <!-- Date of Birth -->
+                                            <lightning-input 
+                                                class="validate" 
+                                                type="date" 
+                                                label="Date of Birth"
+                                                placeholder="MM/DD/YYYY" 
+                                                name="birthdate" 
+                                                maxlength="40" 
+                                                value={formattedDate} 
+                                                onchange={handleInputs} 
+                                                required
+                                                onblur={handleDobError} 
+                                                data-id="birthdate"
+                                                pattern="^[A-Za-z0-9 ]+$"
+                                                message-when-value-missing="Error: Date of Birth is required."
+                                                message-when-pattern-mismatch="Special characters are not allowed"
+                                                max={today} 
+                                                date-style="short">
+                                            </lightning-input>
+                                        </template>
+                                    </template>
+                                    <!-- Business Account -->
+                                    <template if:true={isBusinessForgotUsername}>
+                                        <div class="slds-grid slds-wrap">
+                                            <div class="slds-col bordered_radio slds-large-size_12-of-12 slds-medium-size_12-of-12 slds-small-size_12-of-12 slds-size_12-of-12">
+                                                <lightning-radio-group 
+                                                    name="businessOption" 
+                                                    label="Select an Option"
+                                                    aria-label="Select an option for validation"
+                                                    options={businessForgotUsernameOption} 
+                                                    onchange={handleRadioChange} 
+                                                    type="radio"
+                                                    style="display:inline-block !important"
+                                                    required
+                                                    class="forgotRadioButtonClass">
+                                                </lightning-radio-group>
+                                            </div>
+                                        </div>
+                                        <template if:true={showTextField1}>
+                                            <!-- Owner's Social Security Number -->
+                                            <lightning-input 
+                                                class="validate" 
+                                                type="text" 
+                                                label="Owner's Social Security Number"
+                                                placeholder="XXX-XX-XXXX" 
+                                                name="ownerSSN"
+                                                maxlength="9"
+                                                min-length="9"  
+                                                required 
+                                                onchange={handleInputs}
+                                                pattern="^[0-9X\-]{1,}$" 
+                                                value={newSSN}
+                                                onblur={maskingSSN} 
+                                                onclick={recorveringOrginalSSN}
+                                                message-when-pattern-mismatch="Invalid input. This field only accepts letters and numbers. Special characters are not allowed."
+                                                message-when-value-missing="Error: Owner's Social Security Number is required.">
+                                            </lightning-input>
+                                        </template>
+                                        <template if:true={showTextField2}>
+                                            <!-- Employer Identification Number -->
+                                            <lightning-input 
+                                                class="validate" 
+                                                type="text" 
+                                                label="Employer Identification Number"
+                                                placeholder="XX-XXXXXXX" 
+                                                name="employerIdentificationNum" 
+                                                value={newEmployerIdentificationNumber}
+                                                maxlength="9" 
+                                                min-length="9" 
+                                                pattern="\d{2}-?\d{7}$" 
+                                                required 
+                                                onchange={handleInputs} 
+                                                onblur={maskingEIN} 
+                                                onclick={recorveringOrginalEIN}
+                                                message-when-value-missing="Error: Employer Identification Number is required."
+                                                field-level-help="Employer Identification Number is required to authenticate the Business Name. Please enter “00-0000000” if Unknown."
+                                                message-when-pattern-mismatch="Invalid input. This field only accepts numbers. Special characters are not allowed.">
+                                            </lightning-input>
+                                        </template>
+                                    </template>
+                                    <lightning-button class="slds-align_absolute-center" variant="brand" label="Validate" onclick={handleValidate}></lightning-button>
+                                    <template if:true={showSecurityQuestion}>
+                                        <!-- Security Questions -->
+                                        <div
+                                         class="slds-col slds-large-size--1-of-1 slds-medium-size--1-of-1 slds-size--1-of-1 slds-m-top_medium">
+                                        <h3>Security Questions</h3>
+                                        <!-- Questions  -->
+                                        <div>
+                                            <lightning-combobox name="Question1" label="Question 1"
+                                                        message-when-value-missing="Required" options={getSecurityQues1Options} readonly
+                                                        onchange={handleQuestions} class = "validate" value={selectedSecurityQuestions.Question1} required>
+                                            </lightning-combobox>
+                                            <template if:true={selectedSecurityQuestions.Question1}>
+                                                <lightning-input class="validate" type="text" label="Answer"
+                                                        placeholder="Enter Question 1 answer" name="que1Answer"
+                                                        maxlength="40" onchange={handleQuestions}
+                                                        required message-when-value-missing="Error: Answer is required."
+                                                        pattern="^((?!(<)|(>)).)*$"
+                                                        message-when-pattern-mismatch="Invalid format">
+                                                </lightning-input>
+                                            </template>
+                                        </div>
+                                        <div>
+                                            <lightning-combobox name="Question2" label="Question 2"
+                                                        message-when-value-missing="Required" options={getSecurityQues2Options} readonly
+                                                        onchange={handleQuestions} class = "validate" value={selectedSecurityQuestions.Question2} required>
+                                            </lightning-combobox>
+                                            <template if:true={selectedSecurityQuestions.Question2}>
+                                                <lightning-input class="validate" type="text" label="Answer"
+                                                        placeholder="Enter Question 2 answer" name="que2Answer"
+                                                        maxlength="40" onchange={handleQuestions}
+                                                        required message-when-value-missing="Error: Answer is required."
+                                                        pattern="^((?!(<)|(>)).)*$"
+                                                        message-when-pattern-mismatch="Invalid format">
+                                                </lightning-input>
+                                            </template>
+                                        </div>
+                                        <div>
+                                            <lightning-combobox name="Question3" label="Question 3"
+                                                        message-when-value-missing="Required" options={getSecurityQues3Options} readonly
+                                                        onchange={handleQuestions} class = "validate" value={selectedSecurityQuestions.Question3} required>
+                                            </lightning-combobox>
+                                            <template if:true={selectedSecurityQuestions.Question3}>
+                                                <lightning-input class="validate" type="text" label="Answer"
+                                                        placeholder="Enter Question 3 answer" name="que3Answer"
+                                                        maxlength="40" onchange={handleQuestions}
+                                                        required message-when-value-missing="Error: Answer is required."
+                                                        pattern="^((?!(<)|(>)).)*$"
+                                                        message-when-pattern-mismatch="Invalid format">
+                                                </lightning-input>
+                                            </template>
+                                        </div>
+                                    </div>
+    
+                                    <div class="recaptchaCheckbox2" style={recaptchaDivStyle} tabindex={recaptchaDivTabIndex}>
+                                    </div>
+    
+    
+                                    <div>
+                                        <lightning-button variant="brand" label="Submit" onclick={checkAutomationAndNext}>
+                                        </lightning-button>
+    
+                                    </div>
+                                    </template>
+                                <template if:true={showError} >
+                                        <div class="slds-scoped-notification slds-media slds-theme_error m-b-medium m-t-medium" role="alert" aria-live="assertive">
+                                            <lightning-icon icon-name="utility:error" variant="error" size="small"></lightning-icon>
+
+                                            <div class="p-l-small text-primary">{dynamicErrorText} <a href="tel:5737510293" aria-label="If you need assistance, contact the Missouri Division of Professional Registration at 5737510293">573.751.0293</a> or email <a href="mailto:profreg@pr.mo.gov" target="_blank" class="mailToLink text-primary semiBold-16" aria-label="If you need assistance, Email the Missouri Division of Professional Registration at profreg@pr.mo.gov, this link will open in new tab." >profreg@pr.mo.gov.</a></div>
+                                        </div>
+                                </template>
+                                </template>
+                                <!-- confirmation Page -->
+                                <template if:true={confirmationPage}>
+                                    <template if:true={errorPage}>
+                                        <div class="slds-m-top_medium fp-success-msg error d-flex center">
+                                            <div class="icon-block">
+                                                <img src={errorMsgIcon} alt="error message icon">
+                                            </div>
+                                            <div class="text-block">
+                                                <div class="fp-success-msg-text-heading">Details Did Not Match</div>
+                                                <div class="fp-success-msg-text">
+                                                    Details you provided did not match our records. Please double-check the
+                                                    information you entered and try again. If you're still having trouble,
+                                                    Please contact us at <span style="color:blue;">profreg@pr.mo.gov</span> for
+                                                    further assistance
+                                                </div>
+                                            </div>
+                                        </div>
+    
+                                        <div class="sr-only focus-helper" tabindex="0">
+                                            Details you provided do not match our records. Please double-check the information
+                                            you entered and try again. If you're still having trouble, Please contact us at
+                                            <span style="color:blue;">profreg@pr.mo.gov</span> for further assistance
+                                        </div>
+    
+                                    </template>
+                                    <template if:true={successPage}>
+                                        <div class="slds-m-top_medium fp-success-msg success d-flex  slds-scoped-notification slds-media  slds-theme_success" role="alert" aria-live="assertive">
+                                            <!-- <div class="icon-block">
+                                                <img src={greenTick} alt="success message icon">
+                                            </div> -->
+                                            <div class="slds-media__figure m-t-xs">
+                                                <i class="material-icon material-icon-check_circle_outline"></i>
+                                            </div>
+                                            <div class="text-block slds-media__body">
+                                                <p ><strong>Username Successfully Sent</strong></p>
+                                                <div class=" text-primary">
+                                                    We have just sent your username to the email address you provided during
+                                                    registration. Please check your inbox and if you can't find it, be sure to
+                                                    check your spam folder as well. If you have any further questions or
+                                                    concerns, kindly get in touch with your board. Find contact details at <a target="_blank" href="https://pr.mo.gov/contact-us.asp" style="color:blue;">https://pr.mo.gov/contact-us.asp</a>.
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="sr-only focus-helper" tabindex="0">
+                                            We have just sent your username to the email address you provided during
+                                            registration. Please check your inbox and if you can't find it, be sure to check
+                                            your spam folder as well. If you have any further questions or concerns, kindly get in touch with your board. Find contact details at <a target="_blank" href="https://pr.mo.gov/contact-us.asp" style="color:blue;">https://pr.mo.gov/contact-us.asp</a>.
+                                        </div>
+    
+                                    </template>
+                                </template>
+    
+    
+                            </div>
+                           <div class="slds-text-align--center">
+                            <p class="c-grey slds-p-bottom--medium p-t-medium">Back to <a href="/s/login" class="bold-16"
+                                title="Login" aria-label="Back to Login page">Login
+                            </a>
+                        </p>
+                           </div>
+                            <template if:true={confirmationPage}>
+                                <p style="color: grey;" class="c-grey slds-p-bottom--medium slds-p-horizontal_medium p-horizontal-5">Search
+                                    your spam folder for items from noreply@mo.gov
+                                </p>
+                            </template>
+    
+    
+                        </div>
+                    </div>
+                    <!-- <template if:true={isModalOpen}>
+                        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                            aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                            
+                        </section>
+                    </template> -->
+    
+                </div>
+            </div>
+        </div>
+        <div class="copyright-text d-flex center between slds-p-vertical_x-small">
+            <p>© 2023 - 2024 MTX - Licensing</p>
+        </div>
+    </div>
+</template>

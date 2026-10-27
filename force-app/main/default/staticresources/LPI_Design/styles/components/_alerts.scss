@@ -1,0 +1,90 @@
+.slds-scoped-notification {
+    border: 1px solid !important;
+    border-radius: $border-radius-medium !important;
+    font-weight: $font-weight-medium !important;
+
+    .slds-icon_container {
+        vertical-align: -webkit-baseline-middle;
+        font-size: $font-size-20;
+    }
+
+    &.slds-theme_info {
+        background: $info-shades-4-p;
+        border-color: $info-main !important;
+        p,
+        i {
+            color: $info-main;
+        }
+    }
+
+    &.slds-theme_success {
+        background: $success-shades-4-p;
+        border-color: $success-main;
+
+        p,
+        i {
+            color: $success-main;
+        }
+    }
+
+    &.slds-theme_warning,&.slds-scoped-notification_warning {
+        background: $warning-shades-4-p !important;
+        border-color: $warning-main !important;
+
+        p,
+        i {
+            color: $warning-main;
+        }
+    }
+
+    &.slds-theme_error,&.slds-scoped-notification_error {
+        background: $error-shades-4-p !important;
+        border-color: $error-main !important;
+
+        p,
+        i {
+            color: $error-main;
+        }
+    }
+    &.slds-theme_text{
+        border: none;
+        padding-left: 0;
+        padding-right: 0;
+        p{
+            font-weight: $font-weight-bold;
+        }
+    }
+}
+
+// Toast CSS
+
+.slds-notify_toast {
+    h2, p, a {
+        color: $white;
+    }
+    .cc-icon {
+        font-size: $font-size-22;
+        color: $white;
+    }
+    &.slds-theme_success {
+        background: $success-main;
+    }
+
+    &.slds-theme_warning {
+        background: $warning-main;
+        h2, p, a {
+            color: $black;
+        }
+        .cc-icon {
+            font-size: $font-size-22;
+            color: $black;
+        }
+        button {
+            text-decoration: none;
+        }
+    }
+
+    &.slds-theme_error {
+        background: $error-dark;
+    }
+}

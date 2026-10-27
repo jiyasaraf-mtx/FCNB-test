@@ -1,0 +1,140 @@
+<!--
+  @description       : 
+  @author            : Bharath Kumar M
+  @group             : 
+  @last modified on  : 05-20-2024
+  @last modified by  : Bharath Kumar M
+-->
+<template>
+        <li data-id={section.sectionName} class="slds-accordion__list-item">
+            <section data-id={section.sectionName} class={className}>
+                <div data-id={section.sectionName} class="slds-accordion__summary">
+                    <h2 class="slds-accordion__summary-heading">
+                        <button class="slds-button slds-button_reset slds-accordion__summary-action" aria-expanded={isOpen}
+                            title={section.sectionName} data-id={section.sectionName} onclick={handleToggleAccordionClick}
+                        >
+                            <lightning-icon data-id={section.sectionName} icon-name={icon} size="xx-small"></lightning-icon>&nbsp;
+                            <span data-id={section.catId} class="slds-accordion__summary-content">{section.sectionName}</span>
+                        </button>
+                    </h2>
+                </div>
+                <div class="slds-accordion__content">
+                            <template for:each={section.fieldHeadingWrapper} for:item="fieldHeading" for:index="ind">
+                                <h5 style="color:red;" key={fieldHeading.showHeadingList} if:true={fieldHeading.showErrorMessage}>{fieldHeading.errorMessage}</h5>
+                                <hr if:true={ind} key={fieldHeading.showHeadingList} />
+                                <div key={fieldHeading.showAnyButton} if:true={fieldHeading.showAnyButton} >
+                                    <lightning-button variant="brand" label={fieldHeading.buttonDetail.buttonLable} data-id={fieldHeading.buttonDetail.buttonJSONData} 
+                                    onclick={handleChildButtton} class="slds-float_right slds-m-bottom_small slds-m-top_medium">
+                                </lightning-button>
+                                </div>
+                                <div key={fieldHeading.showHeadingList} class="slds-grid slds-gutters slds-wrap slds-m-bottom_small slds-m-top_small">
+                                <template for:each={fieldHeading.fieldValueList} for:item="fields">
+                                        <template if:true={fields.isCoverCompleteWidth}>
+                                            <div key={fields} class="slds-m-bottom_medium">
+                                                <div class="slds-grid slds-wrap slds-gutters">
+                                                    <div class="slds-col label slds-large-size_12-of-12 slds-medium-size_12-of-12 slds-small-size_12-of-12 slds-size_12-of-12">
+                                                        {fields.label}
+                                                    </div>
+                                                    <div class="slds-col value text-input slds-size_12-of-12">
+                                                        <template if:false={isPortal}>
+                                                            <template if:true={fields.isLookup}>
+                                                                <template if:true={fields.value}><div>
+                                                                    <a onclick={navigateToRecordViewPage} data-id={fields.lookupId}>{fields.value}</a>
+                                                                </div></template>
+                                                                <template if:false={fields.value}><div>-</div></template>
+                                                            </template>
+                                                            <template if:false={fields.isLookup}>
+                                                                <template if:true={fields.value}><div>{fields.value}</div></template>
+                                                                <template if:false={fields.value}><div>-</div></template>
+                                                            </template>
+                                                        </template>
+                                                        <template if:true={isPortal}>
+                                                            <template if:true={fields.value}><div>{fields.value}</div></template>
+                                                            <template if:false={fields.value}><div>-</div></template>
+                                                        </template>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </template>
+                                        <template if:false={fields.isCoverCompleteWidth}>
+                                            <div key={fields} class="slds-col slds-large-size_4-of-12 slds-medium-size_4-of-12 slds-small-size_12-of-12 slds-size_12-of-12 slds-m-bottom_medium">
+                                                <div class="slds-grid slds-wrap slds-gutters">
+                                                    <div class="slds-col label slds-large-size_12-of-12 slds-medium-size_12-of-12 slds-small-size_12-of-12 slds-size_12-of-12">
+                                                        {fields.label}
+                                                    </div>
+                                                    <div class="slds-col value text-input slds-size_12-of-12">
+                                                        <template if:false={isPortal}>
+                                                            <template if:true={fields.isLookup}>
+                                                                <template if:true={fields.value}><div>
+                                                                    <a onclick={navigateToRecordViewPage} data-id={fields.lookupId}>{fields.value}</a>
+                                                                </div></template>
+                                                                <template if:false={fields.value}><div>-</div></template>
+                                                            </template>
+                                                            <template if:false={fields.isLookup}>
+                                                                <template if:true={fields.value}><div>{fields.value}</div></template>
+                                                                <template if:false={fields.value}><div>-</div></template>
+                                                            </template>
+                                                        </template>
+                                                        <template if:true={isPortal}>
+                                                            <template if:true={fields.value}><div>{fields.value}</div></template>
+                                                            <template if:false={fields.value}><div>-</div></template>
+                                                        </template>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </template>
+                                   
+                                </template>
+                                </div>
+                                <template if:true={fieldHeading.showHeadingList}>
+                                    <template for:each={fieldHeading.headingFieldValueList} for:item="headingList" for:index="ind">
+                                        <br key={fieldHeading.showHeadingList}/>
+                                        <h2 key={headingList.headingName}><b>{headingList.headingName}</b></h2>
+                                        <br key={fieldHeading.showHeadingList}/>
+                                        <div key={fieldHeading.showHeadingList} class="slds-grid slds-gutters slds-wrap">
+                                        <template for:each={headingList.headingFieldValue} for:item="fields">
+                                            <div key={fields} class="slds-col slds-large-size_4-of-12 slds-medium-size_4-of-12 slds-small-size_12-of-12 slds-size_12-of-12 slds-m-bottom_medium">
+                                                <div class="slds-grid slds-wrap slds-gutters">
+                                                    <div class="slds-col label slds-large-size_12-of-12 slds-medium-size_12-of-12 slds-small-size_12-of-12 slds-size_12-of-12">
+                                                        {fields.label}
+                                                    </div>
+                                                    <div class="slds-col value text-input slds-size_12-of-12">
+                                                            <template if:false={isPortal}>
+                                                                <template if:true={fields.isLookup}>
+                                                                    <template if:true={fields.value}><div>
+                                                                        <a onclick={navigateToRecordViewPage} data-id={fields.lookupId}>{fields.value}</a>
+                                                                    </div></template>
+                                                                    <template if:false={fields.value}><div>-</div></template>
+                                                                </template>
+                                                                <template if:false={fields.isLookup}>
+                                                                    <template if:true={fields.value}><div>{fields.value}</div></template>
+                                                                    <template if:false={fields.value}><div>-</div></template>
+                                                                </template>
+                                                            </template>
+                                                            <template if:true={isPortal}>
+                                                                <template if:true={fields.value}><div>{fields.value}</div></template>
+                                                                <template if:false={fields.value}><div>-</div></template>
+                                                            </template>
+                                                        </div>
+                                                </div>
+                                            </div>
+                                        </template>
+                                        </div>
+                                    </template>
+                                </template>
+                            </template>
+                    
+                    <template if:true={hasChildSection}>
+                        <ul class="slds-accordion">
+                            <template for:each={section.childSectionList} for:item="childSection">
+                                <c-lpi-application-view-item
+                                    section={childSection} key={childSection.SectionName} is-portal={isPortal}>
+                                </c-lpi-application-view-item>
+                              
+                            </template>
+                        </ul>
+                    </template>
+                </div>
+            </section>
+        </li>
+</template>

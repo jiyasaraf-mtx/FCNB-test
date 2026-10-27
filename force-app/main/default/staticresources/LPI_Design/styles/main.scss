@@ -1,0 +1,58 @@
+// Font load
+@import "./base/openSansFont";
+
+
+// Base Styles ---- Do not change
+@import "./base/variables";
+@import "./base/mixins";
+@import "./base/utilities";
+@import "./base/typography";
+@import "./base/icons";
+
+// Components Overrides ---- Use this for all SF Overrides
+@import "./components/buttons";
+@import "./components/inputs";
+@import "./components/modals";
+@import "./components/tables";
+@import "./components/cards";  
+@import "./components/accordion";  
+@import "./components/radioAndCheckboxes";  
+@import "./components/tabs";  
+@import "./components/alerts";  
+@import "./components/skeleton";
+@import "./components/stepper";
+@import "./components/pagination";
+@import "./components/breadcrumb";
+@import "./components/badges";
+@import "./components/vlocityStyles";
+
+
+// Module Styles --- Consists styles of Header, Footer and Global Styles
+@import "./module/header";
+@import "./module/footer";
+@import "./module/globals";
+@import "./module/sidebar";
+
+
+
+// Pages Styles --- Can be changed based on the website pages
+@import "./pages/landing-page";
+@import "./pages/register";
+@import "./pages/notificationSidebar";
+@import "./pages/amendments";
+@import "./pages/case";
+@import "./pages/complaintForm";
+@import "./pages/dashboard";
+@import "./pages/documentVault";
+@import "./pages/inspections";
+@import "./pages/licenseDetails";
+@import "./pages/licenseeSearch";
+@import "./pages/licenseform";
+@import "./pages/loginPage";
+@import "./pages/mediaQueries";
+@import "./pages/myProfile";
+@import "./pages/pendingCheckListItems";
+@import "./pages/recommendedlicenses";
+@import "./pages/successPage";
+@import "./pages/transferlicense";
+@import "./pages/workflowInternal";

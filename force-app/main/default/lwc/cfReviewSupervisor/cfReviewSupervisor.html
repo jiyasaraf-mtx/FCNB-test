@@ -1,0 +1,241 @@
+<template>
+            <div class="slds-grid slds-wrap slds-is-relative ">
+            <div style="position: fixed;z-index: 999999;top: 0;right: 0;">
+  <omnistudio-toast class="flexcard-toast-element" theme="slds" title="" message="" styletype=""> </omnistudio-toast>
+</div>
+            <div if:true={showLoader} class="slds-is-absolute vloc-loader_override" style="height: 100%; width: 100%; min-height:50px; background: transparent; z-index: 99;">
+  <div>
+   <omnistudio-spinner
+      variant="brand"
+      alternative-text="Loading content..."
+      size="medium"
+      theme="slds"
+      ></omnistudio-spinner>
+  </div>
+</div>
+            <template if:false={hasPermission}>
+              You don't have required permissions to view this card.
+            </template>
+            <template if:true={hasPermission}>
+              <template if:true={hasRecords}>
+                        <template for:each={_records} for:item="record" for:index="rindex">
+                            <omnistudio-flex-card-state if:true={record}  key={record._flex.uniqueKey} data-recordid={record.Id} record={record} data-statue="true"  data-index="0" data-rindex={rindex} class="cf-vlocity-state-0 cf-vlocity-state slds-size_12-of-12 "  tracking-obj={_childCardTrackingObj} >
+      <div if:true={cardLoaded} class="slds-grid slds-wrap slds-m-bottom_x-small " style="      
+         ">
+          <div data-style-id="state0element0" class="slds-col   review-card slds-size_12-of-12  condition-element" data-rindex={rindex} style="      
+         "  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[]}' >
+    <omnistudio-block data-style-id="state0element0_child"  card={card}  record={record}  label="Primary Supervisor"  collapsible="false"  collapsed-by-default="false"  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[]}'  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element0" class="slds-col   slds-p-around_x-small slds-size_12-of-12 " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element0block_element0_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element0block_element0" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element0block_element0block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3E%3Cstrong%3EPrimary%20Supervisor%3C/strong%3E%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element0block_element0block_element1" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element0block_element0block_element1_child"   card={card}  record={record}  merge-field=""  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element0block_element1" class="slds-col   slds-p-around_x-small slds-size_12-of-12  " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element0block_element1_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element1block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element0block_element1block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3ELicense%20Number%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element0block_element1block_element1" class="slds-col   slds-size_12-of-12  " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element0block_element1block_element1_child"   card={card}  record={record}  placeholder="-"  field-name="supervisorLicenseNumber"  label=""  type="text"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element0block_element2" class="slds-col   slds-p-around_x-small slds-size_4-of-12  " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element0block_element2_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element2block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element0block_element2block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3EFirst%20Name%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element0block_element2block_element1" class="slds-col   slds-size_11-of-12  " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element0block_element2block_element1_child"   card={card}  record={record}  placeholder="-"  field-name="SupervisorFirstName"  label=""  type="text"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element0block_element3" class="slds-col   slds-p-around_x-small slds-size_4-of-12  " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element0block_element3_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element3block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element0block_element3block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3EMiddle%20Name%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element0block_element3block_element1" class="slds-col   slds-size_10-of-12  " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element0block_element3block_element1_child"   card={card}  record={record}  placeholder="-"  field-name="supervisorMiddleName"  label=""  type="text"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element0block_element4" class="slds-col   slds-p-around_x-small slds-size_4-of-12  " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element0block_element4_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element4block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element0block_element4block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3ELast%20Name%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element0block_element4block_element1" class="slds-col   slds-size_12-of-12  " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element0block_element4block_element1_child"   card={card}  record={record}  placeholder="-"  field-name="supervisorLastName"  label=""  type="text"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element0block_element5" class="slds-col   slds-p-around_x-small slds-size_4-of-12  " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element0block_element5_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element5block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element0block_element5block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3EEmployment&nbsp;Street%20Address%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element0block_element5block_element1" class="slds-col   slds-size_10-of-12  " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element0block_element5block_element1_child"   card={card}  record={record}  placeholder="-"  field-name="supervisorStreetAddress"  label=""  type="text"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element0block_element6" class="slds-col   slds-p-around_x-small slds-size_4-of-12  " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element0block_element6_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element6block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element0block_element6block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3ECity%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element0block_element6block_element1" class="slds-col   slds-size_12-of-12  " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element0block_element6block_element1_child"   card={card}  record={record}  placeholder="-"  field-name="supervisorCity"  label=""  type="text"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element0block_element7" class="slds-col   slds-p-around_x-small slds-size_4-of-12  " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element0block_element7_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element7block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element0block_element7block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3EState%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element0block_element7block_element1" class="slds-col   slds-size_12-of-12  " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element0block_element7block_element1_child"   card={card}  record={record}  placeholder="-"  field-name="supervisorState"  label=""  type="text"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element0block_element8" class="slds-col   slds-p-around_x-small slds-size_4-of-12  " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element0block_element8_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element8block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element0block_element8block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3EZip%20Code%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element0block_element8block_element1" class="slds-col   slds-size_8-of-12  " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element0block_element8block_element1_child"   card={card}  record={record}  placeholder="-"  field-name="supervisorZip"  label=""  type="text"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element0block_element9" class="slds-col   slds-p-around_x-small slds-size_5-of-12  " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element0block_element9_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element9block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element0block_element9block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3ETelephone%20Number%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element0block_element9block_element1" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element0block_element9block_element1_child"   card={card}  record={record}  placeholder="-"  field-name="supervisorPhone"  label=""  type="text"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element0block_element10" class="slds-col   slds-p-around_x-small slds-size_4-of-12  " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element0block_element10_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element10block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element0block_element10block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3EEmail%20Address%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element0block_element10block_element1" class="slds-col   slds-size_12-of-12  " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element0block_element10block_element1_child"   card={card}  record={record}  placeholder="-"  field-name="supervisorEmail"  label=""  type="text"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element0block_element11" class="slds-col   slds-p-around_x-small slds-size_5-of-12  condition-element" data-rindex={rindex} style=""  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-0","field":"Parent.boardName","operator":"!=","value":"Cosmetology & Barber Examiners","type":"custom","hasMergeField":false},{"id":"state-new-condition-2","field":"Parent.regAuthTypeName","operator":"!=","value":"Perfusionist Provisional","type":"custom","hasMergeField":false,"logicalOperator":"&&"},{"id":"state-new-condition-6","field":"Parent.regAuthTypeName","operator":"!=","value":"Provisional Veterinarian","type":"custom","hasMergeField":false,"logicalOperator":"&&"},{"id":"state-new-condition-23","field":"Parent.regAuthTypeName","operator":"!=","value":"Hearing Instrument Specialist","type":"custom","hasMergeField":false,"logicalOperator":"&&"}]}' >
+    <omnistudio-block data-style-id="state0element0block_element11_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-0","field":"Parent.boardName","operator":"!=","value":"Cosmetology & Barber Examiners","type":"custom","hasMergeField":false},{"id":"state-new-condition-2","field":"Parent.regAuthTypeName","operator":"!=","value":"Perfusionist Provisional","type":"custom","hasMergeField":false,"logicalOperator":"&&"},{"id":"state-new-condition-6","field":"Parent.regAuthTypeName","operator":"!=","value":"Provisional Veterinarian","type":"custom","hasMergeField":false,"logicalOperator":"&&"},{"id":"state-new-condition-23","field":"Parent.regAuthTypeName","operator":"!=","value":"Hearing Instrument Specialist","type":"custom","hasMergeField":false,"logicalOperator":"&&"}]}'  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element11block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element0block_element11block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3ESpeciality/Board%20Certification%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element0block_element11block_element1" class="slds-col   slds-size_12-of-12  " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element0block_element11block_element1_child"   card={card}  record={record}  placeholder="-"  field-name="supervisorSpecialityCertification"  label=""  type="text"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element0block_element12" class="slds-col   slds-p-around_x-small slds-size_5-of-12  condition-element" data-rindex={rindex} style=""  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-2","field":"Parent.regAuthTypeName","operator":"==","value":"Barber Apprentice","type":"custom","hasMergeField":false},{"id":"state-new-condition-6","field":"Parent.regAuthTypeName","operator":"==","value":"Cosmetology Apprentice","type":"custom","hasMergeField":false,"logicalOperator":"||"}]}' >
+    <omnistudio-block data-style-id="state0element0block_element12_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-2","field":"Parent.regAuthTypeName","operator":"==","value":"Barber Apprentice","type":"custom","hasMergeField":false},{"id":"state-new-condition-6","field":"Parent.regAuthTypeName","operator":"==","value":"Cosmetology Apprentice","type":"custom","hasMergeField":false,"logicalOperator":"||"}]}'  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element12block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element0block_element12block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3ESpeciality/Board%20Certification%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element0block_element12block_element1" class="slds-col   slds-size_12-of-12  " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element0block_element12block_element1_child"   card={card}  record={record}  placeholder="-"  field-name="supervisorSpecialityCertification"  label=""  type="text"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div>
+        </div></omnistudio-block>
+    </div>
+        </div>
+      </omnistudio-flex-card-state>
+                        </template>
+                      </template>
+                      <template if:false={hasRecords}>
+                            <omnistudio-flex-card-state  record={record} data-statue="false"  data-index="0" data-rindex={rindex} class="cf-vlocity-state-0 cf-vlocity-state slds-size_12-of-12 "  tracking-obj={_childCardTrackingObj} >
+      <div if:true={cardLoaded} class="slds-grid slds-wrap slds-m-bottom_x-small " style="      
+         ">
+          <div data-style-id="state0element0" class="slds-col   review-card slds-size_12-of-12  condition-element" data-rindex={rindex} style="      
+         "  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[]}' >
+    <omnistudio-block data-style-id="state0element0_child"  card={card}  record={record}  label="Primary Supervisor"  collapsible="false"  collapsed-by-default="false"  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[]}'  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element0" class="slds-col   slds-p-around_x-small slds-size_12-of-12 " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element0block_element0_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element0block_element0" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element0block_element0block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3E%3Cstrong%3EPrimary%20Supervisor%3C/strong%3E%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element0block_element0block_element1" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element0block_element0block_element1_child"   card={card}  record={record}  merge-field=""  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element0block_element1" class="slds-col   slds-p-around_x-small slds-size_12-of-12  " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element0block_element1_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element1block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element0block_element1block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3ELicense%20Number%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element0block_element1block_element1" class="slds-col   slds-size_12-of-12  " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element0block_element1block_element1_child"   card={card}  record={record}  placeholder="-"  field-name="supervisorLicenseNumber"  label=""  type="text"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element0block_element2" class="slds-col   slds-p-around_x-small slds-size_4-of-12  " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element0block_element2_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element2block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element0block_element2block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3EFirst%20Name%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element0block_element2block_element1" class="slds-col   slds-size_11-of-12  " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element0block_element2block_element1_child"   card={card}  record={record}  placeholder="-"  field-name="SupervisorFirstName"  label=""  type="text"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element0block_element3" class="slds-col   slds-p-around_x-small slds-size_4-of-12  " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element0block_element3_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element3block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element0block_element3block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3EMiddle%20Name%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element0block_element3block_element1" class="slds-col   slds-size_10-of-12  " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element0block_element3block_element1_child"   card={card}  record={record}  placeholder="-"  field-name="supervisorMiddleName"  label=""  type="text"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element0block_element4" class="slds-col   slds-p-around_x-small slds-size_4-of-12  " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element0block_element4_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element4block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element0block_element4block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3ELast%20Name%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element0block_element4block_element1" class="slds-col   slds-size_12-of-12  " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element0block_element4block_element1_child"   card={card}  record={record}  placeholder="-"  field-name="supervisorLastName"  label=""  type="text"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element0block_element5" class="slds-col   slds-p-around_x-small slds-size_4-of-12  " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element0block_element5_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element5block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element0block_element5block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3EEmployment&nbsp;Street%20Address%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element0block_element5block_element1" class="slds-col   slds-size_10-of-12  " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element0block_element5block_element1_child"   card={card}  record={record}  placeholder="-"  field-name="supervisorStreetAddress"  label=""  type="text"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element0block_element6" class="slds-col   slds-p-around_x-small slds-size_4-of-12  " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element0block_element6_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element6block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element0block_element6block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3ECity%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element0block_element6block_element1" class="slds-col   slds-size_12-of-12  " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element0block_element6block_element1_child"   card={card}  record={record}  placeholder="-"  field-name="supervisorCity"  label=""  type="text"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element0block_element7" class="slds-col   slds-p-around_x-small slds-size_4-of-12  " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element0block_element7_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element7block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element0block_element7block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3EState%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element0block_element7block_element1" class="slds-col   slds-size_12-of-12  " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element0block_element7block_element1_child"   card={card}  record={record}  placeholder="-"  field-name="supervisorState"  label=""  type="text"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element0block_element8" class="slds-col   slds-p-around_x-small slds-size_4-of-12  " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element0block_element8_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element8block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element0block_element8block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3EZip%20Code%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element0block_element8block_element1" class="slds-col   slds-size_8-of-12  " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element0block_element8block_element1_child"   card={card}  record={record}  placeholder="-"  field-name="supervisorZip"  label=""  type="text"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element0block_element9" class="slds-col   slds-p-around_x-small slds-size_5-of-12  " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element0block_element9_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element9block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element0block_element9block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3ETelephone%20Number%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element0block_element9block_element1" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element0block_element9block_element1_child"   card={card}  record={record}  placeholder="-"  field-name="supervisorPhone"  label=""  type="text"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element0block_element10" class="slds-col   slds-p-around_x-small slds-size_4-of-12  " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element0block_element10_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element10block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element0block_element10block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3EEmail%20Address%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element0block_element10block_element1" class="slds-col   slds-size_12-of-12  " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element0block_element10block_element1_child"   card={card}  record={record}  placeholder="-"  field-name="supervisorEmail"  label=""  type="text"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element0block_element11" class="slds-col   slds-p-around_x-small slds-size_5-of-12  condition-element" data-rindex={rindex} style=""  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-0","field":"Parent.boardName","operator":"!=","value":"Cosmetology & Barber Examiners","type":"custom","hasMergeField":false},{"id":"state-new-condition-2","field":"Parent.regAuthTypeName","operator":"!=","value":"Perfusionist Provisional","type":"custom","hasMergeField":false,"logicalOperator":"&&"},{"id":"state-new-condition-6","field":"Parent.regAuthTypeName","operator":"!=","value":"Provisional Veterinarian","type":"custom","hasMergeField":false,"logicalOperator":"&&"},{"id":"state-new-condition-23","field":"Parent.regAuthTypeName","operator":"!=","value":"Hearing Instrument Specialist","type":"custom","hasMergeField":false,"logicalOperator":"&&"}]}' >
+    <omnistudio-block data-style-id="state0element0block_element11_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-0","field":"Parent.boardName","operator":"!=","value":"Cosmetology & Barber Examiners","type":"custom","hasMergeField":false},{"id":"state-new-condition-2","field":"Parent.regAuthTypeName","operator":"!=","value":"Perfusionist Provisional","type":"custom","hasMergeField":false,"logicalOperator":"&&"},{"id":"state-new-condition-6","field":"Parent.regAuthTypeName","operator":"!=","value":"Provisional Veterinarian","type":"custom","hasMergeField":false,"logicalOperator":"&&"},{"id":"state-new-condition-23","field":"Parent.regAuthTypeName","operator":"!=","value":"Hearing Instrument Specialist","type":"custom","hasMergeField":false,"logicalOperator":"&&"}]}'  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element11block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element0block_element11block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3ESpeciality/Board%20Certification%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element0block_element11block_element1" class="slds-col   slds-size_12-of-12  " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element0block_element11block_element1_child"   card={card}  record={record}  placeholder="-"  field-name="supervisorSpecialityCertification"  label=""  type="text"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element0block_element12" class="slds-col   slds-p-around_x-small slds-size_5-of-12  condition-element" data-rindex={rindex} style=""  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-2","field":"Parent.regAuthTypeName","operator":"==","value":"Barber Apprentice","type":"custom","hasMergeField":false},{"id":"state-new-condition-6","field":"Parent.regAuthTypeName","operator":"==","value":"Cosmetology Apprentice","type":"custom","hasMergeField":false,"logicalOperator":"||"}]}' >
+    <omnistudio-block data-style-id="state0element0block_element12_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-2","field":"Parent.regAuthTypeName","operator":"==","value":"Barber Apprentice","type":"custom","hasMergeField":false},{"id":"state-new-condition-6","field":"Parent.regAuthTypeName","operator":"==","value":"Cosmetology Apprentice","type":"custom","hasMergeField":false,"logicalOperator":"||"}]}'  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element12block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element0block_element12block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3ESpeciality/Board%20Certification%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element0block_element12block_element1" class="slds-col   slds-size_12-of-12  " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element0block_element12block_element1_child"   card={card}  record={record}  placeholder="-"  field-name="supervisorSpecialityCertification"  label=""  type="text"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div>
+        </div></omnistudio-block>
+    </div>
+        </div>
+      </omnistudio-flex-card-state>
+                      </template>
+            </template>
+            <template if:true={hasError}>
+            {error}
+            </template>
+            
+      <omnistudio-action action-wrapperclass="slds-hide" re-render-flyout class="action-trigger slds-col" onupdateos={updateOmniscript} onselectcards={updateSelectedCards} onsetvalue={updateAction} onfireactionevent={actionEvtHandler}>
+      
+      </omnistudio-action>
+  
+            <omnistudio-action class="execute-action" re-render-flyout action-wrapperclass="slds-hide" onupdateos={updateOmniscript} onselectcards={updateSelectedCards} onsetvalue={updateAction} onfireactionevent={actionEvtHandler}>
+            
+            </omnistudio-action>
+            </div>
+          </template>

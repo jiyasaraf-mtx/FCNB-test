@@ -1,0 +1,227 @@
+<!--
+  @description       : 
+  @author            : MTX(Vipin Agarwal)
+  @group             : 
+  @last modified on  : 05-09-2024
+  @last modified by  : MTX Group Inc
+-->
+<template>
+    <template if:true={showSpinner}>
+        <lightning-spinner size="medium" alternative-text="Loading..."></lightning-spinner>
+    </template>
+    <template if:true={isShowDetils}>
+        <template if:false={isReview}>
+            <span>Enter details of all the Funeral Establishments that you are associated with.</span>
+            <div class="householdmem">
+                <div for:each={itemList}  for:item="item"
+                    key={item} for:index="index">
+                    <lightning-accordion active-section-name={item.label} allow-multiple-sections-open class="outerAccordion">
+                        <lightning-accordion-section name={item.label} label={item.label}>
+                            <h3 class="slds-m-top_x-large slds-m-bottom_medium app-flow-subheading">
+                                ESTABLISHMENT INFORMATION
+                            </h3>
+                            <div class="slds-grid slds-wrap slds-gutters">
+                                <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                    <c-lpi-custom-lookup-establishment onlookupupdate={lookupRecord}
+                                    dat-id='' is-establishment={booleanTrue} is-child={booleanFalse} parent-id={item.serialNumber} 
+                                    value={item.establishmentLicNo}></c-lpi-custom-lookup-establishment>
+                                </div>
+                                <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                    <lightning-input type="text" label="Establishment Name" disabled name='establishmentName'
+                                        data-id={item.serialNumber} value={item.establishmentName}
+                                        onchange={handleInput}>
+                                    </lightning-input>
+                                </div>
+                                <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                    <lightning-input  type="text" disabled label="Street Address"
+                                        name="billingStreet" 
+                                        value={item.billingStreet} onchange={handleChange}>
+                                    </lightning-input>
+                                </div>
+                                <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                    <lightning-input  type="text" disabled label="City"
+                                        name="billingCity"  value={item.billingCity} onchange={handleChange}
+                                        >
+                                    </lightning-input>
+                                </div>
+                                <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                    <lightning-input  name="billingState" disabled
+                                        label="State" value={item.billingState} 
+                                        onchange={handleChange}>
+                                    </lightning-input>
+                                </div>
+                                <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                    <lightning-input  type="text" disabled label="Zip Code"
+                                        name="billingPostalCode" minlength="5" maxlength="10" value={item.billingPostalCode}
+                                        onchange={handleChange} >
+                                    </lightning-input>
+                                </div>
+                                <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                    <lightning-input  type="text" label="Establishment Telephone Number"
+                                        name="phone" disabled
+                                        value={item.phone} onchange={handleChange}>
+                                    </lightning-input>
+                                </div>
+                                <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                    <lightning-input  type="text" label="Funeral Director In Charge" disabled
+                                        name="inchargeName" value={item.inchargeName} onchange={handleChange}>
+                                    </lightning-input>
+                                </div>
+                                <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                    <lightning-input  type="text" label="Funeral Director In Charge License Number" disabled
+                                        name="inchargeLicNumber" value={item.inchargeLicNumber} onchange={handleChange}>
+                                    </lightning-input>
+                                </div>
+                                <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                    <lightning-input  type="date" label="Date Relationship Began Or Will Begin With Establishment" date-style="short"
+                                        name="beginDate" value={item.beginDate} onchange={handleChange} data-parentid={item.serialNumber}>
+                                    </lightning-input>
+                                </div>
+                                <div class="slds-col slds-size_1-of-1">
+                                    <template if:false={item.isDisable}>
+                                        <lightning-input type="checkbox"  label="The board's records reflect the relationship listed below is the current relationship that is on record for you. In order for the board to update our records, please indicate by checking Yes or No if this relationship is associated with you." 
+                                            name="relationshipAssociatedWithYou" data-parentid={item.serialNumber} checked={item.relationshipAssociatedWithYou}
+                                            onchange={handleChange}>
+                                        </lightning-input>
+                                    </template>
+                                </div>
+                            </div>
+                            <template if:false={item.hideDelete}>
+                                <lightning-button label="Delete Establishment " class="del-btn house" slot="actions"
+                                    data-parentid={item.serialNumber} value={index}
+                                    name={item.label} onclick={handleDelete} variant="destructive"
+                                    icon-name="utility:delete">
+                                </lightning-button>
+                            </template>
+                        </lightning-accordion-section>
+                    </lightning-accordion>
+                </div>
+                <lightning-button label="Add Another Establishment" class="m-t-5" slot="actions" onclick={handleAddRow}
+                    variant="brand" icon-name="utility:add"></lightning-button>
+                <lightning-button label="Save & Exit" onclick={openModal} variant="brand"></lightning-button>
+                <div class="save-m-btn" style="text-align: end;">
+                    <lightning-button label="Save & Next" onclick={handleSave} variant="brand"></lightning-button>
+                </div>
+            </div>
+        </template>
+        <template if:true={isReview}>
+            <span>Details of all the Funeral Establishments that you are associated with.</span>
+            <div class="householdmem">
+                <div for:each={itemList}  for:item="item"
+                    key={item} for:index="index">
+                    <lightning-accordion active-section-name={item.label} allow-multiple-sections-open class="outerAccordion">
+                        <lightning-accordion-section name={item.label} label={item.label}>
+                            <h3 class="slds-m-top_x-large slds-m-bottom_medium app-flow-subheading">
+                                ESTABLISHMENT INFORMATION
+                            </h3>
+                            <div class="slds-grid slds-wrap slds-gutters">
+                                <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                    <c-lpi-custom-lookup-establishment label="Establishment License Number" onlookupupdate={lookupRecord}
+                                    dat-id='' aria-label="Establishment License Number" is-establishment={booleanTrue} is-child={booleanFalse} parent-id={item.serialNumber} 
+                                    value={item.establishmentLicNo}></c-lpi-custom-lookup-establishment>
+                                </div>
+                                <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                    <lightning-input type="text" label="Establishment Name" disabled name='establishmentName'
+                                        data-id={item.serialNumber} value={item.establishmentName}
+                                        onchange={handleInput}>
+                                    </lightning-input>
+                                </div>
+                                <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                    <lightning-input  type="text" disabled label="Street Address"
+                                        name="billingStreet" 
+                                        value={item.billingStreet} onchange={handleChange}>
+                                    </lightning-input>
+                                </div>
+                                <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                    <lightning-input  type="text" disabled label="City"
+                                        name="billingCity"  value={item.billingCity} onchange={handleChange}
+                                        >
+                                    </lightning-input>
+                                </div>
+                                <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                    <lightning-input  name="billingState" disabled
+                                        label="State" value={item.billingState} 
+                                        onchange={handleChange}>
+                                    </lightning-input>
+                                </div>
+                                <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                    <lightning-input  type="text" disabled label="Zip Code"
+                                        name="billingPostalCode" minlength="5" maxlength="10" value={item.billingPostalCode}
+                                        onchange={handleChange} >
+                                    </lightning-input>
+                                </div>
+                                <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                    <lightning-input  type="text" label="Establishment Telephone Number"
+                                        name="phone" disabled
+                                        value={item.phone} onchange={handleChange}>
+                                    </lightning-input>
+                                </div>
+                                <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                    <lightning-input  type="text" label="Funeral Director In Charge" disabled
+                                        name="inchargeName" value={item.inchargeName} onchange={handleChange}>
+                                    </lightning-input>
+                                </div>
+                                <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                    <lightning-input  type="text" label="Funeral Director In Charge License Number" disabled
+                                        name="inchargeLicNumber" value={item.inchargeLicNumber} onchange={handleChange}>
+                                    </lightning-input>
+                                </div>
+                                <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                    <lightning-input  type="date" label="Date Relationship Began Or Will Begin With Establishment" date-style="short"
+                                        name="beginDate" value={item.beginDate} onchange={handleChange} data-parentid={item.serialNumber} disabled>
+                                    </lightning-input>
+                                </div>
+                                <template if:false={item.isDisable}>
+                                    <div class="slds-col slds-size_1-of-1">
+                                        <lightning-input type="checkbox"  label="The board's records reflect the relationship listed below is the current relationship that is on record for you. In order for the board to update our records, please indicate by checking Yes or No if this relationship is associated with you." 
+                                            name="relationshipAssociatedWithYou" data-parentid={item.serialNumber} checked={item.relationshipAssociatedWithYou}
+                                            onchange={handleChange} disabled>
+                                        </lightning-input>
+                                    </div>
+                                </template>
+                            </div>
+                        </lightning-accordion-section>
+                    </lightning-accordion>
+                </div>
+            </div>
+        </template>
+    </template>
+    <template if:true={isSaveAndExit}>
+        <!-- Modal/Popup Box LWC starts here -->
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <!-- Modal/Popup Box LWC header here -->
+                <header class="slds-modal__header">
+                    <!-- <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close"
+                            alternative-text="close"
+                            variant="inverse"
+                            size="small" ></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button> -->
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Confirm</h2>
+                </header>
+                <!-- Modal/Popup Box LWC body starts here -->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <p>Are you sure you want to Save & Exit?</p>
+                </div>
+                <!-- Modal/Popup Box LWC footer starts here -->
+                <footer class="slds-modal__footer">
+                    <lightning-button label="Cancel" onclick={closeModal} variant="brand"></lightning-button>
+                    <lightning-button label="OK" onclick={handleSave} variant="brand"></lightning-button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+    <template if:true={isShowSucessPage}>
+        <!-- Modal/Popup Box LWC starts here -->
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container1">
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+                    <c-cf-save-exit-sucess-page record-id={parid}></c-cf-save-exit-sucess-page>
+                </div>
+            </div>
+        </section>
+    </template>
+</template>

@@ -1,0 +1,62 @@
+<!--
+  @description       : 
+  @author            : Juhi Goel
+  @group             : 
+  @last modified on  : 09-17-2026
+  @last modified by  : Juhi Goel
+-->
+<template>
+    <lightning-card>
+        <!-- Card Header: Aligns icon vertically with text -->
+        <div slot="title" class="slds-media slds-media_center">
+            <div class="slds-media__figure">
+                <lightning-icon 
+                    icon-name="action:defer" 
+                    alternative-text="defer" 
+                    size="small" 
+                    title="defer">
+                </lightning-icon>
+            </div>
+            <div class="slds-media__body">
+                <h3 class="slds-text-heading_small slds-m-bottom_none">Processing Time</h3>
+            </div>
+        </div>
+
+        <!-- Component Body Content -->
+        <div class="slds-p-horizontal_medium">
+            <!-- Deadline Label -->
+            <template lwc:if={deadlineLabel}>
+                <p class="slds-text-body_regular slds-m-bottom_small">{deadlineLabel}</p>
+            </template>
+
+            <!-- Current Phase Heading -->
+            <template lwc:if={currentphase}>
+                <h2 class="slds-text-heading_medium slds-font-weight_bold slds-m-bottom_small">
+                    {currentphase} Phase
+                </h2>
+            </template>
+
+            <!-- Inner Details Card -->
+            <div class="slds-card slds-card_boundary slds-p-around_medium">
+                <template lwc:if={renderSection}>
+                    <div class="slds-text-title_caps slds-m-bottom_x-small">{currentphase} Phase</div>
+                </template>
+
+                <!-- Timer -->
+                <div class="timer slds-text-heading_small slds-font-weight_bold slds-m-bottom_medium">
+                    {timer}
+                </div>
+
+                <!-- Key-Value Status List -->
+                <ul class="slds-has-dividers_bottom-space">
+                    <template for:each={statusList} for:item="item">
+                        <li key={item.status} class="slds-item slds-grid slds-grid_align-spread slds-p-vertical_x-small">
+                            <span class="slds-font-weight_bold">{item.label}:</span>
+                            <span>{item.value}</span>
+                        </li>
+                    </template>
+                </ul>
+            </div>
+        </div>
+    </lightning-card>
+</template>

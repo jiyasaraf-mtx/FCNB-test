@@ -1,0 +1,25 @@
+<!--
+  @description       : 
+  @author            : Vamsi Mudaliar
+  @group             : 
+  @last modified on  : 09-29-2023
+  @last modified by  : Mohit Karani
+-->
+<template>
+        <lightning-card title="Inspections" icon-name="standard:maintenance_plan">
+                <lightning-datatable key-field="visitId" data={visitsData} columns={columns} hide-checkbox-column="true"
+                        onrowaction={handleVisitRowAction}>
+                </lightning-datatable>
+
+                <lightning-button label="New" title="Non-primary action" onclick={toggleModalController} class="slds-float_right" slot="actions" if:true={isAdhocVisitListView}></lightning-button>
+        </lightning-card>
+
+        <c-lpi-modal is-large="true" title="New Adhoc Inspection" onclose={toggleModalController} if:true={openNewAdhocModal}>
+                <div slot="content">
+                        <c-lpi-new-visit-record show-header="false" is-adhoc-check-box="true" from-related-visit="true" onclose={toggleModalController} onrecordsave={fetchAdhocInspections}></c-lpi-new-visit-record>
+                </div>
+                <div slot="footer">
+                        <button class="slds-button slds-button_brand custom-brand-btn" onclick={handleSaveVisit}>Save</button>
+                </div>
+        </c-lpi-modal>
+</template>

@@ -1,0 +1,77 @@
+<template>
+            <div class="slds-grid slds-wrap slds-is-relative ">
+            <div style="position: fixed;z-index: 999999;top: 0;right: 0;">
+  <omnistudio-toast class="flexcard-toast-element" theme="slds" title="" message="" styletype=""> </omnistudio-toast>
+</div>
+            <div if:true={showLoader} class="slds-is-absolute vloc-loader_override" style="height: 100%; width: 100%; min-height:50px; background: transparent; z-index: 99;">
+  <div>
+   <omnistudio-spinner
+      variant="brand"
+      alternative-text="Loading content..."
+      size="medium"
+      theme="slds"
+      ></omnistudio-spinner>
+  </div>
+</div>
+            <template if:false={hasPermission}>
+              You don't have required permissions to view this card.
+            </template>
+            <template if:true={hasPermission}>
+              <template if:true={hasRecords}>
+                        <template for:each={_records} for:item="record" for:index="rindex">
+                            <omnistudio-flex-card-state if:true={record}  key={record._flex.uniqueKey} data-recordid={record.Id} record={record} data-statue="true"  data-index="0" data-rindex={rindex} class="cf-vlocity-state-0 cf-vlocity-state slds-size_12-of-12"  tracking-obj={_childCardTrackingObj} >
+      <div if:true={cardLoaded} class="slds-grid slds-wrap slds-card slds-p-around_x-small slds-m-bottom_x-small" style="">
+          <div data-style-id="state0element0" class="slds-col   slds-p-around_x-small slds-size_12-of-12 " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element0_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element0block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3E1.%20Have%20you%20been%20finally%20adjudicated%20and%20found%20guilty,%20or%20entered%20a%20plea%20of%20guilty%20or%20nolo%20contendere,%20in%20a%20criminal%20prosecution%20in%20this%20state,%20or%20any%20other%20state,%20or%20of%20the%20United%20States,%20whether%20or%20not%20a%20sentence%20was%20imposed?%20NOTE:%20This%20includes%20Suspended%20Imposition%20of%20Sentence,%20Suspended%20Execution%20of%20Sentence,%20misdemeanor%20and%20felony%20convictions,%20and%20alcohol-related%20offenses,%20i.e.%20DWI%20and%20BAC.%20Check%20yes%20if%20NOT%20previously%20disclosed%20to%20this%20Commission%20and%20provide%20the%20date%20of%20the%20conviction%20and/or%20pleading,%20nature%20of%20the%20offense,%20court%20location,%20and%20case%20number%20on%20a%20separate%20sheet.%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element0block_element1" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element0block_element1_child"   card={card}  record={record}  merge-field="%3Cdiv%3E%7BRSBrokerHaveYouBeenFoundGuilty%7D%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element1" class="slds-col   slds-p-around_x-small slds-size_12-of-12 " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element1_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element1block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element1block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3E2.%20Have%20you%20ever%20had%20a%20real%20estate%20application%20denied%20or%20your%20real%20estate%20license%20suspended,%20revoked,%20placed%20on%20probation,%20or%20otherwise%20disciplined%20in%20Missouri%20or%20any%20other%20state%20or%20jurisdiction?%20Check%20yes%20if%20NOT%20previously%20disclosed%20to%20this%20Commission%20and%20provide%20the%20name%20of%20state%20or%20jurisdiction,%20the%20reason%20for%20denial%20or%20discipline,%20and%20approximate%20dates%20on%20a%20separate%20sheet.%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element1block_element1" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element1block_element1_child"   card={card}  record={record}  merge-field="%3Cdiv%3E%7BRSBrokerHaveYouHadApplicationDenied%7D%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div>
+        </div>
+      </omnistudio-flex-card-state>
+                        </template>
+                      </template>
+                      <template if:false={hasRecords}>
+                            <omnistudio-flex-card-state  record={record} data-statue="false"  data-index="0" data-rindex={rindex} class="cf-vlocity-state-0 cf-vlocity-state slds-size_12-of-12"  tracking-obj={_childCardTrackingObj} >
+      <div if:true={cardLoaded} class="slds-grid slds-wrap slds-card slds-p-around_x-small slds-m-bottom_x-small" style="">
+          <div data-style-id="state0element0" class="slds-col   slds-p-around_x-small slds-size_12-of-12 " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element0_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element0block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3E1.%20Have%20you%20been%20finally%20adjudicated%20and%20found%20guilty,%20or%20entered%20a%20plea%20of%20guilty%20or%20nolo%20contendere,%20in%20a%20criminal%20prosecution%20in%20this%20state,%20or%20any%20other%20state,%20or%20of%20the%20United%20States,%20whether%20or%20not%20a%20sentence%20was%20imposed?%20NOTE:%20This%20includes%20Suspended%20Imposition%20of%20Sentence,%20Suspended%20Execution%20of%20Sentence,%20misdemeanor%20and%20felony%20convictions,%20and%20alcohol-related%20offenses,%20i.e.%20DWI%20and%20BAC.%20Check%20yes%20if%20NOT%20previously%20disclosed%20to%20this%20Commission%20and%20provide%20the%20date%20of%20the%20conviction%20and/or%20pleading,%20nature%20of%20the%20offense,%20court%20location,%20and%20case%20number%20on%20a%20separate%20sheet.%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element0block_element1" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element0block_element1_child"   card={card}  record={record}  merge-field="%3Cdiv%3E%7BRSBrokerHaveYouBeenFoundGuilty%7D%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element1" class="slds-col   slds-p-around_x-small slds-size_12-of-12 " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element1_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element1block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element1block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3E2.%20Have%20you%20ever%20had%20a%20real%20estate%20application%20denied%20or%20your%20real%20estate%20license%20suspended,%20revoked,%20placed%20on%20probation,%20or%20otherwise%20disciplined%20in%20Missouri%20or%20any%20other%20state%20or%20jurisdiction?%20Check%20yes%20if%20NOT%20previously%20disclosed%20to%20this%20Commission%20and%20provide%20the%20name%20of%20state%20or%20jurisdiction,%20the%20reason%20for%20denial%20or%20discipline,%20and%20approximate%20dates%20on%20a%20separate%20sheet.%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element1block_element1" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element1block_element1_child"   card={card}  record={record}  merge-field="%3Cdiv%3E%7BRSBrokerHaveYouHadApplicationDenied%7D%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div>
+        </div>
+      </omnistudio-flex-card-state>
+                      </template>
+            </template>
+            <template if:true={hasError}>
+            {error}
+            </template>
+            
+      <omnistudio-action action-wrapperclass="slds-hide" re-render-flyout class="action-trigger slds-col" onupdateos={updateOmniscript} onselectcards={updateSelectedCards} onsetvalue={updateAction} onfireactionevent={actionEvtHandler}>
+      
+      </omnistudio-action>
+  
+            <omnistudio-action class="execute-action" re-render-flyout action-wrapperclass="slds-hide" onupdateos={updateOmniscript} onselectcards={updateSelectedCards} onsetvalue={updateAction} onfireactionevent={actionEvtHandler}>
+            
+            </omnistudio-action>
+            </div>
+          </template>

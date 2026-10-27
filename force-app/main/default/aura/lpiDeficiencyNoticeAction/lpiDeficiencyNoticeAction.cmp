@@ -1,0 +1,18 @@
+<!--
+  @description       : 
+  @author            : Sudhanshu Jain
+  @group             : 
+  @last modified on  : 10-20-2023
+  @last modified by  : mohit.karani@mtxb2b.com
+-->
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:lightningQuickActionWithoutHeader,force:hasRecordId,force:hasSObjectName">
+  <aura:html tag="style">
+      .slds-modal__container{
+        min-width: 55rem !important; 
+      }
+      .slds-modal__close.closeIcon { 
+        display: none;
+      }
+  </aura:html>
+  <c:lpiApplicationDocumentDeficiencyNotice recordId ="{!v.recordId}" objectApiName ="{!v.sObjectName}" onmodalclose="{!c.handleClose}"/>
+</aura:component>

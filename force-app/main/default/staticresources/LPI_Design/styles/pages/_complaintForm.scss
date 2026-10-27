@@ -1,0 +1,519 @@
+.complaint-form{
+    &__banner{
+        color: $white;
+        background: $primary-main !important;
+        border-radius: toRem(4);
+        .anonymousLink{
+            &:focus{
+                @include focus-outline-white;
+            }
+        }
+    }    
+    &__content{
+        background: $white;
+        box-shadow: toRem(0) toRem(2) toRem(4) rgba(0, 0, 0, 0.1);
+        border-radius: toRem(4);
+        @media only screen and (max-width: 48rem) {
+            padding: 0.5rem !important;
+        }
+        .validate{
+            .slds-form-element__control {
+                display: flex;
+                .slds-radio {
+                    padding-right: 1rem;
+                    .slds-form-element__label {
+                        color: $secondary-main;
+                        font-size: $font-size-14;
+                    }
+                }
+            }
+            &.mobile-full-width-radio{
+                .slds-form-element__control {
+                    .slds-radio {
+                        @media only screen and (max-width: 48rem) {
+                            width: 100%;
+                            margin-right: 0;
+                        }
+                    }
+                }
+            }
+        }
+        
+        .radio-button-label {
+            font-size: 1rem;
+            font-weight: 600;
+            line-height: 1.375rem;
+            color: $secondary-main;
+        }
+
+        .slds-form-element__help{
+            font-weight: normal;
+        }
+
+        .slds-button_neutral, .slds-button_outline-brand {
+            padding: $x-small $medium;
+        }
+        .slds-button_neutral[aria-disabled="true"],
+        .slds-button_outline-brand[aria-disabled="true"] {
+            border: toRem(1) solid $text-disabled;
+            color: $text-disabled;
+        }
+
+        .submit-button .slds-button,
+        .reset-button .slds-button{
+            &_neutral{
+                border: toRem(1) solid $secondary-main;
+                color: $secondary-main;
+            }
+        }
+        .footer-buttons{
+            .reset-button {
+                margin-right: 1rem;
+                @media only screen and (max-width: 48rem) {
+                    margin-right: 0rem;
+                    .slds-button{
+                        margin-bottom: 1rem;
+                    }
+                }
+            }
+        }
+
+lightning-dual-listbox .slds-form-element__label{
+    font-weight: $font-weight-regular;
+    color:$text-primary;
+}
+        .slds-form-element {
+            margin-bottom: 1rem;
+        }
+        .tc-cb{
+            .slds-form-element__label{
+                color: $secondary-main;
+            }
+        }
+
+        .documentActions{
+            lightning-icon.delete {
+                cursor: pointer;
+            }
+        }
+
+        .slds-combobox_container{
+            .slds-listbox{
+                max-height: 15rem;
+                overflow-y: auto;
+            }
+        }
+
+        @media only screen and (max-width: 48rem) {
+            .slds-box {
+                padding: 0.5rem;
+            }
+            .slds-grid {
+                display: block;
+            }
+            .slds-size_4-of-12,
+            .slds-size_6-of-12 {
+                width: 100%;
+                &.slds-p-right_small {
+                    padding:0;
+                }
+            }
+            .slds-button {
+                width: 100%;
+                margin-top: 1rem;
+            }
+
+            .slds-modal__header,
+            .slds-modal__footer{
+                .slds-button {
+                    width: auto;
+                }
+            }
+
+            .slds-table{
+                .slds-button {
+                    width: 2rem;
+                }
+            }
+
+            input[type="search"]{
+                padding-right: 0.25rem;
+            }
+            .date-cmp .slds-input {
+                -webkit-appearance : none;
+            }
+        }
+    }
+
+    .success-msg{
+        padding-bottom: 7rem;
+        .success-icon{
+            justify-content: flex-start;
+            align-items: center;
+            font-size: 2rem;
+            margin-top: 0;
+            margin-left: 0;
+            i{
+                margin-right: $x-small;
+                color: $success-main;
+            }
+        }
+        .success-text{
+            color: $success-main;
+            margin-top: 0 !important;
+            font-size: $font-size-40;
+            font-weight: $font-weight-bold;
+        }
+        .complain-container {
+            background: $background-light;
+            border-radius: toRem(10);
+            max-width: 22rem;
+            margin: 3rem auto;
+            padding: 1rem;
+            text-align: center;
+            .complain-label{
+                color: $secondary-main;
+                font-size: 1rem;
+                font-weight: bold;
+            }
+            .complain-number{    
+                font-size: 2rem;
+                font-weight: 700;
+                color: $primary-main;
+                word-break: break-word;
+            }
+            .slds-button.slds-button_brand {
+                background: $secondary-main;
+                border: toRem(1) solid $white;
+                border-radius: toRem(45);
+                padding: 0.3rem 6rem;
+                font-weight: 400;
+                font-size: toRem(14);
+            }
+        }
+        .backtohome-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            .primary-button-bordered{
+                width: 22rem;
+            }
+        }
+    }
+
+    @media all and (max-width: 71.875rem) {
+        .table-container{
+            overflow: auto;
+        }
+    }
+
+    input[name=unknownProfession] + label.slds-checkbox__label span.slds-form-element__label {
+        color: $secondary-main;
+    }
+
+}
+lightning-combobox .slds-combobox__input,lightning-input .slds-input {
+    padding: 0.25rem 0.75rem;
+
+    // padding: 0.2rem $x-m-small;
+    border: toRem(1) solid $other-outlined-border-23-p;
+    color: $text-primary;
+    // font-size: $font-size-14 !important;
+    font-size: $font-size-16 !important;
+    font-weight: $font-weight-semi-bold;
+    &::placeholder {
+        font-size: $font-size-16;
+        font-weight: $font-weight-regular;
+        color: $text-secondary;
+    }
+}
+
+.main-content.open-sidebar{
+    .complaint-form{
+        margin-left: 0rem;
+    }
+}
+
+.complaint-form button.slds-button.slds-button_destructive {
+    padding: 0.1874rem 2rem !important;
+    font-size: 0.875rem;
+}
+
+.file-upload-instrucions li.slds-item {
+    font-size: toRem(14);
+}
+.slds-textarea[name="complaintDesc"] {
+    min-height: 5rem !important;
+}
+
+.fileComplainSucessTable{
+    .complain-container{
+        max-width: unset !important;
+    }
+}
+
+.add-incident-table .slds-dropdown__list a:focus {
+    outline-offset: toRem(-3) !important;
+}
+
+//complaints.scss
+
+c-complaint-flow-unauthenticated-english {
+    .slds-page-header__title {
+        display: none;
+    }
+    .form-blue-heading {
+        padding-bottom: 0.5rem;
+    }
+    omnistudio-omniscript-text-block[data-omni-key="TextBlock7"] {
+        .form-blue-heading {
+            padding-top: 2rem;
+        }
+    }
+    .heading {
+        margin: 1.5rem 0;
+    }
+    .omniscript-step__body, .omniscript-article  {
+        padding-top: 0;
+    }
+    omnistudio-omniscript-remote-action[data-omni-key="RemoteActiveGetPublicComplaints"] {
+        .slds-button_brand {
+            padding: 0.1874rem;
+        }
+    }
+    omnistudio-omniscript-ip-action[data-omni-key="CancelComplaint"] {
+        .slds-button_brand {
+            color: $text-secondary;
+            font-size: $font-size-14;
+            padding: 0.1874rem;
+            border: toRem(1) solid $text-secondary;
+            background-color: $white;
+        }
+    }
+    omnistudio-omniscript-ip-action[data-omni-key="IntegrationProcedureAction1"] {
+        .slds-button_brand {
+            background: $primary-main;
+            padding: 0.1874rem;
+            font-size: $font-size-14;
+            border: toRem(1) solid $primary-main;
+        }
+    }
+    omnistudio-omniscript-checkbox[data-omni-key="Checkbox2"] {
+        .slds-form-element__control {
+            padding-top: 1.2rem;
+        }
+    }
+    omnistudio-omniscript-file[data-omni-key="AttachDocuments"] {
+        .slds-form-element__label {
+            color: $primary-main;
+            font-size:$font-size-18;
+            font-weight: $font-weight-semi-bold;
+            margin-bottom: 1rem;
+        }
+        .slds-form-element {
+            padding: 1rem;
+            box-shadow: 0 toRem(2) toRem(4) rgba(0,0,0,0.1);
+        }
+        .slds-file-selector__dropzone {
+            border: toRem(1) dashed $primary-main !important;
+            padding: 5rem;
+            display: flex;
+            justify-content: center;
+            background-color:$bg-blue;
+        }
+    } 
+}
+c-cf-complaint-header {
+    .slds-grid.slds-wrap.slds-p-around_x-small.slds-m-bottom_x-small {
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .Landing-Apply-container {
+        &::before {
+            display: none;
+        }
+    }
+}
+c-complaint-flow_-v2-complaint-flow_-v2-english, c-complaint-flow-v2-complaint-flow-v2-english{
+    .omniscript-article{
+        .omniscript-side-content{
+            position: sticky;
+            top: toRem(90);
+        }
+        .omniscript-body{
+            margin-left: 1rem;
+        }
+    }
+    omnistudio-omniscript-step[data-omni-key="Documents"] {
+        .slds-form-element__label {
+            color: $primary-main;
+            font-size:$font-size-18;
+            font-weight: $font-weight-semi-bold;
+            margin-bottom: 1rem;
+        }
+        .slds-form-element {
+            padding: 1rem;
+            box-shadow: 0 toRem(2) toRem(4) rgba(0,0,0,0.1);
+        }
+        .slds-file-selector__dropzone {
+            border: toRem(1) dashed $primary-main !important;
+            padding: 5rem;
+            display: flex;
+            justify-content: center;
+            background-color:$bg-blue;
+        }
+    } 
+    c-cf-complaint-review{
+        .form-blue-heading{
+            font-size: 1rem;
+            margin: 1.25rem 0 0.625rem;
+        }
+    }
+    .slds-page-header__title{
+        display: none;
+    }
+    [data-omni-key="ComplaintForm"]{
+        [data-omni-key="TextBlock3"]{
+            margin-bottom: 1.25rem;
+        }
+    }
+    .omni-vert-stepchart-last{
+        display: none !important;
+    }
+    .slds-progress__list{
+        li{
+            &:nth-child(4){
+                &::after{
+                    display: none;
+                }
+            }
+        }
+    }
+    c-cf-public-complaint-sucess-page_1_-gaurav{
+        .success-text{
+            font-size: 1.8rem;
+        }
+        .back-btn{
+            margin-top: 2.188rem;
+        }
+        .application-container .application-number{
+            font-size: 1.5rem;
+        }
+    }
+}  
+
+.validate {
+    legend {
+        font-size: toRem(14);
+    }
+}
+
+
+// Help.scss starts 
+
+c-cf-f-a-q-list,
+c-cf-f-a-q-detail-view {
+    .slds-grid.slds-wrap.slds-card.slds-p-around_x-small.slds-m-bottom_x-small {
+        padding: 0;
+        background: $background-light;
+        box-shadow: none;
+        .search-block,
+        .questions-filter {
+            padding: 1.875rem;
+            background: $white;
+            margin-top: 1rem;
+            border-radius: $border-radius-medium;
+        }
+        .search-block{
+            position: relative;
+            .search-icon {
+                position: absolute;
+                top: 4.25rem;
+                right: 2.4rem;
+                .slds-icon {
+                    fill: $text-secondary;
+                }
+            }
+        }
+        .questions-filter {
+            .slds-card {
+                background: $white;
+            }
+            .heading-small {
+                margin-bottom: 1.5rem;
+                width: max-content;
+            }
+            .domain {
+                text-align: center;
+                width: max-content;
+            }
+            .filter-section {
+                margin-top: 2.8rem;
+                padding-left: 1.25rem;
+                .agency-filter,
+                .category-filter {
+                    box-shadow: 0 0 0.25rem rgba(0,0,0,0.1);
+                    padding: 1.25rem;
+                }
+            }
+        }
+    }
+    .question-detail-view {
+        background: $white;
+        margin-top: 1.5rem;
+        padding: 1.875rem;
+        .domain {
+            margin-left: 0;
+            width: max-content;
+        }
+        .domain,
+        .sub-heading {
+            margin-bottom: 1rem;
+        }
+    }
+}
+.full-content .fileComplainSucessTable {
+    margin-top: 2.5rem;
+}
+// Help.scss ends 
+.main-content{
+    .slds-container--center.slds-container--x-large{
+        max-width: 100%;
+        margin: 0;
+    }
+}
+
+.faq-main-section{
+    padding: 0 !important;
+}
+
+.complaint-form__banner{
+    .base-link-downarrow{
+        padding: 0.25rem;
+        &:focus{
+            outline-offset: -2px !important;
+        }
+    }
+}
+
+.address-lookup{
+    .slds-form-element__row.slds-grow{
+        .slds-form-element.slds-size_6-of-6{
+            .slds-form-element__label{
+                display: none;
+            }
+        }
+    }
+    .slds-form-element{
+        @extend .m-b-medium;
+    }
+    lightning-base-combobox{
+        .slds-input{
+            padding: 0.25rem 0.75rem;
+            border: 0.0625rem solid rgba(0, 0, 0, 0.23);
+            color: #000814;
+            font-size: 1rem !important;
+            font-weight: 600;
+        }
+    }
+}

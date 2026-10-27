@@ -1,0 +1,45 @@
+<!--
+  @description       : 
+  @author            : Bharath Kumar M
+  @group             : 
+  @last modified on  : 05-28-2024
+  @last modified by  : Bharath Kumar M
+-->
+<template>
+    <div class="backdrop" if:true={showSpinner}>
+        <div class="spinner">
+            <lightning-spinner alternative-text="Loading..."></lightning-spinner>
+        </div>
+    </div>
+    <h1 class="bold-32 m-b-medium">{childCardTitle}</h1>
+    <div class="warning-message-box slds-p-top_none slds-list_horizontal" if:true={showRenewLicenses}>
+        <lightning-icon class=" slds-icon-utility-info-alt slds-icon_container slds-m-right_small" icon-name="utility:info_alt" title={labels.warning}>
+            <span style="--sds-c-icon-color-background: var(--slds-c-icon-color-background, transparent)" part="boundary">
+                <lightning-primitive-icon size="medium" variant="">...</lightning-primitive-icon>
+                <span class="slds-assistive-text">{labels.warning}</span>
+            </span>
+        </lightning-icon>
+         <div class="slds-media__body">
+            <div>{labels.importantNotice}</div>
+            <p>{labels.noticeLicense}</p>
+        </div>
+    </div>
+    <div class='slds-m-vertical_large'>
+        <div class="slds-card" if:true={showRenewLicenses}>
+            <div class="slds-grid m-b-small slds-grid--vertical-align-center">
+                <lightning-input name="enter-search" type="search" class="search-input width-40" variant="label-hidden"
+                    placeholder={labels.searchLicenseTypePlaceholder}
+                    onchange={handleSearch}></lightning-input>
+            </div>
+            <c-lpi-dashboard-table-details onchildmethod={callFromChild} paymentdata={paymentdata}
+                applicationdata={applicationdata} licensedata={licensedata} columns={myLicenseColumns}
+                recordsdata={recordsData} titledata={childCardTitle}></c-lpi-dashboard-table-details>
+        </div>
+        <div class="slds-card" if:false={showRenewLicenses}>
+            <div class="card-border slds-p-around_medium">
+                <div><b>{labels.noRenewalLicenses}</b></div>
+                <div class="slds-m-top_small"><a onclick={openMyLicensePage}>{labels.visitMyLicenses}</a></div>
+            </div>
+        </div>
+    </div>
+</template>

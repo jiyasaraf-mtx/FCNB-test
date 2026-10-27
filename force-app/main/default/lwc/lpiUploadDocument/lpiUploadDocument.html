@@ -1,0 +1,795 @@
+<!-- sldsValidatorIgnore -->
+<template>
+	<div if:true={showSpinner}>
+		<lightning-spinner size="medium" alternative-text="Loading"></lightning-spinner>
+	</div>
+	<div class="slds-clearfix">
+		<div class="slds-float_left">
+			<template if:false={isRevirwPage}>
+				<template if:true={showRequiredText}>
+					<!-- <template if:false={showPreneedAgentLicenseText}> -->
+						<p class="asterisk-caption m-b-small">Documents marked "Required for License Approval" are marked with a double asterisk (<span class="c-red">**</span>). These documents are not required to complete this form but will be
+							required before a license is issued.
+						</p>
+					<!-- </template> -->
+					<!-- <template if:true={showPreneedAgentLicenseText}>
+						<p>Documents marked "Required for registration Approval" are marked with a double asterisk (<span
+								class="c-red">**</span>). These documents are not required to complete this form but
+							will
+							be
+							required before a registration is issued.
+						</p>
+					</template> -->
+				</template>
+				<div class="slds-scoped-notification slds-media slds-media_center slds-theme_info m-b-medium"
+				role="status">
+				<div class="slds-media__figure">
+					<span class="slds-icon_container slds-icon-utility-info" title="info">
+						<i class="material-icon material-icon-info_outline"></i>
+					</span>
+				</div>
+				<div class="slds-media__body">
+					<p>{header}</p>
+				</div>
+			</div>
+				<!-- <p class="m-b-small regular-text-14 text-secondary">{header}</p> -->
+				<!-- Added by Adarsh for I-241411 -->
+				<template if:true={showMTSCondintionalText}>
+					<p class="m-b-small">One of the following is required if you do not have a PharmD:</p>
+				</template>
+				<!-- Added by Adarsh for I-241411 END-->
+				<!-- <template if:true={showInstructionsText}>
+					<p class="bold-16 m-b-small">Photo must not contain pictures where hats, caps or other head covers are worn. No dark
+						glasses can be worn on the photo.</p>
+				</template> -->
+				<!--End-->
+			</template>
+		</div>
+	</div>
+	<div class="document-vault-wrapper">
+		<!--Added By GJ -- Start Here-->
+		<template if:false={isRevirwPage}>
+			<template if:true={isFlowDocumentsPresent}>
+				<div class="section-header table-container">
+					<table class="slds-m-top_medium slds-table slds-table_bordered slds-no-row-hover document-upload_table alpha-table-layout">
+						<caption class="sr-only">Documents Table</caption>
+						<thead>
+							<tr>
+								<th scope="col" class="slds-is-resizable cl_one">Document Name</th>
+								<th scope="col" class="slds-is-resizable cl_two">File</th>
+								<th scope="col">Action</th>
+							</tr>
+						</thead>
+						<tbody>
+							<template for:each={flowDocumentsList} for:item="data" for:index="idx">
+								<tr key={data.documentRecord.Id}>
+									<template if:true={data}>
+										<td data-label="Document Name">
+											<div class="slds-cell-wrap docName">
+												<div class="docName" aria-label={data.documentRecord.Document_Name__c}>
+													{data.documentRecord.Document_Name__c}
+													<template if:true={data.documentRecord.Is_Document_Required__c}>
+														<div if:false={data.documentRecord.isExamModification}>
+															<div
+																if:false={data.documentRecord.isAPEPLSPLAReinstatement}>
+																<!--Added By Sanidhya for issue I-255133
+                                                                     Start Here-->
+																<template if:true={data.documentRecord.isRegType}>
+																	<div if:false={data.documentRecord.isRequiredType}
+																		class="approval-text">** Required for Registration Approval</div>
+																</template>
+																<template if:false={data.documentRecord.isRegType}>
+																	<div if:false={data.documentRecord.isRequiredType}
+																		class="approval-text">**
+																		Required for License Approval</div>
+																</template>
+																<!--End here -->
+															</div>
+															<div if:true={data.documentRecord.isRequiredType}
+																class="approval-text">** Required
+																for {data.documentRecord.Type__c} Approval</div>
+															<div if:true={data.documentRecord.isAPEPLSPLAReinstatement}
+																class="approval-text">** Required
+																for {APEPLSPLAReinstatementLabel} Approval</div>
+														</div>
+														<div if:true={data.documentRecord.isExamModification}
+															class="approval-text">** Required for
+															Exam Modifications Approval</div>
+													</template>
+													<!-- Added as per S-46305 Start Here-->
+													<div if:true={data.documentRecord.Help_Text__c}>
+														<lightning-helptext content={data.documentRecord.Help_Text__c}>
+														</lightning-helptext>
+													</div>
+													<!-- Added as per S-46305 End Here-->
+												</div>
+											</div>
+											<template if:true={data.documentRecord.Is_System_Generated__c}>
+												<template if:true={data.isCetificateNoTaxDoc}>
+													<template if:true={data.documentRecord.Description__c}>
+														<a href={data.documentRecord.Description__c}
+															target="_blank">Click here for Missouri Dept. of Revenue's
+															website.</a>
+													</template>
+												</template>
+												<template if:false={data.isCetificateNoTaxDoc}>
+													<template if:true={data.documentRecord.Description__c}>
+														<a href={data.documentRecord.Description__c}
+															target="_blank">Click
+															here to download {data.docLinkName} form.</a>
+													</template>
+												</template>
+											</template>
+										</td>
+										<td role="gridcell" class="table_gridcell cl_two" data-label="File">
+
+
+											<div class="">
+												<template for:each={data.files} for:item="file">
+													<div key={file.uniqueId}>
+														<div class="slds-grid slds-grid_vertical file-name">
+															<div  class="slds-col slds-size_8-of-12 slds-text-align_left"
+																style="max-width: 200px; white-space:normal;word-break: break-all;">
+																{file.fileName}
+															</div>
+															<div
+																class="slds-col slds-size_4-of-12 slds-text-align_left ">
+																<span class="slds-m-right_small download-icon">
+																	{file.downloadAriaLabel}
+																	<lightning-button-icon size="small"
+																		icon-name="utility:download"
+																		style="padding-left: 2%;"
+																		data-parentrecid={file.parentRecId} tabindex="0"
+																		onclick={handleDownload}
+																		aria-label={file.downloadAriaLabel}>
+																	</lightning-button-icon>
+																</span>
+		
+																<span class="remove-icon">
+																	{file.deleteAriaLabel}
+																	<lightning-button-icon size="small"
+																		icon-name="utility:delete" data-flow="child"
+																		data-parentrecid={file.parentRecId}
+																		onclick={handleDelFile}
+																		aria-label={file.deleteAriaLabel}>
+																		<!--Added aria-label for deletebtn for I-247358-->
+																	</lightning-button-icon>
+		
+																</span>
+															</div>
+														</div>
+													</div>
+
+												</template>
+												<div if:true={data.documentRecord.ContentDocumentLinks}>
+													<template if:true={data.documentRecord.ContentDocumentLinks}
+														for:each={data.documentRecord.ContentDocumentLinks.records}
+														for:item="cv">
+														<div key={cv.Id} class=""
+															style="max-width: 200px; white-space:normal;word-break: break-all;">
+															{cv.ContentDocument.Title}.{cv.ContentDocument.FileExtension}
+														</div>
+
+														<div key={cv.Id}
+															class="slds-col slds-size_4-of-12 slds-text-align_left ">
+															<span class="slds-m-right_small download-icon">
+																<lightning-button-icon size="small"
+																	icon-name="utility:download"
+																	onclick={handleDownload}
+																	data-ext={cv.ContentDocument.FileExtension}
+																	data-filename={cv.Title}
+																	data-contentid={cv.ContentDocument.Id} tabindex="0"
+																	title={cv.ContentDocument.Title}
+																	onkeydown={handleKeyDown}
+																	data-parentrecid={data.documentRecord.Id}
+																	aria-label={cv.downloadAriaLabel}>
+																</lightning-button-icon>
+															</span>
+
+															<span class="remove-icon">
+																<lightning-button-icon size="small"
+																	icon-name="utility:delete"
+																	data-recid={data.documentRecord.Id}
+																	data-flow="parent" onclick={handleDelFile}
+																	aria-label={data.deleteAriaLabel}>
+																</lightning-button-icon>
+
+															</span>
+
+														</div>
+
+													</template>
+												</div>
+
+
+											</div>
+										</td>
+										<td data-label="Action">
+											<lightning-button variant="bare" label="Upload" title="Upload"
+												icon-name="utility:upload" class="btnUploadFocus"
+												aria-label={data.documentRecord.uploadBtnLabel} onclick={doFileUpload}
+												data-docid={data.documentRecord.Id}
+												data-docname={data.documentRecord.Document_Name__c}>
+											</lightning-button>
+											<!-- data-ispoc={data.docNamePoc} -->
+										</td>
+									</template>
+								</tr>
+							</template>
+						</tbody>
+					</table>
+				</div>
+			</template>
+			<template if:true={islawfulDocumentsPresent}>
+				<div class="m-t-xl">
+					<h2 class="bold-24 m-b-xs">Lawful Presence Documentation</h2>
+					<p class="m-b-small regular-text-16 text-secondary">Upload a copy of your lawful presence documentation.</p>
+					<div class="section-header table-container">
+						<table class="slds-m-top_medium slds-table slds-table_bordered slds-no-row-hover document-upload_table alpha-table-layout">
+							<caption class="sr-only">Documents Table of Lawful Presence Documentation</caption>
+							<thead>
+								<tr>
+									<th scope="col" class="slds-is-resizable cl_one">Document Name</th>
+									<th scope="col" class="slds-is-resizable cl_two">File</th>
+									<th scope="col">Action</th>
+								</tr>
+							</thead>
+							<tbody>
+								<template for:each={lawfulPresenceDocumentsList} for:item="data" for:index="idx">
+									<tr key={data.documentRecord.Id}>
+										<template if:true={data}>
+											<td data-label="Document Name">
+												<div class="slds-cell-wrap docName">
+													<div class="docName" aria-label={data.documentRecord.Document_Name__c}>
+														{data.documentRecord.Document_Name__c}
+														<!--Added By Sanidhya for issue I-255133
+																		 Start Here-->
+														<template if:true={data.documentRecord.isRegType}>
+															<div if:true={data.documentRecord.Is_Document_Required__c}
+																class="approval-text">** Required for
+																Registration Approval</div>
+														</template>
+														<template if:false={data.documentRecord.isRegType}>
+															<div if:true={data.documentRecord.Is_Document_Required__c}
+																class="approval-text">** Required for
+																License Approval</div>
+															<!--End Here-->
+														</template>
+														<!-- Added as per S-46305 Start Here-->
+														<div if:true={data.documentRecord.Help_Text__c}>
+															<lightning-helptext content={data.documentRecord.Help_Text__c}>
+															</lightning-helptext>
+														</div>
+														<!-- Added as per S-46305 End Here-->
+													</div>
+												</div>
+											</td>
+											<td role="gridcell" class="table_gridcell cl_two" data-label="File">
+	
+	
+												<div class="slds-grid slds-grid_vertical file-name">
+													<template for:each={data.files} for:item="file">
+	
+														<div key={file.uniqueId} class=""
+															style="max-width: 200px; white-space:normal;word-break: break-all;">
+															{file.fileName}
+	
+															<div
+																class="slds-col slds-size_4-of-12 slds-text-align_left ">
+																<span class="slds-m-right_small download-icon">
+																	<lightning-button-icon size="small"
+																		icon-name="utility:download"
+																		data-parentrecid={file.parentRecId}
+																		data-filename={file.fileName}
+																		data-fileid={file.uniqueId} tabindex="0"
+																		title={file.fileName} onkeydown={handleKeyDown}
+																		data-onbase="true"
+																		aria-label={file.downloadAriaLabel}
+																		onclick={handleDownload}>
+																	</lightning-button-icon>
+																</span>
+	
+																<span class="remove-icon">
+																	<lightning-button-icon size="small"
+																		icon-name="utility:delete" data-flow="child"
+																		data-parentrecid={file.parentRecId}
+																		onclick={handleDelFile}
+																		aria-label={file.deleteAriaLabel}>
+																	</lightning-button-icon>
+	
+																</span>
+															</div>
+														</div>
+	
+													</template>
+													<div if:true={data.documentRecord.ContentDocumentLinks}>
+														<template if:true={data.documentRecord.ContentDocumentLinks}
+															for:each={data.documentRecord.ContentDocumentLinks.records}
+															for:item="cv">
+															<div key={cv.Id} class=""
+																style="max-width: 200px; white-space:normal;word-break: break-all;">
+																{cv.ContentDocument.Title}.{cv.ContentDocument.FileExtension}
+															</div>
+	
+															<div key={cv.Id}
+																class="slds-col slds-size_4-of-12 slds-text-align_left ">
+																<span class="slds-m-right_small download-icon">
+																	<lightning-button-icon size="small"
+																		icon-name="utility:download"
+																		onclick={handleDownload}
+																		data-ext={cv.ContentDocument.FileExtension}
+																		data-filename={cv.Title}
+																		data-contentid={cv.ContentDocument.Id} tabindex="0"
+																		title={cv.ContentDocument.Title}
+																		onkeydown={handleKeyDown}
+																		aria-label={cv.downloadAriaLabel}
+																		data-parentrecid={data.documentRecord.Id}>
+																	</lightning-button-icon>
+																</span>
+	
+																<span class="remove-icon">
+																	<lightning-button-icon size="small"
+																		icon-name="utility:delete" title="Delete"
+																		data-recid={data.documentRecord.Id}
+																		data-flow="parent" onclick={handleDelFile}
+																		aria-label={data.deleteAriaLabel}>
+																	</lightning-button-icon>
+	
+																</span>
+	
+															</div>
+	
+														</template>
+													</div>
+	
+	
+												</div>
+											</td>
+											<td data-label="Action" if:false={data.hideUpload}>
+												<lightning-button variant="bare" label="Upload" title="Upload"
+													icon-name="utility:upload" class="btnUploadFocus"
+													aria-label={data.documentRecord.Document_Name__c} onclick={doFileUpload}
+													data-docid={data.documentRecord.Id}
+													data-docname={data.documentRecord.Document_Name__c}>
+	
+												</lightning-button>
+											</td>
+										</template>
+									</tr>
+								</template>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</template>
+		</template>
+		<template if:true={isRevirwPage}>
+			<template if:true={isFlowDocumentsPresent}>
+				<div class="section-header table-container">
+					<table class="slds-m-top_medium slds-table slds-table_bordered slds-no-row-hover document-upload_table alpha-table-layout">
+						<caption class="sr-only">Documents Table</caption>
+						<thead>
+							<tr>
+								<th scope="col" class="slds-is-resizable cl_one" style="width:50%;">Document Name</th>
+								<th scope="col" class="slds-is-resizable cl_two" style="width:40%;">File</th>
+								<th scope="col" class="slds-is-resizable cl_three" style="width:10%;"></th>
+
+							</tr>
+						</thead>
+						<tbody>
+							<template for:each={flowDocumentsList} for:item="data" for:index="idx">
+								<tr key={data.documentRecord.Id}>
+									<template if:true={data}>
+										<td data-label="Document Name">
+											<div class="slds-cell-wrap docNameReview">
+												<div class="docNameReview">
+													{data.documentRecord.Document_Name__c}
+													<template if:true={data.documentRecord.Is_Document_Required__c}>
+														<!-- <div if:false={data.documentRecord.isExamModification}
+															class="approval-text">>** Required for
+															License Approval</div> -->
+														<div if:false={data.documentRecord.isExamModification}>
+															<div
+																if:false={data.documentRecord.isAPEPLSPLAReinstatement}>
+																<!--Added By Sanidhya for issue I-255133
+                                                                         Start Here-->
+																<template if:true={data.documentRecord.isRegType}>
+																	<div if:false={data.documentRecord.isRequiredType}
+																		class="approval-text">**
+																		Required
+																		for
+																		Registration Approval</div>
+																</template>
+																<template if:false={data.documentRecord.isRegType}>
+																	<div if:false={data.documentRecord.isRequiredType}
+																		class="approval-text">**
+																		Required
+																		for
+																		License Approval</div>
+																</template>
+																<!--End here -->
+															</div>
+															<div if:true={data.documentRecord.isRequiredType}
+																class="approval-text">** Required
+																for
+																{data.documentRecord.Type__c} Approval</div>
+															<div if:true={data.documentRecord.isAPEPLSPLAReinstatement}
+																class="approval-text">** Required
+																for
+																{APEPLSPLAReinstatementLabel} Approval</div>
+														</div>
+														<div if:true={data.documentRecord.isExamModification}
+														class="approval-text">** Required for
+															Exam Modifications Approval</div>
+													</template>
+												</div>
+											</div>
+										</td>
+										<td role="gridcell" class="table_gridcell cl_two" data-label="File">
+											<div class="slds-grid slds-grid_vertical file-name">
+												<template for:each={data.files} for:item="file">
+													<div key={file.uniqueId}>
+														<div class="slds-grid slds-p-top_x-small">
+															{file.fileName}
+														</div>
+													</div>
+												</template>
+												<div if:true={data.documentRecord.ContentDocumentLinks}>
+													<template if:true={data.documentRecord.ContentDocumentLinks}
+														for:each={data.documentRecord.ContentDocumentLinks.records}
+														for:item="cv">
+														<div class="slds-grid slds-p-top_x-small" key={cv.Id}>
+															{cv.ContentDocument.Title}.{cv.ContentDocument.FileExtension}
+														</div>
+													</template>
+												</div>
+											</div>
+										</td>
+										<td role="gridcell" class="table_gridcell cl_three">
+											<div class="slds-grid slds-grid_vertical file-name">
+												<template for:each={data.files} for:item="file">
+													<div key={file.uniqueId}>
+														<div class="slds-grid slds-p-top_x-small">
+
+															<lightning-button-icon size="small"
+																icon-name="utility:download"
+																data-parentrecid={file.parentRecId} tabindex="0"
+																onclick={handleDownload}
+																aria-label={file.downloadAriaLabel}>
+															</lightning-button-icon>
+														</div>
+													</div>
+												</template>
+											</div>
+											<div if:true={data.documentRecord.ContentDocumentLinks}>
+												<template if:true={data.documentRecord.ContentDocumentLinks}
+													for:each={data.documentRecord.ContentDocumentLinks.records}
+													for:item="cv">
+													<div class="slds-grid slds-p-top_x-small" key={cv.Id}>
+
+														<lightning-button-icon size="small" icon-name="utility:download"
+															onclick={handleDownload}
+															data-ext={cv.ContentDocument.FileExtension}
+															data-filename={cv.Title}
+															data-contentid={cv.ContentDocument.Id} tabindex="0"
+															title={cv.ContentDocument.Title} onkeydown={handleKeyDown}
+															aria-label={cv.downloadAriaLabel}
+															data-parentrecid={data.documentRecord.Id}>
+														</lightning-button-icon>
+
+													</div>
+												</template>
+											</div>
+										</td>
+									</template>
+								</tr>
+							</template>
+						</tbody>
+					</table>
+				</div>
+			</template>
+			<template if:true={islawfulDocumentsPresent}>
+				<h2 class="bold-24 m-b-xs">Lawful Presence Documentation</h2>
+				<div class="section-header table-container">
+					<table class="slds-m-top_medium slds-table slds-table_bordered slds-no-row-hover document-upload_table alpha-table-layout">
+						<caption class="sr-only">Documents Table for Lawful Presence Documentation</caption>
+						<thead>
+							<tr>
+								<th scope="col" class="slds-is-resizable cl_one" style="width:50%;">Document Name</th>
+								<th scope="col" class="slds-is-resizable cl_two" style="width:40%;">File</th>
+								<th scope="col" class="slds-is-resizable cl_three" style="width:10%;"></th>
+							</tr>
+						</thead>
+						<tbody>
+							<template for:each={lawfulPresenceDocumentsList} for:item="data" for:index="idx">
+								<tr key={data.documentRecord.Id}>
+									<template if:true={data}>
+										<td data-label="Document Name">
+											<div class="slds-cell-wrap docNameReview">
+												<div class="docNameReview">
+													{data.documentRecord.Document_Name__c}
+													<!--Added By Sanidhya for issue I-255133
+                                                                     Start Here-->
+													<template if:true={data.documentRecord.isRegType}>
+														<div if:true={data.documentRecord.Is_Document_Required__c}
+														class="approval-text">** Required for
+															Registration Approval</div>
+													</template>
+													<template if:false={data.documentRecord.isRegType}>
+														<div if:true={data.documentRecord.Is_Document_Required__c}
+														class="approval-text">** Required for
+															License Approval</div>
+														<!--End Here-->
+													</template>
+												</div>
+											</div>
+										</td>
+										<td role="gridcell" class="table_gridcell cl_two" data-label="File">
+											<div class="slds-grid slds-grid_vertical file-name">
+												<template for:each={data.files} for:item="file">
+													<div key={file.uniqueId}>
+														<div class="slds-grid slds-p-top_x-small">
+															{file.fileName}
+														</div>
+													</div>
+												</template>
+												<div if:true={data.documentRecord.ContentDocumentLinks}>
+													<template if:true={data.documentRecord.ContentDocumentLinks}
+														for:each={data.documentRecord.ContentDocumentLinks.records}
+														for:item="cv">
+														<div class="slds-grid slds-p-top_x-small" key={cv.Id}>
+
+															{cv.ContentDocument.Title}.{cv.ContentDocument.FileExtension}
+
+														</div>
+													</template>
+												</div>
+											</div>
+										</td>
+										<td role="gridcell" class="table_gridcell cl_three">
+											<div class="slds-grid slds-grid_vertical file-name">
+												<template for:each={data.files} for:item="file">
+													<div key={file.uniqueId}>
+														<div class="slds-grid slds-p-top_x-small">
+
+															<lightning-button-icon size="small"
+																icon-name="utility:download"
+																data-parentrecid={file.parentRecId} tabindex="0"
+																onclick={handleDownload}
+																aria-label={file.downloadAriaLabel}>
+															</lightning-button-icon>
+														</div>
+													</div>
+												</template>
+											</div>
+											<div if:true={data.documentRecord.ContentDocumentLinks}>
+												<template if:true={data.documentRecord.ContentDocumentLinks}
+													for:each={data.documentRecord.ContentDocumentLinks.records}
+													for:item="cv">
+													<div class="slds-grid slds-p-top_x-small" key={cv.Id}>
+
+														<lightning-button-icon size="small" icon-name="utility:download"
+															onclick={handleDownload}
+															data-ext={cv.ContentDocument.FileExtension}
+															data-filename={cv.Title}
+															data-contentid={cv.ContentDocument.Id} tabindex="0"
+															title={cv.ContentDocument.Title} onkeydown={handleKeyDown}
+															aria-label={cv.downloadAriaLabel}
+															data-parentrecid={data.documentRecord.Id}>
+														</lightning-button-icon>
+
+													</div>
+												</template>
+											</div>
+										</td>
+									</template>
+								</tr>
+							</template>
+						</tbody>
+					</table>
+				</div>
+			</template>
+		</template>
+		<!--Added By GJ -- Ends Here-->
+
+
+	</div>
+	<template if:true={isShowModal}>
+		<template if:true={addDocId}>
+			<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+				aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open" onkeydown={handleEscAddModal}>
+				<div class="slds-modal__container">
+					<header class="slds-modal__header">
+						<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+							title="Close" onclick={hideModalBox}>
+							<lightning-icon icon-name="utility:close" variant="inverse"
+								size="small"></lightning-icon>
+							<span class="slds-assistive-text">Close Add Other Documents</span>
+						</button>
+						<h1 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Add Other Documents
+						</h1>
+					</header>
+					<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+						<p class="asterisk-caption m-b-medium">Asterisk (<span class="c-red">*</span>) indicates required field</p>
+						<div class="slds-grid slds-wrap">
+							<div class="slds-col slds-size_1-of-1 m-b-medium">
+								<lightning-input type="text" label="Document Name" required value={newDocumentName}
+									max-length="255" pattern="^((?!(<\s*|\s*>)).)*$" class="new-doc"
+									message-when-pattern-mismatch="Invalid input. This field only accepts letters and numbers. Special characters are not allowed."
+									message-when-value-missing="Error: Document Name is required."
+									onchange={handleNewDocumentNameChange}></lightning-input>
+							</div>
+							<div class="slds-col slds-size_1-of-1 m-b-medium">
+								<lightning-textarea label="Description" value={newDocumentDescription}
+									onchange={handleNewDocumentDescChange} maxlength="500"
+									message-when-too-long="A maximum of 500 characters are allowed.">
+								</lightning-textarea>
+							</div>
+							<div class="slds-col slds-size_1-of-1 m-b-medium">
+								<span if:false={isfileUploaded}>
+									<lightning-file-upload class="setUploadBtnFocus" if:true={addDocId} name="fileUploader"
+										accept={acceptedFormats} record-id={addDocId}
+										onuploadfinished={handleUploadFinishedTest}>
+									</lightning-file-upload>
+								</span>
+								<span if:true={isfileUploaded}>
+									{newfilename}
+									<lightning-button-icon size="small" style='margin-left:10px'
+										class="slds-float_right" icon-name="utility:download"
+										data-parentrecid={addDocId} onclick={handleDownload} >
+									</lightning-button-icon>
+									<lightning-button-icon size="small" style='margin-left:10px'
+										class="red-icon slds-float_right" icon-name="utility:delete" data-flow="child"
+										data-parentrecid={addDocId} onclick={handleDelFile} aria-label="delete">
+									</lightning-button-icon>
+								</span>
+							</div>
+						</div>
+					</div>
+					<footer class="slds-modal__footer">
+						<button class="slds-button slds-button_neutral" onclick={hideModalBox}>Cancel</button>
+						<button class="slds-button slds-button_brand" onclick={handleSaveNewDocument}
+							disabled={isFromValid}>Save</button>
+					</footer>
+				</div>
+			</section>
+			<div class="slds-backdrop slds-backdrop_open"></div>
+		</template>
+	</template>
+	<!-- modal end -->
+	<!-- GJ modal start -->
+	<template if:true={isShowUploadModal}>
+		<template if:true={isAppDocId}>
+			<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-02" aria-modal="true"
+				aria-describedby="modal-content-id-1" class="dfs-modal slds-modal slds-fade-in-open" onkeydown={handleEscCloseModal}>
+				<div class="slds-modal__container">
+					<!-- modal header start -->
+					<div class="slds-modal__header">
+						<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+						title="Close" onclick={hideUploadModalBox}>
+						<lightning-icon icon-name="utility:close" variant="inverse"
+							size="small"></lightning-icon>
+							<span class="slds-assistive-text">Close {documentName}</span>
+						</button>
+						<h1 id="modal-heading-02" class="slds-modal__title slds-hyphenate slds-m-around--none docName">
+							{documentName}</h1>
+					</div>
+					<!-- modal body start -->
+					<div class="slds-modal__content" id="modal-content-id-2">
+						<div if:true={otherDocument}>
+							<span if:true={isChildDoc}>
+								<lightning-file-upload if:true={newAppDocId} name="fileUploader"
+									accept={acceptedFormats} record-id={newAppDocId}
+									onuploadfinished={handleUploadFinishedTest}>
+								</lightning-file-upload>
+							</span>
+							<span if:false={isChildDoc}>
+								<lightning-file-upload if:false={isChildDoc} name="fileUploader"
+									accept={acceptedFormats} record-id={documentIdForFileUpload}
+									onuploadfinished={handleUploadFinishedTest}>
+								</lightning-file-upload>
+							</span>
+						</div>
+						<div if:true={isOneByOnePhoto}>
+							<p>Upload a JPG/JPEG file</p>
+							<span if:true={isChildDoc}>
+								<lightning-file-upload if:true={newAppDocId} name="fileUploader"
+									accept={acceptedOneByOneFormats} record-id={newAppDocId}
+									onuploadfinished={handleUploadFinishedTest}>
+								</lightning-file-upload>
+							</span>
+							<span if:false={isChildDoc}>
+								<lightning-file-upload if:false={isChildDoc} name="fileUploader"
+									accept={acceptedOneByOneFormats} record-id={documentIdForFileUpload}
+									onuploadfinished={handleUploadFinishedTest}>
+								</lightning-file-upload>
+							</span>
+						</div>
+						<div if:true={isfirstDoc}>
+							<div if:true={isTwoByTwoPhoto}>
+								<p>Upload a JPG/JPEG/PNG file</p>
+								<p class="m-b-small regular-text-14 text-secondary">Photo must not contain pictures where hats, caps or other head covers are worn. No dark
+									glasses can be worn on the photo.</p>
+								<lightning-input if:true={isTwoByTwoPhoto} name="file" onchange={uploadFileDoc}
+									type="file" class="document-class custom-upload-button__small"
+									aria-label="Upload Document New" data-recordid={documentIdForFileUpload}>
+								</lightning-input>
+							</div>
+						</div>
+						<div if:false={isfirstDoc}>
+							<div if:true={isTwoByTwoPhoto}>
+								<p>Upload a JPG/JPEG/PNG file</p>
+							
+								{twoByTwoWarning}
+								<lightning-input if:true={isTwoByTwoPhoto} name="file" onchange={uploadFileDoc}
+									type="file" class="document-class custom-upload-button__small"
+									aria-label="Upload Document New" data-recordid={documentIdForFileUpload}>
+								</lightning-input>
+							</div>
+						</div>
+					</div>
+					<!-- modal footer start-->
+					<footer class="slds-modal__footer slds-grid_align-center">
+						<button class="slds-button slds-button_neutral" onclick={hideUploadModalBox}>Cancel</button>
+					</footer>
+				</div>
+			</section>
+			<div class="slds-backdrop slds-backdrop_open"></div>
+		</template>
+	</template>
+	<!-- modal end -->
+	<template if:true={isShowDeleteModal}>
+		<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-03" aria-modal="true"
+			aria-describedby="modal-content-id-3" class="dfs-modal slds-modal slds-fade-in-open" onkeydown={handleESCcancel}>
+			<div class="slds-modal slds-fade-in-open slds-backdrop">
+				<div class="slds-modal__container">
+					<header class="slds-modal__header ">
+						<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+						title="Close" onclick={hideUploadModalBox}>
+						<lightning-icon icon-name="utility:close" variant="inverse"
+							size="small"></lightning-icon>
+							<span class="slds-assistive-text">Close Delete Document</span>
+						</button>
+						<h1 class="slds-grid_align-center slds-modal__title slds-hyphenatex"> Delete </h1>
+					</header>
+					<div class="slds-modal__content" id="modal-content-id-3">
+						Are you sure you want to delete this file?
+					</div>
+					<footer class="slds-modal__footer slds-grid_align-center">
+						<button class="slds-button slds-button_neutral" onclick={handlecancel}>Cancel</button>
+						<button class="slds-button slds-button_brand" onclick={handleFileDelete}>Proceed</button>
+					</footer>
+				</div>
+			</div>
+		</section>
+	</template>
+
+	<template if:false={isRevirwPage}>
+		<!-- <div class="additional-doc-border m-t-xl slds-grid slds-grid--vertical-stretch">
+			<div class="slds-col slds-size--9-of-12">
+				<h3 class="bold-24 m-b-xs">Additional Document</h3>
+				<p class="semiBold-16 text-secondary" aria-label={additionalUploadDocTxt}>{additionalUploadDocTxt}</p>
+			</div>
+			<div class="justify-end slds-col slds-grid slds-size--3-of-12">
+				<lightning-button label="+ Add Documents" variant="neutral" title="Add Documents" class="btnAddDocFocus"
+					onclick={addNewDoc}>
+				</lightning-button>
+			</div>
+		</div> -->
+		<div class="additional-doc-border m-t-xl slds-grid slds-wrap">
+			<div class="slds-col slds-size_9-of-12">
+				<h3 class="bold-24 m-b-xs">Additional Document</h3>
+				<p class="semiBold-16 text-secondary" aria-label={additionalUploadDocTxt}>{additionalUploadDocTxt}</p>
+			</div>
+			<div class="slds-col slds-size_3-of-12 slds-text-align_right">
+				<lightning-button 
+					label="+ Add Documents" 
+					variant="neutral" 
+					title="Add Documents" 
+					class="btnAddDocFocus"
+					onclick={addNewDoc}>
+				</lightning-button>
+			</div>
+		</div>
+	</template>
+</template>

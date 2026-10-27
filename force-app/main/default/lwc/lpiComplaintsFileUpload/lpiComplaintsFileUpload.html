@@ -1,0 +1,101 @@
+<!--
+  @description       : 
+  @author            : Vamsi Mudaliar
+  @group             : 
+  @last modified on  : 07-09-2024
+  @last modified by  : Mounika Dasari
+-->
+<template>
+
+    <div if:true={showSpinner}>
+        <lightning-spinner 
+            class="spins" 
+            size="medium" 
+            alternative-text="Loading..."
+            data-text={spinnerText}></lightning-spinner>
+    </div>
+
+    <template if:true={showUploadSection}>
+        <div class="slds-p-bottom_medium slds-m-top_large slds-box">
+            <h3 class="section-heading slds-m-bottom_x-small">Document Uploads</h3>
+
+            <lightning-combobox label="Choose a Respondent, against whom you would like to upload Documents" options={_licensedRespondentOptions}
+            name="licensedRespondent" class="respondentWitness" placeholder="Choose Respondent Name - Agency Name" onchange={handleRespondentSelect}>
+            </lightning-combobox>
+
+            <ul class="slds-has-dividers_bottom-space file-upload-instrucions">
+                <li class="slds-item"> <i>{fileFormatDescMsg}</i></li>
+                <li class="slds-item"><i>{fileLimitDescMsg}</i></li>
+            </ul>
+            <template if:false={maxFileLimitReached}>
+                <template if:true={selectedRespondentName}>
+                    <h3 class="section-heading slds-m-bottom_x-small slds-m-top_medium">Attach Documents</h3>
+                    <p class="m-b-medium">Include copies of documents, letters, or other exhibits supporting the complaint.
+                    </p>
+                    <div class="complaint-document">
+                        <lightning-button 
+                        label="Upload File(s) against Selected Respondent" 
+                        variant="brand-outline" 
+                         class="complaintFileFocus"
+                        aria-label="Upload File(s) against Selected Respondent"
+                        onclick={handleShowUploadModal}></lightning-button>
+                    </div>
+                </template>
+            </template>
+            <template if:true={maxFileLimitReached}>
+                <lightning-icon icon-name="utility:info" alternative-text="Info Icon" size="small" class="help-icon"></lightning-icon>
+                <span> Max File Upload Limit Reached for this Respondent. </span> 
+            </template>
+
+        </div>
+
+        <template if:true={displayModal}>
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open" onkeydown={escCloseModal}>
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"  
+                            aria-label="Close Upload Files" onclick={handleClose}>
+                            <lightning-icon icon-name="utility:close" variant="inverse" size="small">
+                            </lightning-icon>
+                        </button>
+                        <h1 id="modal-heading-01" class="section-heading slds-m-bottom_x-small">
+                            Upload Files</h1>
+                    </header>
+                    <div if:false={isPortalUser} class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                          <!-- APP DOC ID 1234>> {currentAppDocId} -->
+                        <lightning-file-upload
+                            if:true={currentAppDocId}
+                            label="Choose File"
+                            name="fileUploader"
+                            accept={acceptedFormats}
+                            file-field-name="Guest_Record_fileupload__c"
+                            file-field-value={currentAppDocId}
+                            onuploadfinished={openfileUploadNew}
+                            >
+                        </lightning-file-upload>
+                    </div>
+                    <div if:true={isPortalUser} class="slds-modal__content slds-p-around_medium" id="modal-content-id-4">
+                        <!-- APP DOC ID >> {currentAppDocId} -->
+
+                        <lightning-file-upload
+                        if:true={currentAppDocId}
+                        label="Choose File"
+                        name="fileUploader"
+                        accept={acceptedFormats}
+                        record-id={currentAppDocId}
+                        onuploadfinished={openfileUploadNew}
+                        >
+                        </lightning-file-upload>
+                    </div>
+
+                    <footer class="slds-modal__footer">
+                        <lightning-button variant="outline" class="slds-float_left" label="Cancel" title="Cancel" onclick={handleClose}>
+                        </lightning-button>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
+    </template>
+</template>

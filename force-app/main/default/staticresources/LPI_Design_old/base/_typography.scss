@@ -1,0 +1,261 @@
+// h1,
+// h2,
+// h3,
+// h4,
+// h5,
+// h6 {
+//     color: $text-primary;
+//     font-family: $font-family !important;
+// }
+// .text-brand{
+//     color: $primary-main !important;
+// }
+// .text-primary{
+//     color: $text-primary !important;
+// }
+// .text-secondary{
+//     color: $text-secondary !important;
+// }
+// .text-error{
+//     color: $error-main !important;
+// }
+// .text-bold,
+// .text-title{
+//     font-weight: $font-weight-bold;
+// }
+// .list-text {
+//     list-style: disc;
+//     padding-left: toRem(32);
+// }
+// p {
+//     font-size: $small;
+//     font-weight: $font-weight-regular;
+//     line-height: 150%;
+// }
+// .bold-32{
+//     font-size: toRem(32);
+//     font-weight: $font-weight-bold;
+// }
+// .bold-24{
+//     font-size: toRem(24) !important;
+//     font-weight: $font-weight-bold;
+// }
+// .bold-20{
+//     font-size: toRem(20) !important;
+//     font-weight: $font-weight-bold;
+// }
+// .bold-18{
+//     font-size: toRem(18) !important;
+//     font-weight: $font-weight-bold;
+// }
+// .bold-16{
+//     font-size: $small;
+//     font-weight: $font-weight-bold;
+// }
+// .bold-14{
+//     font-weight: $font-weight-bold;
+//     font-size: toRem(14);
+// }
+// .semiBold-16{
+//     font-weight: $font-weight-semi-bold;
+//     font-size: $small;
+// }
+// .semiBold-14{
+//     font-weight: $font-weight-semi-bold;
+//     font-size: toRem(14);
+// }
+// .p-medium-16{
+//     font-weight: $font-weight-medium;
+//     font-size: $small;
+// }
+// .regular-text-14{
+//     font-weight: $font-weight-regular;
+//     font-size: toRem(14);
+// }
+// .regular-text-12{
+//     font-weight: $font-weight-regular;
+//     font-size: toRem(12);
+// }
+// .regular-text-11{
+//     font-weight: $font-weight-regular;
+//     font-size: toRem(11);
+// }
+// .semiBold-12{
+//     font-weight: $font-weight-semi-bold;
+//     font-size: toRem(12);
+// }
+// .regular-text-8{
+//     font-weight: $font-weight-regular;
+//     font-size: $x-small;
+// }
+// .regular-text-20{
+//     font-weight: $font-weight-regular;
+//     font-size: toRem(20);
+// }
+
+// .text-wrap-line-2{
+//     width:100%;
+//     overflow: hidden;
+//     display: -webkit-box;
+//     -webkit-line-clamp: 2;
+//     -webkit-box-orient: vertical;
+// }
+
+// h3 {
+//     font-size: 1rem;
+//     font-weight: 600;
+//     line-height: 1.375rem;
+// }
+
+// .page-heading,
+// .page-heading .slds-rich-text-editor__output h1 {
+//     font-weight: $font-weight-bold;
+//     font-size:$font-size-20 !important; //20px
+//     color: $text-primary;
+// }
+
+// .sub-heading {
+//     font-size:$font-size-18; //18px
+//     font-weight: $font-weight-semi-bold;
+//     color: $primary-main;
+//     font-family: $font-family !important;
+// }
+
+// .heading {
+//     font-size: $font-size-16; //16px
+//     font-weight: $font-weight-semi-bold;
+//     color: $text-primary;
+//     font-family: $font-family !important;
+// }
+
+// .heading-small {
+//     font-size: $font-size-15; //15px
+//     font-weight: $font-weight-semi-bold;
+//     color: $text-primary;
+//     font-family: $font-family !important;
+// }
+
+// .paragraph {
+//     font-size: $font-size-14; //14px
+//     font-weight: $font-weight-regular;
+//     color: $text-secondary;
+//     padding-bottom: 1rem;
+// }
+
+// .text-small {
+//     font-size: $font-size-13; //13px
+//     color: $text-secondary;
+//     font-weight: $font-weight-regular;
+// }
+
+// .form-blue-heading {
+//     font-size:$font-size-18;
+//     font-weight: $font-weight-semi-bold;
+//     color: $primary-main;
+//     font-family: $font-family !important;
+// }
+
+// .dashboard-heading {
+//     padding: 1rem 0;
+
+//     h1 {
+//         font-weight: 700;
+//         font-size: 1.25rem !important;
+//         color: $text-primary;
+//     }
+// }
+
+// /* Alpha Design */
+// .payment-heading {
+//     font-size: $font-size-11;
+//     font-weight: $font-weight-semi-bold;
+//     line-height: toRem(54);
+//     letter-spacing: 0.005em;
+// }
+// .help-text {
+//     font-size: $font-size-14;
+//     font-weight: $font-weight-regular;
+//     color: $text-secondary;
+// }
+
+// .payment-heading-2 {
+//     font-size: $font-size-16;
+//     font-weight: $font-weight-semi-bold;
+//     line-height: toRem(22);
+// }
+
+// .blue-text{
+//     color: $primary-main;
+// }
+// .light-blue-text{
+//     color: $primary-main;
+//     font-size: $font-size-14;
+//     font-weight: $font-weight-regular;
+// }
+// .search-text{
+//     font-size: $font-size-14;
+//     font-weight: $font-weight-semi-bold;
+// }
+// .white-text{
+//     color: $white;
+// }
+// .text-align-center{
+//     text-align: center;
+// }
+// .custom-index{
+//     z-index: 1;
+// }
+
+// .custom-lable-hidden{
+//     label.slds-form-element__label.slds-show_inline ,label.slds-form-element__label.slds-show--inline {
+//         display: none;
+//     }
+// }
+
+// .heading-wrap {
+//     .slds-grid {
+//         .slds-grid {
+//             align-items: center;
+//         }
+//     }
+//     &_title {
+//         span {
+//             display: flex;
+//             flex-wrap: wrap;
+//             column-gap: 1rem;
+//             align-items: center;
+//             h1,h2,h3,h4,h5,h6 {
+//                 margin-bottom: 0;
+//                 & ~ div {
+//                     font-size: $font-size-12;
+//                     border-radius: $border-radius-medium;
+//                     padding: 0.125rem 0.25rem;
+//                     background-color: $blue-lyt;
+//                     color: $primary-main;
+//                     font-weight: $font-weight-semi-bold;
+//                 }
+//             }
+//         }
+//     }
+// }
+// .sub-head {
+//     &_wrap {
+//         span {
+//             display: flex;
+//             column-gap: 0.5rem;
+//             align-items: flex-end;
+//             > div:last-child {
+//                 font-weight: $font-weight-regular;
+//                 font-size: 0.875rem;
+//                 color: $text-secondary;
+//             }
+//         }
+//     }
+// }
+
+// .font-14{
+//     font-size: 0.875rem; //14px
+// }
+// .font-16{
+//     font-size: 1rem; //16px
+// }

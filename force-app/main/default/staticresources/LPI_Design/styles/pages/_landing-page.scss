@@ -1,0 +1,552 @@
+// landing.scss starts
+.Main-landing-page {
+    height: 100vh;
+}
+.search-page-container {
+    background-image: url("../LPI_Design_old/images/search_container_bg.jpg"); 
+    background-size: cover;
+    border-radius: $border-radius-medium;
+    height: 28.75rem;
+}
+
+
+.search-heading {
+    font-size: $font-size-10;
+    color: $white;
+    padding-top: 6rem;
+
+    &-secondary {
+        font-size: $font-size-14;
+        font-weight: $font-weight-regular;
+        color: $white;
+        margin-bottom: 3rem;
+    }
+}
+
+// for vlocity category list
+.icon-position {
+    .block-header {
+        .blockLabel {
+            font-weight: $font-weight-bold;
+        }
+        .blockLabel.label-color-onexpand {
+            color: $text-primary;
+            font-weight: $font-weight-semi-bold;
+        }
+        .heading{
+            font-size:$font-size-18;
+        }
+    }
+    button {
+        width: 100%;
+        .slds-icon.slds-icon_x-small {
+            position: absolute;
+            right: 0.4rem;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        .slds-m-right_small {
+            margin: 0;
+        }
+    }
+}
+.Category-list {
+    .slds-col.slds-size_12-of-12 {
+
+
+        .slds-action_item{
+            color: $black !important;
+            font-weight: 600;
+            padding: 0.8rem 0;
+            border-bottom: 0.063rem solid $other-divider;
+            display: block;
+        }
+    }
+}
+.custom-search {
+    border: toRem(1px) solid $text-secondary;
+    border-radius: $border-radius-medium;
+    padding: 0 0.5rem;
+    margin-bottom: 1rem;
+    .slds-input {
+        border: 0;
+        padding: 0;
+        border-radius: 0;
+    }
+}
+
+// For landing Second page
+c-cf-landing-apply {
+    .slds-grid.slds-wrap.slds-p-around_x-small.slds-m-bottom_x-small {
+        padding: 0;
+    }
+}
+
+.Landing-Apply-container, .info-banner {
+    overflow: hidden;
+    padding: 2rem 3rem;
+    position: relative;
+    background-size: cover;
+    background: url("../LPI_Design_old/images/LandingBanner.png") no-repeat center/cover;
+    .slds-grid .slds-grid {
+        align-items: center;
+    }
+
+    &::before {
+        content: "";
+        height: 75%;
+        width: toRem(1);
+        left: 70%;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: rgba(255, 255, 255, 0.4);
+        position: absolute;
+        z-index: 1;
+    }
+}
+.Landing-Apply-container {
+  
+    .average-section {
+        padding-left: 2rem;
+        color: $white;
+        z-index: 0;
+        .average-heading {
+            font-size: $font-size-14;
+            font-weight: $font-weight-semi-bold;
+        }
+        .days-heading {
+            font-size: $font-size-24;
+            font-weight: $font-weight-bold;
+        }
+    }
+}
+.info-banner {
+    border-radius: $border-radius-medium;
+    &::after {
+        background-color: rgba(11, 81, 183, 0.9);
+    }
+    &_right {
+        padding-left: 2rem;
+    }
+    &_head {
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: $font-weight-bold;
+            letter-spacing: 0.063rem;
+            color: $white;
+        }
+        h1 {
+            margin-bottom: 0.3rem;
+            font-size: $font-size-10;
+        }
+    }
+    &_title, &_text {
+        color: $white;
+    }
+    &_title {
+        font-size:$font-size-18;
+        font-weight: $font-weight-semi-bold;
+    }
+    &_text {
+        font-size: $font-size-14;
+        font-weight: $font-weight-medium;
+    }
+}
+
+@media all and (max-width: 48rem){
+    /*--- Landing page Start---*/
+    .search-heading {
+        padding: 1rem 0 !important;
+        color: $white !important;
+        text-align: left;
+        font-weight: $font-weight-regular;
+        font-size:$font-size-20 !important;
+        font-family: $font-family;
+    }
+    .search-page-container{
+        background-color: $white !important;
+        padding: 1rem !important;
+        .search-container {
+            padding: 1rem !important;
+            .bordered_radio {
+                width: 100% !important;
+                padding-right: 0 !important;
+                margin-bottom: 1rem;
+                .slds-radio {
+                    width: 100% !important;
+                    margin-right: 0 !important;
+                }
+            }
+        }
+    }
+    /*--- Landing page End---*/
+}
+// landing.scss ends
+.banner{
+    background: url('./../media/images/main_banner.jpg') no-repeat center/cover;
+    height: 500px;
+    display: flex;
+    align-items: center;
+    @include responsive(tab-land-start){
+        height: 100%;
+    }
+    .banner-content{
+        // background: $primary-main;
+        background: url('./../media/images/banner-background.svg') no-repeat center/cover ;
+        padding: $x-large;
+        box-shadow: $xx-small $xx-small 44px 0px #00000040;
+        border-radius: $xx-small;
+        margin-top: -12px;
+        @include responsive(tab-land-start){
+            margin: $large $small;
+        }
+        .banner-text-block{
+            color:$white;
+            padding-right: $spacing-large;
+            border-right: toRem(1) solid $white-divider-14-p;
+            h1{
+                color: $white;
+            }
+            @include responsive(tab-land-start){
+                border-bottom: 0.0625rem solid $white-divider-14-p;
+                border-right: 0;
+                padding: 0 0 2rem;
+                margin-bottom: 2rem;
+            }
+        }
+        .service-block{
+            padding-left: $spacing-large;
+            color: $white;
+            @include responsive(tab-land-start){
+                padding: 0;
+            }
+            h2{
+                color: $white;
+            }
+            a{
+                &:focus{
+                    @include focus-outline-white();
+                }
+            }
+            ul{
+                li{
+                    a{
+                        color: $white !important;
+                        margin-bottom: $small;
+                        display: inline-block;
+                        font-size: $font-size-18;
+                        font-weight: $font-weight-semi-bold;
+                        &:focus{
+                            @include focus-outline-white();
+                        }
+                        &.btn-search{
+                            &::before{
+                                content: '\ea0a';
+                                @extend .icon-main;
+                                margin-right: $spacing-medium;
+                            }
+                        }
+                        &.btn-payment{
+                            &::before{
+                                content: '\ea0f';
+                                @extend .icon-main;
+                                margin-right: $spacing-medium;
+                            }
+                        }
+                        &.btn-renew{
+                            &::before{
+                                content: '\ea0e';
+                                @extend .icon-main;
+                                margin-right: $spacing-medium;
+                            }
+                        }
+                        &.btn-file{
+                            &::before{
+                                content: '\ea0c';
+                                @extend .icon-main;
+                                margin-right: $spacing-medium;
+                            }
+                        }
+                        &.btn-amend{
+                            &::before{
+                                content: '\ea0d';
+                                @extend .icon-main;
+                                margin-right: $spacing-medium;
+                            }
+                        }
+                        &.btn-print{
+                            &::before{
+                                content: '\ea09';
+                                @extend .icon-main;
+                                margin-right: $spacing-medium;
+                            }
+                        }
+                        &.btn-license{
+                            &::before{
+                                content: '\ea21';
+                                @extend .icon-main;
+                                margin-right: $spacing-medium;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+.btn-orange{
+    .slds-button{
+        background: #CD740A;
+        border-color: #CD740A;
+        border: none;
+
+        &:hover{
+            background: #CD740A !important;
+            border-color: #CD740A !important;
+        }
+        &:focus{
+            @include focus-outline-white();
+        }
+    }
+}
+.blue-border-bottom{
+    border-bottom: toRem(1) solid $white-divider-14-p;
+}
+
+.recent-section{
+    padding: 3.25rem 0;
+    background: $white;
+    // margin: 0 5rem;
+    @include responsive(tab-land-start){
+        margin: $large;
+        padding: $large 0;
+    }
+    .recent-content{
+        @include responsive(tab-land-start){
+            img{
+                width: 100%;
+            }
+            margin-bottom: $large;
+        }
+        .slds-card{
+            min-height: toRem(255);
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: space-between;
+        }
+    }
+
+}
+
+.faq-section{
+  
+    padding: 3.25rem 0;
+    @include responsive(tab-land-start){
+        padding: 3rem $large;
+    }
+    .faq-content {
+        border: 1px solid $other-divider;
+        padding: $x-medium;
+        border-radius: $xx-small;
+        background: $white;
+        @include responsive(tab-land-start)
+        {
+            margin-bottom: $large;
+        }
+    }
+}
+
+.landing-register-btn{
+    .slds-button{
+        color: $dark;
+        margin: $xx-small;
+        padding: $xx-small $small !important;
+    }
+    ::before{
+        @extend .icon-main ;
+        content: "\ea0b";
+        margin-right: $x-small;
+    }
+}
+
+
+.landing-footer{
+    background:$landing-page-dark-blue;
+    padding: 4rem 0 2rem;
+    @include responsive(tab-land-start){
+        padding: 4rem 2rem;
+    }
+    h4{
+        color: $info-light;
+        letter-spacing: toRem(1);
+        font-weight: $font-weight-regular;
+    }
+    ul{
+        li{
+            a{
+                @extend .text-white, .m-b-small, .p-medium-16;
+                display: inline-block;
+                &:focus{
+                    @include focus-outline-white();
+                }
+            }
+        }
+    }
+    @include responsive(tab-land-start){
+        .slds-col{
+            margin-bottom: $large;
+        }
+    }
+    .backtotop{
+        .slds-button{
+            @extend .text-white;
+            font-weight: $font-weight-regular;
+            &:after{
+                transform: rotate(-90deg) !important;
+            }
+            &:focus{
+                @include focus-outline-white();
+            }
+        }
+    } 
+    .divider{
+        border-color: $landing-footer-border;
+    }
+    .social-media{
+        ul{
+            li{
+                display: inline-block;
+                a{
+                    background: #3C68E21F;
+                    height: $xx-large;
+                    width: $xx-large;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    border-radius: $xx-small;
+                    margin-right: $x-small;
+                }
+            }
+        }
+    }
+}
+.search-result{
+    @include responsive(tab-land-start){
+        margin: $large $small;
+    }
+}
+.search-banner-main{
+    @include responsive(tab-land-start){
+        margin: $large $small;
+    }
+    .search-banner{
+        background: url('./../media/images/banner-background.svg') no-repeat center/cover;
+        height: 225px;
+        padding: 0 4rem;
+        display: flex;
+        align-items: start;
+        flex-direction: column;
+        justify-content: center;
+        border-radius: $xx-small;
+        .border-right {
+            border-right: 1px solid $white-divider-14-p;
+        }
+    }
+}
+.search-results-list{
+    margin-top: $x-m-small;
+    li{
+        a{
+            padding: $x-small $small;
+            color: $landing-page-dark-blue !important;
+            font-weight: $font-weight-semi-bold;
+            display: block;
+            margin-bottom: $x-m-small;
+            &:hover,&.active{
+                background: $primary-main;
+                color: $white !important;
+                text-decoration: none !important;
+                border-radius: $xx-small;
+            }
+        }
+    }
+}
+
+.search-container {
+    margin: 0 auto;
+    background: $white;
+    width: 100%;
+    padding: $xx-small;
+    border-radius: $border-radius-medium;
+    box-shadow: toRem(0) toRem(2) toRem(6) rgba(0, 0, 0, 0.2);
+}
+.search-wrap {
+    // border: 0.0625rem solid $input-border;
+    position: relative;
+    // padding: 0.5rem;
+    border-radius: $border-radius-medium;
+    // box-shadow: $box-shadow;
+    background: $white;
+    // margin-top: 0.5rem;
+    padding: 0.3rem;
+    display: flex;
+    &::after {
+        content: "";
+        width: 0.0625rem;
+        height: 2rem;
+        background-color: $input-border;
+        position: absolute;
+        top: 50%;
+        //right: 26%;
+        right: 35%;
+        transform: translateY(-50%);
+    }
+    .slds-form-element {
+        flex: 0 0 65%;
+        .slds-input {
+            border: 0;
+        }
+    }
+    .landing-picklist {
+        flex: 0 0 33%;
+        .slds-combobox__input {
+            border: 0;
+        }
+    }
+    .sort-button,
+    .search-button{
+        .slds-icon {
+            cursor: pointer;
+        }
+    }
+    .clear-filter-button{
+        .slds-action_item {
+            margin-top: 0.6rem;
+            margin-right: 0.6rem;
+        }
+    }
+    &::after {
+		left: calc(100% - 26rem);
+	}
+    .slds-input{
+        padding-left: $large !important; 
+    }
+}
+.search-inputs{
+    width: 100%;
+    .slds-input{
+        padding-left: $large !important; 
+    }
+}
+
+.logo-landing-main{
+    width: 15%;
+    img{
+        width: 66%;
+    }
+}
+.forgot-page .brand-name {
+    width: 25%;
+}
+

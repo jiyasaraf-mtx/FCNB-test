@@ -1,0 +1,3 @@
+let styleDefinition =
+      {"state0element0block_element1block_element0":[{"conditions":"default","styleObject":{"class":"slds-col  condition-element warning-text slds-large-size_12-of-12  slds-medium-size_10-of-12  slds-small-size_12-of-12  slds-size_12-of-12  ","style":"      \n         ","styleProperties":{}}}],"state0element0block_element1block_element1":[{"conditions":"default","styleObject":{"class":"slds-col  condition-element warning-text slds-large-size_12-of-12  slds-medium-size_10-of-12  slds-small-size_12-of-12  slds-size_12-of-12  ","style":"      \n         ","styleProperties":{}}}]};
+  export default styleDefinition

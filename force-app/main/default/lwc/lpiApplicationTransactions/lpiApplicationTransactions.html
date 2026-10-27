@@ -1,0 +1,1061 @@
+<template>
+	<div class="lpi-tx slds-p-around_small">
+		<div class="lpi-tx-toolbar">
+			<div class="slds-button-group" role="group">
+				<button
+					type="button"
+					class="slds-button slds-button_brand"
+					onclick={openFeeModal}
+				>
+					Add Fee
+				</button>
+				<button
+					type="button"
+					class="slds-button slds-button_neutral"
+					disabled={payDisabled}
+					onclick={openPayModal}
+				>
+					Make Payment
+				</button>
+				<button
+					type="button"
+					class="slds-button slds-button_destructive"
+					disabled={voidDisabled}
+					onclick={handleOpenVoidFromToolbar}
+				>
+					Void Payment
+				</button>
+				<button
+					type="button"
+					class="slds-button slds-button_destructive"
+					disabled={refundDisabled}
+					onclick={openRefundModal}
+				>
+					Refund
+				</button>
+				<button
+					type="button"
+					class="slds-button slds-button_neutral"
+					onclick={resetAll}
+				>
+					Reset
+				</button>
+			</div>
+		</div>
+
+		<div class="lpi-tx-kpis">
+			<div class="lpi-tx-kpi">
+				<label>Status</label>
+				<p>{appStatus}</p>
+			</div>
+			<div class="lpi-tx-kpi">
+				<label>Total Fees</label>
+				<p class="amt">{kpiFees}</p>
+			</div>
+			<div class="lpi-tx-kpi">
+				<label>Balance Due</label>
+				<p class="amt">{kpiDue}</p>
+			</div>
+			<div class="lpi-tx-kpi">
+				<label>Credit</label>
+				<p class="amt">{kpiCredit}</p>
+			</div>
+		</div>
+
+		<div class="lpi-tx-panel">
+			<div class="slds-tabs_default">
+				<ul class="slds-tabs_default__nav lpi-tx-tabs-nav" role="tablist">
+					<li class={transactionTabClass} role="presentation">
+						<button
+							type="button"
+							class="slds-tabs_default__link"
+							role="tab"
+							data-tab="transaction"
+							onclick={handleTabClick}
+						>
+							Transaction
+						</button>
+					</li>
+					<li class={relatedTabClass} role="presentation">
+						<button
+							type="button"
+							class="slds-tabs_default__link"
+							role="tab"
+							data-tab="related"
+							onclick={handleTabClick}
+						>
+							Related
+						</button>
+					</li>
+				</ul>
+
+				<template if:true={isTransactionTab}>
+					<div class="slds-tabs_default__content slds-show" role="tabpanel">
+						<div class="lpi-tx-workspace">
+							<div class="lpi-tx-col-list">
+								<div class="lpi-tx-related-hd">
+									<h2>Transaction</h2>
+									<span>{listCountLabel}</span>
+								</div>
+								<table class="lpi-tx-table">
+									<thead>
+										<tr>
+											<th>Type</th>
+											<th>Name</th>
+											<th class="right">Amount</th>
+											<th>Status</th>
+											<th>Created Date</th>
+										</tr>
+									</thead>
+									<tbody>
+										<template for:each={displayRecords} for:item="row">
+											<tr
+												key={row.id}
+												class={row.rowClass}
+												data-id={row.id}
+												onclick={handleRowClick}
+											>
+												<td>{row.type}</td>
+												<td>
+													<template if:true={row.isInvoice}>
+														<a
+															href="#"
+															class="lpi-tx-doc-link"
+															data-id={row.id}
+															onclick={handleInvoiceLinkClick}
+														>
+															<span class="lpi-tx-doc-icon">PDF</span>
+															{row.displayName}
+														</a>
+													</template>
+													<template if:false={row.isInvoice}>
+														{row.displayName}
+													</template>
+												</td>
+												<td class="right amt">{row.amountDisplay}</td>
+												<td>
+													<span class={row.badgeClass}>{row.status}</span>
+												</td>
+												<td>{row.created}</td>
+											</tr>
+										</template>
+									</tbody>
+								</table>
+								<template if:false={hasRecords}>
+									<div class="lpi-tx-empty">
+										No records yet. Click <strong>Add Fee</strong> to create a
+										fee (and optional invoice document).
+									</div>
+								</template>
+							</div>
+							<div class="lpi-tx-col-detail">
+								<div class="lpi-tx-related-hd">
+									<h2>Record Detail</h2>
+								</div>
+								<div class="lpi-tx-detail-pane">
+									<template if:false={hasSelectedRecord}>
+										<div class="lpi-tx-empty">
+											Select a record from the list.
+										</div>
+									</template>
+									<template if:true={hasSelectedRecord}>
+										<span class={selectedBadgeClass}>{selectedBadgeLabel}</span>
+										<h3 class="slds-m-top_small">{selectedDisplayName}</h3>
+										<p class="sub">{selectedSubline}</p>
+										<div class="lpi-tx-form-element">
+											<div class="lpi-tx-form-element__label">Amount</div>
+											<div class="lpi-tx-form-element__control amt">
+												{selectedAmount}
+											</div>
+										</div>
+										<template
+											for:each={selectedFieldList}
+											for:item="field"
+										>
+											<div class="lpi-tx-form-element" key={field.label}>
+												<div class="lpi-tx-form-element__label">
+													{field.label}
+												</div>
+												<div class="lpi-tx-form-element__control">
+													{field.value}
+												</div>
+											</div>
+										</template>
+										<template if:true={selectedNotes}>
+											<div class="lpi-tx-form-element">
+												<div class="lpi-tx-form-element__label">Notes</div>
+												<div class="lpi-tx-form-element__control">
+													{selectedNotes}
+												</div>
+											</div>
+										</template>
+										<div class="lpi-tx-detail-actions">
+											<template if:true={showOpenInvoiceAction}>
+												<button
+													type="button"
+													class="slds-button slds-button_brand"
+													onclick={handleOpenInvoiceFromDetail}
+												>
+													Open Invoice Document
+												</button>
+											</template>
+											<template if:true={showVoidFromDetailAction}>
+												<button
+													type="button"
+													class="slds-button slds-button_destructive lpi-tx-btn-destructive-fill"
+													onclick={handleVoidFromDetail}
+												>
+													Void Payment
+												</button>
+											</template>
+											<template if:true={showApproveNsfAction}>
+												<button
+													type="button"
+													class="slds-button slds-button_brand"
+													onclick={handleApproveNsf}
+												>
+													Approve NSF Fee
+												</button>
+											</template>
+											<template if:true={showRefundFromDetailAction}>
+												<button
+													type="button"
+													class="slds-button slds-button_destructive lpi-tx-btn-destructive-fill"
+													onclick={handleRefundFromDetail}
+												>
+													Refund
+												</button>
+											</template>
+											<template if:true={showApproveRefundAction}>
+												<button
+													type="button"
+													class="slds-button slds-button_brand"
+													onclick={handleApproveRefund}
+												>
+													Approve Refund
+												</button>
+											</template>
+										</div>
+									</template>
+								</div>
+							</div>
+						</div>
+					</div>
+				</template>
+
+				<template if:true={isRelatedTab}>
+					<div class="slds-tabs_default__content slds-show" role="tabpanel">
+						<div class="lpi-tx-related-hd">
+							<h2>Audit History</h2>
+							<span>{auditCountLabel}</span>
+						</div>
+						<table class="lpi-tx-table">
+							<thead>
+								<tr>
+									<th>Date</th>
+									<th>Action</th>
+									<th>Record</th>
+									<th>Detail</th>
+									<th>User</th>
+								</tr>
+							</thead>
+							<tbody>
+								<template for:each={auditLog} for:item="entry">
+									<tr key={entry.id}>
+										<td>{entry.date}</td>
+										<td>{entry.action}</td>
+										<td>{entry.record}</td>
+										<td>{entry.detail}</td>
+										<td>{entry.user}</td>
+									</tr>
+								</template>
+							</tbody>
+						</table>
+						<template if:false={hasAudit}>
+							<div class="lpi-tx-empty">
+								No audit history yet. Fee, payment, void, refund, and approval
+								actions will appear here with date and time.
+							</div>
+						</template>
+					</div>
+				</template>
+			</div>
+		</div>
+
+		<!-- Add Fee Modal -->
+		<template if:true={showFeeModal}>
+			<section
+				role="dialog"
+				tabindex="-1"
+				aria-modal="true"
+				aria-labelledby="fee-modal-heading"
+				class="slds-modal slds-fade-in-open"
+			>
+				<div class="slds-modal__container" onclick={stopPropagation}>
+					<header class="slds-modal__header">
+						<button
+							class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+							title="Close"
+							onclick={closeFeeModal}
+						>
+							<span class="slds-assistive-text">Close</span>
+							&#215;
+						</button>
+						<h2 id="fee-modal-heading" class="slds-modal__title">Add Fee</h2>
+					</header>
+					<div class="slds-modal__content slds-p-around_medium">
+						<div class="lpi-tx-field">
+							<label for="feeSearch">Fee Name</label>
+							<input
+								id="feeSearch"
+								class="slds-input"
+								type="text"
+								placeholder="Search fee schedule…"
+								autocomplete="off"
+								value={feeSearch}
+								onfocus={handleFeeSearchFocus}
+								oninput={handleFeeSearchInput}
+							/>
+							<div class={feeLookupClass}>
+								<template if:true={hasFeeLookupMatches}>
+									<template for:each={feeLookupMatches} for:item="m">
+										<button
+											type="button"
+											key={m.key}
+											data-idx={m.idx}
+											onclick={handleFeeLookupSelect}
+										>
+											{m.name}
+											<span class="meta">{m.meta}</span>
+										</button>
+									</template>
+								</template>
+								<template if:false={hasFeeLookupMatches}>
+									<button type="button" disabled>No fees found</button>
+								</template>
+							</div>
+						</div>
+						<div class="slds-grid slds-gutters slds-wrap">
+							<div class="slds-col slds-size_1-of-2">
+								<div class="lpi-tx-field">
+									<label>Fee Code</label>
+									<input class="slds-input" readonly value={feeCode} />
+								</div>
+							</div>
+							<div class="slds-col slds-size_1-of-2">
+								<div class="lpi-tx-field">
+									<label>Amount</label>
+									<input class="slds-input" readonly value={feeAmountDisplay} />
+								</div>
+							</div>
+							<div class="slds-col slds-size_1-of-2">
+								<div class="lpi-tx-field">
+									<label>Category</label>
+									<input class="slds-input" readonly value={feeCategory} />
+								</div>
+							</div>
+							<div class="slds-col slds-size_1-of-2">
+								<div class="lpi-tx-field">
+									<label>GL Account</label>
+									<input class="slds-input" readonly value={feeGL} />
+								</div>
+							</div>
+							<div class="slds-col slds-size_1-of-1">
+								<div class="lpi-tx-field">
+									<label>Description</label>
+									<textarea
+										class="slds-textarea"
+										rows="2"
+										readonly
+										value={feeDesc}
+									></textarea>
+								</div>
+							</div>
+						</div>
+						<label class="lpi-tx-check">
+							<input
+								type="checkbox"
+								checked={autoInvoice}
+								onchange={handleAutoInvoiceChange}
+							/>
+							Create Invoice document
+						</label>
+						<div class="lpi-tx-field">
+							<label>Comment</label>
+							<textarea
+								class="slds-textarea"
+								rows="2"
+								placeholder="Optional notes…"
+								value={feeComment}
+								oninput={handleFeeCommentChange}
+							></textarea>
+						</div>
+					</div>
+					<footer class="slds-modal__footer">
+						<button
+							type="button"
+							class="slds-button slds-button_neutral"
+							onclick={closeFeeModal}
+						>
+							Cancel
+						</button>
+						<button
+							type="button"
+							class="slds-button slds-button_brand"
+							disabled={saveFeeDisabled}
+							onclick={saveFee}
+						>
+							Save
+						</button>
+					</footer>
+				</div>
+			</section>
+			<div class="slds-backdrop slds-backdrop_open" onclick={closeFeeModal}></div>
+		</template>
+
+		<!-- Make Payment Modal -->
+		<template if:true={showPayModal}>
+			<section
+				role="dialog"
+				tabindex="-1"
+				aria-modal="true"
+				aria-labelledby="pay-modal-heading"
+				class="slds-modal slds-fade-in-open"
+			>
+				<div class="slds-modal__container" onclick={stopPropagation}>
+					<header class="slds-modal__header">
+						<button
+							class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+							title="Close"
+							onclick={closePayModal}
+						>
+							<span class="slds-assistive-text">Close</span>
+							&#215;
+						</button>
+						<h2 id="pay-modal-heading" class="slds-modal__title">
+							Make Payment
+						</h2>
+					</header>
+					<div class="slds-modal__content slds-p-around_medium">
+						<p class="lpi-tx-hint">{payBalanceHint}</p>
+						<div class="slds-grid slds-gutters slds-wrap">
+							<div class="slds-col slds-size_1-of-2">
+								<div class="lpi-tx-field">
+									<label for="payAmount">Amount</label>
+									<input
+										id="payAmount"
+										class="slds-input"
+										type="number"
+										step="0.01"
+										min="0.01"
+										value={payAmount}
+										oninput={handlePayAmountChange}
+									/>
+								</div>
+							</div>
+							<div class="slds-col slds-size_1-of-2">
+								<div class="lpi-tx-field">
+									<label for="payMethod">Payment Method</label>
+									<select
+										id="payMethod"
+										class="slds-select"
+										onchange={handlePayMethodChange}
+									>
+										<template
+											for:each={payMethodSelectOptions}
+											for:item="opt"
+										>
+											<option
+												key={opt.value}
+												value={opt.value}
+												selected={opt.selected}
+											>
+												{opt.label}
+											</option>
+										</template>
+									</select>
+								</div>
+							</div>
+						</div>
+						<p class={payModeClass}>{payModeHint}</p>
+
+						<template if:true={isCreditCard}>
+							<div class="lpi-tx-gateway-box">
+								<p class="lpi-tx-hint slds-m-bottom_small">
+									Credit card payment is completed on the payment provider site.
+									No card details are entered in Salesforce.
+								</p>
+								<button
+									type="button"
+									class="slds-button slds-button_brand"
+									onclick={openPaymentProvider}
+								>
+									Continue to Payment Provider
+								</button>
+							</div>
+						</template>
+						<template if:false={isCreditCard}>
+							<div class="slds-grid slds-gutters slds-wrap">
+								<div class="slds-col slds-size_1-of-2">
+									<div class="lpi-tx-field">
+										<label>{payRefLabel}</label>
+										<input
+											class="slds-input"
+											type="text"
+											value={payRef}
+											oninput={handlePayRefChange}
+										/>
+									</div>
+								</div>
+								<div class="slds-col slds-size_1-of-2">
+									<div class="lpi-tx-field">
+										<label>{payDateLabel}</label>
+										<input
+											class="slds-input"
+											type="date"
+											value={payDate}
+											oninput={handlePayDateChange}
+										/>
+									</div>
+								</div>
+							</div>
+						</template>
+
+						<div class="lpi-tx-field">
+							<label>Comment</label>
+							<textarea
+								class="slds-textarea"
+								rows="2"
+								placeholder="Optional notes for this payment…"
+								value={payComment}
+								oninput={handlePayCommentChange}
+							></textarea>
+						</div>
+					</div>
+					<footer class="slds-modal__footer">
+						<button
+							type="button"
+							class="slds-button slds-button_neutral"
+							onclick={closePayModal}
+						>
+							Cancel
+						</button>
+						<template if:true={showPayPostButton}>
+							<button
+								type="button"
+								class="slds-button slds-button_brand"
+								onclick={savePay}
+							>
+								Post Payment
+							</button>
+						</template>
+					</footer>
+				</div>
+			</section>
+			<div class="slds-backdrop slds-backdrop_open" onclick={closePayModal}></div>
+		</template>
+
+		<!-- Gateway Modal -->
+		<template if:true={showGatewayModal}>
+			<section
+				role="dialog"
+				tabindex="-1"
+				aria-modal="true"
+				aria-labelledby="gw-modal-heading"
+				class="slds-modal slds-fade-in-open"
+			>
+				<div class="slds-modal__container" onclick={stopPropagation}>
+					<header class="slds-modal__header lpi-tx-gateway-header">
+						<button
+							class="slds-button slds-button_icon slds-modal__close"
+							title="Close"
+							onclick={closeGatewayModal}
+						>
+							<span class="slds-assistive-text">Close</span>
+							&#215;
+						</button>
+						<h2 id="gw-modal-heading" class="slds-modal__title">
+							Payment Provider · Secure Checkout
+						</h2>
+					</header>
+					<div class="slds-modal__content slds-p-around_medium">
+						<p class="lpi-tx-hint">
+							You have left Salesforce. Card data is collected only on the
+							payment provider site.
+						</p>
+						<div class="lpi-tx-form-element lpi-tx-form-flush">
+							<div class="lpi-tx-form-element__label">Merchant</div>
+							<div class="lpi-tx-form-element__control">
+								Financial and Consumer Services Commission (FCNB)
+							</div>
+						</div>
+						<div class="lpi-tx-form-element lpi-tx-form-flush">
+							<div class="lpi-tx-form-element__label">Application ID</div>
+							<div class="lpi-tx-form-element__control">{appId}</div>
+						</div>
+						<div class="lpi-tx-form-element lpi-tx-form-flush">
+							<div class="lpi-tx-form-element__label">Amount</div>
+							<div class="lpi-tx-form-element__control amt lpi-tx-amount-lg">
+								{gwAmountDisplay}
+							</div>
+						</div>
+						<p class="lpi-tx-hint">{gwStatus}</p>
+					</div>
+					<footer class="slds-modal__footer">
+						<button
+							type="button"
+							class="slds-button slds-button_neutral"
+							onclick={closeGatewayModal}
+						>
+							Cancel
+						</button>
+						<button
+							type="button"
+							class="slds-button slds-button_brand"
+							disabled={gwPayDisabled}
+							onclick={completeGatewayPayment}
+						>
+							Pay securely
+						</button>
+					</footer>
+				</div>
+			</section>
+			<div
+				class="slds-backdrop slds-backdrop_open"
+				onclick={closeGatewayModal}
+			></div>
+		</template>
+
+		<!-- Refund Modal -->
+		<template if:true={showRefundModal}>
+			<section
+				role="dialog"
+				tabindex="-1"
+				aria-modal="true"
+				aria-labelledby="refund-modal-heading"
+				class="slds-modal slds-fade-in-open"
+			>
+				<div class="slds-modal__container" onclick={stopPropagation}>
+					<header class="slds-modal__header">
+						<button
+							class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+							title="Close"
+							onclick={closeRefundModal}
+						>
+							<span class="slds-assistive-text">Close</span>
+							&#215;
+						</button>
+						<h2 id="refund-modal-heading" class="slds-modal__title">Refund</h2>
+					</header>
+					<div class="slds-modal__content slds-p-around_medium">
+						<p class="lpi-tx-hint">
+							Refund available credit via cheque or EFT (not card reverse).
+						</p>
+						<div class="slds-grid slds-gutters slds-wrap">
+							<div class="slds-col slds-size_1-of-2">
+								<div class="lpi-tx-field">
+									<label>Refund Amount</label>
+									<input
+										class="slds-input"
+										type="number"
+										step="0.01"
+										readonly
+										value={refundAmount}
+									/>
+								</div>
+							</div>
+							<div class="slds-col slds-size_1-of-2">
+								<div class="lpi-tx-field">
+									<label>Method</label>
+									<select
+										class="slds-select"
+										onchange={handleRefundMethodChange}
+									>
+										<template
+											for:each={refundMethodSelectOptions}
+											for:item="opt"
+										>
+											<option
+												key={opt.value}
+												value={opt.value}
+												selected={opt.selected}
+											>
+												{opt.label}
+											</option>
+										</template>
+									</select>
+								</div>
+							</div>
+							<div class="slds-col slds-size_1-of-1">
+								<div class="lpi-tx-field">
+									<label>Reason</label>
+									<select
+										class="slds-select"
+										onchange={handleRefundReasonChange}
+									>
+										<template
+											for:each={refundReasonSelectOptions}
+											for:item="opt"
+										>
+											<option
+												key={opt.value}
+												value={opt.value}
+												selected={opt.selected}
+											>
+												{opt.label}
+											</option>
+										</template>
+									</select>
+								</div>
+							</div>
+							<template if:true={showRefundOther}>
+								<div class="slds-col slds-size_1-of-1">
+									<div class="lpi-tx-field">
+										<label>Other Reason</label>
+										<input
+											class="slds-input"
+											type="text"
+											placeholder="Enter reason…"
+											value={refundOtherReason}
+											oninput={handleRefundOtherReasonChange}
+										/>
+									</div>
+								</div>
+							</template>
+							<div class="slds-col slds-size_1-of-1">
+								<div class="lpi-tx-field">
+									<label>Comment</label>
+									<textarea
+										class="slds-textarea"
+										rows="2"
+										placeholder="Optional notes…"
+										value={refundComment}
+										oninput={handleRefundCommentChange}
+									></textarea>
+								</div>
+							</div>
+						</div>
+					</div>
+					<footer class="slds-modal__footer">
+						<button
+							type="button"
+							class="slds-button slds-button_neutral"
+							onclick={closeRefundModal}
+						>
+							Cancel
+						</button>
+						<button
+							type="button"
+							class="slds-button slds-button_destructive lpi-tx-btn-destructive-fill"
+							onclick={saveRefund}
+						>
+							Create Refund
+						</button>
+					</footer>
+				</div>
+			</section>
+			<div
+				class="slds-backdrop slds-backdrop_open"
+				onclick={closeRefundModal}
+			></div>
+		</template>
+
+		<!-- Void Modal -->
+		<template if:true={showVoidModal}>
+			<section
+				role="dialog"
+				tabindex="-1"
+				aria-modal="true"
+				aria-labelledby="void-modal-heading"
+				class="slds-modal slds-fade-in-open"
+			>
+				<div class="slds-modal__container" onclick={stopPropagation}>
+					<header class="slds-modal__header">
+						<button
+							class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+							title="Close"
+							onclick={closeVoidModal}
+						>
+							<span class="slds-assistive-text">Close</span>
+							&#215;
+						</button>
+						<h2 id="void-modal-heading" class="slds-modal__title">
+							Void Payment
+						</h2>
+					</header>
+					<div class="slds-modal__content slds-p-around_medium">
+						<p class="lpi-tx-hint">
+							Unapplies the payment and restores balance due. Use
+							<strong>Entered in error</strong> for a mistaken post, or
+							<strong>NSF</strong> when the bank returns the payment.
+						</p>
+						<div class="lpi-tx-field">
+							<label>Payment</label>
+							<select
+								class="slds-select"
+								onchange={handleVoidPaymentChange}
+							>
+								<template
+									for:each={voidPaymentSelectOptions}
+									for:item="opt"
+								>
+									<option
+										key={opt.value}
+										value={opt.value}
+										selected={opt.selected}
+									>
+										{opt.label}
+									</option>
+								</template>
+							</select>
+						</div>
+						<div class="slds-grid slds-gutters slds-wrap">
+							<div class="slds-col slds-size_1-of-2">
+								<div class="lpi-tx-field">
+									<label>Reason</label>
+									<select
+										class="slds-select"
+										onchange={handleVoidReasonChange}
+									>
+										<template
+											for:each={voidReasonSelectOptions}
+											for:item="opt"
+										>
+											<option
+												key={opt.value}
+												value={opt.value}
+												selected={opt.selected}
+											>
+												{opt.label}
+											</option>
+										</template>
+									</select>
+								</div>
+							</div>
+							<div class="slds-col slds-size_1-of-2">
+								<div class="lpi-tx-field">
+									<label>Void Date</label>
+									<input
+										class="slds-input"
+										type="date"
+										value={voidDate}
+										oninput={handleVoidDateChange}
+									/>
+								</div>
+							</div>
+						</div>
+						<template if:true={showVoidOther}>
+							<div class="lpi-tx-field">
+								<label>Other Reason</label>
+								<input
+									class="slds-input"
+									type="text"
+									placeholder="Enter reason…"
+									value={voidOtherReason}
+									oninput={handleVoidOtherReasonChange}
+								/>
+							</div>
+						</template>
+						<template if:true={showVoidNsf}>
+							<div class="slds-grid slds-gutters slds-wrap">
+								<div class="slds-col slds-size_1-of-2">
+									<div class="lpi-tx-field">
+										<label>Bank / NSF Reason</label>
+										<input
+											class="slds-input"
+											type="text"
+											value={voidBankReason}
+											oninput={handleVoidBankReasonChange}
+										/>
+									</div>
+								</div>
+								<div class="slds-col slds-size_1-of-2">
+									<div class="lpi-tx-field">
+										<label>NSF Fee Amount</label>
+										<input
+											class="slds-input"
+											type="number"
+											step="0.01"
+											value={voidNsfFee}
+											oninput={handleVoidNsfFeeChange}
+										/>
+									</div>
+								</div>
+							</div>
+							<p class="lpi-tx-hint under">
+								NSF reverses the payment now. NSF fee requires approval on the
+								NSF Alert record.
+							</p>
+						</template>
+						<p class={voidSummaryClass}>{voidSummary}</p>
+						<div class="lpi-tx-field">
+							<label>Comment</label>
+							<textarea
+								class="slds-textarea"
+								rows="2"
+								placeholder="Optional notes…"
+								value={voidComment}
+								oninput={handleVoidCommentChange}
+							></textarea>
+						</div>
+					</div>
+					<footer class="slds-modal__footer">
+						<button
+							type="button"
+							class="slds-button slds-button_neutral"
+							onclick={closeVoidModal}
+						>
+							Cancel
+						</button>
+						<button
+							type="button"
+							class="slds-button slds-button_destructive lpi-tx-btn-destructive-fill"
+							onclick={saveVoid}
+						>
+							Void Payment
+						</button>
+					</footer>
+				</div>
+			</section>
+			<div class="slds-backdrop slds-backdrop_open" onclick={closeVoidModal}></div>
+		</template>
+
+		<!-- Invoice Viewer Modal -->
+		<template if:true={showInvoiceModal}>
+			<section
+				role="dialog"
+				tabindex="-1"
+				aria-modal="true"
+				aria-labelledby="invoice-modal-heading"
+				class="slds-modal slds-modal_large slds-fade-in-open"
+			>
+				<div class="slds-modal__container" onclick={stopPropagation}>
+					<header class="slds-modal__header">
+						<button
+							class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+							title="Close"
+							onclick={closeInvoiceModal}
+						>
+							<span class="slds-assistive-text">Close</span>
+							&#215;
+						</button>
+						<h2 id="invoice-modal-heading" class="slds-modal__title">
+							{invoiceModalTitle}
+						</h2>
+					</header>
+					<div
+						class="slds-modal__content slds-p-around_medium lpi-tx-invoice-modal-body"
+					>
+						<template if:true={invoiceDoc}>
+							<div class="lpi-tx-invoice-sheet">
+								<div class="inv-header">
+									<div>
+										<div class="org">
+											Financial and Consumer Services Commission
+										</div>
+										<div class="org-sub">
+											FCNB · Province of New Brunswick
+										</div>
+										<div class="org-sub">
+											Public Sector Solutions · Regulatory Authority
+										</div>
+									</div>
+									<div class="inv-title">
+										<h1>INVOICE</h1>
+										<div class="muted">{invoiceDoc.id}</div>
+										<div class="muted">{invoiceDoc.docName}</div>
+									</div>
+								</div>
+								<div class="lpi-tx-invoice-billto-grid">
+									<div>
+										<div class="lpi-tx-invoice-label">Bill To</div>
+										<div class="lpi-tx-invoice-name">{invoiceDoc.applicant}</div>
+										<div>Application ID: {invoiceDoc.appId}</div>
+										<div>Life Insurance Agent</div>
+									</div>
+									<div class="lpi-tx-invoice-meta">
+										<div>
+											<span class="lpi-tx-muted">Issued:</span>
+											{invoiceDoc.issued}
+										</div>
+										<div>
+											<span class="lpi-tx-muted">Due Date:</span>
+											{invoiceDoc.due}
+										</div>
+										<div>
+											<span class="lpi-tx-muted">Status:</span>
+											{invoiceDoc.status}
+										</div>
+									</div>
+								</div>
+								<table>
+									<thead>
+										<tr>
+											<th>Description</th>
+											<th>Fee Code</th>
+											<th>GL Account</th>
+											<th class="right">Amount</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>
+												{invoiceDoc.feeName}<br />
+												<span class="lpi-tx-muted-sm"
+													>{invoiceDoc.category} · {invoiceDoc.division}</span
+												>
+											</td>
+											<td>{invoiceDoc.feeCode}</td>
+											<td>{invoiceDoc.gl}</td>
+											<td class="right amt">{invoiceDoc.amountDisplay}</td>
+										</tr>
+										<tr>
+											<td colspan="3" class="tot">Total Due</td>
+											<td class="right tot amt">
+												{invoiceDoc.amountDisplay}
+											</td>
+										</tr>
+									</tbody>
+								</table>
+								<p class="footer-note">
+									This invoice was auto-generated when the fee was added to
+									Application {invoiceDoc.appId}. Remit payment referencing
+									invoice {invoiceDoc.id}. For cheque payments, include
+									application ID on the memo line.
+								</p>
+							</div>
+						</template>
+					</div>
+					<footer class="slds-modal__footer">
+						<button
+							type="button"
+							class="slds-button slds-button_neutral"
+							onclick={closeInvoiceModal}
+						>
+							Close
+						</button>
+						<button
+							type="button"
+							class="slds-button slds-button_brand"
+							onclick={printInvoice}
+						>
+							Print
+						</button>
+					</footer>
+				</div>
+			</section>
+			<div
+				class="slds-backdrop slds-backdrop_open"
+				onclick={closeInvoiceModal}
+			></div>
+		</template>
+
+		<div
+			class={toastClass}
+			role="status"
+			aria-live="polite"
+		>
+			{toastMessage}
+		</div>
+	</div>
+</template>

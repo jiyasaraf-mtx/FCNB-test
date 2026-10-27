@@ -1,0 +1,109 @@
+.licensee-search{
+    h1{
+        font-size: 2.125rem;
+        font-family: $font-family;
+    }
+    h2{
+        font-size:$font-size-18;
+        font-weight: $font-weight-bold;
+        color: $secondary-main;
+    }
+    lightning-base-combobox.slds-combobox_container {
+        width: 100%;
+    }
+    .info-message{
+        padding: 0.75rem;
+        font-size: 1rem;
+        font-weight: $font-weight-regular;
+        color: $primary-main;
+        border: 0.063rem solid $primary-main;
+        border-radius: 0.25rem !important; 
+        background: rgba(11, 81, 183, 0.06);
+        .slds-icon {
+            fill: $accordion-border;
+        }
+    }
+    
+    label.slds-form-element__label,
+    legend.slds-form-element__label{
+        color: $secondary-main;
+        font-size: $font-size-14;
+        font-weight: $font-weight-semi-bold;
+    }
+
+    .slds-card__footer{
+        border-top: 0.063rem solid $accordion-border;
+        margin-top: 3rem;
+        padding: 1.5rem 0;
+        .slds-button {
+            padding: 0.2rem 4rem;
+            font-weight: 700;
+            font-size: .875rem;
+            @media all and (max-width:30rem) {
+                padding: 0.2rem 2rem;
+            }
+        }
+    }
+
+    .slds-card__header.slds-grid {
+        padding: 0 0.75rem;
+    }
+}
+.license-results .search-banner{
+    height:auto;
+    padding:2.75rem 2.75rem 6rem;
+}
+//Contact us
+
+.unauth-contact{
+    // display: flex;
+    // align-items: center;
+    // gap: toRem(72);
+    &_desc{
+        display: flex;
+        gap: toRem(48);
+        flex-direction: column;
+    }
+    &_form{
+        background: $white;
+        border-radius: $border-radius-medium;
+        border-color: $border-color-light !important;
+        @include card-box-shadow;
+        padding: $xx-large;
+ 
+        @include responsive(tab-port){
+            margin-top: 3rem;
+            padding: $large;
+        }
+    }
+ }
+ .contact-block {
+    padding-top: toRem(80);
+ }
+ .unauth-bg_image{
+    background: url("./../media/images/unauthcontact-bg.png") no-repeat center/cover $white;
+    // background-repeat: ;
+    // background-size: cover;
+ 
+    @include responsive(tab-port){
+        padding: toRem(16) 0;
+    }
+ }
+ .contact-icons{
+    gap: toRem(32);
+    &_pill{
+        gap: toRem(20);
+        &-bg{
+            background-color: $primary-light;
+            border-radius: $border-radius-circle;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: toRem(14);
+            .material-icon{
+                font-size: toRem(32);
+                color: $white;
+            }
+        }
+    }
+}

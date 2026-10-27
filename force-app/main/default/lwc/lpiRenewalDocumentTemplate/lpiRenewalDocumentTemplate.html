@@ -1,0 +1,176 @@
+<template>
+    <div if:true={showSpinner}>
+        <lightning-spinner class="slds-is-fixed slds-is-relative slds-align_absolute-center" size="medium" alternative-text="Loading..."></lightning-spinner>
+    </div>
+    <!-- First Screen: Picklist -->
+    <div class="renewal-form">
+        <div class="custom-card bg-white">
+            <h3 class="bold-16 m-b-small">Document Download Section</h3>
+            <div class="slds-grid">
+                <div class="slds-col slds-size_6-of-12">
+                        <template if:true={showScreen1}>
+                            <div>
+                                <lightning-combobox name="selectOption" label="What would you like to print ?" class="m-b-xms" value={selectedTemplateOption}
+                                    options={templateOptions} onchange={handleTemplateChange} required>
+                                </lightning-combobox>
+                                <template if:true={selectedTemplateOption}>
+                                    <template if:true={showLicenseType}>
+                                        <lightning-combobox name="selectOption" label="Select License Type" class="m-b-xms" value={selectedOption}
+                                            options={picklistOptions} onchange={handlePicklistChange} required>
+                                        </lightning-combobox>
+                                    </template>
+                                    <template if:true={showRenewalCycle}>
+                                        <lightning-combobox name="selectOption" label="Renewal Period" class="m-b-xms" value={selectedCycleOption}
+                                            options={renewalCycleOptions} onchange={handleRenewalCycle} required>
+                                        </lightning-combobox>
+                                    </template>
+                                    <template if:true={showPostcardLicenseType}>
+                                        <lightning-dual-listbox name="multiselect" label="Select License Types" class="m-b-xms" value ={selectedValues} options={options} onchange={handleMultiselectChange} required>
+                                        </lightning-dual-listbox>
+                                    </template>
+                                    <template if:true={showIssueDateRange}>
+                                        <lightning-input class="m-b-xms"
+											label="License Issuance Date (From)"
+											name="issuanceDateFrom"
+											type="Date"
+											onchange={handleIssuanceDateChange}
+											value={selectedIssueDateFrom}
+											max={selectedIssueDateTo}
+											message-when-range-overflow="Issuance from date cannot be greater than issuance to date"
+										></lightning-input>
+                                        <lightning-input class="m-b-xms"
+												label="License Issuance Date (To)"
+												name="issuanceDateTo"
+												type="Date"
+												onchange={handleIssuanceDateChange}
+												value={selectedIssueDateTo}
+												min={selectedIssueDateFrom}
+												message-when-range-underflow="Issuance to date cannot be less than issuance from date"
+											></lightning-input>
+                                    </template>
+                                </template>
+                                <template if:false={showPostcardLicenseType}>
+                                    <!-- <div class="slds-m-around_medium"> -->
+                                        <lightning-button onclick={showSecondScreen} variant="brand" label="Next"></lightning-button>
+                                    <!-- </div> -->
+                                </template>
+                                <template if:true={showPostcardLicenseType}>
+                                    <!-- <div class="slds-m-around_medium"> -->
+                                        <lightning-button onclick={showPostcardSecondScreen} variant="brand" label="Next"></lightning-button>
+                                    <!-- </div> -->
+                                </template>
+                            </div>
+                        </template>
+                    
+                </div>
+            </div>
+            <template if:false={showScreen1}>
+                <!-- <div class="slds-m-around_medium"> -->
+                    <!--Added Note as per T-55433-->
+                    <template if:false={showIssuanceDateFilter}>
+                        <p style="color: red;">
+                            Note: The following list displays {resultLength} license records that don't have a renewal submitted yet.
+                        </p>
+                    </template>
+                    <template if:true={showIssuanceDateFilter}>
+                        <p style="color: red;">
+                            Note: The following list displays only for {resultLength} licenses.
+                        </p>
+                    </template>
+                   
+                <!-- </div> -->
+                <!-- filter heading section -->
+                <div class="">
+                    <span style="font-weight:bold;">Filters</span>
+                </div>
+                <!-- end filter heading section -->
+                <!-- choose filter value section -->
+                <div class="slds-grid slds-wrap slds-gutters">
+                    <template if:true={showLicenseType}>
+                        <div class="slds-col slds-size_1-of-2">
+                            <!-- <div class="slds-p-around_medium"> -->
+                                <lightning-input label="License Number Search" class="m-b-xms" value={searchTerm} onchange={handleSearchChange}
+                                        placeholder="Type License Number here..">
+                                </lightning-input>
+                            <!-- </div> -->
+                        </div>
+                    </template>
+                    <template if:true={showRenewalCycle}>
+                        <div class="slds-col slds-size_1-of-2">
+                            <!-- <div class="slds-p-around_medium"> -->
+                                <lightning-combobox name="selectOption" class="m-b-xms" label="Renewal Period" value={selectedCycleOption}
+                                    options={renewalCycleOptions} onchange={handleRenewalCycle} required>
+                                </lightning-combobox>
+                            <!-- </div> -->
+                        </div>
+                    </template>
+                    <template lwc:if={showIssuanceDateFilter}>
+                        <div class="slds-col slds-size_1-of-2">
+                            <!-- <div class="slds-p-around_medium"> -->
+                                <lightning-input class="m-b-xms"
+                                    label="License Issuance Date"
+                                    name="issuanceDateFilter"
+                                    type="Date"
+                                    onchange={handleIssuanceDateChange}
+                                    value={selectedIssueDateFilter}
+                                ></lightning-input>
+                            <!-- </div> -->
+                        </div>
+                    </template>
+                </div>
+                <!--end filter value section -->
+                <!-- checkbox filter for nursing and send for print -->
+                    <template if:false={showIssueDateRange}>
+                        <div class="slds-grid">
+                            <template if:false={showPostcardLicenseType}>
+                                <div class="slds-col slds-size_1-of-2">
+                                    <!-- <div class="slds-p-around_medium"> -->
+                                        <lightning-input type="checkbox" class="m-b-xms" label="Sent For Print?" onchange={handleFilterSentForPrint}>
+                                        </lightning-input>
+                                    <!-- </div> -->
+                                </div>
+                                  <div class="slds-col slds-size_1-of-2">
+                                    <!-- <div class="slds-p-around_medium"> -->
+                                        <lightning-input type="checkbox" class="m-b-xms" label="Retired" onchange={handleFilterNursing} if:true={nursingStatus}>
+                                        </lightning-input>
+                                    <!-- </div> -->
+                                </div> 
+                            </template>
+                            <template if:true={showPostcardLicenseType}>
+                                <div class="slds-col slds-size_1-of-2">
+                                    <!-- <div class="slds-p-around_medium"> -->
+                                        <lightning-input type="checkbox" class="m-b-xms" label="Sent for Printing" onchange={handlePostcardSentForPrint}>
+                                        </lightning-input>
+                                    <!-- </div> -->
+                                </div>    
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <!-- <div class="slds-p-around_medium">         -->
+                                        <lightning-input type="checkbox" class="m-b-xms" label="No Email" onchange={handleNoEmail}>
+                                        </lightning-input>
+                                        <lightning-helptext content="Mark true to display license records that don't have an email.">
+                                        </lightning-helptext>
+                                    <!-- </div> -->
+                                </div>
+                            </template>
+                        </div>
+                    </template>
+                <!-- close checkbox sections -->
+                <div class="slds-m-around_medium">
+                    <template if:false={showTable}>
+                        <div class="slds-align_absolute-center slds-m-around_medium">
+                            <p style="color: red;">NO DATA FOUND.</p>
+                        </div>
+                    </template>
+                    <template if:true={showTable}>
+                        <lightning-datatable key-field="Id" data={data} columns={columnList} onrowselection={handleRowSelection}></lightning-datatable>
+                    </template>
+                </div>
+                <div class="slds-clearfix">
+                    <lightning-button onclick={showFirstScreen} variant="brand" label="Previous" class="  slds-float_left"></lightning-button>
+                    <lightning-button label="Download" onclick={getBulkLicenseDetailsJson} variant="brand"
+                        disabled={isButtonDisabled} class=" slds-float_right"></lightning-button>
+                </div>
+            </template>
+        </div>
+    </div>
+</template>

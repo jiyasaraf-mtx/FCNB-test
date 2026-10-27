@@ -1,0 +1,27 @@
+.spins::after {
+    position: absolute;
+    content: attr(data-text);
+    width: 100%;
+    text-align: center; 
+    font-weight: bold;
+    top: calc(50% + 2rem)
+}
+.spinHolder{
+    position: absolute;
+    top: calc(20% + 2rem);
+    bottom: 300px
+ }
+
+
+ .headertext{
+    margin-top: 10rem;
+    margin-bottom: 1rem;
+    margin-right: 0px;
+    margin-left: 20px;
+}
+
+.additional-doc-border{
+    border: 1px solid #e5e5e5;
+    padding: 1rem 0.75rem;
+    margin-top: 1rem;
+}

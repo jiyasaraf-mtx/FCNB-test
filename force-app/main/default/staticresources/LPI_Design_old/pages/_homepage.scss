@@ -1,0 +1,157 @@
+// .modpr-homepage{
+//     .modpr-homepage_banner {
+//         background: $secondary-main;
+//         height: 26rem;
+//         padding: 4rem;
+//         background: linear-gradient(rgba(30, 58, 98, 0.86), rgba(30, 58, 98, 0.86)),url("../LP_Design/images/homepageBannerBg.png");
+//         @media only screen and (max-width: 61.93rem) {
+//             padding: 3rem;
+//             height: auto;
+//             width: 98%;
+//             margin: 0 auto;
+//             padding-bottom: 5rem;
+//         }
+//         h1 {
+//             color: $white;
+//             font-size: 3rem;
+//             font-family: Francois One;
+//             @media only screen and (max-width: 61.93rem) {
+//                 font-size: 2rem;
+//             }
+//         }
+//         p {
+//             color: $white;
+//             font-size: 1.25rem;
+//             font-family: Tahoma;
+//             line-height: 2rem;
+//             margin: 1.5rem 0;
+//             @media only screen and (max-width: 61.93rem) {
+//                 font-size: 1rem;
+//                 margin-bottom: 0;
+//             }
+//         }
+//     }
+
+//     .modpr-homepage_content {
+//         width: 90%;
+//         margin: 0 auto;
+//         position: relative;
+//         top: -6rem;
+//         // overflow-x: auto;
+//         .licenses-card, .dashboard-card {
+//             //min-width: 40rem;
+//             .slds-col{
+//                 @media only screen and (max-width: 61.93rem) {     
+//                     width: 100%;
+//                     margin-bottom: 1rem;
+//                 }
+//             }
+//         }
+//         @media only screen and (max-width: 61.93rem) {
+//             top: -3em;
+//         }
+//     }
+
+//     .dashboard-card{
+//         .slds-card{
+//             @media only screen and (max-width: 61.93rem) {
+//                 padding: 1rem;
+//             }
+//         }
+//         .dashboard-card__body {
+//             display: flex;
+//             flex-direction: column;
+//             p{
+//                 text-align: center;
+//                 @media only screen and (max-width: 47.938rem) {     
+//                     height: auto;
+//                     margin-bottom: 0;
+//                 }
+//                 @media only screen and (max-width: 53.125rem) {
+//                     height: 3rem;
+//                 }
+//                 @media only screen and (max-width: 90.75rem) {
+//                     margin-bottom: 1.5rem;
+//                     height: 2rem;
+//                 }
+//             }
+//             .slds-button {
+//                 font-size: 1.5rem;
+//                 font-family: Francois One;
+//                 color: $primary-main;
+//                 white-space: nowrap;
+//                 @media only screen and (max-width: 81.25rem) {
+//                     font-size: 1.2rem;
+//                 }
+//                 @media only screen and (max-width: 61.93rem) {
+//                     font-size: 1rem;
+//                 }
+//                 svg{
+//                     fill: $primary-main;
+//                     height: 1.5rem;
+//                     width: 1.5rem;
+//                 }
+//             }
+//         }
+//     }
+
+//     .apply-license-card,
+//     .renew-license-card,
+//     .file-complaint-card{
+//         .slds-card{
+//             background: $text-dark-blue;
+//             border-radius: 0.25rem;
+//             height: 11.25rem;
+//             display: flex;
+//             flex-direction: column;
+//             align-items: center;
+//             justify-content: center;
+//             .slds-button{
+//                 border-radius: 0.25rem;
+//                 border: toRem(1) solid $white;
+//                 background: linear-gradient(131deg, $text-dark-blue 0%, rgba(30, 58, 98, 0.50) 100%);
+//                 box-shadow: 0 0.25rem 0.5rem 0 $text-dark-blue;
+//                 padding: 0.75rem 1.5rem;
+//                 color: $white;
+//                 font-size: 1.5rem;
+//                 font-family: Francois One;
+//                 text-transform: uppercase;
+//                 white-space: nowrap;
+//                 &:focus{
+//                     outline-color: $white !important;
+//                 }
+//                 @media only screen and (max-width: 61.93rem) {
+//                     font-size: 1rem;
+//                     padding: 0.75rem;
+//                 }
+//                 @media only screen and (max-width: 81.25rem) {
+//                     font-size: 1.2rem;
+//                 }
+//                 @media only screen and (min-width: 81.25rem) and (min-width: 93.75rem) {
+//                     font-size: 1.5rem;
+//                 }
+//             }
+//         }
+//     }
+//     .apply-license-card .slds-card{
+//         background: linear-gradient(rgba(30, 58, 98, 0.5), rgba(30, 58, 98, 0.5)),url("../LP_Design/images/homepage_applyforLicensesBg.png");
+//     }
+//     .renew-license-card .slds-card{
+//         background: linear-gradient(rgba(30, 58, 98, 0.5), rgba(30, 58, 98, 0.5)),url("../LP_Design/images/homepage_renewLicensesBg.png");
+//     }
+//     .file-complaint-card .slds-card{
+//         background: linear-gradient(rgba(30, 58, 98, 0.5), rgba(30, 58, 98, 0.5)),url("../LP_Design/images/homepage_fileComplaintBg.png");
+//     }
+// }
+
+// .main-content.open-sidebar{
+//     .modpr-homepage{
+//         @media only screen and (min-width: 48rem) and (max-width: 75rem) {
+//             .modpr-homepage_content .licenses-card .slds-col, 
+//             .modpr-homepage_content .dashboard-card .slds-col {
+//                 width: 100%;
+//                 margin-bottom: 1rem;
+//             }
+//         }
+//     }
+// }

@@ -1,0 +1,263 @@
+<!--
+  @description       : 
+  @author            : Bharath Kumar M
+  @group             : 
+  @last modified on  : 06-19-2024
+  @last modified by  : Bharath Kumar M
+-->
+<apex:page renderAs="pdf" applyBodyTag="false" applyHtmlTag="false" showHeader="false" standardstylesheets="false" contentType="text/html;charset=UTF-8" controller="LPI_MiscPaymentReceiptPDFController" title="PaymentReceipt.pdf">
+    <head>
+        <title>Payment Receipt</title>
+        <style>
+            @page 
+            {
+                size: letter;
+                margin: 12mm 10mm;
+            }
+
+            body {
+                font-family: Arial Unicode MS;
+            }
+
+            font { font-family: Arial Unicode MS !important; }
+
+            .pdfheader {
+                font-size: 24px;
+                font-weight: 500;
+            }
+            
+            table {
+                width: 100%;
+            }
+
+            table tr {
+                page-break-inside: avoid;
+            }
+
+            table td {
+                vertical-align: baseline;
+            }
+
+            .custom-grid-2 td {
+                width: 50%;
+                padding-bottom: 30px;
+                padding-right: 10px;
+            }
+
+            .custom-payment-grid-2 td {
+                width: 50%;
+                padding-bottom: 5px;
+                padding-right: 10px;
+                padding-left: 10px;
+
+            }
+
+            .custom-payment-grid-2 th {
+                width: 50%;
+                padding-bottom: 5px;
+                padding-right: 10px;
+                padding-left: 10px;
+            }
+
+            .section{
+                margin-top: 20px;
+            }
+
+            .section .sectionHeading{
+                font-weight: 700;
+                font-size: 16px;
+                color: #1E3A62;
+            }
+
+            .sectionBody{
+                padding-top: 20px;
+            }
+
+            .view-info-label{
+                font-size: 12px;
+                line-height: 14px;
+                color: #6B6B6B;
+                font-weight: 400;
+            }
+            .read-only-info{
+                font-size: 14px;
+                color: #121212;
+                font-weight: 400;
+            }
+
+            .pdfBody{
+                position: relative;
+            }
+            .watermark{
+                position: absolute;
+                top: 25%;
+                left: 15%;
+                width: 70%;
+                text-align: center;
+                opacity: 0.35;
+            }
+            .watermark img{
+                width: 500px;
+                height: auto;
+            }
+
+            .payment-table, .payment-table th, .payment-table td{
+                border: 1px solid black;
+                border-collapse: collapse;
+            }
+            .payment-table_rightCell{
+                text-align: right;
+            }
+
+            .payment-summary td{
+                width: 50%;
+                padding-bottom: 5px;
+                padding-right: 10px;
+                padding-left: 10px;
+                font-size: 14px;
+                color: #121212;
+                font-weight: bold;
+            }
+            .payment-summary{
+                background-color: lightgoldenrodyellow;
+            }
+
+        </style>
+    </head>
+
+    <body>
+        <div class="pdf">
+            <div class="pdfheader">
+                <c:LPI_PDFLogo />
+                <hr/>
+            </div>
+            <div class="pdfBody">
+                <apex:outputPanel rendered="{!paymentReceiptData != NULL}">
+                    <div class="section">
+                        <div>
+                            <span class="sectionHeading">Receipt of Payment</span>
+                            <span style="float: right;" class="read-only-info">Date :&nbsp;
+                                <apex:outputText value="{0,date,MM/dd/yyyy}"> 
+                                    <apex:param value="{!Today()}" />
+                                </apex:outputText> 
+                            </span>
+                        </div>
+                        <div class="sectionBody">
+                            <table>
+                                <tr class='custom-grid-2'>
+                                    <td>
+                                        <div class="view-only-info">
+                                            <label class="view-info-label">Board</label>
+                                            <div class="read-only-info">{!paymentReceiptData.boardName}</div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class='custom-grid-2'>
+                                    <td>
+                                        <div class="view-only-info">
+                                            <label class="view-info-label">Payer Name</label>
+                                            <div class="read-only-info">{!paymentReceiptData.payerName}</div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="view-only-info">
+                                            <label class="view-info-label">Payer Phone</label>
+                                            <div class="read-only-info">{!paymentReceiptData.payerPhone}</div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <apex:outputpanel rendered="{!paymentReceiptData.chequeNumber != ''}"> 
+                                    <tr class='custom-grid-2'>
+                                        <td>
+                                            <div class="view-only-info">
+                                                <label class="view-info-label">Confirmation/Cheque Number</label>
+                                                <div class="read-only-info">{!paymentReceiptData.chequeNumber}</div>
+                                            </div>
+                                        </td>                                       
+                                        <td>
+                                            <div class="view-only-info">
+                                                <label class="view-info-label">Date Received</label>
+                                                <div class="read-only-info">
+                                                    <apex:outputText value="{0,date,MM/dd/yyyy',' h:mm a}"> 
+                                                        <apex:param value="{!paymentReceiptData.dateReceived}" />
+                                                    </apex:outputText> 
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </apex:outputpanel>  
+                                <apex:outputpanel rendered="{!paymentReceiptData.chequeNumber == ''}"> 
+                                    <tr class='custom-grid-2'>
+                                        <td>
+                                            <div class="view-only-info">
+                                                <label class="view-info-label">Date Received</label>
+                                                <div class="read-only-info">
+                                                    <apex:outputText value="{0,date,MM/dd/yyyy',' h:mm a}"> 
+                                                        <apex:param value="{!paymentReceiptData.dateReceived}" />
+                                                    </apex:outputText> 
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </apex:outputpanel>
+                                <tr class='custom-grid-2'>
+                                    <td>
+                                        <div class="view-only-info">
+                                            <label class="view-info-label">Payment Method</label>
+                                            <div class="read-only-info">{!paymentReceiptData.paymentMethod}</div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="view-only-info">
+                                            <label class="view-info-label">Application Number</label>
+                                            <div class="read-only-info">{!paymentReceiptData.applicationNumber}</div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                            <!-- Table for Fee Details -->
+                            <label class="view-info-label">Payment Information</label>
+                            <table class="payment-table" style="margin-top: 2px;">
+                                <tr class='custom-payment-grid-2'>
+                                    <th class="read-only-info">Fee Type</th>
+                                    <th class="read-only-info payment-table_rightCell">
+                                        <apex:outputText value="Payment">
+                                         </apex:outputText>
+                                    </th>
+                                </tr>   
+                                
+                                <tr class='custom-payment-grid-2'>
+                                    <td class="read-only-info">
+                                        {!paymentReceiptData.feeName}
+                                    </td>
+                                    <td class="read-only-info payment-table_rightCell">
+                                        <apex:outputText value="{0, Number, Currency}">
+                                            <apex:param value="{!paymentReceiptData.paymentAmount}" />
+                                        </apex:outputText>
+                                    </td>
+                                </tr>
+                                
+                                <tr class='payment-summary'>
+                                    <td>
+                                        <span style="font-family: sans-serif; font-weight:bold;"> Total Amount </span>
+                                
+                                    </td>
+                                    <td class="payment-table_rightCell">
+                                        <span style="font-family: sans-serif; font-weight:bold;">
+                                            <apex:outputText value="{0, Number, Currency}">
+                                                <apex:param value="{!paymentReceiptData.paymentAmount}" />
+                                            </apex:outputText>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </table>  
+                        </div>
+                    </div>
+                </apex:outputPanel>
+                <div class="watermark">
+                    <apex:image url="{!URLFOR($Resource.LPI_IBM_Logo_Watermark)}" width="500" height="500" alt=""/>
+                </div>
+            </div>
+        </div>
+    </body>
+</apex:page>

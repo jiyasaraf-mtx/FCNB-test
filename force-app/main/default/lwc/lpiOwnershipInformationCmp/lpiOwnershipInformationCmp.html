@@ -1,0 +1,563 @@
+<!--
+  @description       : 
+  @author            : Garvit Jain
+  @group             : 
+  @last modified on  : 12-22-2022
+  @last modified by  : Garvit Jain
+-->
+<template>
+    <template if:true={showSpinner}>
+        <lightning-spinner alternative-text="Loading..." size="small"></lightning-spinner>
+    </template>
+        <template if:true={showOwnerInfoSubText}>
+            <div class="slds-m-bottom_medium">
+                <p>Please provide ownership information for each person who owns more than 10% of AMC.</p>
+                <p>Each Controlling Person will need to complete the Controlling Person <a href="https://pr.mo.gov/boards/appraisers/375-0877s%20(10-12).pdf" target="_blank">Application</a> and upload it in the Documents section.</p>
+            </div>
+        </template>
+        <template if:false={showOwnerInfoSubText}>
+    <div class="slds-m-bottom_medium">
+                <p>Applicants should provide the ownership information for the entity to be licensed.</p>
+    </div>
+        </template>
+    <div class="ownershipInfo accordion-block">
+        <template if:true={ownershipInformationWrap.showAllOwnerShip}>
+            <lightning-accordion allow-multiple-sections-open
+                active-section-name={ownershipInformationWrap.activeSections}>
+                <div for:each={ownershipInformationWrap.ownerInformation} for:item="ownerData" key={ownerData}
+                    for:index="index" class="accordion">
+                    <lightning-accordion-section name={ownerData.ownershipInformationTitle}
+                        label={ownerData.ownershipInformationTitle} data-id={ownerData.uniqueId}>
+                        <div class="slds-grid slds-wrap slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_8-of-12 slds-large-size_8-of-12">
+                                <lightning-radio-group class="bordered_radio" required
+                                    data-name={ownerData.isTheOwnerBusinessEntityName} data-id={ownerData.uniqueId}
+                                    label="Is the Owner/Partner/Member a Business Entity?"
+                                    value={ownerData.isBusinessEntityData} options={isTheOwnerLicensedInMOOption}
+                                    autocomplete="off" onchange={handleChange}
+                                    message-when-value-missing="Error: Is the Owner/Partner/Member a Business Entity? is required.">
+                                </lightning-radio-group>
+                            </div>
+                            <template if:true={ownerData.showDelete}>
+                                <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12"
+                                    style="align-self: end;display: flex;justify-content: end;">
+                                    <lightning-button class="del-btn income" label="Delete" icon-name="utility:delete"
+                                        slot="actions" data-id={ownerData.uniqueId} onclick={deleteSection}
+                                        variant="destructive"></lightning-button>
+                                </div>
+                            </template>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-12 slds-large-size_1-of-12">
+                            </div>
+
+                            <!--Business Section-->
+                            <template if:true={ownerData.isBusinessOwner}>
+                                <template if:false={ownerData.isCorporateOwnerShip}>
+                                    <template if:false={hideLicensedWithBoardQue}> <!--Added for I-246215-->
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                                        <lightning-radio-group class="bordered_radio" required
+                                            data-name={ownerData.isTheBusinessLicensedInMOName}
+                                            data-id={ownerData.uniqueId}
+                                            label={radioLabel} autocomplete="off"
+                                            value={ownerData.isTheOwnerLicensedInMO}
+                                            options={isTheOwnerLicensedInMOOption} onchange={handleChange}
+                                            message-when-value-missing={radioErrorMsg}>
+                                        </lightning-radio-group>
+                                    </div>
+                                    </template>
+                                </template>
+                                <template if:true={ownerData.showOwnerShipSection}>
+                                    <template if:false={ownerData.isCorporateOwnerShip}>
+                                        <template if:true={ownerData.showLookUpLicense}>
+                                            <div
+                                                class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                                                <c-lpi-custom-lookup-cmp label={typeaheadLabel}
+                                                    onlookupupdate={lookupRecord} dat-id={ownerData.uniqueId}
+                                                    placeholder="Search License here..." licnesetype="Business"
+                                                    value={ownerData.searchedKey}></c-lpi-custom-lookup-cmp>
+                                            </div>
+                                        </template>
+                                        <template if:false={ownerData.showLookUpLicense}>
+                                            <div
+                                                class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                                                <lightning-input type="text" label={typeaheadLabel}
+                                                    data-name="licenseNumber" pattern="^((?!(<)|(>)).)*$"
+                                                    autocomplete="off" onchange={handleChange} max-length="18"
+                                                    message-when-pattern-mismatch={typeaheadErrorMsg}
+                                                    data-id={ownerData.uniqueId} value={ownerData.licenseNumber}>
+                                                </lightning-input>
+                                            </div>
+                                        </template>
+                                    </template>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <lightning-input type="text" label="Business Name" data-name="businessName"
+                                            required={ownerData.isPartialRequired} disabled={ownerData.isPartialDisable}
+                                            data-id={ownerData.uniqueId} pattern={regPattern}
+                                            message-when-pattern-mismatch={messagePatternMismatch} max-length="40"
+                                            value={ownerData.businessName} autocomplete="off" onchange={handleChange}
+                                            message-when-value-missing="Error: Business Name is required.">
+                                        </lightning-input>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <lightning-input type="email" label="Business Email" data-name="businessEmail"
+                                            required={ownerData.isPartialRequired}
+                                            pattern="^([A-Za-z0-9_\-\.\+]+)@([A-Za-z0-9_\-\.]+)\.([A-Za-z]{2,10})$"
+                                            message-when-pattern-mismatch="Invalid email format."
+                                            disabled={ownerData.isPartialDisable} data-id={ownerData.uniqueId}
+                                            value={ownerData.businessEmail} autocomplete="off" onchange={handleChange}
+                                            message-when-value-missing="Error: Business Email is required.">
+                                        </lightning-input>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <lightning-input class="validate" type="tel" label="Telephone Number"
+                                            placeholder="Enter Telephone Number" data-name="busienssPhone"
+                                            required={ownerData.isPartialRequired} maxlength="10" min-length="10"
+                                            pattern="[0-9]*" disabled={ownerData.isPartialDisable}
+                                            data-id={ownerData.uniqueId}
+                                            message-when-pattern-mismatch="Please enter telephone number only!"
+                                            autocomplete="off" onchange={handleChange} value={ownerData.busienssPhone}
+                                            message-when-value-missing="Error: Telephone Number is required.">
+                                        </lightning-input>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_4-of-12">
+                                        <lightning-input type="number" label="Ownership Percentage"
+                                            data-name="ownershipPercent" min="0" max="100" data-id={ownerData.uniqueId}
+                                            value={ownerData.ownershipPercent} autocomplete="off"
+                                            message-when-value-missing="Error: Ownership Percentage is required."
+                                            onchange={handleChange} required formatter="percent-fixed" step="0.01">
+                                        </lightning-input>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-p-top_small">
+                                        <h3>Business Address</h3>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <lightning-combobox label="Country" data-name="country"
+                                            required={ownerData.isPartialRequired} max-length="40"
+                                            disabled={ownerData.isPartialDisable} data-id={ownerData.uniqueId}
+                                            options={countryOptions} value={ownerData.country} autocomplete="off"
+                                            onchange={handleChange}
+                                            message-when-value-missing="Error: Country is required.">
+                                        </lightning-combobox>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                                        <lightning-input type="text" label="Street Address" data-name="streetAddress1"
+                                            required={ownerData.isPartialRequired} pattern={regPattern}
+                                            message-when-pattern-mismatch={messagePatternMismatch}
+                                            disabled={ownerData.isPartialDisable} data-id={ownerData.uniqueId}
+                                            max-length="255" value={ownerData.streetAddress1} autocomplete="off"
+                                            onchange={handleChange}
+                                            message-when-value-missing="Error: Street Address is required.">
+                                        </lightning-input>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12">
+                                        <lightning-input type="text" label="City" data-name="city"
+                                            required={ownerData.isPartialRequired} max-length="40" pattern={regPattern}
+                                            message-when-pattern-mismatch={messagePatternMismatch}
+                                            disabled={ownerData.isPartialDisable} data-id={ownerData.uniqueId}
+                                            value={ownerData.city} autocomplete="off" onchange={handleChange}
+                                            message-when-value-missing="Error: City is required.">
+                                        </lightning-input>
+                                    </div>
+                                    <template if:true={ownerData.isUsState}>
+                                        <div
+                                            class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12">
+                                            <lightning-combobox label="State" data-name="state"
+                                                required={ownerData.isPartialRequired} max-length="40"
+                                                disabled={ownerData.isPartialDisable} data-id={ownerData.uniqueId}
+                                                options={stateOption} value={ownerData.state} autocomplete="off"
+                                                onchange={handleChange}
+                                                message-when-value-missing="Error: State is required.">
+                                            </lightning-combobox>
+                                        </div>
+                                        <div
+                                            class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12">
+                                            <lightning-input type="text" label="Zip Code" data-name="zipCode"
+                                                required={ownerData.isPartialRequired} pattern="^[0-9]{5}" maxlength="5"
+                                                message-when-pattern-mismatch="Zip Code should be five digits."
+                                                disabled={ownerData.isPartialDisable} data-id={ownerData.uniqueId}
+                                                value={ownerData.zipCode} autocomplete="off" onchange={handleChange}
+                                                message-when-value-missing="Error: Zip Code is required.">
+                                            </lightning-input>
+                                        </div>
+                                    </template>
+                                    <template if:false={ownerData.isUsState}>
+                                        <div
+                                            class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12">
+                                            <lightning-input type="text" label="State" data-name="stateText"
+                                                maxlength="40"
+                                                disabled={ownerData.isPartialDisable} data-id={ownerData.uniqueId}
+                                                value={ownerData.stateText} autocomplete="off" onchange={handleChange}
+                                                pattern={regPattern}
+                                                message-when-pattern-mismatch={messagePatternMismatch}
+                                                message-when-value-missing="Error: State is required.">
+                                            </lightning-input>
+                                        </div>
+                                        <div
+                                            class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12">
+                                            <lightning-input type="text" label="Zip Code" data-name="zipCode"
+                                                pattern="^[a-zA-Z0-9]*$"
+                                                minlength="5" maxlength="10"
+                                                message-when-pattern-mismatch="Please enter correct Zip/Postal Code."
+                                                disabled={ownerData.isPartialDisable} data-id={ownerData.uniqueId}
+                                                value={ownerData.zipCode} autocomplete="off" onchange={handleChange}
+                                                message-when-value-missing="Error: Zip Code is required.">
+                                            </lightning-input>
+                                        </div>
+                                    </template>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12">
+                                        <template if:true={ownerData.isPartialDisable}>
+                                            <lightning-input type="text" label="County" data-name="county"
+                                                max-length="60" pattern={regPattern}
+                                                message-when-pattern-mismatch={messagePatternMismatch}
+                                                disabled={ownerData.isPartialDisable} data-id={ownerData.uniqueId}
+                                                value={ownerData.county} autocomplete="off" onchange={handleChange}>
+                                            </lightning-input>
+                                        </template>
+                                        <template if:false={ownerData.isPartialDisable}>
+                                            <template if:true={ownerData.isStateMO}>
+                                                <div class="county-search">
+                                                    <lightning-input type="search" label="County" data-name="county"
+                                                        max-length="60" pattern={regPattern}
+                                                        message-when-pattern-mismatch={messagePatternMismatch}
+                                                        disabled={ownerData.isPartialDisable}
+                                                        data-id={ownerData.uniqueId} value={ownerData.county}
+                                                        autocomplete="off" onchange={search}>
+                                                    </lightning-input>
+                                                    <div if:true={searchResults} id="listbox-id-5"
+                                                        class="slds-dropdown slds-dropdown_length-with-icon-7 slds-dropdown_fluid"
+                                                        role="listbox">
+                                                        <ul class="slds-listbox slds-listbox_vertical"
+                                                            role="presentation">
+                                                            <template for:each={searchResults} for:item="searchResult">
+                                                                <li key={searchResult.value}
+                                                                    data-name={searchResult.label} role="presentation"
+                                                                    onclick={selectSearchResult}
+                                                                    class="slds-listbox__item">
+                                                                    <div class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small "
+                                                                        role="option">
+                                                                        <span class="slds-media__body">
+                                                                            <span class="slds-truncate"
+                                                                                title={searchResult.label}>
+                                                                                {searchResult.label}
+                                                                            </span>
+                                                                        </span>
+                                                                    </div>
+                                                                </li>
+                                                            </template>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </template>
+                                            <template if:false={ownerData.isStateMO}>
+                                                <lightning-input type="text" label="County" data-name="county"
+                                                    max-length="60" pattern={regPattern}
+                                                    message-when-pattern-mismatch={messagePatternMismatch}
+                                                    disabled={ownerData.isPartialDisable} data-id={ownerData.uniqueId}
+                                                    value={ownerData.county} autocomplete="off" onchange={handleChange}>
+                                                </lightning-input>
+                                            </template>
+                                        </template>
+                                    </div>
+                                </template>
+                            </template>
+                            <!--Individual Section-->
+                            <template if:true={ownerData.isIndividualOwner}>
+                                <template if:false={hideLicensedWithBoardQue}> <!--Added for I-246215-->
+                                <div
+                                    class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_12-of-12">
+                                    <lightning-radio-group class="bordered_radio" required
+                                        data-name={ownerData.isTheOwnerLicensedInMOName} data-id={ownerData.uniqueId}
+                                        label={ownerRadioLabel} autocomplete="off"
+                                        value={ownerData.isTheOwnerLicensedInMO} options={isTheOwnerLicensedInMOOption}
+                                        onchange={handleChange}
+                                        message-when-value-missing={ownerErrorMsg}>
+                                    </lightning-radio-group>
+                                </div>
+                                </template>
+                                <template if:true={ownerData.showOwnerShipSection}>
+                                    <template if:true={ownerData.showLookUpLicense}>
+                                        <div
+                                            class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                                            <c-lpi-custom-lookup-cmp label={typeaheadLabel}
+                                                onlookupupdate={lookupRecord} dat-id={ownerData.uniqueId}
+                                                placeholder="Search License here..." licnesetype="Individual"
+                                                value={ownerData.searchedKey}></c-lpi-custom-lookup-cmp>
+                                        </div>
+                                    </template>
+                                    <template if:false={ownerData.showLookUpLicense}>
+                                        <div
+                                            class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                                            <lightning-input type="text" label={typeaheadLabel}
+                                                data-name="licenseNumber" pattern="^((?!(<)|(>)).)*$" autocomplete="off"
+                                                onchange={handleChange} max-length="18"
+                                                message-when-pattern-mismatch={typeaheadErrorMsg}
+                                                data-id={ownerData.uniqueId} value={ownerData.licenseNumber}>
+                                            </lightning-input>
+                                        </div>
+                                    </template>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <lightning-input type="text" label="First Name" data-name="firstName"
+                                            required={ownerData.isPartialRequired} disabled={ownerData.isPartialDisable}
+                                            data-id={ownerData.uniqueId} pattern={regPattern}
+                                            message-when-pattern-mismatch={messagePatternMismatch} max-length="40"
+                                            value={ownerData.firstName} autocomplete="off" onchange={handleChange}
+                                            message-when-value-missing="Error: First Name is required.">
+                                        </lightning-input>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <lightning-input type="text" label="Middle Name" data-name="middleName"
+                                            max-length="40" disabled={ownerData.isPartialDisable}
+                                            data-id={ownerData.uniqueId} pattern={regPattern}
+                                            message-when-pattern-mismatch={messagePatternMismatch}
+                                            value={ownerData.middleName} autocomplete="off" onchange={handleChange}>
+                                        </lightning-input>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <lightning-input type="text" label="Last Name" data-name="lastName"
+                                            required={ownerData.isPartialRequired} pattern={regPattern}
+                                            message-when-pattern-mismatch={messagePatternMismatch} max-length="80"
+                                            disabled={ownerData.isPartialDisable} data-id={ownerData.uniqueId}
+                                            value={ownerData.lastName} autocomplete="off" onchange={handleChange}
+                                            message-when-value-missing="Error: Last Name is required.">
+                                        </lightning-input>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12">
+                                        <lightning-input type="email" label="Email" data-name="email"
+                                            required={ownerData.isPartialRequired}
+                                            pattern="^([A-Za-z0-9_\-\.\+]+)@([A-Za-z0-9_\-\.]+)\.([A-Za-z]{2,10})$"
+                                            message-when-pattern-mismatch="Invalid email format."
+                                            disabled={ownerData.isPartialDisable} data-id={ownerData.uniqueId}
+                                            value={ownerData.email} autocomplete="off" onchange={handleChange}
+                                            message-when-value-missing="Error: Email is required.">
+                                        </lightning-input>
+                                    </div>
+                                    <template if:true={showDOB}>
+                                        <div
+                                            class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12">
+                                            <lightning-input type="date" label="Date of Birth" data-name="birthdate"
+                                                required={ownerData.isPartialRequired}
+                                                disabled={ownerData.isPartialDisable} data-id={ownerData.uniqueId}
+                                                value={ownerData.birthdate} autocomplete="off" onchange={handleChange}
+                                                message-when-value-missing="Error: Date of Birth is required.">
+                                            </lightning-input>
+                                        </div>
+                                    </template>
+                                    <template if:false={ownerData.isPartialDisable}>
+                                        <div
+                                            class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12">
+                                            <template if:true={ownerData.isPartialRequired}>
+                                                <lightning-input type="text" label="SSN" data-name="SSN"
+                                                    required={ownerData.isUsState} max-length="9" class="validateSSN"
+                                                    pattern="^[0-9]{9}"
+                                                    message-when-pattern-mismatch="Please enter a valid SSN"
+                                                    disabled={ownerData.isPartialDisable} data-id={ownerData.uniqueId}
+                                                    value={ownerData.SSN} autocomplete="off" onchange={handleChange}
+                                                    message-when-value-missing="Error: SSN is required.">
+                                                </lightning-input>
+                                            </template>
+                                            <template if:false={ownerData.isPartialRequired}>
+                                                <lightning-input type="text" label="SSN" data-name="SSN"
+                                                    required={ownerData.isPartialRequired} max-length="9"
+                                                    class="validateSSN" pattern="^[0-9]{9}"
+                                                    message-when-pattern-mismatch="Please enter a valid SSN"
+                                                    disabled={ownerData.isPartialDisable} data-id={ownerData.uniqueId}
+                                                    value={ownerData.SSN} autocomplete="off" onchange={handleChange}
+                                                    message-when-value-missing="Error: SSN is required.">
+                                                </lightning-input>
+                                            </template>
+                                        </div>
+                                    </template>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12">
+                                        <lightning-input type="text" label="Title" data-name="title" required
+                                            maxlength="40" pattern={regPattern}
+                                            message-when-pattern-mismatch={messagePatternMismatch}
+                                            data-id={ownerData.uniqueId} value={ownerData.title} autocomplete="off"
+                                            onchange={handleChange}
+                                            message-when-value-missing="Error: Title is required.">
+                                        </lightning-input>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12">
+                                        <lightning-input type="number" label="Ownership Percentage"
+                                            data-name="ownershipPercent" min="0" max="100" data-id={ownerData.uniqueId}
+                                            value={ownerData.ownershipPercent} autocomplete="off"
+                                            message-when-value-missing="Error: Ownership Percentage is required."
+                                            onchange={handleChange} required formatter="percent-fixed" step="0.01">
+                                        </lightning-input>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-p-top_small">
+                                        <h3>Residence Address</h3>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <lightning-combobox label="Country" data-name="country"
+                                            required={ownerData.isPartialRequired} max-length="40"
+                                            disabled={ownerData.isPartialDisable} data-id={ownerData.uniqueId}
+                                            options={countryOptions} value={ownerData.country} autocomplete="off"
+                                            onchange={handleChange}
+                                            message-when-value-missing="Error: Country is required.">
+                                        </lightning-combobox>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                                        <lightning-input type="text" label="Street Address" data-name="streetAddress1"
+                                            required={ownerData.isPartialRequired} pattern={regPattern}
+                                            message-when-pattern-mismatch={messagePatternMismatch}
+                                            disabled={ownerData.isPartialDisable} data-id={ownerData.uniqueId}
+                                            max-length="255" value={ownerData.streetAddress1} autocomplete="off"
+                                            onchange={handleChange}
+                                            message-when-value-missing="Error: Street Address is required.">
+                                        </lightning-input>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12">
+                                        <lightning-input type="text" label="City" data-name="city"
+                                            required={ownerData.isPartialRequired} max-length="40" pattern={regPattern}
+                                            message-when-pattern-mismatch={messagePatternMismatch}
+                                            disabled={ownerData.isPartialDisable} data-id={ownerData.uniqueId}
+                                            value={ownerData.city} autocomplete="off" onchange={handleChange}
+                                            message-when-value-missing="Error: City is required.">
+                                        </lightning-input>
+                                    </div>
+                                    <template if:true={ownerData.isUsState}>
+                                        <div
+                                            class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12">
+                                            <lightning-combobox label="State" data-name="state"
+                                                required={ownerData.isPartialRequired} max-length="40"
+                                                disabled={ownerData.isPartialDisable} data-id={ownerData.uniqueId}
+                                                options={stateOption} value={ownerData.state} autocomplete="off"
+                                                onchange={handleChange}
+                                                message-when-value-missing="Error: State is required.">
+                                            </lightning-combobox>
+                                        </div>
+                                        <div
+                                            class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12">
+                                            <lightning-input type="text" label="Zip Code" data-name="zipCode"
+                                                required={ownerData.isPartialRequired} pattern="^[0-9]{5}" maxlength="5"
+                                                message-when-pattern-mismatch="Zip Code should be five digits."
+                                                disabled={ownerData.isPartialDisable} data-id={ownerData.uniqueId}
+                                                value={ownerData.zipCode} autocomplete="off" onchange={handleChange}
+                                                message-when-value-missing="Error: Zip Code is required.">
+                                            </lightning-input>
+                                        </div>
+                                    </template>
+                                    <template if:false={ownerData.isUsState}>
+                                        <div
+                                            class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12">
+                                            <lightning-input type="text" label="State" data-name="stateText"
+                                                maxlength="40"
+                                                disabled={ownerData.isPartialDisable} data-id={ownerData.uniqueId}
+                                                value={ownerData.stateText} autocomplete="off" onchange={handleChange}
+                                                pattern={regPattern}
+                                                message-when-pattern-mismatch={messagePatternMismatch}
+                                                message-when-value-missing="Error: State is required.">
+                                            </lightning-input>
+                                        </div>
+                                        <div
+                                            class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12">
+                                            <lightning-input type="text" label="Zip Code" data-name="zipCode"
+                                                pattern="^[a-zA-Z0-9]*$"
+                                                minlength="5" maxlength="10"
+                                                message-when-pattern-mismatch="Please enter correct Zip/Postal Code."
+                                                disabled={ownerData.isPartialDisable} data-id={ownerData.uniqueId}
+                                                value={ownerData.zipCode} autocomplete="off" onchange={handleChange}
+                                                message-when-value-missing="Error: Zip Code is required.">
+                                            </lightning-input>
+                                        </div>
+                                    </template>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12">
+                                        <template if:true={ownerData.isPartialDisable}>
+                                            <lightning-input type="text" label="County" data-name="county"
+                                                max-length="60" pattern={regPattern}
+                                                message-when-pattern-mismatch={messagePatternMismatch}
+                                                disabled={ownerData.isPartialDisable} data-id={ownerData.uniqueId}
+                                                value={ownerData.county} autocomplete="off" onchange={handleChange}>
+                                            </lightning-input>
+                                        </template>
+                                        <template if:false={ownerData.isPartialDisable}>
+                                            <template if:true={ownerData.isStateMO}>
+                                                <div class="county-search">
+                                                    <lightning-input type="search" label="County" data-name="county"
+                                                        max-length="60" pattern={regPattern}
+                                                        message-when-pattern-mismatch={messagePatternMismatch}
+                                                        disabled={ownerData.isPartialDisable}
+                                                        data-id={ownerData.uniqueId} value={ownerData.county}
+                                                        autocomplete="off" onchange={search}>
+                                                    </lightning-input>
+                                                    <div if:true={searchResults} id="listbox-id-6"
+                                                        class="slds-dropdown slds-dropdown_length-with-icon-7 slds-dropdown_fluid"
+                                                        role="listbox">
+                                                        <ul class="slds-listbox slds-listbox_vertical"
+                                                            role="presentation">
+                                                            <template for:each={searchResults} for:item="searchResult">
+                                                                <li key={searchResult.value}
+                                                                    data-name={searchResult.label} role="presentation"
+                                                                    onclick={selectSearchResult}
+                                                                    class="slds-listbox__item">
+                                                                    <div class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small "
+                                                                        role="option">
+                                                                        <span class="slds-media__body">
+                                                                            <span class="slds-truncate"
+                                                                                title={searchResult.label}>
+                                                                                {searchResult.label}
+                                                                            </span>
+                                                                        </span>
+                                                                    </div>
+                                                                </li>
+                                                            </template>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </template>
+                                            <template if:false={ownerData.isStateMO}>
+                                                <lightning-input type="text" label="County" data-name="county"
+                                                    max-length="60" pattern={regPattern}
+                                                    message-when-pattern-mismatch={messagePatternMismatch}
+                                                    disabled={ownerData.isPartialDisable} data-id={ownerData.uniqueId}
+                                                    value={ownerData.county} autocomplete="off" onchange={handleChange}>
+                                                </lightning-input>
+                                            </template>
+                                        </template>
+                                    </div>
+                                </template>
+                            </template>
+                        </div>
+                    </lightning-accordion-section>
+                </div>
+            </lightning-accordion>
+        </template>
+    </div>
+    <!--Button to add additional owner-->
+    <template if:true={ownershipInformationWrap.showAllOwnerShip}>
+        <template if:true={ownershipInformationWrap.showAddOwnerShipDetails}>
+            <div class="slds-size_12-of-12 slds-p-top_medium">
+                <lightning-button class="addAdditionalOwnerBtn" label="Add Additional Owner" onclick={addOwnerShipSection} variant="brand"
+                    icon-name="utility:add"></lightning-button>
+            </div>
+        </template>
+    </template>
+
+    <div class="save-m-btn" style="text-align: end;">
+        <!-- <div class="save-m-btn slds-size_12-of-12 slds-medium-size_3-of-12"> -->
+        <lightning-button label="Save & Next" onclick={nextButton} variant="brand"></lightning-button>
+    </div>
+</template>

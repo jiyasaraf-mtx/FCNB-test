@@ -1,0 +1,38 @@
+<!--
+  @description       : 
+  @author            : Bharath Kumar M
+  @group             : 
+  @last modified on  : 06-18-2024
+  @last modified by  : Bharath Kumar M
+-->
+
+<apex:component >
+    <apex:attribute name="applicationName" description="This is par name" type="String" required="true"/>
+    <apex:attribute name="applicationHeader" description="This is Pdf page header" type="String" required="false"/>
+    <div style="text-align:center;">
+        <div class="page-heading">
+            <!-- <h2>
+                MTX 
+            </h2> -->
+            <h2 class="second-heading-modpr">
+                <b>LPI Accelerator</b>
+            </h2>
+        </div>
+        <div class="pdf-image-logo">
+            <c:LPI_PDFLogo />
+        </div>
+        <apex:outputpanel rendered="{!applicationHeader!=NULL}">
+            <div><h1 class="sectionHeading bold" style="font-weight:500;">{!applicationHeader}</h1></div>
+        </apex:outputpanel>
+        <div>
+            <h3>
+                Application Number
+            </h3>
+        </div>
+        <div>
+            <h1 class="section sectionHeading color-blue bold" style="font-weight:600;">
+                <u>{!applicationName}</u>
+            </h1>
+        </div>
+    </div>
+</apex:component>

@@ -1,0 +1,3 @@
+let styleDefinition =
+      {"state0element0block_element5block_element0":[{"conditions":"default","styleObject":{"class":"slds-col  condition-element vertical-menu slds-size_9-of-12  ","style":"      \n         ","styleProperties":{}}}],"state0element0block_element5block_element0_menuitem_0":[{"conditions":"default","styleObject":{"class":" condition-element   ","style":"","styleProperties":""}}]};
+  export default styleDefinition

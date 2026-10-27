@@ -1,0 +1,182 @@
+<!--
+  @description       : 
+  @author            : MTX Group Product Team
+  @group             : 
+  @last modified on  : 08-16-2024
+  @last modified by  : MTX Group Product Team
+-->
+<template>
+    <div class="backdrop" if:true={showSpinner}>
+        <div class="spinner">
+            <lightning-spinner alternative-text="Loading..."></lightning-spinner>
+        </div>
+    </div>
+
+    <div class="slds-p-around_medium slds-card">
+        <h1 class="section-heading slds-m-bottom_x-small">
+            Remittance Form
+        </h1>
+        <div class="requireMessage asterisk-caption p-b-small">
+            <p>Asterisk (<span class="c-red">*</span>) indicates required field
+            </p>
+        </div>
+        <div class="slds-grid slds-wrap slds-gutters">
+            <div class="slds-col slds-large-size--3-of-3 slds-medium-size--2-of-2 slds-size--1-of-1 m-b-medium">
+                <lightning-input class="coorporateValidate" type="text"
+                    label="Name of private occupational training organization"
+                    placeholder="Enter Name of private occupational training organization" name="accountName"
+                    maxlength="40" onchange={handleAuthInputs} required
+                    message-when-value-missing="Error: Name of private occupational training organization."
+                    pattern={patternObj.name}
+                    message-when-pattern-mismatch="Invalid input. This field only accepts letters and numbers. Special characters are not allowed.">
+                </lightning-input>
+            </div>
+            <!-- <div class="slds-grid slds-wrap slds-gutters"> -->
+            <div class="slds-col slds-large-size--1-of-3 slds-medium-size--1-of-1 slds-size--1-of-1 m-b-medium">
+                <lightning-input class="authContactValidate" type="tel" label="Telephone" placeholder="Enter Telephone"
+                    name="accountPhone" maxlength="10" min-length="10" pattern={patternObj.phone}
+                    message-when-pattern-mismatch="Please enter Telephone only!" onchange={handleAuthInputs}>
+                </lightning-input>
+            </div>
+            <div class="slds-col slds-large-size--1-of-3 slds-medium-size--1-of-1 slds-size--1-of-1 m-b-medium">
+                <!-- <lightning-combobox class="coorporateValidate corporateValidateEmail" name="program"
+                    placeholder="Select Program" label="Program"
+                    required message-when-value-missing="Error: Program is required."
+                    options={programOptions} onchange={handleInputs}>
+                </lightning-combobox> -->
+                <lightning-input class="authContactValidate" type="text" label="Program Title"
+                    placeholder="Enter Program Title" name="program" onchange={handleAuthInputs}>
+                </lightning-input>
+            </div>
+            <!-- tuition -->
+            <div class="slds-col slds-large-size--1-of-3 slds-medium-size--1-of-1 slds-size--1-of-1 m-b-medium">
+                <lightning-input class="authContactValidate" type="number" label="Tuition" formatter="currency"
+                    step=".01" placeholder="Enter Tuition" name="tuitionFee" maxlength="40" onchange={handleAuthInputs}>
+                </lightning-input>
+            </div>
+            <!-- Dates -->
+
+            <div class="slds-col slds-large-size--1-of-2 slds-medium-size--1-of-1 slds-size--1-of-1 m-b-medium">
+                <lightning-input class="coorporateValidate" type="date" label="Start Date of Program"
+                    placeholder="MM/DD/YYYY" name="startDateProgram" maxlength="40" onchange={handleAuthInputs}
+                    pattern={patternObj.dob} message-when-pattern-mismatch="Special characters are not allowed"
+                    date-style="short">
+                </lightning-input>
+            </div>
+            <div class="slds-col slds-large-size--1-of-2 slds-medium-size--1-of-1 slds-size--1-of-1 m-b-medium">
+                <lightning-input class="coorporateValidate" type="date" label="End Date of Program"
+                    placeholder="MM/DD/YYYY" name="endDateProgram" maxlength="40" required
+                    message-when-value-missing="Error: End Date of Program is required." onchange={handleAuthInputs}
+                    pattern={patternObj.dob} message-when-pattern-mismatch="Special characters are not allowed"
+                    date-style="short">
+                </lightning-input>
+
+            </div>
+            <!-- </div> -->
+        </div>
+        <div class="slds-grid slds-wrap slds-gutters">
+            <!-- <div class="slds-col slds-large-size--1-of-1 slds-medium-size--1-of-1 slds-size--1-of-1 m-b-medium">
+                <lightning-combobox class="coorporateValidate corporateValidateEmail" name="program"
+                    placeholder="Select Program" label="Program" required
+                    message-when-value-missing="Error: Program is required." options={programOptions}
+                    onchange={handleInputs}>
+                </lightning-combobox>
+            </div> -->
+            <!-- Mailing Address -->
+            <div class="slds-col slds-large-size--1-of-1 slds-medium-size--1-of-1 slds-size--1-of-1 m-b-medium">
+                <h2 class="bold-20">Address</h2>
+            </div>
+            <div class="slds-col slds-large-size--1-of-1 slds-medium-size--1-of-1 slds-size--1-of-1 m-b-medium">
+                <lightning-input-address name="Mailing-address" address-label="Search Address"
+                    address-lookup-placeholder=" Enter Search Address here" street-placeholder="Enter Street Address"
+                    street-label="Street Address" city-label="City" city-placeholder="Enter City"
+                    country-label="Country" country-placeholder="Enter Country" province-label="Province"
+                    province-placeholder="Enter Province" postal-code-label="Postal Code"
+                    postal-code-placeholder="Enter Postal Code" show-address-lookup onchange={handleAddressChange}
+                    data-id="mailadd" class="address-lookup">
+                </lightning-input-address>
+            </div>
+        </div>
+        <!-- Mailing Address -->
+        <div class="slds-col slds-large-size--1-of-1 slds-medium-size--1-of-1 slds-size--1-of-1 m-b-medium">
+            <h2 class="bold-20">Select Student</h2>
+        </div>
+        <lightning-button label="Add Student" onclick={handleAddRecord} class="slds-m-bottom_small"></lightning-button>
+        <div class="slds-col slds-large-size--1-of-1 slds-medium-size--1-of-1 slds-size--1-of-1 m-b-medium">
+
+            <template if:true={isModalOpen}>
+                <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+                    <div class="slds-modal__container">
+                        <!-- Modal/Popup Header -->
+                        <header class="slds-modal__header">
+                            <lightning-button-icon icon-name="utility:close" onclick={handleCloseModal}
+                                alternative-text="Close" class="slds-modal__close"></lightning-button-icon>
+                            <h2 class="slds-text-heading_medium">Add Student</h2>
+                        </header>
+
+                        <!-- Modal/Popup Body -->
+                        <div class="slds-modal__content slds-p-around_medium">
+                            <lightning-input label="First Name" value={newFirstName} onchange={handleInputChange}
+                                data-id="firstName"></lightning-input>
+                            <lightning-input label="Last Name" value={newLastName} onchange={handleInputChange}
+                                data-id="lastName"></lightning-input>
+                            <lightning-input label="Start Date" type="date" value={newStartDate}
+                                placeholder="MM/DD/YYYY" date-style="short" onchange={handleInputChange}
+                                data-id="startDate"></lightning-input>
+                            <lightning-input label="End Date" type="date" value={newEndDate} placeholder="MM/DD/YYYY"
+                                date-style="short" onchange={handleInputChange} data-id="endDate"></lightning-input>
+                        </div>
+
+                        <!-- Modal/Popup Footer -->
+                        <footer class="slds-modal__footer">
+                            <lightning-button variant="neutral" label="Cancel"
+                                onclick={handleCloseModal}></lightning-button>
+                            <lightning-button variant="brand" label="Save"
+                                onclick={handleSaveRecord}></lightning-button>
+                        </footer>
+                    </div>
+                </section>
+                <div class="slds-backdrop slds-backdrop_open"></div>
+            </template>
+        </div>
+        <div if:true={showDataTable}
+            class="slds-col slds-large-size--1-of-1 slds-medium-size--1-of-1 slds-size--1-of-1 m-b-medium">
+            <lightning-datatable key-field="Id" data={data} columns={columns} onrowselection={handleRowSelection}>
+            </lightning-datatable>
+        </div>
+        <!-- <div class="slds-col slds-large-size--1-of-1 slds-medium-size--1-of-1 slds-size--1-of-1 m-b-medium"> -->
+        <div class="slds-grid slds-wrap slds-gutters">
+            <div class="slds-col slds-large-size--1-of-4 slds-medium-size--1-of-2 slds-size--1-of-1 m-b-medium">
+                <lightning-input type="number" label="Total Number of Students" disabled value={selectedRowsCount}>
+                </lightning-input>
+            </div>
+            <!-- <div>X</div> -->
+            <div class="slds-col slds-large-size--1-of-4 slds-medium-size--1-of-2 slds-size--1-of-1 m-b-medium">
+                <lightning-input type="number" label="Tuition Fee" formatter="currency" step=".01" disabled
+                    value={protectionFeeDetail.tuitionFee}>
+                </lightning-input>
+            </div>
+            <!-- <div>=</div> -->
+            <div class="slds-col slds-large-size--1-of-4 slds-medium-size--1-of-2 slds-size--1-of-1 m-b-medium">
+                <lightning-input type="number" label="Total Tuition" formatter="currency" step=".01"
+                    field-level-help="Total Tuition will be Total Number of Students multiplied by Tuition Fee" disabled
+                    value={totalTuitionFee}>
+                </lightning-input>
+            </div>
+            <!-- X 1% -->
+            <div class="slds-col slds-large-size--1-of-4 slds-medium-size--1-of-2 slds-size--1-of-1 m-b-medium">
+                <lightning-input type="number" label="Total Student Protection Fee Remitted"
+                    field-level-help="Total Student Protection Fee Remitted will be 1% of the Total Tuition"
+                    formatter="currency" step=".01" disabled value={totalStudentRemittedFee}>
+                </lightning-input>
+            </div>
+        </div>
+        <!-- </div> -->
+        <div
+            class="m-b-medium slds-col slds-grid slds-grid--align-end slds-large-size--1-of-1 slds-medium-size--1-of-1 slds-size--1-of-1">
+            <button class="slds-button slds-button_brand" onclick={saveAccount} title="Save">Save</button>
+        </div>
+
+        <!-- </div> -->
+    </div>
+</template>

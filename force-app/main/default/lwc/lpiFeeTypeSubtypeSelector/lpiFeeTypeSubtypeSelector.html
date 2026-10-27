@@ -1,0 +1,31 @@
+<template>
+   <template if:true={showSpinnerParent}>
+       <lightning-spinner class="spins" size="medium" variant="brand" alternative-text="loading.."></lightning-spinner>
+   </template>
+   <template if:true={showSpinner}>
+       <lightning-spinner class="spins" size="medium" variant="brand" alternative-text="loading.."></lightning-spinner>
+   </template>
+   <div class="slds-m-around_medium">
+       <lightning-input
+           label="Application Type"
+           type="text"
+           value={searchKeyType}
+           disabled={isTypeDisabled}
+           required
+       ></lightning-input>
+   </div>
+  
+   <div class="slds-m-around_medium">
+       <lightning-combobox
+           class="targetApplicationSubtype"
+           name="ApplicationSubType"
+           label="Application SubType"
+           options={applicationSubTypeList}
+           value={searchKeySubType}
+           onchange={handleChangeForSubType}  
+           disabled={isSubTypeDisabled}       
+           required
+       >
+       </lightning-combobox>
+   </div>
+</template>

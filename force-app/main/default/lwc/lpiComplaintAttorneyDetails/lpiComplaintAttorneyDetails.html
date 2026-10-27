@@ -1,0 +1,163 @@
+<!--
+  @description       : 
+  @author            : Vamsi Mudaliar
+  @group             : 
+  @last modified on  : 07-10-2024
+  @last modified by  : Uzma Md
+-->
+<template>
+    <div class="slds-grid slds-grid--align-spread slds-grid--vertical-align-center m-t-small m-b-small">
+        <h3 class="bold-18">{labels.complaintAddAttorney}</h3>
+        <lightning-button class="add-btn initialButton" label={labels.complaintAddAttorney} title="Add Attorney"
+        aria-label="Add Attorney" onclick={handleAttorneyModalToggle}>
+        <!-- disabled={disableAddRespondentButton}> -->
+        </lightning-button>
+    </div>
+
+    <template if:true={isModalOpen}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+            aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal_small" onkeydown={handleEscKeyDown}>
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                        aria-label="Close Add or Edit Attorney Modal" onclick={handleAttorneyModalToggle}>
+                        <lightning-icon icon-name="utility:close" variant="inverse" size="small"></lightning-icon>
+                    </button>
+                    <h1 id="modal-heading-01" class="section-heading slds-m-bottom_x-small">
+                        {labels.complaintAddEditAttorney}</h1>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <!-- We will be adding Two Questions Separtely.  -->
+                        <div class="slds-text-heading_small slds-m-bottom_medium mandatory-text">
+                            <p class="asterisk-caption m-b-medium">{labels.complaintAsterisk} (<span class="c-red">*</span>) {labels.complaintAsteriskRequiredField}</p>
+                            <p class="m-b-medium">{labels.complaintPleaseType} <strong>{labels.complaintUnknown}</strong> {labels.complaintRequiredFieldsUnknown}</p>
+                        </div>
+
+                    <div class="slds-grid slds-gutters slds-wrap">
+                        <!-- <div class="slds-col"> -->
+                            <!-- <div class="slds-grid slds-gutters"> -->
+                            <div class="slds-col slds-size_4-of-12">
+                                    <lightning-input type="text" required=true placeholder={labels.complaintEnterAttorneyFirstName}
+                                        class="respondentWitness" pattern={patternObj.text}
+                                        label={labels.complaintAttorneyFirstName} value={attorneyInfo.firstName}
+                                        name="firstName" max-length="40" onchange={handleInputChange}
+                                        data-attorney="true" message-when-value-missing={labels.complaintAttorneyFirstNameRequiredError}>
+                                    </lightning-input>
+                            </div>
+            
+                            <div class="slds-col slds-size_4-of-12">
+                                    <lightning-input type="text" class="respondentWitness" placeholder={labels.complaintEnterAttorneyMiddleName}
+                                        pattern={patternObj.text} label={labels.complaintAttorneyMiddleName}
+                                        value={attorneyInfo.middleName} name="middleName" max-length="40"
+                                        onchange={handleInputChange} data-attorney="true">
+                                    </lightning-input>
+                            </div>
+            
+                            <div class="slds-col slds-size_4-of-12">
+                                    <lightning-input type="text" required=true placeholder={labels.complaintEnterAttorneyLastName}
+                                        class="respondentWitness" pattern={patternObj.text}
+                                        label={labels.complaintAttorneyLastName} value={attorneyInfo.lastName}
+                                        name="lastName" max-length="80" onchange={handleInputChange}
+                                        data-attorney="true" message-when-value-missing={labels.complaintLastNameRequiredError}>
+                                    </lightning-input>
+                            </div>
+                            <!-- </div> -->
+                        <!-- </div> -->
+                        <!-- Attorney Address Starts - - - - Vamsi -->
+                        <div class="slds-col slds-m-top_large slds-size_4-of-12">
+                            <h2 id="modal-heading-06" class="section-heading slds-m-bottom_x-small ">
+                               {labels.complaintAttorneyAddress}
+                            </h2>
+                        </div>
+                        <div class="slds-col slds-size_12-of-12">
+                            <lightning-input type="text" class="respondentWitness" pattern={patternObj.text} placeholder={labels.complaintEnterStreetAddress}
+                                label={labels.complaintStreetAddress} aria-label="Street Address of Attorney Address"
+                                value={attorneyInfo.addressData.streetOne} name="streetOne" max-length="255"
+                                onchange={handleInputChange} data-attorney="true" data-address="true">
+                            </lightning-input>
+                        </div>
+            
+                        <div class="slds-col">
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_6-of-12">
+                                    <lightning-input type="text" class="respondentWitness" placeholder={labels.complaintEnterCityTown}
+                                        aria-label="City of Attorney Address" pattern={patternObj.text}
+                                        label={labels.complaintCityTown} value={attorneyInfo.addressData.city} name="city"
+                                        max-length="40" onchange={handleInputChange} data-attorney="true"
+                                        data-address="true">
+                                    </lightning-input>
+                                </div>
+            
+                                <div class="slds-col slds-size_6-of-12">
+            
+                                    <lightning-combobox label={labels.complaintState} options={stateOptions} placeholder={labels.complaintSelectState}
+                                        value={attorneyInfo.addressData.state} name="state"
+                                        aria-label="State of Attorney Address" data-address="true"
+                                        max-length="80" class="respondentWitness"
+                                        onchange={handleInputChange} data-attorney="true">
+                                    </lightning-combobox>
+                                </div>
+                            </div>
+                        </div>
+            
+                        <div class="slds-col slds-size_6-of-12 slds-p-right_small">
+                            <lightning-input type="text" label={labels.complaintZipCode} name="zipCode" data-address="true"
+                                data-attorney="true" max-length="10" placeholder={labels.complaintEnterZipCode}
+                                value={attorneyInfo.addressData.zipCode}
+                                pattern={patternObj.zipCode} aria-label="Zip code of Attorney Address"
+                                message-when-pattern-mismatch={labels.complaintZipCodePatternError}
+                                class="respondentWitness" onchange={handleInputChange}>
+                            </lightning-input>
+                        </div>
+                        <!-- Attorney Address Ends - - - - Vamsi -->
+            
+                        <div class="slds-col">
+                            <div class="slds-grid slds-gutters slds-wrap">
+                                <div class="slds-col slds-size_6-of-12">
+                                    <lightning-input type="tel" data-attorney="true" placeholder={labels.complaintEnterAttorneyPhone}
+                                        class="phoneNumberField" label={labels.complaintAttorneyPhone}
+                                        aria-label="Attorney Phone of Attorney Address"
+                                        value={attorneyInfo.attorneyPhone} name="attorneyPhone"
+                                        max-length="14" onchange={handleInputChange}
+                                        pattern={patternObj.digits}
+                                        message-when-pattern-mismatch={labels.complaintEntryDoesNotMatchPattern} required=true message-when-value-missing={labels.complaintPhoneNumberRequiredError}>
+                                    </lightning-input>
+                                </div>
+                                <div class="slds-col slds-size_6-of-12">
+                                    <lightning-input type="email" name="attorneyEmail" placeholder={labels.complaintEnterAttorneyEmail}
+                                        label={labels.complaintAttorneyEmail} class="" data-attorney="true"
+                                        value={attorneyInfo.attorneyEmail} max-length="80"
+                                        aria-label="Attorney Email of Attorney Address"
+                                        pattern={patternObj.email} onchange={handleInputChange} required=true message-when-value-missing={labels.complaintEmailRequiredError}> 
+                                    </lightning-input>
+                                </div>
+                                <div class="slds-col slds-size_6-of-12">
+                                    <lightning-input type="text" name="comments" placeholder={labels.complaintEnterComments}
+                                        label={labels.complaintComments} class="" data-attorney="true"
+                                        value={attorneyInfo.comments} max-length="100"
+                                        aria-label="Attorney Comments"
+                                        pattern={patternObj.text} onchange={handleInputChange}> 
+                                    </lightning-input>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <footer class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" onclick={handleAttorneyModalToggle}
+                        title="Cancel">{labels.complaintCancel}</button>
+                    <button class="slds-button slds-button_brand" onclick={saveAttorneyDetails}
+                        title="Save">{labels.complaintSave}</button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+
+        <!-- <h3 class="section-heading slds-m-bottom_x-small">Add/Edit Attorney</h3> -->
+<!-- 
+        <div class="slds-grid slds-grid_vertical">
+           
+        </div> -->
+
+</template>

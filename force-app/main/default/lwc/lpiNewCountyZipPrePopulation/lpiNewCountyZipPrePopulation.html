@@ -1,0 +1,212 @@
+<!--
+  @description       : 
+  @author            : Bharath Kumar M
+  @group             : 
+  @last modified on  : 05-28-2024
+  @last modified by  : Bharath Kumar M
+-->
+<template>
+    <template if:true={errorMessages}>
+        <ul>
+            <template for:each={errorMessages} for:item="errorMessage">
+                <li key={errorMessage}>{errorMessage}</li>
+            </template>
+        </ul>
+    </template>
+
+    <div class="slds-grid slds-wrap slds-gutters PI-NewCountyZipPrePopulation">
+        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+            <!-- <div class="slds-form-element"> -->
+                <!-- Street Address -->
+                <lightning-input
+                    class="validateZipcode"
+                    type="text"
+                    label="Street Address"
+                    value={dataObj.streetaddress}
+                    name={streetaddressname}
+                    onchange={handleInputs}
+                    placeholder="Enter street address"
+                    required
+                    max-length="255"
+                    data-id={streetaddressname}
+                    message-when-value-missing="Error: Street Address is required."
+                    onblur={handleErrorMsgsOnBlur}
+                >
+                </lightning-input>
+                <template if:true={streetRequired}>
+                    <div class="error-message">Error: Street Address is required.</div>
+                </template>
+            <!-- </div> -->
+        </div>
+
+        <template if:true={isCountryVisible}>
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                <!-- <div class="slds-form-element"> -->
+                    <!-- Country -->
+                    <lightning-combobox
+                        class="validateZipcode"
+                        label="Country"
+                        value={dataObj.country}
+                        options={countryOptions}
+                        name={countryname}
+                        onchange={handleInputs}
+                        placeholder="Enter country"
+                        required
+                        data-id={countryname}
+                        message-when-value-missing="Error: Country is required."
+                        onblur={handleErrorMsgsOnBlur}
+                        disabled={isCountryRO}
+                    >
+                    </lightning-combobox>
+                    <template if:true={countryRequired}>
+                        <div class="error-message">Error: Country is required.</div>
+                    </template>
+                </div>
+            <!-- </div> -->
+        </template>
+
+        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+            <!-- <div class="slds-form-element"> -->
+                <!-- State Picklist -->
+                <template if:true={isUS}>
+                    <lightning-combobox
+                        class="validateZipcode"
+                        label="State"
+                        value={dataObj.statepicklist}
+                        options={stateOptions}
+                        name={statepicklistname}
+                        onchange={handleInputs}
+                        required
+                        placeholder="Enter state"
+                        data-id={statepicklistname}
+                        message-when-value-missing="Error: State is required."
+                        onblur={handleErrorMsgsOnBlur}
+                    >
+                    </lightning-combobox>
+                    <template if:true={statePicklistRequired}>
+                        <div class="error-message">Error: State is required.</div>
+                    </template>
+                </template>
+
+                <!-- State Text -->
+                <template if:false={isUS}>
+                    <lightning-input
+                        class="validateZipcode"
+                        type="text"
+                        label="State"
+                        value={dataObj.statetext}
+                        name={statetextname}
+                        placeholder="Enter State"
+                        onchange={handleInputs}
+                        required={isFieldRequired}
+                        max-length="40"
+                        data-id={statetextname}
+                        message-when-value-missing="Error: State is required."
+                        onblur={handleErrorMsgsOnBlur}
+                    >
+                    </lightning-input>
+                    <template if:true={stateTextRequired}>
+                        <div class="error-message">Error: State is required.</div>
+                    </template>
+                </template>
+            </div>
+        <!-- </div> -->
+
+        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+            <!-- <div class="slds-form-element"> -->
+                <template if:true={isUS}>
+                    <!-- US Zipcode -->
+                    <lightning-input
+                        class="validateZipcode"
+                        type="text"
+                        label="Zip Code"
+                        value={dataObj.zipcode}
+                        name={zipname}
+                        placeholder="Enter Zip Code"
+                        onchange={handleInputs}
+                        required
+                        min-length="5"
+                        max-length="5"
+                        data-id={zipname}
+                        message-when-value-missing="Error: Zip Code is required."
+                        onblur={handleErrorMsgsOnBlur}
+                    >
+                    </lightning-input>
+                    <template if:true={zipRequired}>
+                        <div class="error-message">Error: Zip Code is required.</div>
+                    </template>
+                </template>
+                <template if:false={isUS}>
+                    <!-- NON-US Zipcode -->
+                    <lightning-input
+                        class="validateZipcode"
+                        type="text"
+                        label="Zip Code"
+                        value={dataObj.zipcode}
+                        name={zipname}
+                        placeholder="Enter Zip Code"
+                        onchange={handleInputs}
+                        required={isFieldRequired}
+                        min-length="4"
+                        max-length="10"
+                        data-id={zipname}
+                        message-when-value-missing="Error: Zip Code is required."
+                        onblur={handleErrorMsgsOnBlur}
+                    >
+                    </lightning-input>
+                    <template if:true={zipRequired}>
+                        <div class="error-message">Error: Zip Code is required.</div>
+                    </template>
+                </template>
+            <!-- </div> -->
+        </div>
+
+        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+            <!-- <div class="slds-form-element"> -->
+                <!-- City -->
+                <lightning-input
+                    class="validateCity"
+                    type="text"
+                    label="City"
+                    value={dataObj.city}
+                    placeholder="Enter City"
+                    name={cityname}
+                    maxlength="40"
+                    onchange={handleInputs}
+                    required
+                    data-id={cityname}
+                    message-when-value-missing="Error: City is required."
+                    onblur={handleErrorMsgsOnBlur}
+                >
+                </lightning-input>
+                <template if:true={cityRequired}>
+                    <div class="error-message">Error: City is required.</div>
+                </template>
+            <!-- </div> -->
+        </div>
+
+        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+            <!-- <div class="slds-form-element"> -->
+                <!-- County -->
+                <lightning-input
+                    class="validateCounty"
+                    type="text"
+                    label="County"
+                    value={dataObj.county}
+                    name={countyname}
+                    placeholder="Enter county"
+                    maxlength="40"
+                    onchange={handleInputs}
+                    required={isCountyRequired}
+                    data-id={countyname}
+                    message-when-value-missing="Error: County is required."
+                    onblur={handleErrorMsgsOnBlur}
+                >
+                </lightning-input>
+                <template if:true={countyRequired}>
+                    <div class="error-message">Error: County is required.</div>
+                </template>
+            <!-- </div> -->
+        </div>
+    </div>
+</template>

@@ -1,0 +1,57 @@
+<!--
+  @description       : End Visit Modal Popup(S-52838)
+  @author            : Vamshi Kumar
+  @group             : 
+  @last modified on  : 08-03-2023
+  @last modified by  : Mohit Karani
+-->
+<template>
+    <div if:true={showSpinner}>
+        <lightning-spinner size="medium" alternative-text="Loading..."></lightning-spinner>
+    </div>
+    <template if:true={displayCmp}>
+        <header class="slds-modal__header slds-p-around_xx-small">
+            <h2 class="slds-text-heading_medium slds-hyphenate">End Inspection? </h2>
+        </header>
+        <div class="slds-grid slds-wrap">
+            <div if:false={isInprogress} class="slds-col slds-size_12-of-12 slds-m-bottom_x-small">
+                <div class="slds-modal__content slds-p-top_x-small">
+                    <p><strong>One or more mandatory tasks are incomplete.</strong></p>
+                </div>
+                <div class="slds-modal__content slds-p-top_x-small">
+                    <p>You can go back and finish all mandatory tasks or abandon the inspection now.</p>
+                </div>
+                <div class="slds-modal__content slds-p-top_small">
+                    <p>Do you want to abandon the inspection?</p>
+                </div>
+                <div class="input-group">
+                    <lightning-textarea label="" placeholder="Additional comments..." rows="5"
+                        onchange={handleTextAreaChange} name="AbandonComment"></lightning-textarea>
+                </div>
+                <div class="slds-p-top_x-small">
+                    <lightning-button variant="brand" label="Abandon Inspection" onclick={handleClickVisit} name="Abandon"
+                        class="slds-float_right"></lightning-button>
+                    <lightning-button label="Go Back" onclick={closeQuickAction} class="slds-float_left"></lightning-button>
+                </div>
+            </div>
+            <div if:true={isInprogress} class="slds-col slds-size_12-of-12 slds-m-bottom_x-small">
+                <div class="slds-modal__content slds-p-top_x-small">
+                    <p><strong>You've finished all your tasks.</strong></p>
+                </div>
+                <div class="slds-modal__content slds-p-top_x-small">
+                    <p>You can either review or complete the inspection now.</p>
+                </div>
+                <div class="input-group">
+                    <lightning-textarea label="" placeholder="Additional comments..." rows="5"
+                        onchange={handleTextAreaChange} name="CompleteComment"></lightning-textarea>
+                </div>
+                <div class="slds-p-around_x-small">
+                    <lightning-button variant="brand" label="Complete Inspection" onclick={handleClickVisit} name="Complete"
+                        class="slds-float_right"></lightning-button>
+                    <lightning-button label="Go Back" onclick={closeQuickAction} class="slds-float_left"></lightning-button>
+                </div>
+            </div>
+        </div>
+    </template>
+   
+</template>

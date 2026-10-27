@@ -1,0 +1,57 @@
+<!-- sldsValidatorIgnore -->
+<template>
+    <lightning-quick-action-panel header="Deposit and Reconciliation License Actions">
+        <div if:true={showSpinner}>
+            <lightning-spinner size="medium" alternative-text="Loading"></lightning-spinner>
+        </div>
+        <template if:false={showModal}>
+            <div class="slds-col slds-size_1-of-1 licenses-details__right">
+                <div if:true={showButtons}>
+                    <lightning-card>
+                        <div class="slds-m-bottom_large">
+                            <div class="button-group">
+                                <template for:each={buttonData} for:item="item" for:index="ind">
+                                    <lightning-button  key={item.buttonName} variant="brand" label={item.buttonLable} data-name={item.buttonJSONData} data-id={ind} onclick={navigateToPaymentPage} class="slds-m-around_x-small slds-m-bottom_xx-small"></lightning-button>
+                                </template>
+                            </div>
+                        </div>
+                    </lightning-card>
+                </div>
+                <div class="slds-p-around_medium" if:false={showButtons}>
+                    <p>No action available.</p>
+                </div>
+            </div>
+        </template>
+        <template if:true={showModal}>
+            <div>
+                <div class="slds-p-around_medium bordered_radio">
+                    <lightning-radio-group name="selectType"
+                                        data-id="selecttype"
+                                        label={modalHeaderTitle}
+                                        options={childButtonList}
+                                        value={subtype}
+                                        type="radio"
+                                        onchange={handleChangeSubType} 
+                                        required>
+                    </lightning-radio-group>
+                    <template if:true={showChildOfchild}>
+                        <lightning-radio-group name="childType"
+                                        data-id={subtype}
+                                        label={childHeadingValue}
+                                        options={childOfchildOption}
+                                        value={childValue}
+                                        type="radio"
+                                        onchange={handleChildChangeType} 
+                                        required>
+                        </lightning-radio-group>
+                    </template>
+                </div>
+                <div class="slds-modal__footer">
+                    <button class="slds-button slds-button_outline-brand" onclick={handlePreviousClick}>Previous</button>
+                    <button class="slds-button slds-button_brand" onclick={navigateToPaymentPage}>Continue</button>
+                </div>
+            </div>
+        </template>
+    </lightning-quick-action-panel>
+    
+</template>

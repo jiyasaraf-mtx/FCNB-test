@@ -1,0 +1,213 @@
+<!--
+  @description       : 
+  @author            : MTX Group Product Team
+  @group             : 
+  @last modified on  : 08-16-2024
+  @last modified by  : MTX Group Product Team
+-->
+<template>
+    <div class="backdrop" if:true={showSpinner}>
+        <div class="spinner">
+            <lightning-spinner alternative-text="Loading..."></lightning-spinner>
+        </div>
+    </div>
+    <!-- Button to open the modal -->
+    <lightning-button class="corpOfficerFocusButton base-institution-profile-btn m-r-xl" label={labels.createInstitutionProfile}
+        title={labels.createInstitutionProfile} variant="base" onclick={openModal}
+        aria-label={labels.createInstitutionProfile}>
+    </lightning-button>
+    <template if:true={isModalOpen}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-02" aria-modal="true"
+            aria-describedby="modal-content-id-2"
+            class="slds-modal slds-fade-in-open add-coorporate-modal slds-modal_small">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                        title="Close" onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
+                            size="small"></lightning-icon>
+                        <span class="slds-assistive-text">Close Create institution profile</span>
+                    </button>
+                    <h1 id="modal-heading-02" class="section-heading slds-m-bottom_x-small">
+                        Add Institution Profile</h1>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+                    <div class="requireMessage asterisk-caption p-b-small">
+                        <p>Asterisk (<span class="c-red">*</span>) indicates required field
+                        </p>
+                    </div>
+                    <div class="slds-grid slds-wrap slds-gutters">
+                        <div class="slds-col slds-large-size--3-of-3 slds-medium-size--2-of-2 slds-size--1-of-1 m-b-medium">
+                            <lightning-input class="coorporateValidate" type="text"
+                                label="Name of private occupational training organization"
+                                placeholder="Enter Name of private occupational training organization"
+                                name="accountName" maxlength="40" value={accountWrapper.accountName}
+                                onchange={handleAuthInputs} required
+                                message-when-value-missing="Error: Name of private occupational training organization."
+                                pattern={patternObj.name}
+                                message-when-pattern-mismatch="Invalid input. This field only accepts letters and numbers. Special characters are not allowed.">
+                            </lightning-input>
+                        </div>
+                    </div>
+                    <div class="slds-grid slds-wrap slds-gutters">
+                        <div class="slds-col slds-large-size--1-of-3 slds-medium-size--1-of-2 slds-size--1-of-1 m-b-medium">
+
+                            <!--Web Site-->
+                            <lightning-input class="authContactValidate" type="tel" label="Web Site Address"
+                                placeholder="Enter Web Site Address" name="accountWebsite" onchange={handleAuthInputs}
+                                value={accountWrapper.accountWebsite}>
+                            </lightning-input>
+                        </div>
+                        <!--Telephone-->
+                        <div class="slds-col slds-large-size--1-of-3 slds-medium-size--1-of-2 slds-size--1-of-1 m-b-medium">
+
+                            <lightning-input class="authContactValidate" type="tel" label="Telephone"
+                                placeholder="Enter Telephone" name="accountPhone" maxlength="10" min-length="10"
+                                pattern={patternObj.phone} message-when-pattern-mismatch="Please enter Telephone only!"
+                                onchange={handleAuthInputs} value={accountWrapper.accountPhone}>
+                            </lightning-input>
+                        </div>
+                        <!-- Email -->
+                        <div class="slds-col slds-large-size--1-of-3 slds-medium-size--1-of-2 slds-size--1-of-1 m-b-medium">
+                            <lightning-input class="authContactValidate authContactValidateEmail" type="email"
+                                label="E-mail" placeholder="Enter E-mail" name="accountEmail" maxlength="40" required
+                                message-when-value-missing="Error: E-mail is required." onchange={handleAuthInputs}
+                                value={accountWrapper.accountEmail} pattern={patternObj.email}
+                                message-when-pattern-mismatch="Invalid email format.">
+                            </lightning-input>
+                        </div>
+
+                        <div class="slds-col slds-large-size--1-of-3 slds-medium-size--1-of-2 slds-size--1-of-1 m-b-medium">
+                            <!-- Fax -->
+                            <lightning-input class="authContactValidate" type="tel" label="Fax" placeholder="Enter Fax"
+                                name="accountFax" pattern={patternObj.phone}
+                                message-when-pattern-mismatch="Please enter Fax only!" onchange={handleAuthInputs}
+                                value={accountWrapper.accountFax}>
+                            </lightning-input>
+                        </div>
+                    </div>
+                    <div class="slds-grid slds-wrap slds-gutters">
+                        <!-- Mailing Address -->
+                        <div class="slds-col slds-large-size--1-of-1 slds-medium-size--1-of-1 slds-size--1-of-1 m-b-medium">
+                            <h2 class="bold-20">Mailing Address</h2>
+                        </div>
+                        <div class="slds-col slds-large-size--1-of-1 slds-medium-size--1-of-1 slds-size--1-of-1 m-b-medium">
+                            <lightning-input-address name="Mailing-address" address-label="Search Address"
+                                address-lookup-placeholder=" Enter Search Address here"
+                                street-placeholder="Enter Street Address" street-label="Street Address"
+                                city-label="City" city-placeholder="Enter City" country-label="Country"
+                                country-placeholder="Enter Country" province-label="Province"
+                                province-placeholder="Enter Province" postal-code-label="Postal Code"
+                                postal-code-placeholder="Enter Postal Code" show-address-lookup
+                                onchange={handleAddressChange} data-id="mailadd" class="address-lookup">
+                            </lightning-input-address>
+                        </div>
+                        <!-- Mailing Address -->
+                        <div class="slds-col slds-large-size--1-of-1 slds-medium-size--1-of-1 slds-size--1-of-1 m-b-medium">
+                            <h2 class="bold-20">Street Address</h2>
+                        </div>
+                        <div class="slds-col slds-large-size--1-of-1 slds-medium-size--1-of-1 slds-size--1-of-1 m-b-medium">
+                            <lightning-input-address name="Street-address" address-label="Search Address"
+                                address-lookup-placeholder=" Enter Search Address here"
+                                street-placeholder="Enter Street Address" street-label="Street Address"
+                                city-label="City" city-placeholder="Enter City" country-label="Country"
+                                country-placeholder="Enter Country" province-label="Province"
+                                province-placeholder="Enter Province" postal-code-label="Postal Code"
+                                postal-code-placeholder="Enter Postal Code" show-address-lookup
+                                onchange={handleAddressChange} data-id="mailadd" class="address-lookup">
+                            </lightning-input-address>
+                        </div>
+                    </div>
+                    <!-- <div class="slds-col slds-large-size--1-of-3 slds-medium-size--1-of-2 slds-size--1-of-1">
+                            <lightning-input class="coorporateValidate" type="text" label="Street Address "
+                                placeholder="Enter Street Address " name="addressData.street1" maxlength="255"
+                                value={accountWrapper.addressData.street1} onchange={handleInputChange} required
+                                message-when-value-missing="Error: Street Address  is required."
+                                pattern={patternObj.text} aria-label="Street Address of Mailing Address"
+                                message-when-pattern-mismatch="Invalid input. This field only accepts letters and numbers. Special characters are not allowed.">
+                            </lightning-input>
+                        </div>
+                        <div class="slds-col slds-large-size--1-of-3 slds-medium-size--1-of-2 slds-size--1-of-1">
+                            <lightning-combobox class="coorporateValidate" name="addressData.country" label="Country"
+                                value={accountWrapper.addressData.country} required
+                                message-when-value-missing="Error: Country is required."
+                                aria-label="Country of Mailing Address" options={countryOptions}
+                                onchange={handleInputChange}>
+                            </lightning-combobox>
+                        </div>
+                        <div class="slds-col slds-large-size--1-of-3 slds-medium-size--1-of-2 slds-size--1-of-1">
+                            <lightning-input class="coorporateValidate" type="text" label="City"
+                                placeholder="Enter City" name="addressData.city" maxlength="40"
+                                value={accountWrapper.addressData.city} onchange={handleInputChange} required
+                                message-when-value-missing="Error: City is required."
+                                aria-label="City of Mailing Address" pattern={patternObj.text}
+                                message-when-pattern-mismatch="Invalid input. This field only accepts letters and numbers. Special characters are not allowed.">
+                            </lightning-input>
+                        </div>
+                            <div class="slds-col slds-large-size--1-of-3 slds-medium-size--1-of-2 slds-size--1-of-1">
+                                <lightning-input class="coorporateValidate" type="text" label="Zip/Postal Code"
+                                    placeholder="Enter Zip/Postal Code" name="addressData.zipcode" minlength="5"
+                                    maxlength="5" value={accountWrapper.addressData.zipcode}
+                                    onchange={handleInputChange} required
+                                    message-when-value-missing="Error: Zip/Postal Code is required."
+                                    pattern={patternObj.zipCodeUS} aria-label="Zip or Postal code of Mailing Address"
+                                    message-when-pattern-mismatch="Please enter correct Zip/Postal Code">
+                                </lightning-input>
+                            </div> -->
+
+                    <!-- <template if:false={isMailingAddressUS}>
+                            <div class="slds-col slds-large-size--1-of-3 slds-medium-size--1-of-2 slds-size--1-of-1">
+                                <lightning-input class="coorporateValidate" type="text" label="Zip/Postal Code"
+                                    placeholder="Enter Zip/Postal Code" name="addressData.zipcode" minlength="5"
+                                    maxlength="10" value={accountWrapper.addressData.zipcode}
+                                    onchange={handleInputChange} required
+                                    message-when-value-missing="Error: Zip/Postal Code is required."
+                                    pattern={patternObj.zipCodeNonUS}
+                                    message-when-pattern-mismatch="Please enter correct Zip/Postal Code">
+                                </lightning-input>
+                            </div>
+                        </template> -->
+
+                    <!-- Province Picklist-->
+                    <!-- <template if:true={isMailingAddressUS}> -->
+                    <!-- <div class="slds-col slds-large-size--1-of-3 slds-medium-size--1-of-2 slds-size--1-of-1">
+                        <lightning-combobox class="coorporateValidate" name="addressData.state"
+                            placeholder="Enter Province" label="Province" value={accountWrapper.addressData.state} required
+                            message-when-value-missing="Error: Province is required." aria-label="Province of Mailing Address"
+                            options={stateOptions} onchange={handleInputChange}>
+                        </lightning-combobox>
+                    </div> -->
+                    <!-- </template> -->
+
+                    <!-- Province Text -->
+                    <!-- <template if:false={isMailingAddressUS}>
+                            <div class="slds-col slds-large-size--1-of-3 slds-medium-size--1-of-2 slds-size--1-of-1">
+                                <lightning-input class="coorporateValidate" type="text" label="Province"
+                                    placeholder="Enter Province " name="addressData.stateText" maxlength="40"
+                                    value={accountWrapper.addressData.stateText} onchange={handleInputChange} required
+                                    message-when-value-missing="Error: Province is required." pattern={patternObj.text}
+                                    aria-label="Province of Mailing Address"
+                                    message-when-pattern-mismatch="Invalid input. This field only accepts letters and numbers. Special characters are not allowed.">
+                                </lightning-input>
+                            </div>
+                        </template> -->
+
+                    <!-- <div class="slds-col slds-large-size--1-of-3 slds-medium-size--1-of-2 slds-size--1-of-1">
+                            <lightning-input class="coorporateValidate" type="text" label="County"
+                                aria-label="County of Mailing Address" placeholder="Enter County "
+                                name="addressData.county" maxlength="40" value={accountWrapper.addressData.county}
+                                onchange={handleInputChange} pattern={patternObj.text}
+                                message-when-pattern-mismatch="Invalid input. This field only accepts letters and numbers. Special characters are not allowed.">
+                            </lightning-input>
+                        </div> -->
+                </div>
+                <footer class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" onclick={closeModal} title="Cancel">Cancel</button>
+                    <button class="slds-button slds-button_brand" onclick={saveAccount} title="Save">Save</button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+
+</template>

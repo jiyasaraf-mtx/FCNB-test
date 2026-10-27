@@ -1,0 +1,26 @@
+<template>
+    <div class="homepage">
+        <div class="slds-card m-b-medium">
+            <div class="slds-grid slds-wrap slds-gutters slds-grid_vertical-align-center">
+                <div class="slds-col slds-large-size_9-of-12 slds-medium-size_12-of-12 slds-size_12-of-12">
+                    <h1 class="bold-32 m-b-xms">Welcome to Employer Portal</h1>
+                    <p>Welcome to MTX LPI Home Page. Here you can apply online for a new license, renew a current license, and file a complaint, among other actions related to professional registration and licensure.</p>
+                    <div class="divider"></div>
+                    <div class="slds-grid banner-btns">
+                        <lightning-button variant="base" label="Apply for License" title="Apply for License" onclick={navigateToApplyForLicense} class="base-link base-apply-btn m-r-xl"></lightning-button>
+                        <lightning-button variant="base" label="Renew License" title="Renew License" onclick={navigateToRenewLicense} class="base-link base-renew-btn m-r-xl"></lightning-button>
+                        <lightning-button variant="base" label="File Complaint" title="File Complaint" onclick={navigateToFileComplaints} class="base-link base-file-btn"></lightning-button>
+                    </div>
+                </div>
+                <div class="slds-col slds-large-size_3-of-12 slds-medium-size_12-of-12 slds-size_12-of-12">
+                    <div class="slds-grid slds-grid_align-center slds-grid_vertical-align-center">
+                        <img src={dashboardImg} alt="" srcset="">
+                    </div>
+                </div>
+            </div>
+        </div>
+ 
+     
+       
+    </div>
+</template>

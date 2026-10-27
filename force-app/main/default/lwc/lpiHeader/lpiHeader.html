@@ -1,0 +1,181 @@
+<!--
+  @description       : 
+  @author            : MTX(Vipin Agarwal)
+  @group             : 
+  @last modified on  : 08-27-2026
+  @last modified by  : Juhi Goel
+-->
+<template>
+    <div if:false={cmpHide} class="lpi-header d-flex justify-content-between">
+        <!-- <a class="skip-link" tabindex="0" href="#main-content-1">Skip to main content</a> -->
+        <div class="d-flex slds-grid--vertical-align-center brand-logo">
+            <div class="menu slds-p-right_large" id="menu" onclick={toggleSidebar}>
+                <a href="javascript:void(0)">
+                    <img src={menu} alt="Vertical Menu" />
+                </a>
+            </div>
+            <div class="brand-name slds-m-right_xx-large" onclick={handleHome}>
+                <a href="javascript:void(0)" title="LPI Logo">
+                    <img src={logo} alt="LPI Logo" style="width: 20%;">
+                </a>
+            </div>
+            <!-- <div class="search-input">
+                <lightning-input name="enter-search" label="search" variant="label-hidden" type="search"
+                    placeholder="What are you looking for"></lightning-input>
+            </div> -->
+        </div>
+
+        <div class="header-nav d-flex">
+            <div class="slds-grid slds-grid--vertical-align-center">
+                <div class="lp-language-selector slds-m-right_medium" style="min-width: 9rem;">
+                    <lightning-combobox
+                        name="portalLanguage"
+                        label="Language"
+                        value={selectedLanguage}
+                        placeholder="Language"
+                        options={languageOptions}
+                        onchange={handleLanguageChange}
+                        variant="label-hidden"
+                        disabled={languageUpdating}
+                    ></lightning-combobox>
+                </div>
+                <div if:false={isMainBusinessAccount} class="profile-name business-dropdown">
+                    <lightning-helptext class="bussiness-helptext" content={labels.switchAccountHelp}></lightning-helptext>
+                    <div class="bussiness-select">
+                        <p class="user-role">{labels.selectedAccount}</p>
+                        <div class="header-menu slds-m-right_x-small">
+                            <lightning-button-menu alternative-text="Show menu" onselect={handleChange} variant="bare"
+                                label={selectedAccountName}>
+                                <template for:each={acrList} for:item="item">
+                                    <lightning-menu-divider key={item} if:false={item.Id}></lightning-menu-divider>
+                                    <lightning-menu-subheader key={item} if:false={item.Id} label={item.Name}>
+                                    </lightning-menu-subheader>
+                                    <lightning-menu-divider key={item} if:false={item.Id}></lightning-menu-divider>
+                                    <template if:true={item.Id}>
+                                        <lightning-menu-item icon-name="utility:check" name={item.Id} key={item}
+                                            if:true={item.showIcon} label={item.Name} value={item.Id}></lightning-menu-item>
+                                        <lightning-menu-item name={item.Id} key={item} label={item.Name}
+                                            if:false={item.showIcon} value={item.Id}></lightning-menu-item>
+                                    </template>
+    
+                                </template>
+                            </lightning-button-menu>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- NOTIFICATION ICON START -->
+                <div class="notification-wrapper slds-m-right_medium slds-is-relative">
+                    <button
+                        class="notification-btn"
+                        onclick={toggleNotificationDropdown}
+                        title={labels.notifications}
+                        aria-label={labels.notifications}
+                        aria-expanded={showNotificationDropdown}
+                        type="button"
+                    >
+                        <lightning-icon icon-name="utility:notification" size="small" variant="border-filled"></lightning-icon>
+                        <template if:true={unreadCount}>
+                            <span class="notification-badge">{unreadCount}</span>
+                        </template>
+                    </button>
+
+                    <template if:true={showNotificationDropdown}>
+                        <div class="notification-dropdown slds-popover slds-popover_panel slds-nubbin_top-right">
+                            <div class="slds-popover__header slds-border_bottom">
+                                <h2 class="slds-text-heading_small slds-font-weight_bold">{labels.notifications}</h2>
+                            </div>
+                            <div class="slds-popover__body notification-body">
+                                <template if:true={notifications.length}>
+                                    <template for:each={notifications} for:item="notif">
+                                        <div key={notif.id} class="notification-item">
+                                            <p class="notif-title">{notif.title}</p>
+                                            <template if:true={notif.applicationName}>
+                                                <p class="notif-app">{notif.applicationName}</p>
+                                            </template>
+                                            <p class="notif-text">{notif.body}</p>
+                                            <span class="notif-date">{notif.date}</span>
+                                        </div>
+                                    </template>
+                                </template>
+                                <template if:false={notifications.length}>
+                                    <p class="slds-text-color_weak slds-text-align_center slds-p-around_medium">{labels.noNotifications}</p>
+                                </template>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+                <!-- NOTIFICATION ICON END -->
+
+                <div class="profile-image slds-p-right_small">
+                    <img src={userProfileImage} alt="Profile Image" />
+                </div>
+
+                <!-- For mobile only START-->
+                <div class="profile-name profile-dropdown d-flex dir-column desktop-only">
+                    <lightning-button-menu class="profile-menu" variant="bare" label={userName}
+                        alternative-text="Show menu" menu-alignment="auto">
+                        <div class="profile">
+                            <div if:false={isBusinessAccount} >
+                                <!-- <img src={myProfile} alt="My Profile"> -->
+                                <lightning-menu-item tabindex="0" class="profile-icon" value="Profile" label="My Profile"
+                                    onclick={handleAccount}>
+                                </lightning-menu-item>
+                            </div>
+                            <div onclick={handleLogout}>
+                                <!-- <img src={signOut} alt="Log out"> -->
+                                <lightning-menu-item tabindex="0" class="logout-icon" value="Logout" label="Logout" onclick={handleLogout}>
+                                </lightning-menu-item>
+                            </div>
+                        </div>
+                    </lightning-button-menu>
+                    <!-- Added for story S-58444 -->
+                    <template if:true={isBusinessAccount}>
+                        <a class="user-role profile-menu-link" onclick={handleManageAccountClick}>Manage Account</a>
+                    </template>
+                </div>
+                <!-- For mobile only END-->
+
+                <!-- For desktop only START-->
+                <div class="profile-name profile-dropdown d-flex dir-column mobile-only">
+                    <lightning-button-menu class="profile-menu" variant="bare"
+                        alternative-text="Show menu" menu-alignment="auto">
+                        <div class="profile">
+                            <div class="user-name-mobile-only">
+                                {userName}
+                            </div>
+                            <div if:false={isBusinessAccount}>
+                                <!-- <img src={myProfile} alt="My Profile"> -->
+                                <lightning-menu-item tabindex="0" class="profile-icon" value="Profile" label="My Profile"
+                                    onclick={handleAccount}>
+                                </lightning-menu-item>
+                            </div>
+                            <div if:true={isBusinessAccount} class="manage-account-mobile-only">
+                                <!-- <img src={myProfile} alt="Manage Account"> -->
+                                <lightning-menu-item tabindex="0"  class="profile-icon" value="Manage Account" label="Manage Account"
+                                    onclick={handleManageAccountClick}>
+                                </lightning-menu-item>
+                            </div>
+                            <div  onclick={handleLogout}>
+                                <!-- <img src={signOut} alt="Log out"> -->
+                                <lightning-menu-item tabindex="0" class="logout-icon"  value="Logout" label="Logout" onclick={handleLogout}>
+                                </lightning-menu-item>
+                            </div>
+                        </div>
+                    </lightning-button-menu>
+                    <!-- Added for story S-58444 -->
+                    <template if:true={isBusinessAccount}>
+                        <a class="user-role profile-menu-link" onclick={handleManageAccountClick}>Manage Account</a>
+                    </template>
+                </div>
+                <!-- For desktop only END-->
+
+            </div>
+            <!-- <div><span>Link</span></div> -->
+            <!-- <div class="toggle-notification">
+                <img src={toggle} alt="toggle" onclick={toggleNotificationbar} />
+            </div> -->
+        </div>
+        <!-- <div><span>Link</span></div> -->
+    </div>
+</template>

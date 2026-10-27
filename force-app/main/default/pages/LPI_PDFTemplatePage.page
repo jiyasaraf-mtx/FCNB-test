@@ -1,0 +1,228 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 06-18-2024
+  @last modified by  : Bharath Kumar M
+-->
+<apex:page renderAs="pdf" applyBodyTag="false" applyHtmlTag="false" showHeader="false" standardstylesheets="false" contentType="text/html;charset=UTF-8" controller="LPI_ApplicationPDFController">
+    <head>
+        <style>
+            @page 
+            {
+                size: letter;
+                margin: 12mm 10mm;
+                @top-right{
+                    font-family: sans-serif;
+                    content: "Application Number : {!applicationName}";
+                    color: #1E3A62;
+                    font-size: 14px;
+                    font-weight: 700;
+                    border-bottom: 2px solid #1E3A62;
+                }
+
+                @top-left{
+                    font-family: sans-serif;
+                    content: "{!IF(ISBLANK(businessLicenseNumber),'',businessLicenseNumber)}";
+                    color: #1E3A62;
+                    font-size: 14px;
+                    font-weight: 700;
+                    display: none;
+                    border-bottom: 2px solid #1E3A62;
+                }
+
+                @bottom-right {
+                    content: "Page " counter(page) " of " counter(pages);
+                }
+            }
+            @page :first {
+                size: letter;
+                margin: 12mm 10mm;
+                @top-right{
+                    border-bottom: 2px solid #1E3A62;
+            		width: 80%;
+            		text-align:center;
+                }
+                @top-left{
+                    border-bottom: 2px solid #1E3A62;
+            		width: 80%;
+            		text-align:center;
+                }
+            }
+
+            
+
+            body {
+                font-family: Arial Unicode MS;
+            }
+
+            font { font-family: Arial Unicode MS !important; }
+
+            table {
+                width: 100%;
+                table-layout:fixed;
+            }
+
+            table tr {
+                page-break-inside: avoid;
+            }
+
+            table td {
+                vertical-align: baseline;
+            }
+
+            .custom-grid-3 td {
+                width: 33%;
+                padding-bottom: 20px;
+                padding-right: 10px;
+            }
+
+            .custom-grid-2 td {
+                width: 50%;
+                padding-bottom: 20px;
+                padding-right: 10px;
+            }
+
+            .custom-grid-1 td {
+                width: 100%;
+                padding-bottom: 20px;
+                padding-right: 10px;
+            }
+
+            .section{
+                margin-top: 20px;
+            }
+
+            .section .sectionHeading{
+                font-weight: 500;
+                font-size: 16px;
+                color: #1E3A62;
+            }
+
+            .subSection .sectionHeading{
+                font-weight: 500;
+                font-size: 16px;
+                color: #1E3A62;
+            }
+
+            .regularSectionHeading{
+                font-size: 15px !important;
+                font-weight: 900;
+                color: black !important;
+            }
+
+            .headingLine{
+                border: 1px solid #D4D4D4;
+            }
+
+            .sectionBody{
+                padding-top: 15px;
+            }
+
+            .view-info-label{
+                font-size: 12px;
+                color: #6B6B6B;
+                word-wrap:break-word !important;
+
+            }
+
+            .read-only-info{
+                font-size: 14px;
+                color: #121212;
+                overflow-wrap: break-word !important;
+                word-wrap: break-word !important;
+            }
+
+            .bold-regular-text{
+                font-size: 12px !important;
+                color: #6B6B6B !important;
+            }
+
+
+            .sectionBody .main-question{
+                padding-bottom: 20px;
+                padding-right: 10px;
+            }
+
+            .bold-heading{
+                font-size: 15px !important;
+                font-weight: 900;
+                color: black !important;
+            }
+            .pdf-image-logo{
+            	margin: 40px;
+            }
+            .color-blue{
+            	color: #1E3A62;
+            }
+
+            .page-heading{
+                font-size: 26px;
+                line-height: 30px;
+            }
+
+            .pdfBody{
+                position: relative;
+            }
+            .sectionBody{
+                margin: auto auto;
+            }
+            .watermark{
+                position: absolute;
+                top: 30%;
+                left: 15%;
+                width: 70%;
+                text-align: center;
+                opacity: 0.35;
+            } 
+
+            .labelClass h1,.labelClass h2,.labelClass h3,.labelClass h4{
+                font-size: 16px;
+                color: #121212;
+            }
+            .labelClass p,.labelClass ol,.labelClass li{
+                font-size: 14px;
+                color: #121212;
+            }
+            .labelClass strong{
+                font-size: 14px !important;
+                font-weight: bold;
+                color: black !important;
+            	font-family: sans-serif;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="pdfBody">
+            <div class="watermark">
+                <apex:image value="{!URLFOR($Resource.LPI_IBM_Logo_Watermark)}" width="500" height="500" alt=""/>
+            </div>
+            <!--First Page Stard-->
+            <c:LPI_PDFFirstPage applicationName="{!applicationName}" />
+            <div style="page-break-after:always;"></div>
+            <!--First Page End-->
+            
+            <!-- Iterate over the section list and show each section one by one -->
+            <apex:repeat value="{!pdfSectionWrapper}" var="section" id="mainSectionId">
+                <!-- Show the top level section -->
+                <c:LPI_PDFSection section="{!section}" isSubSection="false"  
+                rendered="{!NOT(section.isJSONStoredSection)}"/>
+                <c:LPI_JsonStoredStepPDFSection section="{!section}" isSubSection="false" 
+                rendered="{!section.isJSONStoredSection}"/>  
+                <!-- end of top level section -->  
+
+                <!-- If there is any subsectionList Iterate over it  Here our code is supporting Four level of subsections-->
+                <apex:repeat value="{!section.subSectionList}" var="subSection" id="subSectionId">
+                    <c:LPI_PDFSection section="{!subSection}" isSubSection="true" rendered="{!NOT(subSection.isJSONStoredSection)}"/>  
+                    <c:LPI_JsonStoredStepPDFSection section="{!subSection}" isSubSection="true" rendered="{!subSection.isJSONStoredSection}"/>   
+                    <apex:repeat value="{!subSection.subSectionList}" var="subSection2" id="subSection2Id">
+                        <c:LPI_PDFSection section="{!subSection2}" isSubSection="true"/>  
+                        <apex:repeat value="{!subSection2.subSectionList}" var="subSection3" id="subSection3Id">
+                            <c:LPI_PDFSection section="{!subSection3}" isSubSection="true"/>  
+                        </apex:repeat> 
+                    </apex:repeat>    
+                </apex:repeat>           
+            </apex:repeat>
+        </div>
+    </body>
+</apex:page>

@@ -1,0 +1,3 @@
+<design:component label="LPI Header (Aura)">
+    <design:attribute name="cmpHide" label="Hide Header" />
+</design:component>

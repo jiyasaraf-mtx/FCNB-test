@@ -1,0 +1,51 @@
+<template>
+            <div class="slds-grid slds-wrap slds-is-relative ">
+            <div style="position: fixed;z-index: 999999;top: 0;right: 0;">
+  <omnistudio-toast class="flexcard-toast-element" theme="slds" title="" message="" styletype=""> </omnistudio-toast>
+</div>
+            <div if:true={showLoader} class="slds-is-absolute vloc-loader_override" style="height: 100%; width: 100%; min-height:50px; background: transparent; z-index: 99;">
+  <div>
+   <omnistudio-spinner
+      variant="brand"
+      alternative-text="Loading content..."
+      size="medium"
+      theme="slds"
+      ></omnistudio-spinner>
+  </div>
+</div>
+            <template if:false={hasPermission}>
+              You don't have required permissions to view this card.
+            </template>
+            <template if:true={hasPermission}>
+              <template if:true={hasRecords}>
+                        <template for:each={_records} for:item="record" for:index="rindex">
+                            <omnistudio-flex-card-state if:true={record}  key={record._flex.uniqueKey} data-recordid={record.Id} record={record} data-statue="true"  data-index="0" data-rindex={rindex} class="cf-vlocity-state-0 cf-vlocity-state slds-size_12-of-12"  tracking-obj={_childCardTrackingObj} >
+      <div if:true={cardLoaded} class="slds-grid slds-wrap slds-card slds-p-around_x-small slds-m-bottom_x-small" style="">
+          <div data-style-id="state0element0" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element0_child"   card={card}  record={record}  merge-field="%3Col%3E%0A%3Cli%3EThis%20checklist%20is%20for%20your%20convenience;%20you%20do%20not%20need%20to%20include%20it%20with%20your%20application.%20Your%20application%20is%20classified%20as%20a%20public%20record%20and%20may%20be%20available%20for%20inspection%20by%20the%20public,%20except%20with%20regard%20to%20the%20release%20of%20information%20which%20is%20sub-classified%20as%20controlled,%20private,%20or%20protected%20under%20the%20Missouri%20Sunshine%20Law%20or%20restricted%20by%20other%20law.%3C/li%3E%0A%3Cli%3EThe%20following%20items%20are%20required%20to%20complete%20your%20application:%0A%3Col%3E%0A%3Cli%3EComplete%20Criminal%20History%20Disclosure%20Statement%20for%20EACH%20plea%20of%20guilty%20or%20nolo%20contendere%20or%20finding%20of%20guilt%3C/li%3E%0A%3Cli%3EPersonal%20Narrative,%20Police%20Reports,%20Court%20Records,%20and%20Probation/Parole%20Officer%20Records%20for%20EACH%20plea%20of%20guilty%20or%20nolo%20contendere%20or%20finding%20of%20guilt%3C/li%3E%0A%3C/ol%3E%0A%3C/li%3E%0A%3Cli%3EThe%20Division%20or%20respective%20licensing%20board&rsquo;s%20determination%20is%20based%20solely%20on%20the%20information%20you%20provide%20with%20your%20petition.%20Any%20misrepresentations,%20or%20intentional%20or%20unintentional%20omissions,%20may%20invalidate%20your%20determination.%3C/li%3E%0A%3Cli%3ESubmit%20the%20above%20items%20with%20your%20completed%20Pre-licensure%20Criminal%20History%20Determination%20Petition%20to%20your%20respective%20licensing%20entity.%3C/li%3E%0A%3C/ol%3E"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div>
+      </omnistudio-flex-card-state>
+                        </template>
+                      </template>
+                      <template if:false={hasRecords}>
+                            <omnistudio-flex-card-state  record={record} data-statue="false"  data-index="0" data-rindex={rindex} class="cf-vlocity-state-0 cf-vlocity-state slds-size_12-of-12"  tracking-obj={_childCardTrackingObj} >
+      <div if:true={cardLoaded} class="slds-grid slds-wrap slds-card slds-p-around_x-small slds-m-bottom_x-small" style="">
+          <div data-style-id="state0element0" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element0_child"   card={card}  record={record}  merge-field="%3Col%3E%0A%3Cli%3EThis%20checklist%20is%20for%20your%20convenience;%20you%20do%20not%20need%20to%20include%20it%20with%20your%20application.%20Your%20application%20is%20classified%20as%20a%20public%20record%20and%20may%20be%20available%20for%20inspection%20by%20the%20public,%20except%20with%20regard%20to%20the%20release%20of%20information%20which%20is%20sub-classified%20as%20controlled,%20private,%20or%20protected%20under%20the%20Missouri%20Sunshine%20Law%20or%20restricted%20by%20other%20law.%3C/li%3E%0A%3Cli%3EThe%20following%20items%20are%20required%20to%20complete%20your%20application:%0A%3Col%3E%0A%3Cli%3EComplete%20Criminal%20History%20Disclosure%20Statement%20for%20EACH%20plea%20of%20guilty%20or%20nolo%20contendere%20or%20finding%20of%20guilt%3C/li%3E%0A%3Cli%3EPersonal%20Narrative,%20Police%20Reports,%20Court%20Records,%20and%20Probation/Parole%20Officer%20Records%20for%20EACH%20plea%20of%20guilty%20or%20nolo%20contendere%20or%20finding%20of%20guilt%3C/li%3E%0A%3C/ol%3E%0A%3C/li%3E%0A%3Cli%3EThe%20Division%20or%20respective%20licensing%20board&rsquo;s%20determination%20is%20based%20solely%20on%20the%20information%20you%20provide%20with%20your%20petition.%20Any%20misrepresentations,%20or%20intentional%20or%20unintentional%20omissions,%20may%20invalidate%20your%20determination.%3C/li%3E%0A%3Cli%3ESubmit%20the%20above%20items%20with%20your%20completed%20Pre-licensure%20Criminal%20History%20Determination%20Petition%20to%20your%20respective%20licensing%20entity.%3C/li%3E%0A%3C/ol%3E"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div>
+      </omnistudio-flex-card-state>
+                      </template>
+            </template>
+            <template if:true={hasError}>
+            {error}
+            </template>
+            
+      <omnistudio-action action-wrapperclass="slds-hide" re-render-flyout class="action-trigger slds-col" onupdateos={updateOmniscript} onselectcards={updateSelectedCards} onsetvalue={updateAction} onfireactionevent={actionEvtHandler}>
+      
+      </omnistudio-action>
+  
+            <omnistudio-action class="execute-action" re-render-flyout action-wrapperclass="slds-hide" onupdateos={updateOmniscript} onselectcards={updateSelectedCards} onsetvalue={updateAction} onfireactionevent={actionEvtHandler}>
+            
+            </omnistudio-action>
+            </div>
+          </template>

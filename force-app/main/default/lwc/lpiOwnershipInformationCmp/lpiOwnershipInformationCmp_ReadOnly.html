@@ -1,0 +1,299 @@
+<!--
+  @description       : 
+  @author            : Garvit Jain
+  @group             : 
+  @last modified on  : 09-07-2023
+  @last modified by  : Ranjitha M U
+-->
+<template>
+    <template if:true={showSpinner}>
+        <lightning-spinner alternative-text="Loading..." size="small"></lightning-spinner>
+    </template>
+    <!-- <div>
+        <p>Applicants should provide the Ownership information for the entity to be licensed</p>
+    </div> -->
+    <div class="ownershipInfo">
+        <template if:true={ownershipInformationWrap.showAllOwnerShip}>
+            <lightning-accordion allow-multiple-sections-open
+                active-section-name={ownershipInformationWrap.activeSections}>
+                <div for:each={ownershipInformationWrap.ownerInformation} for:item="ownerData" key={ownerData}
+                    for:index="index">
+                    <lightning-accordion-section name={ownerData.ownershipInformationTitle}
+                        label={ownerData.ownershipInformationTitle}>
+                        <div class="slds-grid slds-wrap slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_12-of-12">
+                                <lightning-radio-group disabled name={ownerData.isTheOwnerBusinessEntityName}
+                                    data-id={ownerData.uniqueId} label="Is the Owner/Partner/Member a Business Entity?"
+                                    type="button" value={ownerData.isBusinessEntityData}
+                                    options={isTheOwnerLicensedInMOOption}>
+                                </lightning-radio-group>
+                            </div>
+                            <!--Business Section-->
+                            <template if:true={ownerData.isBusinessOwner}>
+                                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                                    <lightning-radio-group disabled name={ownerData.isTheBusinessLicensedInMOName}
+                                        data-id={ownerData.uniqueId}
+                                        label="Is the Entity Licensed in Missouri by the Board?" type="button"
+                                        value={ownerData.isTheOwnerLicensedInMO} options={isTheOwnerLicensedInMOOption}>
+                                    </lightning-radio-group>
+                                </div>
+                                <template if:true={ownerData.showOwnerShipSection}>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                                        <lightning-input type="text" label="Board License Number" name="licenseNumber"
+                                            disabled
+                                            message-when-pattern-mismatch="Please enter correct Board License Number"
+                                            data-id={ownerData.uniqueId} value={ownerData.licenseNumber}>
+                                        </lightning-input>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <lightning-input type="text" label="Business Name" name="businessName" disabled
+                                            data-id={ownerData.uniqueId} pattern={regPattern}
+                                            message-when-pattern-mismatch={messagePatternMismatch} max-length="40"
+                                            value={ownerData.businessName}>
+                                        </lightning-input>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <lightning-input type="email" label="Business Email" name="businessEmail"
+                                            pattern="^([A-Za-z0-9_\-\.\+]+)@([A-Za-z0-9_\-\.]+)\.([A-Za-z]{2,10})$"
+                                            message-when-pattern-mismatch="Invalid email format." disabled
+                                            data-id={ownerData.uniqueId} value={ownerData.businessEmail}>
+                                        </lightning-input>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <lightning-input class="validate" type="tel" label="Telephone Number"
+                                            placeholder="Enter Telephone Number" name="busienssPhone" maxlength="10"
+                                            min-length="10" pattern="[0-9]*" disabled
+                                            message-when-pattern-mismatch="Please enter telephone number only!"
+                                            value={ownerData.busienssPhone}>
+                                        </lightning-input>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_4-of-12">
+                                        <lightning-input type="number" label="Ownership Percentage"
+                                            name="ownershipPercent" min="0" max="100" data-id={ownerData.uniqueId}
+                                            value={ownerData.ownershipPercent} disabled formatter="percent-fixed"
+                                            step="0.01">
+                                        </lightning-input>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-p-top_small">
+                                        <p><strong>Business Address</strong></p>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <lightning-combobox label="Country" name="country" max-length="40" disabled
+                                            data-id={ownerData.uniqueId} options={countryOptions}
+                                            value={ownerData.country}>
+                                        </lightning-combobox>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                                        <lightning-input type="text" label="Street Address" name="streetAddress1"
+                                            pattern={regPattern} message-when-pattern-mismatch={messagePatternMismatch}
+                                            disabled data-id={ownerData.uniqueId} max-length="255"
+                                            value={ownerData.streetAddress1}>
+                                        </lightning-input>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12">
+                                        <lightning-input type="text" label="City" name="city" max-length="40"
+                                            pattern={regPattern} message-when-pattern-mismatch={messagePatternMismatch}
+                                            disabled data-id={ownerData.uniqueId} value={ownerData.city}>
+                                        </lightning-input>
+                                    </div>
+                                    <template if:true={ownerData.isUsState}>
+                                        <div
+                                            class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12">
+                                            <lightning-combobox label="State" name="state" max-length="40" disabled
+                                                data-id={ownerData.uniqueId} options={stateOption}
+                                                value={ownerData.state}>
+                                            </lightning-combobox>
+                                        </div>
+                                        <div
+                                            class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12">
+                                            <lightning-input type="text" label="Zip Code" name="zipCode"
+                                                pattern="^[0-9]{5}" maxlength="5"
+                                                message-when-pattern-mismatch="Zip Code should be five digits." disabled
+                                                data-id={ownerData.uniqueId} value={ownerData.zipCode}>
+                                            </lightning-input>
+                                        </div>
+                                    </template>
+                                    <template if:false={ownerData.isUsState}>
+                                        <div
+                                            class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12">
+                                            <lightning-input type="text" label="State" name="stateText" maxlength="40"
+                                                disabled data-id={ownerData.uniqueId} value={ownerData.stateText}>
+                                            </lightning-input>
+                                        </div>
+                                        <div
+                                            class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12">
+                                            <lightning-input type="text" label="Zip Code" name="zipCode"
+                                                pattern="^[a-zA-Z0-9]*$" minlength="5" maxlength="10"
+                                                message-when-pattern-mismatch="Please enter correct Zip/Postal Code."
+                                                disabled data-id={ownerData.uniqueId} value={ownerData.zipCode}>
+                                            </lightning-input>
+                                        </div>
+                                    </template>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12">
+                                        <lightning-input type="text" label="County" name="county" max-length="40"
+                                            pattern={regPattern} message-when-pattern-mismatch={messagePatternMismatch}
+                                            disabled data-id={ownerData.uniqueId} value={ownerData.county}>
+                                        </lightning-input>
+                                    </div>
+                                </template>
+                            </template>
+                            <!--Individual Section-->
+                            <template if:true={ownerData.isIndividualOwner}>
+                                <div class="slds-col slds-size_1-of-1 slds-medium-size_8-of-12 slds-large-size_8-of-12">
+                                    <lightning-radio-group disabled name={ownerData.isTheOwnerLicensedInMOName}
+                                        data-id={ownerData.uniqueId}
+                                        label="Is the Owner/Partner/Member licensed with the Board?" type="button"
+                                        value={ownerData.isTheOwnerLicensedInMO} options={isTheOwnerLicensedInMOOption}>
+                                    </lightning-radio-group>
+                                </div>
+                                <template if:true={ownerData.showOwnerShipSection}>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                                        <lightning-input type="text" label="Board License Number" name="licenseNumber"
+                                            disabled
+                                            message-when-pattern-mismatch="Please enter correct Board License Number"
+                                            data-id={ownerData.uniqueId} value={ownerData.licenseNumber}>
+                                        </lightning-input>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <lightning-input type="text" label="First Name" name="firstName" disabled
+                                            data-id={ownerData.uniqueId} pattern={regPattern}
+                                            message-when-pattern-mismatch={messagePatternMismatch} max-length="40"
+                                            value={ownerData.firstName}>
+                                        </lightning-input>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <lightning-input type="text" label="Middle Name" name="middleName"
+                                            max-length="40" disabled data-id={ownerData.uniqueId} pattern={regPattern}
+                                            message-when-pattern-mismatch={messagePatternMismatch}
+                                            value={ownerData.middleName}>
+                                        </lightning-input>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <lightning-input type="text" label="Last Name" name="lastName"
+                                            pattern={regPattern} message-when-pattern-mismatch={messagePatternMismatch}
+                                            max-length="80" disabled data-id={ownerData.uniqueId}
+                                            value={ownerData.lastName}>
+                                        </lightning-input>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12">
+                                        <lightning-input type="email" label="Email" name="email"
+                                            pattern="^([A-Za-z0-9_\-\.\+]+)@([A-Za-z0-9_\-\.]+)\.([A-Za-z]{2,10})$"
+                                            message-when-pattern-mismatch="Invalid email format." disabled
+                                            data-id={ownerData.uniqueId} value={ownerData.email}>
+                                        </lightning-input>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12">
+                                        <lightning-input type="text" label="SSN" name="SSN" max-length="9"
+                                            class="validateSSN" pattern="^[0-9]{9}"
+                                            message-when-pattern-mismatch="Please enter a valid SSN" disabled
+                                            data-id={ownerData.uniqueId} value={ownerData.SSN}>
+                                        </lightning-input>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12">
+                                        <lightning-input type="text" label="Title" name="title" maxlength="40" disabled
+                                            pattern={regPattern} message-when-pattern-mismatch={messagePatternMismatch}
+                                            data-id={ownerData.uniqueId} value={ownerData.title}>
+                                        </lightning-input>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12">
+                                        <lightning-input type="number" label="Ownership Percentage"
+                                            name="ownershipPercent" min="0" max="100" data-id={ownerData.uniqueId}
+                                            disabled value={ownerData.ownershipPercent} formatter="percent-fixed"
+                                            step="0.01">
+                                        </lightning-input>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-p-top_small">
+                                        <h2><strong>Residence Address</strong></h2>
+                                    </div>
+
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <lightning-combobox label="Country" name="country" max-length="40" disabled
+                                            data-id={ownerData.uniqueId} options={countryOptions}
+                                            value={ownerData.country}>
+                                        </lightning-combobox>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                                        <lightning-input type="text" label="Street Address" name="streetAddress1"
+                                            pattern={regPattern} message-when-pattern-mismatch={messagePatternMismatch}
+                                            disabled data-id={ownerData.uniqueId} max-length="255"
+                                            value={ownerData.streetAddress1}>
+                                        </lightning-input>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12">
+                                        <lightning-input type="text" label="City" name="city" max-length="40"
+                                            pattern={regPattern} message-when-pattern-mismatch={messagePatternMismatch}
+                                            disabled data-id={ownerData.uniqueId} value={ownerData.city}>
+                                        </lightning-input>
+                                    </div>
+                                    <template if:true={ownerData.isUsState}>
+                                        <div
+                                            class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12">
+                                            <lightning-combobox label="State" name="state" max-length="40" disabled
+                                                data-id={ownerData.uniqueId} options={stateOption}
+                                                value={ownerData.state}>
+                                            </lightning-combobox>
+                                        </div>
+                                        <div
+                                            class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12">
+                                            <lightning-input type="text" label="Zip Code" name="zipCode"
+                                                pattern="^[0-9]{5}" maxlength="5"
+                                                message-when-pattern-mismatch="Zip Code should be five digits." disabled
+                                                data-id={ownerData.uniqueId} value={ownerData.zipCode}>
+                                            </lightning-input>
+                                        </div>
+                                    </template>
+                                    <template if:false={ownerData.isUsState}>
+                                        <div
+                                            class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12">
+                                            <lightning-input type="text" label="State" name="stateText" maxlength="40"
+                                                disabled data-id={ownerData.uniqueId} value={ownerData.stateText}>
+                                            </lightning-input>
+                                        </div>
+                                        <div
+                                            class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12">
+                                            <lightning-input type="text" label="Zip Code" name="zipCode"
+                                                pattern="^[a-zA-Z0-9]*$" minlength="5" maxlength="10"
+                                                message-when-pattern-mismatch="Please enter correct Zip/Postal Code."
+                                                disabled data-id={ownerData.uniqueId} value={ownerData.zipCode}>
+                                            </lightning-input>
+                                        </div>
+                                    </template>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12">
+                                        <lightning-input type="text" label="County" name="county" max-length="40"
+                                            pattern={regPattern} message-when-pattern-mismatch={messagePatternMismatch}
+                                            disabled data-id={ownerData.uniqueId} value={ownerData.county}>
+                                        </lightning-input>
+                                    </div>
+
+                                </template>
+                            </template>
+                        </div>
+                    </lightning-accordion-section>
+                </div>
+            </lightning-accordion>
+        </template>
+    </div>
+</template>

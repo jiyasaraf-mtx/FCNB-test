@@ -1,0 +1,1141 @@
+<!--
+  @description       : 
+  @author            : Vamsi Mudaliar
+  @group             : 
+  @last modified on  : 05-29-2024
+  @last modified by  : Bharath Kumar M
+-->
+<template>
+  <div class="slds-is-relative">
+    <lightning-spinner if:false={showSpinner} class="slds-align_absolute-center"></lightning-spinner>
+    <lightning-quick-action-panel header="Add Entity">
+      <div class="slds-text-heading_small slds-p-vertical_small slds-m-top_small mandatory-text">
+        Required fields are marked with an asterisk(<span class="mandatory-mark">*</span>)
+      </div>
+
+      <!-- Adding combobox for selecting Role like Respondent , Witness, Attorney and Other Entity-->
+      <lightning-combobox class="respondentWitness" label="Select an option" options={options} value={selectedOption}
+        onchange={handleChange} required>
+      </lightning-combobox>
+      <!-- Ending combobox for selecting Role like Respondent , Witness, Attorney and Other Entity-->
+      
+      <!-- Adding First Radio Button Starts - Is the new Respondent Licensed? -->
+      <div if:true={showRespondentFields}>
+        <lightning-radio-group required label="Is the new Respondent Licensed?"
+          class="validate slds-m-top_small radio-button-label" name="licensedUnlicensed"
+          options={licensedUnlicensedOptions} onchange={handleLicenseChange} value={radioValue} type="radio">
+        </lightning-radio-group>
+      </div>
+      <!-- Ended First Radio Button Starts - Is the new Respondent Licensed? -->
+
+      <!-- Adding Search by Name or License Number -->
+      <div if:true={showRespondentFields}>
+        <div class="slds-grid slds-gutters slds-p-top_small">
+          <div class="slds-col slds-size_12-of-12">
+            <div if:true={isLicensed} class="slds-form-element">
+              <div class="slds-form-element__control">
+                <div class="slds-combobox_container " style=" max-height: 15rem; overflow-y: scroll;">
+                  <div id="box" class={boxClass} aria-expanded="true" aria-haspopup="listbox" role="combobox">
+                    <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right"
+                      style="font-weight: bold;font-size:0.8rem;" role="none">
+                      <template if:true={selectedRespondentData.isValueSelected}>
+                        <div id="lookup-pill" class="slds-pill-container">
+                          <lightning-pill class="pillSize" label={selectedRespondentData.entityName}
+                            name={selectedRespondentData.entityName} data-id={selectedRespondentData.businessId}
+                            onremove={handleRemovePill} data-index={index}>
+                            <lightning-icon icon-name="standard:person_account" class="slds-icon--medium"
+                              alternative-text="person_account"></lightning-icon>
+                          </lightning-pill>
+                        </div>
+                      </template>
+                      <template if:false={selectedRespondentData.isValueSelected}>
+                        <div class="slds-p-top_none">
+                          <span style="color: red;" class="mandatory-mark">*</span>
+                          <lightning-input class="slds-p-left_small respondentWitness" type="search" id="input"
+                            value={selectedRespondentData.searchTerm} onclick={handleClick}
+                            onchange={handleChangeBusinessLicense} placeholder="Search by Name or License Number"
+                            variant="label-hidden" autocomplete="off" data-index={index} required></lightning-input>
+                        </div>
+                      </template>
+                    </div>
+                    <div id="listbox-id-1" role="listbox " if:false={selectedRespondentData.isValueSelected}>
+                      <ul class="slds-listbox slds-listbox_vertical" role="presentation">
+                        <template if:true={selectedRespondentData.records} for:each={selectedRespondentData.records}
+                          for:item="record">
+                          <li key={record.businessId} onclick={handeBusinessSelect} data-id={record.businessId}
+                            role="presentation" data-name={record.entityName} data-index={index}>
+                            <span class="slds-lookup__item-action slds-lookup__item-action--label" role="option">
+                              <lightning-icon class="slds-icon slds-icon--medium" icon-name="standard:person_account"
+                                alternative-text="person_account" size="small"></lightning-icon>
+                              <span class="slds-media__body" data-id={record.businessId}>
+                                <span class=" slds-listbox__option-text_entity"
+                                  data-id={record.businessId}>{record.entityName}</span>
+                                <span class="slds-listbox__option-meta"
+                                  data-id={record.businessId}>{record.profession}</span>
+                              </span>
+                            </span>
+                          </li>
+                        </template>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Ended Search by Name or License Number -->
+
+      <!-- Adding 3 respondent fields that is Name, Telephone Number and Repondent Email after that street address will come -->
+      <div if:true={showRespondentFields} class="slds-grid slds-gutters">
+        <div
+          class="slds-col slds-size_1-of-1 slds-small-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_12-of-12 slds-m-bottom_small"
+          if:true={isBusinessProfession}>
+          <span>
+            <lightning-input required type="text" class="respondentWitness" pattern={patternObj.text}
+              label="Name (Person and/or Company)" placeholder="Enter Name" value={selectedRespondentData.entityName} name="entityName"
+              max-length="255" onchange={handleRespChange} disabled={isLicensed} data-index={index}>
+            </lightning-input>
+          </span>
+        </div>
+      </div>
+      <div if:true={showRespondentFields} class="slds-grid slds-gutters">
+        <div class="slds-col slds-size_12-of-12" if:false={isBusinessProfession}>
+          <div class="slds-grid slds-wrap slds-gutters">
+            <div
+              class="slds-col slds-size_1-of-1 slds-small-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12 slds-m-bottom_small slds-inline">
+              <span>
+                <lightning-input required type="text" placeholder="Enter First Name" class="respondentWitness" pattern={patternObj.text}
+                  label="First Name" value={selectedRespondentData.firstName} name="firstName" max-length="40"
+                  onchange={handleRespChange} disabled={isLicensed} data-index={index}>
+                </lightning-input>
+              </span>
+            </div>
+            <div
+              class="slds-col slds-size_1-of-1 slds-small-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12 slds-m-bottom_small slds-inline">
+              <span>
+                <lightning-input type="text" class="respondentWitness" placeholder="Enter Middle Name" pattern={patternObj.text} label="Middle Name"
+                  value={selectedRespondentData.middleName} name="middleName" max-length="40"
+                  onchange={handleRespChange} disabled={isLicensed} data-index={index}>
+                </lightning-input>
+              </span>
+            </div>
+            <div
+              class="slds-col slds-size_1-of-1 slds-small-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12 slds-m-bottom_small slds-inline">
+              <span>
+                <lightning-input required type="text" class="respondentWitness" placeholder="Enter Last Name" pattern={patternObj.text}
+                  label="Last Name" value={selectedRespondentData.lastName} name="lastName" max-length="80"
+                  onchange={handleRespChange} disabled={isLicensed} data-index={index}>
+                </lightning-input>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div if:true={showRespondentFields} class="slds-grid slds-gutters">
+        <div
+          class="slds-col slds-size_1-of-1 slds-small-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12 slds-m-bottom_small slds-inline">
+          <span>
+            <lightning-input required class="phoneNumberField respondentWitness" placeholder="Enter Telephone Number" type="tel" label="Telephone Number"
+              value={selectedRespondentData.telephone} max-length="14" onchange={handleRespChange} name="telephone"
+              disabled={isLicensed} data-index={index} pattern={patternObj.digits}
+              message-when-pattern-mismatch="Your Entry does not match the pattern">
+            </lightning-input>
+          </span>
+        </div>
+        <div
+          class="slds-col slds-size_1-of-1 slds-small-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12 slds-m-bottom_small slds-inline">
+          <span>
+            <lightning-input required type="email" class="respondentWitness" placeholder="Enter Repondent Email" pattern={patternObj.email}
+              label="Repondent Email" value={selectedRespondentData.email} name="email" max-length="80"
+              onchange={handleRespChange} disabled={isLicensed} data-index={index}>
+            </lightning-input>
+          </span>
+        </div>
+      </div>
+
+      <!-- Ended 3 respondent fields that is Name, Telephone Number and Repondent Email after that street address will come -->
+
+      <!-- Adding 4 Witness fields after that street address will come -->
+      <div if:true={showWitnessFields}>
+
+
+        <lightning-radio-group required label="Create New Record or Choose from Existing records?" class="respondentWitness"
+        name="newOrExistingEntityRec" options={newOrExisting} value={entitiesData.newOrExistingEntityRec} type="radio"
+        onchange={handleRadioChange} data-index={index}>
+       </lightning-radio-group>
+
+        <template if:true={isNewRecord}>
+        <div class="slds-grid slds-gutters">
+          <div class="slds-col slds-size_4-of-12 slds-m-bottom_small ">
+            <span>
+              <lightning-input required type="text" pattern="^((?!(<)|(>)).)*$" label="First Name"
+                value={witnessData.firstName} name="firstName" max-length="40" placeholder="Enter First Name" class="respondentWitness"
+                message-when-pattern-mismatch="Your Entry does not match the pattern"  onchange={handleWitnessData} data-index={index}>
+              </lightning-input>
+              
+            </span>
+          </div>
+          <div class="slds-col slds-size_4-of-12 slds-m-bottom_small ">
+            <span>
+              <lightning-input type="text" pattern="^((?!(<)|(>)).)*$" placeholder="Enter Middle Name"  label="Middle Name"
+                value={witnessData.middleName} name="middleName" max-length="40" class="respondentWitness"
+                onchange={handleWitnessData}>
+              </lightning-input>
+            </span>
+          </div>
+          <div class="slds-col slds-size_4-of-12 slds-m-bottom_small ">
+            <span>
+              <lightning-input required type="text" pattern="^((?!(<)|(>)).)*$" placeholder="Enter Last Name" label="Last Name"
+                value={witnessData.lastName} name="lastName" max-length="80" class="respondentWitness"
+                onchange={handleWitnessData}>
+              </lightning-input>
+            </span>
+          </div>
+        </div>
+        <div class="slds-grid slds-gutters">
+          <div class="slds-col slds-size_6-of-12 slds-m-bottom_small ">
+            <span>
+              <lightning-input required class="respondentWitness" type="tel" placeholder="Enter Telephone Number" label="Telephone Number"
+                value={witnessData.telephone} name="telephone" pattern={patternObj.digits} max-length="14"
+                onchange={handleWitnessData} message-when-pattern-mismatch="Your Entry does not match the pattern">
+              </lightning-input>
+             
+            </span>
+          </div>
+          <div class="slds-col slds-size_6-of-12 slds-m-bottom_small ">
+            <span>
+              <lightning-input type="email" name="email" label="Email" placeholder="Enter Email" value={witnessData.email} max-length="80"
+                pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,10}$" onchange={handleWitnessData}>
+              </lightning-input>
+            </span>
+          </div>
+        </div>
+        </template>
+        <template if:false={isNewRecord}>
+
+          <template if:false={isNewRecord}>
+            <div class="slds-form-element">
+              <label class="slds-form-element__label">Select a record</label>
+               <div class="slds-form-element__control slds-combobox-group">
+          
+              <template if:true={showTargetSelector}>
+              
+                 <lightning-combobox
+                 required="true"
+                  data-id="targetSelector"
+                  label="Select a target sObject"
+                  variant="label-hidden"
+                  options={targetObjects}
+                  value={selectedTarget}
+                  onchange={handleTargetSelection}
+                  class="slds-combobox_object-switcher slds-combobox-addon_start" >
+               </lightning-combobox>
+             </template>
+             <lightning-record-picker 
+                        lwc:ref="recordPicker"
+                        object-api-name={selectedTarget}
+                        placeholder="Search..."
+                        label="Select a record"
+                        variant="label-hidden"
+                        filter={filterPersonAcc}
+                        onchange={handlePersonAccRecord}
+                        class="slds-size_full slds-combobox-addon_end"
+                    >
+              </lightning-record-picker>
+                  </div>
+                </div>
+          </template>
+
+          <div class="slds-grid slds-gutters">
+            <div class="slds-col slds-size_4-of-12 slds-m-bottom_small ">
+              <span>
+                <lightning-input  type="text" pattern={patternObj.text} label="First Name"
+                  value={address.FirstName} placeholder="Enter First Name" name="firstName" max-length="40" class="respondentWitness" disabled ="true"
+                  onchange={handleWitnessData}>
+                </lightning-input>
+              </span>
+            </div>
+            <div class="slds-col slds-size_4-of-12 slds-m-bottom_small ">
+              <span>
+                <lightning-input type="text" pattern={patternObj.text} label="Middle Name"
+                  value={address.MiddleName} name="middleName" placeholder="Enter Middle Name" max-length="40" class="respondentWitness" disabled ="true"
+                  onchange={handleWitnessData}>
+                </lightning-input>
+              </span>
+            </div>
+            <div class="slds-col slds-size_4-of-12 slds-m-bottom_small ">
+              <span>
+                <lightning-input  type="text" pattern={patternObj.text} placeholder="Enter Last Name" label="Last Name"
+                  value={address.LastName} name="lastName" max-length="80" class="respondentWitness" disabled ="true"
+                  onchange={handleWitnessData}>
+                </lightning-input>
+              </span>
+            </div>
+          </div>
+          <div class="slds-grid slds-gutters">
+            <div class="slds-col slds-size_6-of-12 slds-m-bottom_small ">
+              <span>
+                <lightning-input  class="phoneNumberField respondentWitness" placeholder="Enter Telephone Number" type="tel" label="Telephone Number"
+                  value={address.PersonHomePhone} name="telephone" pattern={patternObj.digits} max-length="14" disabled ="true"
+                  onchange={handleWitnessData}>
+                </lightning-input>
+              </span>
+            </div>
+            <div class="slds-col slds-size_6-of-12 slds-m-bottom_small ">
+              <span>
+                <lightning-input type="email" name="email" label="Email" placeholder="Enter Email" value={address.PersonEmail} max-length="80" disabled ="true"
+                  pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,10}$" onchange={handleWitnessData}>
+                </lightning-input>
+              </span>
+            </div>
+          </div>
+          </template>
+      
+      </div>
+      <!-- Ended 4 Witness fields after that street address will come -->
+
+      <!-- Adding 3 Attorny fields after that street address will come -->
+      <div if:true={showAttorneyFields}>
+        <div class="slds-col">
+
+          <lightning-radio-group required label="Create New Record or Choose from Existing records?" class="respondentWitness"
+          name="newOrExistingEntityRec" options={newOrExisting} value={entitiesData.newOrExistingEntityRec} type="radio"
+          onchange={handleRadioChange} data-index={index}>
+         </lightning-radio-group>
+         <template if:true ={isNewRecord}>
+          <div class="slds-grid slds-gutters">
+            <div class="slds-col slds-size_4-of-12 slds-m-bottom_small ">
+              <lightning-input required type="text" class="respondentWitness" placeholder="Enter First Name" pattern="^((?!(<)|(>)).)*$"
+                label="Attorney First Name" value={attorneyInfo.firstName} name="firstName" max-length="40"
+                onchange={handleInputChange} data-attorney="true">
+              </lightning-input>
+            </div>
+
+            <div class="slds-col slds-size_4-of-12 slds-m-bottom_small ">
+              <lightning-input type="text" class="respondentWitness" placeholder="Enter Middle Name" pattern="^((?!(<)|(>)).)*$"
+                label="Attorney Middle Name" value={attorneyInfo.middleName} name="middleName" max-length="40"
+                onchange={handleInputChange} data-attorney="true">
+              </lightning-input>
+            </div>
+
+            <div class="slds-col slds-size_4-of-12 slds-m-bottom_small ">
+              <lightning-input required type="text" class="respondentWitness" placeholder="Enter Last Name" pattern="^((?!(<)|(>)).)*$"
+                label="Attorney Last Name" value={attorneyInfo.lastName} name="lastName" max-length="80"
+                onchange={handleInputChange} data-attorney="true">
+              </lightning-input>
+            </div>
+          </div>
+        </template>
+        <template if:false ={isNewRecord}>
+          <template if:false={isNewRecord}>
+            <div class="slds-form-element">
+              <label class="slds-form-element__label">Select a record</label>
+               <div class="slds-form-element__control slds-combobox-group">
+          
+              <template if:true={showTargetSelector}>
+              
+                 <lightning-combobox
+                 required="true"
+                  data-id="targetSelector"
+                  label="Select a target sObject"
+                  variant="label-hidden"
+                  options={targetObjects}
+                  value={selectedTarget}
+                  onchange={handleTargetSelection}
+                  class="slds-combobox_object-switcher slds-combobox-addon_start" >
+               </lightning-combobox>
+             </template>
+             <lightning-record-picker 
+                        lwc:ref="recordPicker"
+                        object-api-name={selectedTarget}
+                        placeholder="Search..."
+                        label="Select a record"
+                        variant="label-hidden"
+                        filter={filterPersonAcc}
+                        onchange={handlePersonAccRecord}
+                        class="slds-size_full slds-combobox-addon_end"
+                    >
+              </lightning-record-picker>
+                  </div>
+                </div>
+          </template>
+
+          <div class="slds-grid slds-gutters">
+            <div class="slds-col slds-size_4-of-12 slds-m-bottom_small ">
+              <lightning-input  type="text" class="respondentWitness" placeholder="Enter First Name" pattern={patternObj.text}
+                label="Attorney First Name" value={address.FirstName} name="firstName" max-length="40" disabled ="true"
+                onchange={handleInputChange} data-attorney="true">
+              </lightning-input>
+            </div>
+
+            <div class="slds-col slds-size_4-of-12 slds-m-bottom_small ">
+              <lightning-input type="text" class="respondentWitness" placeholder="Enter Middle Name" pattern={patternObj.text}
+                label="Attorney Middle Name" value={address.MiddleName} name="middleName" max-length="40" disabled ="true"
+                onchange={handleInputChange} data-attorney="true">
+              </lightning-input>
+            </div>
+
+            <div class="slds-col slds-size_4-of-12 slds-m-bottom_small ">
+              <lightning-input  type="text" class="respondentWitness" placeholder="Enter Last Name" pattern={patternObj.text}
+                label="Attorney Last Name" value={address.LastName} name="lastName" max-length="80" disabled ="true"
+                onchange={handleInputChange} data-attorney="true">
+              </lightning-input>
+            </div>
+          </div>
+        </template>
+
+        </div>
+      </div>
+      <!-- Ended 3 Attorny fields after that street address will come -->
+      <div if:true={showAttorneyMODPRFields}>
+        <div class="slds-col">
+
+          <lightning-radio-group required label="Create New Record or Choose from Existing records?" class="respondentWitness"
+          name="newOrExistingEntityRec" options={newOrExisting} value={entitiesData.newOrExistingEntityRec} type="radio"
+          onchange={handleRadioChange} data-index={index}>
+         </lightning-radio-group>
+         <template if:true ={isNewRecord}>
+          <div class="slds-grid slds-gutters">
+            <div class="slds-col slds-size_4-of-12 slds-m-bottom_small ">
+              <lightning-input required type="text" class="respondentWitness" placeholder="Enter First Name" pattern="^((?!(<\S)|(\S>)).)*$"
+                label="Attorney First Name test" value={attorneyInfo.firstName} name="firstName" max-length="40"
+                onchange={handleInputChange} data-attorney="true">
+              </lightning-input>
+            </div>
+
+            <div class="slds-col slds-size_4-of-12 slds-m-bottom_small ">
+              <lightning-input type="text" class="respondentWitness" placeholder="Enter Middle Name" pattern="^((?!(<\S)|(\S>)).)*$"
+                label="Attorney Middle Name test" value={attorneyInfo.middleName} name="middleName" max-length="40"
+                onchange={handleInputChange} data-attorney="true">
+              </lightning-input>
+            </div>
+
+            <div class="slds-col slds-size_4-of-12 slds-m-bottom_small ">
+              <lightning-input required type="text" class="respondentWitness" placeholder="Enter Last Name" pattern="^((?!(<\S)|(\S>)).)*$"
+                label="Attorney Last Name test" value={attorneyInfo.lastName} name="lastName" max-length="80"
+                onchange={handleInputChange} data-attorney="true">
+              </lightning-input>
+            </div>
+          </div>
+        </template>
+        <template if:false ={isNewRecord}>
+          <template if:false={isNewRecord}>
+            <div class="slds-form-element">
+              <label class="slds-form-element__label">Select a record  </label>
+               <div class="slds-form-element__control slds-combobox-group">
+          
+              <template if:true={showAttorneyTargetSelector}>
+              
+                 <lightning-combobox
+                 required="true"
+                  data-id="targetSelector"
+                  label="Select a target sObject"
+                  variant="label-hidden"
+                  options={targetAtorneyObjects}
+                  value={selectedAttorneyTarget}
+                  onchange={handleTargetAttorneySelection}
+                  class="slds-combobox_object-switcher slds-combobox-addon_start" >
+               </lightning-combobox>
+             </template>
+            
+             <lightning-record-picker 
+                        lwc:ref="recordPicker"
+                        object-api-name={selectedAttorneyTarget}
+                        placeholder="Search..."
+                        label="Select a record"
+                        variant="label-hidden"
+                        filter={filterAttorneyRec}
+                        matching-info={matchingInfo}
+                       display-info={displayInfo}
+                        onchange={handleAttorneyRecords}
+                        class="slds-size_full slds-combobox-addon_end"
+                    >
+              </lightning-record-picker>
+                  </div>
+                </div>
+          </template>
+
+          <div class="slds-grid slds-gutters">
+            <div class="slds-col slds-size_4-of-12 slds-m-bottom_small ">
+              <lightning-input  type="text" class="respondentWitness" placeholder="Enter First Name" pattern={patternObj.text}
+                label="Attorney First Name" value={attorneyInfo.firstName} name="firstName" max-length="40" disabled ="true"
+                onchange={handleInputChange} data-attorney="true">
+              </lightning-input>
+            </div>
+
+            <div class="slds-col slds-size_4-of-12 slds-m-bottom_small ">
+              <lightning-input type="text" class="respondentWitness" placeholder="Enter Middle Name" pattern={patternObj.text}
+                label="Attorney Middle Name" value={attorneyInfo.middleName} name="middleName" max-length="40" disabled ="true"
+                onchange={handleInputChange} data-attorney="true">
+              </lightning-input>
+            </div>
+
+            <div class="slds-col slds-size_4-of-12 slds-m-bottom_small ">
+              <lightning-input  type="text" class="respondentWitness" placeholder="Enter Last Name" pattern={patternObj.text}
+                label="Attorney Last Name" value={attorneyInfo.lastName} name="lastName" max-length="80" disabled ="true"
+                onchange={handleInputChange} data-attorney="true">
+              </lightning-input>
+            </div>
+          </div>
+        </template>
+
+        </div>
+      </div>
+      
+ 
+      <!-- Adding Other Entities field-->
+      <div class="slds-col">
+        <div if:true={showOtherEntityFields}>
+       
+          <lightning-radio-group required label="Create New Record or Choose from Existing records?" class="respondentWitness"
+          name="newOrExistingEntityRec" options={newOrExisting} value={entitiesData.newOrExistingEntityRec} type="radio"
+          onchange={handleRadioChange} data-index={index}>
+         </lightning-radio-group>
+
+        
+         <div if:false={isNewRecord}>
+         <template if:false={isNewRecord}>
+            <div class="slds-form-element">
+              <label class="slds-form-element__label">Select a record</label>
+               <div class="slds-form-element__control slds-combobox-group">
+          
+              <template if:true={showTargetSelector}>
+              
+                 <lightning-combobox
+                 required="true"
+                  data-id="targetSelector"
+                  label="Select a target sObject"
+                  variant="label-hidden"
+                  options={targetObjects}
+                  value={selectedTarget}
+                  onchange={handleTargetSelection}
+                  class="slds-combobox_object-switcher slds-combobox-addon_start" >
+               </lightning-combobox>
+             </template>
+             <lightning-record-picker 
+                        lwc:ref="recordPicker"
+                        object-api-name={selectedTarget}
+                        placeholder="Search..."
+                        label="Select a record"
+                        variant="label-hidden"
+                        filter={filterBusinessAcc}
+                        onchange={handleBusinessAccRecord}
+                        class="slds-size_full slds-combobox-addon_end"
+                    >
+              </lightning-record-picker>
+                  </div>
+                </div>
+          </template>
+         
+          <lightning-input type="text"  class="respondentWitness" pattern={patternObj.text}
+              label="Entity Name" value={address.Name} name="entityName" placeholder="Enter Entity Name" max-length="255"  disabled="true" read-only="true">
+            </lightning-input>
+     
+          </div>
+
+          <div if:true={showOtherEntityFields}>
+            <div if:true={isNewRecord}>
+            <lightning-input type="text" required class="respondentWitness" placeholder="Enter Entity Name" pattern="^((?!(<)|(>)).)*$"
+              label="Entity Name" value={entitiesData.entityName} name="entityName" max-length="255"
+              onchange={handleOtherEntityChange} data-index={index}>
+            </lightning-input>
+          </div>
+        </div>
+          
+     
+      </div>
+     </div>
+
+      <!-- Ended 3 Other fieldse -->
+
+      <!-- Adding   field for Employer -->
+      <div if:true={showEmployerFields}>
+        <lightning-radio-group required label="Create New Record or Choose from Existing records?" class="respondentWitness"
+        name="newOrExistingRec" options={newOrExisting} value={employerData.newOrExistingRec} type="radio"
+        onchange={handleRadioChange} data-index={index}>
+       </lightning-radio-group>
+      
+       <template if:false={isNewRecord}>
+        <div class="slds-form-element">
+          <label class="slds-form-element__label">Select a record</label>
+           <div class="slds-form-element__control slds-combobox-group">
+      
+          <template if:true={showTargetSelector}>
+          
+             <lightning-combobox
+              data-id="targetSelector"
+              label="Select a target sObject"
+              variant="label-hidden"
+              options={targetObjects}
+              value={selectedTarget}
+              onchange={handleTargetSelection}
+              class="slds-combobox_object-switcher slds-combobox-addon_start" >
+           </lightning-combobox>
+         </template>
+         <lightning-record-picker
+                    lwc:ref="recordPicker"
+                    object-api-name={selectedTarget}
+                    placeholder="Search..."
+                    label="Select a record"
+                    variant="label-hidden"
+                    filter={filterBusinessAcc}
+                    onchange={handleBusinessAccRecord}
+                    class="slds-size_full slds-combobox-addon_end"
+                >
+          </lightning-record-picker>
+              </div>
+            </div>
+          <lightning-input type="text"  class="respondentWitness" pattern={patternObj.text}
+              label="Employer Name" value={address.Name} name="entityName" placeholder="Enter Employer Name" max-length="255"  disabled="true" read-only="true">
+            </lightning-input> 
+      </template>
+
+        <template if:true={isNewRecord}>
+        <div class="slds-col">
+          <lightning-input required type="text" pattern="^((?!(<)|(>)).)*$" label="Employer Name"
+              value={employerData.entityName} name="entityName" max-length="40" placeholder="Enter Employer Name" class="respondentWitness"
+               onchange={handleEmployerData}>
+          </lightning-input>
+        </div>
+        </template>
+
+      </div>
+      <!-- Ended 3 Other fields after that street address will come -->
+
+      <!-- Adding Street address and other 3 fields which will be common and all 3 entitity -->
+     <div class="slds-col">
+        <h4 id="modal-heading-06" class="section-heading slds-m-bottom_x-small">
+          <b>{addressText}</b>
+        </h4>
+      </div> 
+      
+      <!-- Ended Street address and other 3 fields which will be common and all 3 entitity -->
+
+      <!-- Adding left out responded fields-->
+      <div if:true={showRespondentFields} class="slds-grid slds-gutters">
+        <div
+          class="slds-col slds-size_1-of-1 slds-small-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12 slds-m-bottom_small">
+          <span>
+            <lightning-input if:true={isLicensed} required type="text" placeholder="Enter Profession" pattern="^((?!(<\S)|(\S>)).)*$"
+              label="Profession" value={selectedRespondentData.profession} name="profession" class="respondentWitness"
+              max-length="255" disabled data-index={index}>
+            </lightning-input>
+          </span>
+        </div>
+        <div if:true={isLicensed}
+          class="slds-col slds-size_1-of-1 slds-small-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12 slds-m-bottom_small">
+          <span>
+            <lightning-input required type="text" pattern="^((?!(<\S)|(\S>)).)*$" placeholder="Enter License Number" label="License Number"
+              value={selectedRespondentData.licenseNum} name="licenseNum" class="respondentWitness" disabled>
+            </lightning-input>
+          </span>
+        </div>
+      </div>
+
+      <!-- Adding Employer Details Sub Section Starts wwhich will come for Individual Unlicensed  -->
+      <div if:true={isRespondent}>
+        <div if:false={isLicensed}>
+          <div if:false={isBusinessProfession}>
+            <div class="slds-grid slds-grid_vertical">
+              <div class="slds-col slds-size_12-of-12">
+                <div class="slds-text-heading_small slds-p-vertical_small">
+                  Current Employer Information
+                </div>
+              </div>
+
+              <div class="slds-col slds-size_12-of-12">
+                <lightning-input required type="text" pattern="^((?!(<\S)|(\S>)).)*$" placeholder="Enter Name of Employer" label="Name of Employer"
+                  value={employerInfo.employerName} name="employerName" class="respondentWitness" data-employer="true"
+                  data-index={index} onchange={handleRespChange}>
+                </lightning-input>
+              </div>
+
+              <div class="slds-col slds-size_12-of-12">
+                <br>
+                <h4 id="modal-heading-05" class="section-heading slds-m-bottom_x-small ">Employer Address</h4>
+              </div>
+
+              <div class="slds-col slds-size_12-of-12">
+                <lightning-input required type="text" pattern="^((?!(<\S)|(\S>)).)*$" placeholder="Enter Street" label="Street" data-address="true"
+                  data-employer="true" value={employerInfo.employerAddress.streetOne} name="streetOne"
+                  class="respondentWitness" data-index={index} onchange={handleRespChange}>
+                </lightning-input>
+              </div>
+
+              <div class="slds-col slds-size_12-of-12">
+                <div class="slds-grid slds-gutters">
+                  <div class="slds-col slds-size_4-of-12">
+                    <lightning-input required type="text" data-address="true" data-employer="true" placeholder="Enter City"
+                      pattern="^((?!(<\S)|(\S>)).)*$" label="City" value={employerInfo.employerAddress.city} name="city"
+                      max-length="40" onchange={handleRespChange} class="respondentWitness" data-index={index}>
+                    </lightning-input>
+                  </div>
+
+                  <div
+                    class="slds-col slds-size_1-of-1 slds-small-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+                    <lightning-combobox required label="State" options={stateOptions} data-employer="true" placeholder="Enter State"
+                      value={employerInfo.employerAddress.state} name="state" data-address="true" max-length="80"
+                      class="respondentWitness" onchange={handleRespChange}>
+                    </lightning-combobox>
+                  </div>
+                  <div
+                    class="slds-col slds-size_1-of-1 slds-small-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+                    <lightning-input required type="text" label="Zip Code" name="zipCode" data-address="true"
+                      value={employerInfo.employerAddress.zipCode} max-length="10" min-length="5" placeholder="A1A 1A1"
+                      pattern="^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$" data-employer="true"
+                      message-when-pattern-mismatch="Zip Code should be five digits(XXXXX) or five digits + dash + 4 digits(XXXXX-XXXX)."
+                      class="respondentWitness" onchange={handleRespChange}>
+                    </lightning-input>
+                  </div>
+                </div>
+              </div>
+
+              <div class="slds-col slds-size_12-of-12">
+                <lightning-combobox required label="Employment Status" options={employmentStatusOptions}
+                  value={employerInfo.employmentStatus} name="employmentStatus" data-employer="true" max-length="80"
+                  class="respondentWitness" onchange={handleRespChange}>
+                </lightning-combobox>
+              </div>
+              
+              <div class="slds-col">
+                <div class="slds-grid slds-gutters">
+                  <div class="slds-col slds-size_6-of-12">
+                    <lightning-input class="phoneNumberField respondentWitness" type="tel" label="Telephone Number"
+                      required value={employerInfo.telephone} name="telephone" max-length="14"
+                      onchange={handleRespChange} pattern={patternObj.digits} data-employer="true" placeholder="Enter Telephone Number"
+                      message-when-pattern-mismatch="Your Entry does not match the pattern"></lightning-input>
+                  </div>
+                  <div class="slds-col slds-size_6-of-12">
+                    <lightning-input type="email" name="email" label="Email" value={employerInfo.email} max-length="80" placeholder="Enter Email"
+                      data-employer="true" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,10}$" class="respondentWitness"
+                      onchange={handleRespChange}>
+                    </lightning-input>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Ended Employer Details Sub Section Ends  -->
+
+      
+      <!--Address Details for Employer and ENtity-->
+          <div if:true={selectedOption}>
+            <div if:true ={showAddressData}>
+              <div class="slds-grid slds-gutters">
+                <div class="slds-col slds-size_1-of-1 slds-m-bottom_small">
+                  <div if:false={address.BillingStreet}>
+                    <div if:true={isNewRecord}>
+                      <span> 
+                        <lightning-input required type="text" pattern="^((?!(<)|(>)).)*$" label="Street Address" placeholder="Enter Street Address"
+                         class="respondentWitness" value={addressData.streetOne} max-length="255" onchange={handleAddressChange}
+                          name="streetOne" data-address="true" disabled={isLicensed} data-index={index}>
+                        </lightning-input>
+                      </span>
+                    </div>
+                  </div>
+                  <div if:true={address}>
+                    <div if:false={isNewRecord}>
+                      <span>
+                       <lightning-input  type="text" pattern="^((?!(<)|(>)).)*$" label="Street Address" placeholder="Enter Street Address"
+                        class="respondentWitness" value={address.BillingStreet} max-length="255" onchange={handleAddressChange}
+                        name="streetOne" data-address="true" disabled="true" data-index={index}>
+                        </lightning-input>
+                      </span>
+                   </div>
+                  </div>
+                </div>
+              </div>
+  
+              <div class="slds-grid slds-gutters">
+                <div class="slds-col">
+                  <div if:false={address.BillingCity}>
+                    <div if:true={isNewRecord}>
+                      <span>
+                        <lightning-input required type="text" class="respondentWitness" pattern="^((?!(<)|(>)).)*$" placeholder="Enter City"
+                        label="City" value={addressData.city} name="city" data-address="true" max-length="40"
+                        onchange={handleAddressChange} disabled={isLicensed} data-index={index}>
+                        </lightning-input>
+                      </span>
+                    </div>
+                  </div>
+                  <div if:true={address}>
+                    <div if:false={isNewRecord}>
+                      <span>
+                        <lightning-input  type="text" class="respondentWitness" pattern="^((?!(<)|(>)).)*$" placeholder="Enter City"
+                        label="City" value={address.BillingCity} name="city" data-address="true" max-length="40"
+                       onchange={handleAddressChange} disabled="true" data-index={index}>
+                       </lightning-input>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+  
+              <!-- State (Picklist) -->
+             <div class="slds-col">
+                <div if:false={address.BillingState}>
+                  <div if:true={isNewRecord}>
+                     <span>
+                       <lightning-combobox required label="State" options={stateOptions} class="respondentWitness" placeholder="Select State"
+                       value={addressData.state} name="state" data-address="true" max-length="80"
+                       onchange={handleAddressChange} disabled={isLicensed} data-index={index}>
+                        </lightning-combobox>
+                      </span>
+                   </div>
+                </div>
+                <div if:true={address}>
+                  <div if:false={isNewRecord}>
+                     <span>
+                      <lightning-input  type="text" label="State" placeholder="Enter State"
+                      class="respondentWitness" value={address.BillingState} max-length="255" onchange={handleAddressChange}
+                      name="state" data-address="true" disabled="true" data-index={index}>
+                      </lightning-input>
+                      </span>
+                   </div>
+                </div>
+              </div>
+          
+          </div>
+
+          <div class="slds-grid slds-gutters">
+            <div class="slds-col">
+              <div if:false={address.BillingPostalCode}>
+                <div if:true={isNewRecord}>
+                  <span>
+                    <lightning-input required type="text" label="Zip Code" placeholder="A1A 1A1" name="zipCode" data-address="true"
+                    value={addressData.zipCode} max-length="10" min-length="5" pattern="^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$"
+                    class="respondentWitness"
+                    message-when-pattern-mismatch="Zip Code should be five digits(XXXXX) or five digits + dash + 4 digits(XXXXX-XXXX)."
+                    onchange={handleAddressChange} disabled={isLicensed} data-index={index}>
+                    </lightning-input>
+                  </span>
+                </div>
+              </div>
+
+              <div if:true={address}>
+                <div if:false={isNewRecord}>
+                  <span>
+                    <lightning-input  type="text" label="Zip Code" name="zipCode" placeholder="A1A 1A1" data-address="true"
+                     value={address.BillingPostalCode} max-length="10" min-length="5" pattern="^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$"
+                     class="respondentWitness"
+                     message-when-pattern-mismatch="Zip Code should be five digits(XXXXX) or five digits + dash + 4 digits(XXXXX-XXXX)."
+                     onchange={handleAddressChange} disabled="true" data-index={index}>
+                    </lightning-input>
+                  </span>
+                </div>
+              </div>
+             
+            </div>
+          </div>
+        </div>
+        </div>
+      <!--Address Deatils ENd-->
+      <!--Address Details for Attorney and Witness-->
+      <div if:true={selectedOption}>
+        <div if:true ={showAddressDetails}>
+          <div class="slds-grid slds-gutters">
+            <div class="slds-col slds-size_1-of-1 slds-m-bottom_small">
+              <div if:false={address.PersonOtherStreet}>
+                <div if:true={isNewRecord}>
+                  <span>
+                    <lightning-input required type="text" pattern="^((?!(<)|(>)).)*$" placeholder="Enter Street Address" label="Street Address"
+                     class="respondentWitness" value={addressData.streetOne} max-length="255" onchange={handleAddressChange}
+                      name="streetOne" data-address="true" disabled={isLicensed} data-index={index}>
+                    </lightning-input>
+                  </span>
+                </div>
+              </div>
+              <div if:true={address}>
+                <div if:false={isNewRecord}>
+                  <span>
+                   <lightning-input  type="text" pattern="^((?!(<)|(>)).)*$" label="Street Address" placeholder="Enter Street Address"
+                    class="respondentWitness" value={address.PersonOtherStreet} max-length="255" onchange={handleAddressChange}
+                    name="streetOne" data-address="true" disabled="true" data-index={index}>
+                    </lightning-input>
+                  </span>
+               </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="slds-grid slds-gutters">
+            <div class="slds-col">
+              <div if:false={address.PersonOtherCity}>
+                <div if:true={isNewRecord}>
+                  <span>
+                    <lightning-input required type="text" class="respondentWitness" pattern="^((?!(<)|(>)).)*$" placeholder="Enter City"
+                    label="City" value={addressData.city} name="city" data-address="true" max-length="40"
+                    onchange={handleAddressChange} disabled={isLicensed} data-index={index}>
+                    </lightning-input>
+                  </span>
+                </div>
+              </div>
+              <div if:true={address}>
+                <div if:false={isNewRecord}>
+                  <span>
+                    <lightning-input  type="text" class="respondentWitness" pattern="^((?!(<)|(>)).)*$" placeholder="Enter City"
+                    label="City" value={address.PersonOtherCity} name="city" data-address="true" max-length="40"
+                   onchange={handleAddressChange} disabled="true" data-index={index}>
+                   </lightning-input>
+                  </span>
+                </div>
+              </div>
+            </div>
+          <!-- State (Picklist) -->
+         <div class="slds-col">
+            <div if:false={address.PersonOtherState}>
+              <div if:true={isNewRecord}>
+                 <span>
+                   <lightning-combobox required label="State" options={stateOptions} class="respondentWitness" placeholder="Select State"
+                   value={addressData.state} name="state" data-address="true" max-length="80"
+                   onchange={handleAddressChange} disabled={isLicensed} data-index={index}>
+                    </lightning-combobox>
+                  </span>
+               </div>
+            </div>
+            <div if:true={address}>
+              <div if:false={isNewRecord}>
+                 <span>
+                    <lightning-input  type="text" label="State" placeholder="Enter State"
+                      class="respondentWitness" value={address.PersonOtherState} max-length="255" onchange={handleAddressChange}
+                      name="state" data-address="true" disabled="true" data-index={index}>
+                      </lightning-input>
+                  </span>
+               </div>
+            </div>
+          </div>
+      
+      </div>
+      <div class="slds-grid slds-gutters">
+        <div class="slds-col">
+          <div if:false={address.zipCode}>
+            <div if:true={isNewRecord}>
+              <span>
+                <lightning-input required type="text" label="Zip Code" name="zipCode" data-address="true"
+                value={addressData.zipCode} max-length="10" min-length="5" pattern="^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$"
+                class="respondentWitness" placeholder="A1A 1A1"
+                message-when-pattern-mismatch="Zip Code should be five digits(XXXXX) or five digits + dash + 4 digits(XXXXX-XXXX)."
+                onchange={handleAddressChange} disabled={isLicensed} data-index={index}>
+                </lightning-input>
+              </span>
+            </div>
+          </div>
+
+          <div if:true={address}>
+            <div if:false={isNewRecord}>
+              <span>
+                <lightning-input  type="text" label="Zip Code" name="zipCode" data-address="true"
+                 value={address.PersonOtherPostalCode} max-length="10" min-length="5" pattern="^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$"
+                 class="respondentWitness" placeholder="A1A 1A1"
+                 message-when-pattern-mismatch="Zip Code should be five digits(XXXXX) or five digits + dash + 4 digits(XXXXX-XXXX)."
+                 onchange={handleAddressChange} disabled="true" data-index={index}>
+                </lightning-input>
+              </span>
+            </div>
+          </div>
+         
+        </div>
+      </div>
+    </div>
+    </div>
+      
+        
+        <!-- Adding leftout Employer fields  -->
+          <div if:true={showEmployerFields}>
+            <div class="slds-col">
+              <div class="slds-grid slds-gutters">
+
+                <div class="slds-col slds-size_6-of-12">
+                  <div if:false={address.Phone}>
+                    <div if:true={isNewRecord}>
+                      <lightning-input required class="respondentWitness" placeholder="Enter Employer Phone" type="tel" data-attorney="true" label="Employer Phone"
+                      value={entitiesData.telephone} name="telephone" max-length="14" onchange={handleEmployerData}
+                      pattern={patternObj.digits} message-when-pattern-mismatch="Your Entry does not match the pattern">
+                      </lightning-input>
+                    </div>
+                  </div>
+                  <div if:true={address}>
+                    <div if:false={isNewRecord}>
+                      <lightning-input  class="respondentWitness" type="tel" data-attorney="true" label="Employer Phone" placeholder="Enter Employer Phone"
+                      value={address.Phone} name="telephone" max-length="14" onchange={handleEmployerData}
+                      pattern={patternObj.digits} message-when-pattern-mismatch="Your Entry does not match the pattern" disabled="true">
+                      </lightning-input>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slds-col slds-size_6-of-12">
+                  <div if:false={address.Buisness_Email__c}>
+                    <div if:true={isNewRecord}>
+                      <lightning-input type="email" name="email" label="Employer Email" data-attorney="true" placeholder="Enter Employer Email"
+                      value={entitiesData.email} max-length="80" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,10}$"
+                      onchange={handleEmployerData}>
+                      </lightning-input>
+                   </div>
+                  </div>
+                  <div if:true={address}>
+                    <div if:false={isNewRecord}>
+                      <lightning-input type="email" name="email" label="Employer Email" data-attorney="true" placeholder="Enter Employer Email"
+                      value={address.Buisness_Email__c} max-length="80" disabled="true" pattern={patternObj.email}
+                      onchange={handleEmployerData}>
+                      </lightning-input>
+                    </div>
+                  </div>
+                </div>
+              </div>
+           </div>
+          </div>
+        <!-- End-->
+
+          <!-- Adding leftout Attorney fields  -->
+      <div if:true={showAttorneyFields}>
+        <div class="slds-col">
+          <div class="slds-grid slds-gutters">
+            <div class="slds-col slds-size_6-of-12">
+              <div if:false={address.PersonHomePhone}>
+                <div if:true={isNewRecord}>
+                  <lightning-input required class="respondentWitness" type="tel" data-attorney="true" label="Attorney Phone" placeholder="Enter Attorney Phone"
+                    value={attorneyInfo.attorneyPhone} name="attorneyPhone" max-length="14" onchange={handleInputChange}
+                   pattern={patternObj.digits} message-when-pattern-mismatch="Your Entry does not match the pattern">
+                  </lightning-input>
+                </div>
+              </div>
+           
+              <div if:true={address}>
+                <div if:false={isNewRecord}>
+                  <lightning-input  class="respondentWitness" type="tel" data-attorney="true" label="Attorney Phone" disabled ="true" placeholder="Enter Attorney Phone"
+                    value={address.PersonHomePhone} name="attorneyPhone" max-length="14" onchange={handleInputChange}
+                    pattern={patternObj.digits} message-when-pattern-mismatch="Your Entry does not match the pattern">
+                  </lightning-input>
+                </div>
+              </div>
+            </div>
+
+            <div class="slds-col slds-size_6-of-12">
+              <div if:false={address.PersonEmail}>
+                <div if:true={isNewRecord}>
+                  <lightning-input required type="email" class="respondentWitness" name="attorneyEmail" placeholder="Enter Attorney Email"
+                  label="Attorney Email" data-attorney="true" value={attorneyInfo.attorneyEmail} max-length="80"
+                  pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,10}$" onchange={handleInputChange}>
+                   </lightning-input>
+                </div>
+              </div>
+              <div if:true={address}>
+                <div if:false={isNewRecord}>
+                    <lightning-input  type="email" class="respondentWitness" name="attorneyEmail" disabled="true" placeholder="Enter Attorney Email"
+                     label="Attorney Email" data-attorney="true" value={address.PersonEmail} max-length="80"
+                      pattern={patternObj.email} onchange={handleInputChange}>
+                    </lightning-input>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Ending leftout Attorney Information fields  -->
+      <div if:true={showAttorneyMODPRFields}>
+        <div class="slds-col">
+          <div class="slds-grid slds-gutters">
+            <div class="slds-col slds-size_6-of-12">
+              <div if:false={address.PersonHomePhone}>
+                <div if:true={isNewRecord}>
+                  <lightning-input required class="respondentWitness" type="tel" data-attorney="true" label="Attorney Phone" placeholder="Enter Attorney Phone"
+                    value={attorneyInfo.attorneyPhone} name="attorneyPhone" max-length="14" onchange={handleInputChange}
+                   pattern={patternObj.digits} message-when-pattern-mismatch="Your Entry does not match the pattern">
+                  </lightning-input>
+                </div>
+              </div>
+           
+              <div if:true={address}>
+                <div if:false={isNewRecord}>
+                  <lightning-input  class="respondentWitness" type="tel" data-attorney="true" label="Attorney Phone" disabled ="true" placeholder="Enter Attorney Phone"
+                    value={address.PersonHomePhone} name="attorneyPhone" max-length="14" onchange={handleInputChange}
+                    pattern={patternObj.digits} message-when-pattern-mismatch="Your Entry does not match the pattern">
+                  </lightning-input>
+                </div>
+              </div>
+            </div>
+
+            <div class="slds-col slds-size_6-of-12">
+              <div if:false={address.PersonEmail}>
+                <div if:true={isNewRecord}>
+                  <lightning-input required type="email" class="respondentWitness" name="attorneyEmail" placeholder="Enter Attorney Email"
+                  label="Attorney Email" data-attorney="true" value={attorneyInfo.attorneyEmail} max-length="80"
+                  pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,10}$" onchange={handleInputChange}>
+                   </lightning-input>
+                </div>
+              </div>
+              <div if:true={address}>
+                <div if:false={isNewRecord}>
+                    <lightning-input  type="email" class="respondentWitness" name="attorneyEmail" disabled="true" placeholder="Enter Attorney Email"
+                     label="Attorney Email" data-attorney="true" value={address.PersonEmail} max-length="80"
+                      pattern={patternObj.email} onchange={handleInputChange}>
+                    </lightning-input>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Adding leftout Other Entity fields  -->
+      <div if:true={showOtherEntityFields}>
+        <div class="slds-col">
+          <div class="slds-grid slds-gutters">
+            <div class="slds-col slds-size_6-of-12">
+              <div if:false={address.Phone}>
+                <div if:true={isNewRecord}>
+              <lightning-input required class="respondentWitness" type="tel" data-attorney="true" label="Entity Phone" placeholder="Enter Entity Phone"
+                value={entitiesData.telephone} name="telephone" max-length="14" onchange={handleOtherEntityChange}
+                pattern={patternObj.digits} message-when-pattern-mismatch="Your Entry does not match the pattern">
+              </lightning-input>
+              </div>
+              </div>
+
+              <div if:true={address}>
+                <div if:false={isNewRecord}>
+              <lightning-input  class="respondentWitness" type="tel" data-attorney="true" label="Entity Phone" placeholder="Enter Entity Phone"
+                value={address.Phone} name="telephone" max-length="14" onchange={handleOtherEntityChange}
+                pattern={patternObj.digits} message-when-pattern-mismatch="Your Entry does not match the pattern" disabled="true">
+              </lightning-input>
+              </div>
+              </div>
+            </div>
+            <div class="slds-col slds-size_6-of-12">
+              <div if:false={address.Buisness_Email__c}>
+                <div if:true={isNewRecord}>
+              <lightning-input type="email" name="email" label="Entity Email" data-attorney="true" placeholder="Enter Entity Email"
+                value={entitiesData.email} max-length="80" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,10}$"
+                onchange={handleOtherEntityChange}>
+              </lightning-input>
+              </div>
+              </div>
+
+              <div if:true={address}>
+                <div if:false={isNewRecord}>
+              <lightning-input type="email" name="email" label="Entity Email" data-attorney="true" placeholder="Enter Entity Email"
+              value={address.Buisness_Email__c} max-length="80" disabled="true" pattern={patternObj.email}
+              onchange={handleOtherEntityChange}>
+            </lightning-input>
+            </div>
+
+            </div>
+            </div>
+          </div>
+        </div>
+      </div> 
+      <!-- Ending leftout Other Entity fields  -->
+
+
+      <div slot="footer">
+        <lightning-button variant="neutral" label="Cancel" onclick={closeAction}></lightning-button>
+        <lightning-button variant="brand" label="Save" onclick={handleSave} class="slds-m-left_x-small">
+        </lightning-button>
+      </div>
+    </lightning-quick-action-panel>
+  </div>
+</template>

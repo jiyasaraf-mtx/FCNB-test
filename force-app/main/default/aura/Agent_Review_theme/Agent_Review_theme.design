@@ -1,0 +1,5 @@
+<design:component label="Agent Review Theme">
+    <design:attribute name="showSidebar" label="Show Sidebar" />
+    <design:attribute name="headerHide" label="Show Header" />
+    <design:attribute name="guestClass" label="Use Main Content Width" />
+</design:component>

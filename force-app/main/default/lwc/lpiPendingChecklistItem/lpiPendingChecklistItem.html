@@ -1,0 +1,50 @@
+<template>
+    <div class="application-review-header">
+        <button class="slds-button slds-m-bottom_medium" onclick={backToApplication}>Back to All Applications Page</button>
+        <div class="page-heading slds-m-bottom_medium"><h1>Application Number - {applicationNumber}</h1></div>
+    </div>
+    <!-- <div class="pending-checklist slds-p-around_x-large slds-m-top_large">
+        <section class={className}>
+            <div class="slds-accordion__summary">
+                <h2 class="slds-accordion__summary-heading">
+                    <button class="slds-button slds-button_reset slds-accordion__summary-action" aria-expanded={isOpen}
+                        title="Pending Checklist Items" onclick={handleToggleAccordionClick}
+                    >
+                        <lightning-icon icon-name={icon} size="xx-small"></lightning-icon>&nbsp;
+                        <span  class="slds-accordion__summary-content">Pending Review Items</span>
+                    </button>
+                </h2>
+            </div>
+            <div class="slds-accordion__content">
+                <template if:true={showList}>
+                    <template for:each={pendingChecklistItem} for:item="item">
+                        <div key={item.Checklist_Name__c} class="pending-checklist__item">
+                            <div class="pending-checklist__title d-flex center">
+                                <img src={greenTick} alt="Pending">
+                                <div>
+                                    {item.Checklist_Name__c}
+                                </div>
+                            </div>
+                            <div class="pending-checklist__content">
+                                <div class="pending-checklist__comment-header">
+                                    Review Comments
+                                </div>
+                                <div class="pending-checklist__comment-text">
+                                    <template if:true={item.Comment__c}>
+                                        {item.Comment__c}
+                                    </template>
+                                    <template if:false={item.Comment__c}>
+                                        No comments
+                                    </template>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </template>
+                <template if:false={showList}>
+                    No Pending Checklist Items
+                </template>
+            </div>
+        </section>
+</div> -->
+</template>

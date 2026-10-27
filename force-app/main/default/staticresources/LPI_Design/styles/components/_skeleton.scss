@@ -1,0 +1,72 @@
+.cc-skeleton-square,
+.cc-skeleton-heading,
+.cc-skeleton-icon,
+.cc-skeleton-small-button,
+.cc-skeleton-p-fullwidth,
+.cc-skeleton-p-70,
+.cc-skeleton-p-40,
+.cc-skeleton-large-button {
+    background: $background-light;
+    border-radius: $border-radius-medium;
+    margin-bottom: $x-small;
+}
+.cc-datafilled-card {
+    .loading {
+        background:#dee3ed;
+    }
+}
+.cc-skeleton-square {
+    height: toRem(64);
+    width: toRem(64);
+}
+.cc-skeleton-heading {
+    height: toRem(30);
+    width: toRem(300);
+}
+.cc-skeleton-icon {
+    height: toRem(24);
+    width: toRem(24);
+}
+.cc-skeleton-small-button {
+    height: toRem(24);
+    width: toRem(72);
+    display: inline-block;
+}
+.cc-skeleton-p-fullwidth {
+    width: 100%;
+    height: toRem(16);
+}
+.cc-skeleton-p-70 {
+    width: 70%;
+    height: toRem(16);
+}
+.cc-skeleton-p-40 {
+    width: 40%;
+    height: toRem(16);
+}
+.cc-skeleton-large-button {
+    width: toRem(200);
+    height: toRem(40);
+}
+.loading {
+    padding: 0;
+    overflow: hidden;
+    position: relative;
+    &:after {
+        display: block;
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        transform: translateX(-100%);
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+        animation: loading 1s infinite;
+    }
+}
+
+
+@keyframes loading {
+    100% {
+        transform: translateX(100%);
+    }
+}

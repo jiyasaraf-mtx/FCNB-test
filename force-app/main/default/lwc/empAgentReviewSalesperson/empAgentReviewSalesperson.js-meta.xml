@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>61.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>Agent Review – Real Estate Salesperson</masterLabel>
+    <description>Agent Reviewer Portal queue for Real Estate Salesperson applications.</description>
+    <targets>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+        <target>lightning__AppPage</target>
+        <target>lightning__HomePage</target>
+        <target>lightning__Tab</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightningCommunity__Default">
+            <property name="showHeader" type="Boolean" default="true" label="Show page header"/>
+            <property name="pageMode" type="String" default="dashboard" label="Page mode (dashboard|queue)"/>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

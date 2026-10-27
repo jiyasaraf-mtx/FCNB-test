@@ -1,0 +1,193 @@
+<template>
+    <div class="ocr-page">
+        <header class="ocr-header">
+            <div>
+                <h1 class="ocr-title">OCR Document Extraction</h1>
+                <p class="ocr-subtitle">Upload documents to automatically extract and populate information.</p>
+            </div>
+        </header>
+
+        <div class="ocr-grid">
+            <!-- 1. Upload + Recent -->
+            <section class="ocr-panel">
+                <h2 class="panel-title">1. Upload Document</h2>
+
+                <div class="upload-dropzone">
+                    <lightning-icon icon-name="utility:upload" size="large" class="upload-icon"></lightning-icon>
+                    <p class="upload-copy">Drag and drop files here or</p>
+                    <lightning-file-upload
+                        label="Upload Files"
+                        name="ocrUploader"
+                        accept={acceptedFormats}
+                        record-id={userId}
+                        onuploadfinished={handleUploadFinished}>
+                    </lightning-file-upload>
+                    <p class="upload-hint">Supported formats: PDF, JPG, PNG, TIFF (Max 10MB)</p>
+                </div>
+
+                <div class="recent-header">
+                    <h3 class="recent-title">Recent Uploads</h3>
+                    <button class="view-all-link" type="button" onclick={handleViewAll}>View All</button>
+                </div>
+
+                <template if:true={hasRecentFiles}>
+                    <ul class="recent-list">
+                        <template for:each={recentFiles} for:item="file">
+                            <li key={file.documentId}>
+                                <button
+                                    type="button"
+                                    class={file.itemClass}
+                                    data-id={file.documentId}
+                                    onclick={handleRecentFileClick}>
+                                    <lightning-icon icon-name={file.iconName} size="small"></lightning-icon>
+                                    <span class="recent-meta">
+                                        <span class="recent-name">{file.title}</span>
+                                        <span class="recent-time">{file.relativeTime}</span>
+                                    </span>
+                                    <span class={file.statusClass} title={file.statusLabel}>
+                                        <lightning-icon
+                                            icon-name={file.statusIcon}
+                                            size="xx-small"
+                                            alternative-text={file.statusLabel}>
+                                        </lightning-icon>
+                                    </span>
+                                </button>
+                            </li>
+                        </template>
+                    </ul>
+                </template>
+                <template if:false={hasRecentFiles}>
+                    <p class="empty-hint">No recent uploads yet.</p>
+                </template>
+            </section>
+
+            <!-- 2. Preview -->
+            <section class="ocr-panel preview-panel">
+                <div class="preview-header">
+                    <h2 class="panel-title">2. Document Preview</h2>
+                    <template if:true={hasPreview}>
+                        <div class="preview-toolbar">
+                            <button type="button" class="toolbar-btn" onclick={zoomOut} title="Zoom out">−</button>
+                            <span class="zoom-label">{zoomLabel}</span>
+                            <button type="button" class="toolbar-btn" onclick={zoomIn} title="Zoom in">+</button>
+                            <a class="toolbar-link" href={preview.downloadUrl} target="_blank" rel="noopener noreferrer" title="Download">
+                                <lightning-icon icon-name="utility:download" size="x-small"></lightning-icon>
+                            </a>
+                        </div>
+                    </template>
+                </div>
+
+                <div class="preview-body">
+                    <template if:true={isLoadingPreview}>
+                        <lightning-spinner alternative-text="Loading preview" size="medium"></lightning-spinner>
+                    </template>
+
+                    <template if:true={hasPreview}>
+                        <div class="preview-stage">
+                            <template if:true={showImagePreview}>
+                                <img
+                                    src={preview.previewUrl}
+                                    alt={preview.title}
+                                    class="preview-image"
+                                    style={imageZoomStyle} />
+                            </template>
+                            <template if:true={showPdfPreview}>
+                                <object
+                                    data={preview.previewUrl}
+                                    type="application/pdf"
+                                    class="preview-frame"
+                                    title={preview.title}>
+                                    <iframe src={preview.previewUrl} class="preview-frame" title={preview.title}></iframe>
+                                </object>
+                            </template>
+                            <template if:true={showPreviewFallback}>
+                                <div class="preview-fallback">
+                                    <lightning-icon icon-name="doctype:image" size="large"></lightning-icon>
+                                    <p class="slds-m-top_small"><b>{preview.title}</b></p>
+                                    <p class="slds-m-bottom_small">Inline preview is unavailable for this file size/type.</p>
+                                    <a class="slds-button slds-button_brand" href={preview.downloadUrl} target="_blank" rel="noopener noreferrer">
+                                        Open File
+                                    </a>
+                                </div>
+                            </template>
+                        </div>
+                        <div class="preview-thumb">
+                            <span class="thumb-chip">Page 1</span>
+                        </div>
+                    </template>
+
+                    <template if:false={hasPreview}>
+                        <template if:false={isLoadingPreview}>
+                            <div class="preview-empty">
+                                <lightning-icon icon-name="utility:preview" size="large"></lightning-icon>
+                                <p>Upload or select a file to preview it here.</p>
+                            </div>
+                        </template>
+                    </template>
+                </div>
+            </section>
+
+            <!-- 3. Extracted Information -->
+            <section class="ocr-panel extract-panel">
+                <div class="extract-header">
+                    <h2 class="panel-title">3. Extracted Information</h2>
+                </div>
+
+                <div class="extract-body">
+                    <template if:true={isLoading}>
+                        <div class="extract-loading">
+                            <lightning-spinner alternative-text="Extracting" size="medium"></lightning-spinner>
+                            <p>AI is analyzing your document...</p>
+                        </div>
+                    </template>
+
+                    <template if:true={showExtracted}>
+                        <template if:true={hasSections}>
+                            <lightning-accordion allow-multiple active-section-name={activeSectionNames}>
+                                <template for:each={sections} for:item="section">
+                                    <lightning-accordion-section
+                                        key={section.title}
+                                        name={section.title}
+                                        label={section.title}>
+                                        <div class="field-grid">
+                                            <template for:each={section.fields} for:item="field">
+                                                <div key={field.key} class="field-item">
+                                                    <label class="field-label">{field.key}</label>
+                                                    <div class="field-value">{field.value}</div>
+                                                </div>
+                                            </template>
+                                        </div>
+                                    </lightning-accordion-section>
+                                </template>
+                            </lightning-accordion>
+                        </template>
+
+                        <template if:true={hasTables}>
+                            <template for:each={tables} for:item="tbl">
+                                <div key={tbl.key} class="table-block">
+                                    <h3 class="table-title">{tbl.tableName}</h3>
+                                    <lightning-datatable
+                                        key-field="id"
+                                        data={tbl.data}
+                                        columns={tbl.columns}
+                                        hide-checkbox-column
+                                        show-row-number-column>
+                                    </lightning-datatable>
+                                </div>
+                            </template>
+                        </template>
+                    </template>
+
+                    <template if:false={showExtracted}>
+                        <template if:false={isLoading}>
+                            <div class="extract-empty">
+                                <lightning-icon icon-name="utility:magicwand" size="large"></lightning-icon>
+                                <p>Extracted fields will appear here after upload.</p>
+                            </div>
+                        </template>
+                    </template>
+                </div>
+            </section>
+        </div>
+    </div>
+</template>

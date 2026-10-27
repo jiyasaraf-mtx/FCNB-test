@@ -1,0 +1,265 @@
+<template>
+            <div class="slds-grid slds-wrap slds-is-relative ">
+            <div style="position: fixed;z-index: 999999;top: 0;right: 0;">
+  <omnistudio-toast class="flexcard-toast-element" theme="slds" title="" message="" styletype=""> </omnistudio-toast>
+</div>
+            <div if:true={showLoader} class="slds-is-absolute vloc-loader_override" style="height: 100%; width: 100%; min-height:50px; background: transparent; z-index: 99;">
+  <div>
+   <omnistudio-spinner
+      variant="brand"
+      alternative-text="Loading content..."
+      size="medium"
+      theme="slds"
+      ></omnistudio-spinner>
+  </div>
+</div>
+            <template if:false={hasPermission}>
+              You don't have required permissions to view this card.
+            </template>
+            <template if:true={hasPermission}>
+              <template if:true={hasRecords}>
+                        <template for:each={_records} for:item="record" for:index="rindex">
+                            <omnistudio-flex-card-state if:true={record}  key={record._flex.uniqueKey} data-recordid={record.Id} record={record} data-statue="true"  data-index="0" data-rindex={rindex} class="cf-vlocity-state-0 cf-vlocity-state slds-size_12-of-12"  tracking-obj={_childCardTrackingObj} >
+      <div if:true={cardLoaded} class="slds-grid slds-wrap slds-card slds-p-around_x-small slds-m-bottom_x-small" style="">
+          <div data-style-id="state0element0" class="slds-col   slds-p-around_x-small accordion-block slds-size_12-of-12  " data-rindex={rindex} style="      
+         " >
+    <omnistudio-block data-style-id="state0element0_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element0" class="slds-col   slds-p-around_x-small accordion slds-size_12-of-12  " data-rindex={rindex} style="      
+         " >
+    <omnistudio-block data-style-id="state0element0block_element0_child"  card={card}  record={record}  label="License"  collapsible="true"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element0block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element0block_element0block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3ELicense%20type%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element0block_element0block_element1" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element0block_element0block_element1_child"   card={card}  record={record}  merge-field="%3Cdiv%3E%7BregAuthTypeName%7D%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element0block_element1" class="slds-col   slds-p-around_x-small accordion slds-size_12-of-12  condition-element" data-rindex={rindex} style="      
+         "  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-0","field":"authorisationType","operator":"==","value":"Individual","type":"custom","hasMergeField":false}]}' >
+    <omnistudio-block data-style-id="state0element0block_element1_child"  card={card}  record={record}  label="Personal Information"  collapsible="true"  collapsed-by-default="true"  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-0","field":"authorisationType","operator":"==","value":"Individual","type":"custom","hasMergeField":false}]}'  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element1block_element0" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><c-cf-m-o-d-p-r-personal-information-review data-style-id="state0element0block_element1block_element0_child"  tracking-obj={_childCardTrackingObj}  is-inside-parent={insideParent} parent-uniquekey={uniqueKey}  card-node=""  parent-record={record}  records={_records}  parent-mergefields={card}  record-id={recordId}  is-child-card-tracking-enabled="false"  parent-attribute='\{"parId":"{recordId}"}'  object-api-name={objectApiName}  theme="slds"   onupdateparent={updateParentData}></c-cf-m-o-d-p-r-personal-information-review>
+    </div><div data-style-id="state0element0block_element1block_element1" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><c-cf-r-s-sales-personfetch-residence-address data-style-id="state0element0block_element1block_element1_child"  tracking-obj={_childCardTrackingObj}  is-inside-parent={insideParent} parent-uniquekey={uniqueKey}  card-node=""  parent-record={record}  records={_records}  parent-mergefields={card}  record-id={recordId}  is-child-card-tracking-enabled="false"  parent-attribute='\{"parId":"{recordId}"}'  object-api-name={objectApiName}  theme="slds"  omni-json-def={omniJsonDef} omni-script-header-def={omniScriptHeaderDef} omni-custom-state={omniCustomState} omni-json-data={omniJsonData} omni-support-key={record._flex.uniqueKey}   onupdateparent={updateParentData}></c-cf-r-s-sales-personfetch-residence-address>
+    </div><div data-style-id="state0element0block_element1block_element2" class="slds-col   slds-size_12-of-12 condition-element" data-rindex={rindex} style=""  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-0","field":"regAuthTypeName","operator":"==","value":"Martial Arts Judge","type":"custom","hasMergeField":false}]}' ><c-cf-a-t-t-prfl-info-additional-information-f-c data-style-id="state0element0block_element1block_element2_child"  tracking-obj={_childCardTrackingObj}  is-inside-parent={insideParent} parent-uniquekey={uniqueKey}  card-node=""  parent-record={record}  records={_records}  parent-mergefields={card}  record-id={recordId}  is-child-card-tracking-enabled="false"  parent-attribute='\{"BoardName":"{boardName}","parId":"{recordId}"}'  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-0","field":"regAuthTypeName","operator":"==","value":"Martial Arts Judge","type":"custom","hasMergeField":false}]}'  object-api-name={objectApiName}  theme="slds"   onupdateparent={updateParentData}></c-cf-a-t-t-prfl-info-additional-information-f-c>
+    </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element0block_element2" class="slds-col   slds-p-around_x-small accordion slds-size_12-of-12  condition-element" data-rindex={rindex} style="      
+         "  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-32","field":"authorisationType","operator":"==","value":"Business","type":"custom","hasMergeField":false}]}' >
+    <omnistudio-block data-style-id="state0element0block_element2_child"  card={card}  record={record}  label="Business Information"  collapsible="true"  collapsed-by-default="true"  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-32","field":"authorisationType","operator":"==","value":"Business","type":"custom","hasMergeField":false}]}'  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element2block_element0" class="slds-col   slds-size_12-of-12 condition-element" data-rindex={rindex} style=""  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-7","field":"boardName","operator":"!=","value":"Private Investigator and Private Fire Investigator Examiners","type":"custom","hasMergeField":false}]}' ><c-cf-m-o-d-p-r-business-information-review-f-c data-style-id="state0element0block_element2block_element0_child"  tracking-obj={_childCardTrackingObj}  is-inside-parent={insideParent} parent-uniquekey={uniqueKey}  card-node=""  parent-record={record}  records={_records}  parent-mergefields={card}  record-id={recordId}  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-7","field":"boardName","operator":"!=","value":"Private Investigator and Private Fire Investigator Examiners","type":"custom","hasMergeField":false}]}'  is-child-card-tracking-enabled="false"  parent-attribute='\{"parId":"{recordId}"}'  object-api-name={objectApiName}  theme="slds"  omni-json-def={omniJsonDef} omni-script-header-def={omniScriptHeaderDef} omni-custom-state={omniCustomState} omni-json-data={omniJsonData} omni-support-key={record._flex.uniqueKey}   onupdateparent={updateParentData}></c-cf-m-o-d-p-r-business-information-review-f-c>
+    </div><div data-style-id="state0element0block_element2block_element1" class="slds-col   slds-size_12-of-12 condition-element" data-rindex={rindex} style=""  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-0","field":"boardName","operator":"==","value":"Private Investigator and Private Fire Investigator Examiners","type":"custom","hasMergeField":false}]}' ><c-cf-p-i-p-f-i-agency-primary-branch-business-info-f-c data-style-id="state0element0block_element2block_element1_child"  tracking-obj={_childCardTrackingObj}  is-inside-parent={insideParent} parent-uniquekey={uniqueKey}  card-node=""  parent-record={record}  records={_records}  parent-mergefields={card}  record-id={recordId}  is-child-card-tracking-enabled="false"  parent-attribute='\{"parId":"{recordId}"}'  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-0","field":"boardName","operator":"==","value":"Private Investigator and Private Fire Investigator Examiners","type":"custom","hasMergeField":false}]}'  object-api-name={objectApiName}  theme="slds"  omni-json-def={omniJsonDef} omni-script-header-def={omniScriptHeaderDef} omni-custom-state={omniCustomState} omni-json-data={omniJsonData} omni-support-key={record._flex.uniqueKey}   onupdateparent={updateParentData}></c-cf-p-i-p-f-i-agency-primary-branch-business-info-f-c>
+    </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element0block_element3" class="slds-col   slds-p-around_x-small accordion slds-size_12-of-12  " data-rindex={rindex} style="      
+         " >
+    <omnistudio-block data-style-id="state0element0block_element3_child"  card={card}  record={record}  label="License Details"  collapsible="true"  collapsed-by-default="true"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element3block_element0" class="slds-col   slds-p-around_x-small slds-size_8-of-12  " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element0block_element3block_element0_child"  card={card}  record={record}  label=""  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element3block_element0block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element0block_element3block_element0block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3ELicense%20Type%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element0block_element3block_element0block_element1" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element0block_element3block_element0block_element1_child"   card={card}  record={record}  merge-field="%3Cdiv%3E%7BDuplicateApplicationLicenseDetails.DuplicateLicenseType%7D%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element0block_element3block_element1" class="slds-col   slds-p-around_x-small slds-size_4-of-12  " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element0block_element3block_element1_child"  card={card}  record={record}  label=""  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element3block_element1block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element0block_element3block_element1block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3ELicense%20Number%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element0block_element3block_element1block_element1" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element0block_element3block_element1block_element1_child"   card={card}  record={record}  merge-field="%3Cdiv%3E%7BDuplicateApplicationLicenseDetails.DuplicateLicenseNumber%7D%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element0block_element3block_element2" class="slds-col   slds-p-around_x-small slds-size_4-of-12  " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element0block_element3block_element2_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element3block_element2block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element0block_element3block_element2block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3EIssuance%20date%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element0block_element3block_element2block_element1" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element0block_element3block_element2block_element1_child"   card={card}  record={record}  placeholder="-"  type="date"  label=""  format="MM/DD/YYYY"  field-name="DuplicateApplicationLicenseDetails.DuplicateLicenseIssuanceDate"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element0block_element3block_element3" class="slds-col   slds-p-around_x-small slds-size_4-of-12  " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element0block_element3block_element3_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element3block_element3block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element0block_element3block_element3block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3EExpiration%20date%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element0block_element3block_element3block_element1" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element0block_element3block_element3block_element1_child"   card={card}  record={record}  placeholder="-"  type="date"  label=""  format="MM/DD/YYYY"  field-name="DuplicateApplicationLicenseDetails.DuplicateLicenseExpirationDate"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element0block_element3block_element4" class="slds-col   slds-p-around_x-small slds-size_4-of-12  " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element0block_element3block_element4_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element3block_element4block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element0block_element3block_element4block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3EStatus%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element0block_element3block_element4block_element1" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element0block_element3block_element4block_element1_child"   card={card}  record={record}  merge-field="%3Cdiv%3E%7BDuplicateApplicationLicenseDetails.DuplicateLicenseStatus%7D%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element0block_element4" class="slds-col   slds-p-around_x-small accordion slds-size_12-of-12  " data-rindex={rindex} style="      
+         " >
+    <omnistudio-block data-style-id="state0element0block_element4_child"  card={card}  record={record}  label="Reason for Request"  collapsible="true"  collapsed-by-default="true"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element4block_element0" class="slds-col   slds-p-around_x-small slds-size_6-of-12  " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element0block_element4block_element0_child"  card={card}  record={record}  label=""  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element4block_element0block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element0block_element4block_element0block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3EReason%20for%20Request%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element0block_element4block_element0block_element1" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element0block_element4block_element0block_element1_child"   card={card}  record={record}  merge-field="%3Cdiv%3E%7BDuplicateLicenseReasonforRequest.SelectReasonforRequest%7D%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element0block_element4block_element1" class="slds-col   slds-p-around_x-small slds-size_6-of-12  condition-element" data-rindex={rindex} style=""  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-0","field":"DuplicateLicenseReasonforRequest.SelectReasonforRequest","operator":"==","value":"Other","type":"custom","hasMergeField":false}]}' >
+    <omnistudio-block data-style-id="state0element0block_element4block_element1_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-0","field":"DuplicateLicenseReasonforRequest.SelectReasonforRequest","operator":"==","value":"Other","type":"custom","hasMergeField":false}]}'  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element4block_element1block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element0block_element4block_element1block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3EOther%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element0block_element4block_element1block_element1" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element0block_element4block_element1block_element1_child"   card={card}  record={record}  merge-field="%3Cdiv%3E%7BDuplicateLicenseReasonforRequest.ReasonforRequestOther%7D%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element0block_element5" class="slds-col   slds-p-around_x-small accordion slds-size_12-of-12  condition-element" data-rindex={rindex} style="      
+         "  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-4","field":"boardName","operator":"==","value":"Real Estate Appraisers","type":"custom","hasMergeField":false},{"id":"state-new-condition-11","field":"boardName","operator":"==","value":"Social Workers","type":"custom","hasMergeField":false,"logicalOperator":"||"},{"id":"state-new-condition-21","field":"boardName","operator":"==","value":"Occupational Therapy","type":"custom","hasMergeField":false,"logicalOperator":"||"},{"id":"state-new-condition-34","field":"boardName","operator":"==","value":"Respiratory Care","type":"custom","hasMergeField":false,"logicalOperator":"||"},{"id":"state-new-condition-50","field":"boardName","operator":"==","value":"Tattooing, Body Piercing & Branding","type":"custom","hasMergeField":false,"logicalOperator":"||"}]}' >
+    <omnistudio-block data-style-id="state0element0block_element5_child"  card={card}  record={record}  label="Duplicate License Information"  collapsible="true"  collapsed-by-default="true"  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-4","field":"boardName","operator":"==","value":"Real Estate Appraisers","type":"custom","hasMergeField":false},{"id":"state-new-condition-11","field":"boardName","operator":"==","value":"Social Workers","type":"custom","hasMergeField":false,"logicalOperator":"||"},{"id":"state-new-condition-21","field":"boardName","operator":"==","value":"Occupational Therapy","type":"custom","hasMergeField":false,"logicalOperator":"||"},{"id":"state-new-condition-34","field":"boardName","operator":"==","value":"Respiratory Care","type":"custom","hasMergeField":false,"logicalOperator":"||"},{"id":"state-new-condition-50","field":"boardName","operator":"==","value":"Tattooing, Body Piercing & Branding","type":"custom","hasMergeField":false,"logicalOperator":"||"}]}'  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element5block_element0" class="slds-col   slds-p-around_x-small slds-size_12-of-12  " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element0block_element5block_element0_child"  card={card}  record={record}  label=""  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element5block_element0block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element0block_element5block_element0block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3EDo%20you%20want%20to%20request%20more%20than%201%20Duplicate%20License?%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element0block_element5block_element0block_element1" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element0block_element5block_element0block_element1_child"   card={card}  record={record}  merge-field="%3Cdiv%3E%7BrequestMoreThanOne%7D%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element0block_element5block_element1" class="slds-col   slds-p-around_x-small slds-size_12-of-12  condition-element" data-rindex={rindex} style=""  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-0","field":"requestMoreThanOne","operator":"==","value":"Yes","type":"custom","hasMergeField":false}]}' >
+    <omnistudio-block data-style-id="state0element0block_element5block_element1_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-0","field":"requestMoreThanOne","operator":"==","value":"Yes","type":"custom","hasMergeField":false}]}'  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element5block_element1block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element0block_element5block_element1block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3ENumber%20of%20Requests%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element0block_element5block_element1block_element1" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element0block_element5block_element1block_element1_child"   card={card}  record={record}  merge-field="%3Cdiv%3E%7BtotalDuplicateLicense%7D%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div>
+        </div></omnistudio-block>
+    </div>
+        </div></omnistudio-block>
+    </div>
+        </div>
+      </omnistudio-flex-card-state>
+                        </template>
+                      </template>
+                      <template if:false={hasRecords}>
+                            <omnistudio-flex-card-state  record={record} data-statue="false"  data-index="0" data-rindex={rindex} class="cf-vlocity-state-0 cf-vlocity-state slds-size_12-of-12"  tracking-obj={_childCardTrackingObj} >
+      <div if:true={cardLoaded} class="slds-grid slds-wrap slds-card slds-p-around_x-small slds-m-bottom_x-small" style="">
+          <div data-style-id="state0element0" class="slds-col   slds-p-around_x-small accordion-block slds-size_12-of-12  " data-rindex={rindex} style="      
+         " >
+    <omnistudio-block data-style-id="state0element0_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element0" class="slds-col   slds-p-around_x-small accordion slds-size_12-of-12  " data-rindex={rindex} style="      
+         " >
+    <omnistudio-block data-style-id="state0element0block_element0_child"  card={card}  record={record}  label="License"  collapsible="true"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element0block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element0block_element0block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3ELicense%20type%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element0block_element0block_element1" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element0block_element0block_element1_child"   card={card}  record={record}  merge-field="%3Cdiv%3E%7BregAuthTypeName%7D%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element0block_element1" class="slds-col   slds-p-around_x-small accordion slds-size_12-of-12  condition-element" data-rindex={rindex} style="      
+         "  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-0","field":"authorisationType","operator":"==","value":"Individual","type":"custom","hasMergeField":false}]}' >
+    <omnistudio-block data-style-id="state0element0block_element1_child"  card={card}  record={record}  label="Personal Information"  collapsible="true"  collapsed-by-default="true"  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-0","field":"authorisationType","operator":"==","value":"Individual","type":"custom","hasMergeField":false}]}'  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element1block_element0" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><c-cf-m-o-d-p-r-personal-information-review data-style-id="state0element0block_element1block_element0_child"  tracking-obj={_childCardTrackingObj}  is-inside-parent={insideParent} parent-uniquekey={uniqueKey}  card-node=""  parent-record={record}  records={_records}  parent-mergefields={card}  record-id={recordId}  is-child-card-tracking-enabled="false"  parent-attribute='\{"parId":"{recordId}"}'  object-api-name={objectApiName}  theme="slds"   onupdateparent={updateParentData}></c-cf-m-o-d-p-r-personal-information-review>
+    </div><div data-style-id="state0element0block_element1block_element1" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><c-cf-r-s-sales-personfetch-residence-address data-style-id="state0element0block_element1block_element1_child"  tracking-obj={_childCardTrackingObj}  is-inside-parent={insideParent} parent-uniquekey={uniqueKey}  card-node=""  parent-record={record}  records={_records}  parent-mergefields={card}  record-id={recordId}  is-child-card-tracking-enabled="false"  parent-attribute='\{"parId":"{recordId}"}'  object-api-name={objectApiName}  theme="slds"   onupdateparent={updateParentData}></c-cf-r-s-sales-personfetch-residence-address>
+    </div><div data-style-id="state0element0block_element1block_element2" class="slds-col   slds-size_12-of-12 condition-element" data-rindex={rindex} style=""  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-0","field":"regAuthTypeName","operator":"==","value":"Martial Arts Judge","type":"custom","hasMergeField":false}]}' ><c-cf-a-t-t-prfl-info-additional-information-f-c data-style-id="state0element0block_element1block_element2_child"  tracking-obj={_childCardTrackingObj}  is-inside-parent={insideParent} parent-uniquekey={uniqueKey}  card-node=""  parent-record={record}  records={_records}  parent-mergefields={card}  record-id={recordId}  is-child-card-tracking-enabled="false"  parent-attribute='\{"BoardName":"{boardName}","parId":"{recordId}"}'  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-0","field":"regAuthTypeName","operator":"==","value":"Martial Arts Judge","type":"custom","hasMergeField":false}]}'  object-api-name={objectApiName}  theme="slds"   onupdateparent={updateParentData}></c-cf-a-t-t-prfl-info-additional-information-f-c>
+    </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element0block_element2" class="slds-col   slds-p-around_x-small accordion slds-size_12-of-12  condition-element" data-rindex={rindex} style="      
+         "  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-32","field":"authorisationType","operator":"==","value":"Business","type":"custom","hasMergeField":false}]}' >
+    <omnistudio-block data-style-id="state0element0block_element2_child"  card={card}  record={record}  label="Business Information"  collapsible="true"  collapsed-by-default="true"  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-32","field":"authorisationType","operator":"==","value":"Business","type":"custom","hasMergeField":false}]}'  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element2block_element0" class="slds-col   slds-size_12-of-12 condition-element" data-rindex={rindex} style=""  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-7","field":"boardName","operator":"!=","value":"Private Investigator and Private Fire Investigator Examiners","type":"custom","hasMergeField":false}]}' ><c-cf-m-o-d-p-r-business-information-review-f-c data-style-id="state0element0block_element2block_element0_child"  tracking-obj={_childCardTrackingObj}  is-inside-parent={insideParent} parent-uniquekey={uniqueKey}  card-node=""  parent-record={record}  records={_records}  parent-mergefields={card}  record-id={recordId}  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-7","field":"boardName","operator":"!=","value":"Private Investigator and Private Fire Investigator Examiners","type":"custom","hasMergeField":false}]}'  is-child-card-tracking-enabled="false"  parent-attribute='\{"parId":"{recordId}"}'  object-api-name={objectApiName}  theme="slds"   onupdateparent={updateParentData}></c-cf-m-o-d-p-r-business-information-review-f-c>
+    </div><div data-style-id="state0element0block_element2block_element1" class="slds-col   slds-size_12-of-12 condition-element" data-rindex={rindex} style=""  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-0","field":"boardName","operator":"==","value":"Private Investigator and Private Fire Investigator Examiners","type":"custom","hasMergeField":false}]}' ><c-cf-p-i-p-f-i-agency-primary-branch-business-info-f-c data-style-id="state0element0block_element2block_element1_child"  tracking-obj={_childCardTrackingObj}  is-inside-parent={insideParent} parent-uniquekey={uniqueKey}  card-node=""  parent-record={record}  records={_records}  parent-mergefields={card}  record-id={recordId}  is-child-card-tracking-enabled="false"  parent-attribute='\{"parId":"{recordId}"}'  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-0","field":"boardName","operator":"==","value":"Private Investigator and Private Fire Investigator Examiners","type":"custom","hasMergeField":false}]}'  object-api-name={objectApiName}  theme="slds"   onupdateparent={updateParentData}></c-cf-p-i-p-f-i-agency-primary-branch-business-info-f-c>
+    </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element0block_element3" class="slds-col   slds-p-around_x-small accordion slds-size_12-of-12  " data-rindex={rindex} style="      
+         " >
+    <omnistudio-block data-style-id="state0element0block_element3_child"  card={card}  record={record}  label="License Details"  collapsible="true"  collapsed-by-default="true"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element3block_element0" class="slds-col   slds-p-around_x-small slds-size_8-of-12  " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element0block_element3block_element0_child"  card={card}  record={record}  label=""  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element3block_element0block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element0block_element3block_element0block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3ELicense%20Type%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element0block_element3block_element0block_element1" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element0block_element3block_element0block_element1_child"   card={card}  record={record}  merge-field="%3Cdiv%3E%7BDuplicateApplicationLicenseDetails.DuplicateLicenseType%7D%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element0block_element3block_element1" class="slds-col   slds-p-around_x-small slds-size_4-of-12  " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element0block_element3block_element1_child"  card={card}  record={record}  label=""  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element3block_element1block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element0block_element3block_element1block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3ELicense%20Number%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element0block_element3block_element1block_element1" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element0block_element3block_element1block_element1_child"   card={card}  record={record}  merge-field="%3Cdiv%3E%7BDuplicateApplicationLicenseDetails.DuplicateLicenseNumber%7D%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element0block_element3block_element2" class="slds-col   slds-p-around_x-small slds-size_4-of-12  " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element0block_element3block_element2_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element3block_element2block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element0block_element3block_element2block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3EIssuance%20date%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element0block_element3block_element2block_element1" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element0block_element3block_element2block_element1_child"   card={card}  record={record}  placeholder="-"  type="date"  label=""  format="MM/DD/YYYY"  field-name="DuplicateApplicationLicenseDetails.DuplicateLicenseIssuanceDate"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element0block_element3block_element3" class="slds-col   slds-p-around_x-small slds-size_4-of-12  " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element0block_element3block_element3_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element3block_element3block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element0block_element3block_element3block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3EExpiration%20date%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element0block_element3block_element3block_element1" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element0block_element3block_element3block_element1_child"   card={card}  record={record}  placeholder="-"  type="date"  label=""  format="MM/DD/YYYY"  field-name="DuplicateApplicationLicenseDetails.DuplicateLicenseExpirationDate"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element0block_element3block_element4" class="slds-col   slds-p-around_x-small slds-size_4-of-12  " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element0block_element3block_element4_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element3block_element4block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element0block_element3block_element4block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3EStatus%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element0block_element3block_element4block_element1" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element0block_element3block_element4block_element1_child"   card={card}  record={record}  merge-field="%3Cdiv%3E%7BDuplicateApplicationLicenseDetails.DuplicateLicenseStatus%7D%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element0block_element4" class="slds-col   slds-p-around_x-small accordion slds-size_12-of-12  " data-rindex={rindex} style="      
+         " >
+    <omnistudio-block data-style-id="state0element0block_element4_child"  card={card}  record={record}  label="Reason for Request"  collapsible="true"  collapsed-by-default="true"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element4block_element0" class="slds-col   slds-p-around_x-small slds-size_6-of-12  " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element0block_element4block_element0_child"  card={card}  record={record}  label=""  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element4block_element0block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element0block_element4block_element0block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3EReason%20for%20Request%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element0block_element4block_element0block_element1" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element0block_element4block_element0block_element1_child"   card={card}  record={record}  merge-field="%3Cdiv%3E%7BDuplicateLicenseReasonforRequest.SelectReasonforRequest%7D%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element0block_element4block_element1" class="slds-col   slds-p-around_x-small slds-size_6-of-12  condition-element" data-rindex={rindex} style=""  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-0","field":"DuplicateLicenseReasonforRequest.SelectReasonforRequest","operator":"==","value":"Other","type":"custom","hasMergeField":false}]}' >
+    <omnistudio-block data-style-id="state0element0block_element4block_element1_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-0","field":"DuplicateLicenseReasonforRequest.SelectReasonforRequest","operator":"==","value":"Other","type":"custom","hasMergeField":false}]}'  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element4block_element1block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element0block_element4block_element1block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3EOther%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element0block_element4block_element1block_element1" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element0block_element4block_element1block_element1_child"   card={card}  record={record}  merge-field="%3Cdiv%3E%7BDuplicateLicenseReasonforRequest.ReasonforRequestOther%7D%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element0block_element5" class="slds-col   slds-p-around_x-small accordion slds-size_12-of-12  condition-element" data-rindex={rindex} style="      
+         "  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-4","field":"boardName","operator":"==","value":"Real Estate Appraisers","type":"custom","hasMergeField":false},{"id":"state-new-condition-11","field":"boardName","operator":"==","value":"Social Workers","type":"custom","hasMergeField":false,"logicalOperator":"||"},{"id":"state-new-condition-21","field":"boardName","operator":"==","value":"Occupational Therapy","type":"custom","hasMergeField":false,"logicalOperator":"||"},{"id":"state-new-condition-34","field":"boardName","operator":"==","value":"Respiratory Care","type":"custom","hasMergeField":false,"logicalOperator":"||"},{"id":"state-new-condition-50","field":"boardName","operator":"==","value":"Tattooing, Body Piercing & Branding","type":"custom","hasMergeField":false,"logicalOperator":"||"}]}' >
+    <omnistudio-block data-style-id="state0element0block_element5_child"  card={card}  record={record}  label="Duplicate License Information"  collapsible="true"  collapsed-by-default="true"  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-4","field":"boardName","operator":"==","value":"Real Estate Appraisers","type":"custom","hasMergeField":false},{"id":"state-new-condition-11","field":"boardName","operator":"==","value":"Social Workers","type":"custom","hasMergeField":false,"logicalOperator":"||"},{"id":"state-new-condition-21","field":"boardName","operator":"==","value":"Occupational Therapy","type":"custom","hasMergeField":false,"logicalOperator":"||"},{"id":"state-new-condition-34","field":"boardName","operator":"==","value":"Respiratory Care","type":"custom","hasMergeField":false,"logicalOperator":"||"},{"id":"state-new-condition-50","field":"boardName","operator":"==","value":"Tattooing, Body Piercing & Branding","type":"custom","hasMergeField":false,"logicalOperator":"||"}]}'  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element5block_element0" class="slds-col   slds-p-around_x-small slds-size_12-of-12  " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element0block_element5block_element0_child"  card={card}  record={record}  label=""  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element5block_element0block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element0block_element5block_element0block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3EDo%20you%20want%20to%20request%20more%20than%201%20Duplicate%20License?%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element0block_element5block_element0block_element1" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element0block_element5block_element0block_element1_child"   card={card}  record={record}  merge-field="%3Cdiv%3E%7BrequestMoreThanOne%7D%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element0block_element5block_element1" class="slds-col   slds-p-around_x-small slds-size_12-of-12  condition-element" data-rindex={rindex} style=""  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-0","field":"requestMoreThanOne","operator":"==","value":"Yes","type":"custom","hasMergeField":false}]}' >
+    <omnistudio-block data-style-id="state0element0block_element5block_element1_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-0","field":"requestMoreThanOne","operator":"==","value":"Yes","type":"custom","hasMergeField":false}]}'  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element5block_element1block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element0block_element5block_element1block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3ENumber%20of%20Requests%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element0block_element5block_element1block_element1" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element0block_element5block_element1block_element1_child"   card={card}  record={record}  merge-field="%3Cdiv%3E%7BtotalDuplicateLicense%7D%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div>
+        </div></omnistudio-block>
+    </div>
+        </div></omnistudio-block>
+    </div>
+        </div>
+      </omnistudio-flex-card-state>
+                      </template>
+            </template>
+            <template if:true={hasError}>
+            {error}
+            </template>
+            
+      <omnistudio-action action-wrapperclass="slds-hide" re-render-flyout class="action-trigger slds-col" onupdateos={updateOmniscript} onselectcards={updateSelectedCards} onsetvalue={updateAction} onfireactionevent={actionEvtHandler}>
+      
+      </omnistudio-action>
+  
+            <omnistudio-action class="execute-action" re-render-flyout action-wrapperclass="slds-hide" onupdateos={updateOmniscript} onselectcards={updateSelectedCards} onsetvalue={updateAction} onfireactionevent={actionEvtHandler}>
+            
+            </omnistudio-action>
+            </div>
+          </template>

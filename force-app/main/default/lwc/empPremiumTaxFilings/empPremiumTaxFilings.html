@@ -1,0 +1,83 @@
+<template>
+    <div class="pt-page" role="main">
+        <header class="pt-header">
+            <h1 class="pt-title">Select a filing type</h1>
+            <p class="pt-subtitle">Three separate forms — same pattern (record provincial payment + proof), different fields.</p>
+        </header>
+
+        <!-- Row 1: open forms -->
+        <section class="cards" aria-label="Open a filing form">
+            <template for:each={openTiles} for:item="tile">
+                <button
+                    key={tile.type}
+                    type="button"
+                    class={tile.className}
+                    data-type={tile.type}
+                    onclick={handleOpenForm}>
+                    <h2>{tile.title}</h2>
+                    <p>{tile.description}</p>
+                    <span class="tag">{tile.footerLabel}</span>
+                </button>
+            </template>
+        </section>
+
+        <!-- Row 2: filter records -->
+        <section class="filter-block" aria-label="Filter filings">
+            <h2 class="filter-heading">{labels.filterHeading}</h2>
+            <div class="cards cards-filter">
+                <template for:each={filterTiles} for:item="tile">
+                    <button
+                        key={tile.type}
+                        type="button"
+                        class={tile.className}
+                        data-type={tile.type}
+                        aria-pressed={tile.ariaPressed}
+                        onclick={handleSelectTile}>
+                        <h2>{tile.title}</h2>
+                        <p>{tile.description}</p>
+                        <span class="tag">{tile.footerLabel}</span>
+                    </button>
+                </template>
+            </div>
+        </section>
+
+        <section class="returns-card" aria-label={labels.returns}>
+            <div class="returns-head">
+                <div>
+                    <h2 class="returns-title">{sectionTitle}</h2>
+                    <p class="returns-sub">{subtitle}</p>
+                </div>
+            </div>
+
+            <template if:true={isLoading}>
+                <div class="state-block" role="status">
+                    <lightning-spinner alternative-text={labels.loading} size="small"></lightning-spinner>
+                </div>
+            </template>
+
+            <template if:true={errorMessage}>
+                <div class="state-block error" role="alert">{errorMessage}</div>
+            </template>
+
+            <template if:true={showEmpty}>
+                <div class="state-block empty">{emptyLabel}</div>
+            </template>
+
+            <template if:true={hasReturns}>
+                <ul class="returns-list">
+                    <template for:each={returns} for:item="row">
+                        <li key={row.id} class="return-row">
+                            <div class="return-main">
+                                <div class="return-period">{row.periodLabel}</div>
+                                <div class="return-meta">{row.subtitle}</div>
+                            </div>
+                            <div class="return-aside">
+                                <span class={row.statusClass}>{row.paymentStatus}</span>
+                            </div>
+                        </li>
+                    </template>
+                </ul>
+            </template>
+        </section>
+    </div>
+</template>

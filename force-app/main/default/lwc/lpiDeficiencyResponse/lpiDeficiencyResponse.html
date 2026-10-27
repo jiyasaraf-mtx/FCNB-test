@@ -1,0 +1,139 @@
+<!--
+  @description       : 
+  @author            : MTX Group Inc
+  @group             : 
+  @last modified on  : 06-13-2024
+  @last modified by  : MTX Group Inc
+-->
+<template>
+    <template if:true={showSpinner}>
+        <lightning-spinner size="medium" alternative-text="Loading..."></lightning-spinner>
+    </template>
+
+    <div class="deficiency-notice">
+        <div class="slds-card">
+            <h1 class="sub-heading bold-24 m-b-xml" slot="title">Deficiency Notice</h1>
+            <p class="asterisk-caption m-b-medium">Asterisk (<span class="c-red">*</span>) indicates required field</p>
+              <div class="warning-message-box slds-m-vertical_large slds-list_horizontal">
+        <lightning-icon class=" slds-icon-utility-info-alt slds-icon_container slds-m-right_small"
+            icon-name="utility:info_alt" title="Warning">
+            <span style="--sds-c-icon-color-background: var(--slds-c-icon-color-background, transparent)"
+                part="boundary">
+                <lightning-primitive-icon size="medium" variant="">...</lightning-primitive-icon>
+                <span class="slds-assistive-text">Warning</span>
+            </span>
+        </lightning-icon>
+        <div class="slds-media__body">
+						<div>
+								Important Notice
+						</div>
+         		<lightning-formatted-rich-text value={notiDesc}></lightning-formatted-rich-text>
+       	 </div>
+						</div>
+<!-- 						<div class="slds-m-vertical_large deficiency_note">
+                <div class="slds-grid d-flex center">
+                    <div>
+                        <lightning-icon icon-name="utility:info_alt" alternative-text="info" title="info">
+                        </lightning-icon>
+                    </div>
+                    <div class="slds-m-left_small slds-media__body">
+												<div>
+														Important Notice
+												</div>
+                        <p class="slds-m-top_xx-small">
+                            <lightning-formatted-rich-text value={notiDesc}></lightning-formatted-rich-text>
+                        </p>
+                    </div>
+                </div>
+            </div> -->
+            <div class="m-b-medium">
+                <div class="slds-grid slds-wrap slds-gutters">
+                    <div
+                        class="slds-col slds-large-size_6-of-12 slds-medium-size_6-of-12 slds-size--12-of-12 m-b-medium">
+                        <div class="regular-text-16">Application Number</div>
+                        <div class="bold-16">{applicationNumber}</div>
+                    </div>
+                    <template if:true={deficiencyReviewReason}>
+                        <div
+                            class="slds-col slds-large-size_6-of-12 slds-medium-size_6-of-12 slds-size--12-of-12 m-b-medium">
+                            <div class="regular-text-16">Deficiency Review Comment</div>
+                            <div class="deficiency-reason"><lightning-formatted-rich-text value={deficiencyReviewReason}></lightning-formatted-rich-text></div>
+                        </div>
+                    </template>
+                </div>
+                <!-- <div class="slds-m-bottom_x-small"><Span class="heading-small" slot="title">Application Number - </Span> {applicationNumber}</div>
+                <template if:true={deficiencyReviewReason}>
+                    <div class="slds-m-bottom_x-small">
+                        <div class="heading-small" slot="title">Deficiency Review Comment</div>
+                        <lightning-formatted-rich-text value={deficiencyReviewReason}></lightning-formatted-rich-text>
+                    </div>
+                </template> -->
+                <template if:true={dueDiligenceDetails}>
+                    <table class="slds-table slds-table_bordered slds-no-row-hover alpha-table-layout dashboard-table">
+                        <caption class="sr-only">Missing Details table</caption>
+                        <thead>
+                            <tr class="slds-line-height_reset">
+                                <th scope="col">
+                                    <div class="slds-truncate" title="Serial Number">Sr.No</div>
+                                </th>
+                                <th scope="col">
+                                    <div class="slds-truncate" title="Missing Details">Missing Details</div>
+                                </th>
+                                <th scope="col">
+                                    <div class="slds-truncate" title="Comments">Comments</div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <template for:each={dueDiligenceDetails} for:item="dueDiligence">
+                                <tr key={dueDiligence.checklistName}>
+                                    <td>1</td>
+                                    <td>{dueDiligence.checklistName}</td>
+                                    <td>{dueDiligence.comment}</td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                    <!-- <div class="heading-small" slot="title">Missing Details</div>
+                    <ol class="slds-list_ordered">
+                        <template for:each={dueDiligenceDetails} for:item="dueDiligence">
+                            <li key={dueDiligence.checklistName}>
+                                {dueDiligence.checklistName}
+                                <ul class="slds-list_dotted">
+                                    <li>{dueDiligence.comment}</li>
+                                </ul>
+                            </li>
+                        </template>
+                    </ol> -->
+                </template>
+            </div>
+            <lightning-textarea class="m-b-medium" name="deficiencyComment" label="Deficiency Applicant Response"
+                value={deficiencyComment} max-length="25000" onchange={handleChange} placeholder=""
+                message-when-value-missing="Error: Deficiency Applicant Response is required."
+                required></lightning-textarea>
+            <div class="divider m-b-large m-t-large"></div>
+
+            <c-lpi-view-uploaded-documents object-id={appId} show-deficiency-recor={showDeficiencyRecor}
+                deficiency-id={recordId}>
+            </c-lpi-view-uploaded-documents>
+
+            <div class="divider m-b-large m-t-large"></div>
+            <!-- View  Fee Detail start -->
+            <template lwc:if={feeRecordExist}>
+                <c-lpi-view-additional-fee-data fee-data={regTransactionFeeItemList}>
+                    <div slot="paymentButton" class="slds-grid slds-grid--align-end">
+                        <lightning-button label="Submit" variant="brand" title="Make Payment" onclick={handleSubmit}>
+                        </lightning-button>
+                    </div>
+                </c-lpi-view-additional-fee-data>
+            </template>
+            <!-- View  Fee Detail end -->
+            <template lwc:else>
+                <div class="slds-grid slds-grid--align-end">
+                    <lightning-button label="Submit" variant="brand" title="Submit" onclick={handleSubmit}>
+                    </lightning-button>
+                </div>
+            </template>
+        </div>
+    </div>
+</template>

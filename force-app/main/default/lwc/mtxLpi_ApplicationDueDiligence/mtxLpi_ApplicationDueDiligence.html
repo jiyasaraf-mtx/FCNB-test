@@ -1,0 +1,274 @@
+<!--
+  @description       : 
+  @author            : Bharath Kumar M
+  @group             : 
+  @last modified on  : 06-21-2024
+  @last modified by  : Bharath Kumar M
+-->
+<template>
+	<!--Added accordian for   S-55668 -->
+	<div class=" slds-m-bottom--medium">
+		<div class="container lpiApplication slds-p-top--medium">
+			<template if:true={showSpinner}>
+				<lightning-spinner size="medium" alternative-text="Loading..."></lightning-spinner>
+			</template>
+			<template if:false={isStatusApproved}>
+				<template if:true={responsiblePartyCheck}>
+					<div
+						class="slds-grid slds-grid--align-spread slds-grid--vertical-align-center slds-m-bottom--small">
+						<h1 class="slds-text-title_bold">Due Diligences</h1>
+						<div>
+							<lightning-button if:true={isDisabled} class="slds-p-around_x-small edit-button"
+								label="Edit" onclick={handleEdit} variant="brand"></lightning-button>
+							<lightning-button if:false={isDisabled} class="slds-p-around_x-small" label="Save"
+								onclick={handleRecordChangeSave} variant="brand"></lightning-button>
+							<lightning-button if:false={isDisabled} class="slds-p-around_x-small cancel-button"
+								label="Cancel" onclick={handleRecordEditCancel}
+								variant="brand-outline"></lightning-button>
+						</div>
+					</div>
+				</template>
+				<div class="container-table">
+					<template for:each={dueDiligenceList} for:item="dd" for:index="ddindex">
+						<table class="slds-table" if:false={dd.showNoDDError} key={dd.key}>
+							<thead>
+								<tr>
+									<th class="" scope="col">
+										<div class="" title="Checklist Name">Checklist Name</div>
+									</th>
+									<!-- <th class="" scope="col" style="min-width: 14rem;">
+											<div class="" title="Responsible Party">Responsible Party</div>
+										</th> for I-240575-->
+									<th class="" scope="col">
+										<div class="" title="Comment">Internal Comment</div>
+									</th>
+									<th class="" scope="col">
+										<div class="" title="Comment">Comment</div>
+									</th>
+									<th class="" scope="col">
+										<div class="" title="Status">Status</div>
+									</th>
+									<th class="" scope="col">
+										<div class="" title="Completed By">Completed By</div>
+									</th>
+									<th class="" scope="col">
+										<div class="" title="Completed Date/Time">Completed On</div>
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+								<template for:each={dd.value} for:item="dueDiligence" for:index="index">
+									<tr key={dueDiligence.Id}>
+										<th data-label="Checklist Name" scope="row" class="tableData">
+											<div class="d-flex center">
+												<div>{dueDiligence.CheckListName}</div>
+												<lightning-helptext if:true={dueDiligence.HelpText}
+													content={dueDiligence.HelpText}></lightning-helptext>
+											</div>
+										</th>
+									<!-- <td data-label="Responsible Party">
+											<div if:true={isDisabled}>
+													<div if:true={dueDiligence.ResponsiblePartyId} class="">
+													{dueDiligence.ResponsiblePartyName}</div>
+											</div>
+											<div if:true={dueDiligence.isApprover}>
+													<div if:false={isDisabled}>
+															<div if:true={dueDiligence.isSupportStaff} class="">
+																	<c-custom-look-up icon-name="standard:custom" name="approverName" s-object-api-name="User-DueDiligence" label="Name Of Approver" value={dueDiligence.ResponsiblePartyId} onlookupupdate={lookupRecord} placeholder="Search User here..." data-ddindex={ddindex} data-dataindex={index} data-recordid={dueDiligence.Id} default-record-id={dueDiligence.ResponsiblePartySS} ></c-custom-look-up>
+															</div>
+															<div if:false={dueDiligence.isSupportStaff} class="">
+															<c-custom-look-up icon-name="standard:custom" name="approverName" s-object-api-name="User-DueDiligence" label="Name Of Approver" value={dueDiligence.ResponsiblePartyId} onlookupupdate={lookupRecord} placeholder="Search User here..." data-ddindex={ddindex} data-dataindex={index} data-recordid={dueDiligence.Id} default-record-id={dueDiligence.ResponsiblePartyId} ></c-custom-look-up>
+															</div>
+																<c-custom-look-up icon-name="standard:custom" name="approverName" s-object-api-name="User" label="Name Of Approver" value={dueDiligence.ResponsiblePartyId} onlookupupdate={lookupRecord} placeholder="Search User here..." data-ddindex={ddindex} data-dataindex={index} data-recordid={dueDiligence.Id} default-record-id={dueDiligence.ResponsiblePartyId} required></c-custom-look-up>
+
+													</div>
+											</div>
+											<div if:false={dueDiligence.isApprover}>
+													<div if:false={isDisabled}>
+															<div if:true={dueDiligence.ResponsiblePartyId} class="">
+																	{dueDiligence.ResponsiblePartyName}</div>
+													</div>
+											</div>
+										</td> for I-240575 -->
+										<td data-label="Comment">
+
+											<div if:true={dueDiligence.isApprover}>
+												<div if:true={isDisabled}>
+													{dueDiligence.internalComment}
+												</div>
+												<div if:false={isDisabled}>
+													<lightning-textarea value={dueDiligence.internalComment}
+														variant="label-hidden" disabled={isDisabled}
+														onchange={handleInternalCommentChange} class="required-data"
+														data-ddindex={ddindex} data-recordid={dueDiligence.Id}
+														onkeyup={handleKeyUp} data-dataindex={index} max-length="32768"
+														required={dueDiligence.IsCommentRequired}
+														message-when-value-missing="Error: Comment is required if status is Missing.">
+													</lightning-textarea>
+												</div>
+											</div>
+											<div if:false={dueDiligence.isApprover}>
+												<div if:true={isDisabled}>
+													{dueDiligence.internalComment}
+												</div>
+											</div>
+										</td>
+										<td data-label="Comment">
+											<div if:true={dueDiligence.isApprover}>
+												<div if:true={isDisabled}>
+													{dueDiligence.Comment}
+												</div>
+												<div if:false={isDisabled}>
+													<lightning-textarea value={dueDiligence.Comment}
+														variant="label-hidden" disabled={isDisabled}
+														onchange={handleCommentChange} class="required-data"
+														data-ddindex={ddindex} data-recordid={dueDiligence.Id}
+														onkeyup={handleKeyUp} data-dataindex={index} max-length="32768"
+														required={dueDiligence.IsCommentRequired}
+														message-when-value-missing="Error: Comment is required if status is Missing.">
+													</lightning-textarea>
+												</div>
+											</div>
+											<div if:false={dueDiligence.isApprover}>
+												<div if:true={isDisabled}>
+													{dueDiligence.Comment}
+												</div>
+											</div>
+										</td>
+										<td data-label="Status">
+											<div if:true={dueDiligence.isApprover}>
+												<div if:true={isDisabled} class={dueDiligence.statusClass}>
+													{dueDiligence.Status}
+												</div>
+												<div if:false={isDisabled}>
+													<lightning-combobox class="dueDiligence"
+														options={dueDiligence.statusOptions} value={dueDiligence.Status}
+														disabled={isDisabled} onchange={handleStatusChange}
+														data-ddindex={ddindex} data-recordid={dueDiligence.Id}
+														data-dataindex={index} variant="label-hidden"
+														dropdown-alignment=“auto”>
+													</lightning-combobox>
+												</div>
+											</div>
+											<div if:false={dueDiligence.isApprover}>
+												<div if:true={isDisabled} class={dueDiligence.statusClass}>
+													{dueDiligence.Status}
+												</div>
+											</div>
+										</td>
+										<td data-label="Completed By">
+											<div class="" if:true={dueDiligence.CompletedBy}>
+												{dueDiligence.CompletedByName}</div>
+										</td>
+										<td data-label="Completed Date/Time">
+											<lightning-formatted-date-time value={dueDiligence.convertedDate}
+												year="numeric" month="numeric" day="numeric" hour="2-digit"
+												minute="2-digit">
+											</lightning-formatted-date-time>
+										</td>
+									</tr>
+								</template>
+
+							</tbody>
+						</table>
+						<template if:true={dd.showNoDDError}>
+							<div class="slds-illustration slds-illustration_large" key={dd.key}>
+								<div class="slds-text-longform">
+									<img src={noDataFound} alt="">
+									<h3 class="slds-text-heading_medium">No Due Diligence Item Found.</h3>
+								</div>
+							</div>
+						</template>
+					</template>
+					<template if:true={noStatusDdRecords}>
+						<div class="slds-illustration slds-illustration_large">
+							<div class="slds-text-longform">
+								<img src={noDataFound} alt="">
+								<h3 class="slds-text-heading_medium">No Due Diligence Item Found.</h3>
+							</div>
+						</div>
+					</template>
+				</div>
+			</template>
+
+			<template if:true={isStatusApproved}>
+				<div class="container-table">
+					<table class="slds-table" if:false={noDdRecords}>
+						<thead>
+							<tr>
+								<th class="" scope="col">
+									<div class="" title="Checklist Name">Checklist Name</div>
+								</th>
+								<th class="" scope="col">
+									<div class="" title="Comment">Internal Comment</div>
+								</th>
+								<th class="" scope="col">
+									<div class="" title="Comment">Comment</div>
+								</th>
+								<th class="" scope="col">
+									<div class="" title="Status">Status</div>
+								</th>
+								<th class="" scope="col">
+									<div class="" title="Completed By">Completed By</div>
+								</th>
+								<th class="" scope="col">
+									<div class="" title="Completed Date/Time">Completed On</div>
+								</th>
+<!-- 								<th class="" scope="col">
+									<div class="" title="Associated Status">Associated Status</div>
+								</th> -->
+							</tr>
+						</thead>
+						<tbody>
+							<template for:each={dueDiligenceListAfterApproved} for:item="dueDiligence"
+								for:index="index">
+								<tr key={dueDiligence.Id}>
+									<th data-label="Checklist Name" scope="row" class="tableData">
+										<div class="d-flex center">
+											<div>{dueDiligence.Checklist_Name__c}</div>
+<!-- 											<lightning-helptext if:true={dueDiligence.Help_Text__c}
+												content={dueDiligence.Help_Text__c}></lightning-helptext> -->
+										</div>
+									</th>
+									<td data-label="Comment">
+										{dueDiligence.Internal_Comments__c}
+									</td>
+									<td data-label="Comment">
+										{dueDiligence.Comment__c}
+									</td>
+									<td data-label="Status">
+										<div class={dueDiligence.statusClass}>
+											{dueDiligence.Status__c}
+										</div>
+									</td>
+									<td data-label="Completed By">
+										<div class="" if:true={dueDiligence.Completed_By__c}>
+											{dueDiligence.Completed_By__r.Name}</div>
+									</td>
+									<td data-label="Completed Date/Time">
+										<lightning-formatted-date-time value={dueDiligence.convertedDate} year="numeric"
+											month="numeric" day="numeric" hour="2-digit" minute="2-digit">
+										</lightning-formatted-date-time>
+									</td>
+<!-- 									<td data-label="Associated Status">
+										<div class="" if:true={dueDiligence.Application_Status__c}>
+											{dueDiligence.Application_Status__c}</div>
+									</td> -->
+								</tr>
+							</template>
+
+						</tbody>
+					</table>
+					<template if:true={noDdRecords}>
+						<div class="slds-illustration slds-illustration_large">
+							<div class="slds-text-longform">
+								<img src={noDataFound} alt="">
+								<h3 class="slds-text-heading_medium">No Due Diligence Item Found.</h3>
+							</div>
+						</div>
+					</template>
+				</div>
+			</template>
+		</div>
+	</div>
+</template>

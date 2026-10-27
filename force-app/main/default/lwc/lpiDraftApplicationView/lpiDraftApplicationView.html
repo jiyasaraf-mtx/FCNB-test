@@ -1,0 +1,14 @@
+<template>
+    <div if:true={showSpinner}>
+		<lightning-spinner size="medium" alternative-text="Loading"></lightning-spinner>
+	</div>
+    <div>
+        <lightning-datatable
+                key-field="id"
+                hide-checkbox-column
+                data={data}
+                columns={columns}
+                onrowaction={handleRowAction}>
+        </lightning-datatable>
+    </div>
+</template>

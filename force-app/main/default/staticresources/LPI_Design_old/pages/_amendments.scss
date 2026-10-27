@@ -1,0 +1,495 @@
+// .amendments-main {
+//     .amendments-header {
+//         h1 {
+//             font-size: 1.25rem;
+//             font-weight: 700;
+//             line-height: 1.5rem;
+//         }
+//     }
+// }
+
+// .accordion-block {
+
+//     // padding-right: 1.25rem;
+//     .accordion {
+//         margin-bottom: 1rem;
+//         border: 0.063rem solid $input-border;
+//         border-radius: 0.25rem;
+
+//         .block-header {
+//             padding: 1rem;
+//         }
+
+//         .blockSlot {
+//             padding-left: 0;
+//             padding-top: 0.6rem;
+//         }
+
+//         .label,
+//         .slds-form-element__label {
+//             font-size: 0.875rem;
+//             font-weight: 600;
+//             color: $text-secondary;
+
+//             .field-value {
+//                 font-weight: normal;
+//             }
+//         }
+
+//         .text-input {
+//             font-size: 1rem;
+//             font-weight: 400;
+//             color: $text-primary;
+//         }
+
+//         .accordion-row {
+//             margin-bottom: 1rem;
+//         }
+
+//         .accordion-subsection {
+//             border-top: 0.063rem solid $input-border;
+//             margin-top: 1.25rem;
+//         }
+
+//         .accordion-heading {
+//             color: $primary-main;
+//             margin: 0.6rem 0;
+//             font-weight: 600;
+//         }
+
+//         a {
+//             color: $text-primary;
+//         }
+
+//         &.document-list {
+//             h4 {
+//                 font-size: 0.875rem;
+//                 font-weight: 600;
+//                 line-height: 1.375rem;
+//                 color: $text-secondary;
+//             }
+
+//             ul {
+//                 li {
+//                     font-size: 0.875rem;
+//                     font-weight: 400;
+//                     line-height: 1.5rem;
+//                     color: $text-secondary;
+//                 }
+//             }
+
+//             .document-certificates {
+//                 margin: 0.625rem 0 1.25rem;
+//             }
+//         }
+//     }
+
+//     button.slds-button {
+//         outline: unset !important;
+//         outline-offset: unset !important;
+//         box-shadow: unset;
+//         border: none;
+//         width: 100%;
+//         margin: 0;
+//         padding-left: 0;
+//         padding-right: 0;
+//     }
+
+//     button span:first-child {
+//         display: flex;
+//         flex-direction: row-reverse;
+//         align-items: center;
+//         justify-content: space-between;
+//         width: 100%;
+//     }
+
+//     .slds-text-heading_small {
+//         color: $primary-main;
+//         width: 100%;
+//         text-align: left;
+//         font-weight: 600;
+//     }
+// }
+
+// c-cf-license-details-payment-view,
+// c-cf-renew-license-payment,
+// c-cf-application-payment-details {
+
+//     .page-heading {
+//         margin-bottom: 1.25rem;
+//     }
+// }
+
+// .valid-block {
+//     font-size: 0.875rem;
+//     font-weight: 600;
+//     line-height: 0.875rem;
+//     background: $background-light;
+//     padding: 1rem 0.75rem;
+
+//     p {
+//         &:first-child {
+//             font-size: 0.875rem;
+//             font-weight: 600;
+//             line-height: 0.875rem;
+//             color: $text-primary;
+//             display: inline-block;
+//         }
+
+//         &:last-child {
+//             font-size: 0.75rem;
+//             font-weight: 400;
+//             line-height: 0.875rem;
+//             color: $text-secondary;
+//             display: inline-block;
+//         }
+//     }
+// }
+
+// .payment-view-dark {
+//     border-bottom: 0.063rem solid $input-border;
+//     padding: 1rem 0.75rem;
+// }
+
+// .active-block-main {
+//     padding: 1rem 0.75rem;
+// }
+
+// .details-payment-main {
+//     background: $background-light;
+//     border-radius: 0.25rem;
+
+//     .payment-view-dark {
+//         border-bottom: 0.063rem solid $input-border;
+
+//         &:last-child {
+//             border-bottom: none;
+//         }
+//     }
+
+//     .payment-text {
+//         font-weight: 600;
+//     }
+// }
+
+// .payment-text {
+//     font-size: toRem(13);
+//     font-weight: 400;
+//     line-height: toRem(12);
+//     color: $text-secondary;
+// }
+
+// .payment-details {
+//     font-size: 0.813rem;
+//     font-weight: 600;
+//     color: $text-primary;
+//     line-height: 0.875rem;
+// }
+
+// .active-state {
+//     lightning-formatted-rich-text {
+//         div {
+//             display: inline-block;
+//             color: $green;
+//             background: rgba(35, 149, 47, 0.12);
+//             border-radius: 0.25rem;
+//             padding: 0.313rem 0.438rem;
+//         }
+//     }
+// }
+
+// .print-button {
+//     button {
+//         width: 100%;
+//         margin-top: 2.5rem;
+//         padding: 0.25rem;
+//     }
+// }
+
+// .amend-button {
+//     button {
+//         width: 100%;
+//         margin-top: 0.625rem;
+//         padding: 0.25rem;
+//     }
+// }
+
+// // }
+// c-cf-license-banner-new {
+//     .license-banner {
+//         padding: 1.25rem;
+//         background: url("../LP_Design/images/license-banner.png") no-repeat center/cover;
+//     }
+
+//     lightning-formatted-rich-text {
+//         div {
+//             font-size: 1.5rem;
+//             font-weight: 700;
+//             line-height: 2rem;
+//             color: $white;
+//         }
+//     }
+// }
+
+// c-amendments-amendment-form-english {
+
+//     [data-omni-key *="block-heading"] //,[data-omni-key="block-heading-1"],[data-omni-key="block-heading-2"],[data-omni-key="block-heading-3"],[data-omni-key="block-heading-4"],[data-omni-key="block-heading-5"]
+
+//         {
+//         font-size: 1rem;
+//         font-weight: 700;
+//         line-height: 1rem;
+//         color: $primary-main;
+//     }
+
+//     [data-omni-key *="changing-heading"] {
+//         font-size: 0.875rem, ;
+//         font-weight: 400;
+//         line-height: 1rem;
+//         color: $text-secondary;
+//     }
+
+//     [data-omni-key *="save"] {
+//         button {
+//             background-color: var(--lwc-colorBackgroundButtonDefaultDisabled, rgb(255, 255, 255));
+//             border-color: var(--lwc-buttonColorBorderPrimary, rgb(209, 213, 219));
+//             color: var(--lwc-colorTextButtonDefaultDisabled, rgb(201, 201, 201));
+//             cursor: default;
+//         }
+//     }
+
+//     [data-omni-key*="border-block"] {
+//         margin: 2.5rem 0;
+//         border: 0.031rem solid $input-border;
+//     }
+
+//     [data-omni-key="UploadDocument"] .slds-file-selector__dropzone {
+//         border: 0.063rem dashed $primary-main;
+//         padding: 5rem;
+//         display: flex;
+//         justify-content: center;
+//         background-color: $bg-blue;
+//     }
+
+//     c-cf-amendments-payment_-fc {
+
+//         c-amendments-card-details-english,
+//         c-amendments-fee-summary-english {
+//             .omniscript-article {
+//                 margin-top: 0;
+//             }
+
+//             .omniscript-body[data-stepborder='right'][c-amendmentsCardDetailsEnglish_amendmentsCardDetailsEnglish],
+//             .omniscript-body[data-stepborder='right'][c-amendmentsFeeSummaryEnglish_amendmentsFeeSummaryEnglish] {
+//                 border: none;
+//             }
+
+//         }
+
+//         omnistudio-omniscript-step[data-omni-key=Payment] {
+
+//             omnistudio-omniscript-block[data-omni-key=Block1] .slds-accordion__content,
+//             omnistudio-omniscript-step[data-omni-key=FeeSummary] omnistudio-omniscript-block[data-omni-key=Block1] .slds-accordion__content {
+//                 box-shadow: $box-shadow-1;
+
+//                 omnistudio-omniscript-text-block[data-omni-key=TextBlock3] {
+//                     margin: 0%;
+//                 }
+//             }
+//         }
+
+//         omnistudio-omniscript-step[data-omni-key=FeeSummary] {
+//             height: 29.1rem;
+
+//             omnistudio-omniscript-block[data-omni-key=Block1] {
+//                 .slds-accordion__content {
+//                     padding: 0;
+//                     box-shadow: none;
+//                     border: none;
+
+//                     &#content-339 {
+//                         padding: 0 0.938rem;
+//                     }
+//                 }
+//             }
+
+//             omnistudio-omniscript-block[data-omni-key=Block3] {
+//                 .slds-accordion__content {
+//                     width: 18.5rem;
+//                 }
+
+//                 omnistudio-omniscript-text-block[data-omni-key=TextBlock1] {
+//                     margin: 0;
+//                 }
+//             }
+//         }
+
+
+//     }
+
+//     c-amendments-fee-summary-english {
+//         [data-omni-key="FeeSummary"] {
+//             margin-left: 0;
+
+//             [data-omni-key="TextBlock2"],
+//             [data-omni-key="TextBlock3"] {
+//                 padding: 0.625rem;
+//                 margin: 0;
+//             }
+//         }
+//     }
+
+//     [data-omni-key="CustomLWC6"] {
+//         padding: 0;
+//     }
+
+//     [data-omni-key="Amendment"] {
+//         [data-omni-key="SetValues1"] {
+//             button {
+//                 background: transparent;
+//                 color: $primary-main;
+//             }
+//         }
+
+//         [data-omni-key="Text11"] {
+//             padding: 0;
+//             margin: 0;
+//             width: 4.375rem;
+
+//             input {
+//                 font-size: 0.813rem;
+//                 background: transparent;
+//                 padding-top: 0.063rem;
+//                 padding-bottom: 0.063rem;
+//                 margin-top: 0.25rem;
+//                 color: var(--lwc-colorTextButtonDefaultDisabled, $input-color-2);
+//                 cursor: default;
+//             }
+//         }
+//     }
+
+//     [data-omni-key="Payment"] {
+//         [data-omni-key="NavigateAction11"] {
+//             display: flex;
+//             width: 100%;
+//             justify-content: flex-end;
+
+//             button {
+//                 width: 7.5rem;
+//                 background: $primary-main;
+//                 border-radius: 0.25rem;
+//                 padding: 0.25rem;
+//                 color: $white;
+//                 top: 2.9rem;
+//             }
+//         }
+
+//     }
+// }
+
+// c-cf-amendments-form-review {
+//     .accordion-block {
+//         .accordion {
+//             &:nth-child(2) {
+//                 .block-header {
+//                     button {
+//                         margin-bottom: 1.875rem;
+//                     }
+//                 }
+//             }
+
+//             .label {
+//                 font-size: 1rem;
+//                 font-weight: 400;
+//                 color: $text-secondary;
+//                 margin-bottom: 2.5rem;
+//             }
+
+//             .label-value {
+//                 font-size: 1.125rem;
+//                 font-weight: 600;
+//                 line-height: 1rem;
+//                 color: $text-primary;
+//             }
+//         }
+
+//         .info-block {
+//             font-size: 0.875rem;
+//             font-weight: 400;
+//             line-height: 1.375rem;
+//             margin: 1.875rem 0 1.25rem;
+//         }
+//     }
+// }
+
+// c-cf-amendment-form {
+//     .license-banner {
+//         position: fixed;
+//         z-index: 1;
+//         max-width: 86.5rem;
+//         margin: 0 auto !important;
+//         width: 100% !important;
+//         left: 0;
+//         right: 0;
+//     }
+
+//     .omniscript-article {
+//         margin-top: 5rem;
+//         height: 75vh;
+
+//         // overflow: auto;
+//         .omniscript-side-content {
+//             height: calc(100vh - 13rem) !important;
+//         }
+//     }
+// }
+
+// c-cf-amendments-license-details {
+//     .actionFlyout {
+//         .slds-modal {
+//             .slds-modal__header {
+//                 .slds-modal__close {
+//                     top: 0;
+//                     z-index: 99999;
+//                     right: 1rem;
+//                     justify-content: end;
+//                 }
+//             }
+//         }
+//     }
+
+//     omnistudio-omniscript-radio .slds-form-element__control {
+//         display: block;
+//         flex-wrap: wrap;
+//         row-gap: 1rem;
+
+//         .slds-radio {
+//             margin-bottom: 0.625rem;
+//         }
+//     }
+// }
+
+// // [data-omni-key="PersonalInformation"]{
+// omnistudio-omniscript-custom-lwc[data-omni-key="CustomLWC2"] {
+//     width: 100%;
+
+//     c-cf-amendment-info-box-orange[data-omni-key="CustomLWC2"] {
+//         .slds-card {
+//             padding: 0;
+//         }
+
+//         .info-box {
+//             .slds-col.slds-size_1-of-1 {
+//                 padding: 1rem;
+//                 font-size: 1rem;
+//                 font-weight: 400;
+//                 color: $warning-2;
+//                 border: toRem(1) solid $warning-2;
+//                 border-radius: 0.25rem;
+//                 background: $warning-lyt;
+//             }
+//         }
+//     }
+// }
+
+// // }

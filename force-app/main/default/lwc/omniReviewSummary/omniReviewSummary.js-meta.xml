@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>Omni Review Summary</masterLabel>
+    <description>Generic OmniScript Review &amp; Summary with collapsible sections, disclosure, and EN/FR labels. Reusable across OmniScripts.</description>
+    <targets>
+        <target>lightning__RecordPage</target>
+        <target>lightning__AppPage</target>
+        <target>lightning__HomePage</target>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage,lightning__AppPage,lightning__HomePage,lightningCommunity__Default">
+            <property name="sectionKeys" type="String" label="Section Keys" description="Comma-separated OmniScript step keys to review (e.g. FilingHeader,PlanData). Leave blank to auto-detect."/>
+            <property name="skipKeys" type="String" label="Skip Keys" description="Comma-separated root keys to ignore when auto-detecting sections."/>
+            <property name="showDisclosure" type="Boolean" default="true" label="Show Disclosure" description="Show disclosure text and attestation checkbox."/>
+            <property name="requireAttestation" type="Boolean" default="true" label="Require Attestation" description="Block Next/Submit until attestation is checked."/>
+            <property name="hideEmptyFields" type="Boolean" default="true" label="Hide Empty Fields"/>
+            <property name="labelPrefix" type="String" default="PP_" label="Label Prefix" description="Custom Label prefix used to resolve field/section titles (e.g. PP_)."/>
+            <property name="title" type="String" default="" label="Optional Title Override"/>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

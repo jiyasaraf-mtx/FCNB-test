@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>60.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>Tax Return Payment Stepper (Static)</masterLabel>
+     <runtimeNamespace>omnistudio</runtimeNamespace>
+    <description>Static Payment Panel with Stepper for OmniScript &amp; Community Portal.</description>
+    <targets>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+    </targets>
+</LightningComponentBundle>

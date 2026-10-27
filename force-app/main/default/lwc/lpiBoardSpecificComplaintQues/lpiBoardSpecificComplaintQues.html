@@ -1,0 +1,107 @@
+<!--
+  @description       : 
+  @author            : Vamsi Mudaliar
+  @group             : 
+  @last modified on  : 05-21-2024
+  @last modified by  : Bharath Kumar M
+-->
+<template>
+    <div class="">
+
+    <h2 class="bold-24"> Agency Specific Questions </h2>
+        <template if:true={isPharmacy}>
+            <lightning-radio-group required label="Do you possess evidence in the form of documents or photos?"
+            class="radio-group"
+            name="docEvidence" options={yesNoOptions}
+            value={inputWrapper.docEvidence} type="radio"
+            onchange={handleInputChange} onblur={handleBlur}>
+            </lightning-radio-group>
+            <div if:true={hasDocsPhotosEvidence}>
+            <i><strong>If yes, please attach copies of this evidence with your complaint.</strong></i>
+            </div>
+            <lightning-radio-group required label="Do you possess evidence in the form of drugs or prescription labels, bottles, or containers?"
+            class="radio-group"
+            name="prescriptionLabelEvidence" options={yesNoOptions}
+            value={inputWrapper.prescriptionLabelEvidence} type="radio"
+            onchange={handleInputChange} onblur={handleBlur}>
+            </lightning-radio-group>
+            <div if:true={hasEvidenceInFormOfDrugsLabels}>
+                <i><strong>If yes, please keep this evidence for the Missouri Board of Pharmacy inspector to review.</strong></i>
+            </div>
+        </template>
+       
+        <template if:true={isArch}>
+                <lightning-dual-listbox name="complaintPractice"
+                label="The complaint deals with the practice of:"
+                source-label="Available"
+                selected-label="Selected"
+                field-level-help="Select the Complaint Practice"
+                options={complaintPraticeOptions}
+                onchange={handleInputChange}
+                onblur={handleBlur} required>
+                </lightning-dual-listbox>
+
+                <lightning-dual-listbox name="complaintNature"
+                label="The Nature of the Complaint is:"
+                source-label="Available"
+                selected-label="Selected"
+                field-level-help="Select the Nature of Complaint"
+                options={complaintNatureOptions}
+                onchange={handleInputChange}
+                onblur={handleBlur} required>
+                </lightning-dual-listbox>
+        </template>
+
+        <template if:true={isOptometrist}>
+            <lightning-radio-group required label="Do you presently have an outstanding bill from the optometrist against whom you are complaining?"
+            class="radio-group"
+            name="outstandingBill" options={yesNoOptions}
+            value={inputWrapper.outstandingBill} type="radio"
+            onchange={handleInputChange} onblur={handleBlur}>
+            </lightning-radio-group>
+            
+            <lightning-input type="number" formatter="currency" step="0.01"  max="9999999999.99"
+            label="If yes, list the amount." value={inputWrapper.outstandingBillAmount} name="outstandingBillAmount"
+            onchange={handleInputChange} onblur={handleBlur} if:true={hasOutStandingBill} 
+            message-when-bad-input="Please enter upto 10 digits including 2 decimal places.">
+            </lightning-input>
+
+            <lightning-radio-group required label="Have you seen and/or been treated by a different optometrist before or after the treatment rendered by the optometrist against whom you are complaining?"
+            class="radio-group"
+            name="treatmentByDiffOpto" options={yesNoOptions}
+            value={inputWrapper.treatmentByDiffOpto} type="radio"
+            onchange={handleInputChange} onblur={handleBlur}>
+            </lightning-radio-group>
+            
+            <div if:true={wasTreatedByOpto}>
+                <i><strong>If yes, please provide the names and addresses in the Other Entities section of this form.</strong></i>
+            </div>
+
+            <lightning-radio-group required label="Do you know of any other patients who have had similar problems with the optometrist against whom you are complaining?"
+            class="radio-group"
+            name="optoSimiliarPatients" options={yesNoOptions}
+            value={inputWrapper.optoSimiliarPatients} type="radio"
+            onchange={handleInputChange} onblur={handleBlur}>
+            </lightning-radio-group>
+            
+            <div if:true={optoSimiliarPatients}>
+                <i><strong>If yes, please provide the names and addresses in the Other Entities section of this form.</strong></i>
+            </div>
+        </template>
+
+        <template if:true={isDental}>
+            <lightning-radio-group required label="Were you seen or treated by any other dentist(s) prior to and/or after treatment was rendered by the dentist referred to in your complaint?"
+            class="radio-group"
+            name="treatedByDifferentDentist" options={yesNoOptions}
+            value={inputWrapper.treatedByDifferentDentist} type="radio"
+            onchange={handleInputChange} onblur={handleBlur}>
+            </lightning-radio-group>
+            
+            <div if:true={wasTreatedByDifferentDentist}>
+                <i><strong>If yes, please provide the names and addresses in the Other Entities section of this form.</strong></i>
+            </div>
+        </template>
+    </div>  
+
+
+</template>

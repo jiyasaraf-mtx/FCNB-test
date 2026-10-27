@@ -1,0 +1,137 @@
+<!--
+  @description       : This page is used to generate PDF for Violation Letter
+  @author            : Vamsi Mudaliar
+  @group             : 
+  @last modified on  : 06-24-2024
+  @last modified by  : Bharath Kumar M
+-->
+<apex:page showHeader="false" sidebar="false" standardStylesheets="false" standardController="Visit" extensions="LPI_ViolationLetterController" applyHtmlTag="false" applyBodyTag="false" renderAs="pdf">
+    <apex:variable var="recordId" value="{!$CurrentPage.parameters.recordId}" />
+    <apex:form >
+        <apex:pageBlock >
+            <table style="width: 100%; border-collapse: collapse;">
+                <tr>
+                    <td style="width: 50%; vertical-align: top;">
+                        <c:LPI_PDFLogo />
+                        <!-- <apex:image id="theImage" value="{!URLFOR($Resource.LPI_Design,'/media/images/logo.png')}" width="300" /> -->
+                    </td>
+                        <td style="width: 50%; text-align: right; vertical-align: top;">
+                         <apex:outputPanel rendered="{!AccPlaceDetails.boardName == 'Pharmacy'}">
+                             {!AccPlaceDetails.boardName}<br/>
+                         </apex:outputPanel>
+                         <apex:outputPanel rendered="{!AccPlaceDetails.boardName == 'Cosmetology & Barber Examiners'}">
+                             {!AccPlaceDetails.boardName}<br/>
+                         </apex:outputPanel>
+                         <apex:outputPanel rendered="{!AND(
+                                                     AccPlaceDetails.boardName != 'Cosmetology & Barber Examiners',
+                                                     AccPlaceDetails.boardName != 'Pharmacy')}">
+                             Central Investigations Unit (CIU)<br/>
+                         </apex:outputPanel>
+                         <apex:outputText >3605  Boulevard </apex:outputText>
+                            <br/>
+                            <apex:outputText value="{!AccPlaceDetails.boardPOBox}"/><br/>
+                            <apex:outputText >Jefferson City, MO 65102-1335</apex:outputText><br/>
+                            <apex:outputText >Telephone: (573) 526-0162</apex:outputText><br/>
+                            <apex:outputText value="Email - {!AccPlaceDetails.boardEmailId}"></apex:outputText>
+                        </td>
+                </tr>
+            </table>
+            <h2 style="padding-left: 10px;">Violation Letter</h2>
+             <table style="width: 100%;">
+                <tr>
+                    <td style="padding: 10px; font-weight: bold; vertical-align: top;">TO:</td>
+                    <td style="padding-top: 10px;vertical-align: top;font-weight: bold;padding-right: 300px;">
+                        <apex:outputText value="{!AccPlaceDetails.accountName}"/><br/>
+                        <apex:outputText value="{!AccPlaceDetails.street}"/><br/>
+                        <apex:outputText value="{!AccPlaceDetails.city}"/><br/>
+                        <apex:outputPanel rendered="{!AccPlaceDetails.businessState != null}">
+                             {!AccPlaceDetails.businessState}<br/>
+                         </apex:outputPanel>
+                        <apex:outputText value="{!AccPlaceDetails.country}"/><br/>
+                        <apex:outputText value="{!AccPlaceDetails.postalCode}"/>
+                    </td>
+                </tr>
+                 <tr>
+                    <td style="padding: 5px; font-weight: bold; vertical-align: top;">DATE:</td>
+                    <td style="padding: 5px; vertical-align: top;">
+                        <apex:outputText value="{!TEXT(TODAY())}"/><br/>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 5px; font-weight: bold; vertical-align: top;">INSPECTION DATE:</td>
+                    <td style="padding: 5px; vertical-align: top;">
+                        <apex:outputText value="{!AccPlaceDetails.inspectionComDate}"/><br/>
+                    </td>
+                </tr>
+                
+                <tr style="{!IF( AccPlaceDetails.boardName == 'Pharmacy', 'display:none', '')}">
+                    <td style="padding: 5px; font-weight: bold; vertical-align: top;">COMMENTS:</td>
+                    <td style="padding: 5px; vertical-align: top;">
+                        <apex:outputText value="{!AccPlaceDetails.comments}" /><br/>
+                    </td>
+                </tr>
+                
+         
+            </table>
+            <div style="padding: 6px; font-weight: 400;font-style: italic;">
+                <p>A copy of the business inspection is included with this written report. Listed below are the violation(s) and the applicable law(s) and/or rule(s) according to the item number on the inspection form.</p>
+            </div>
+            
+            <table style="width: 100%;">
+                <thead>
+                    <tr style="text-align: left;padding: 8px;">
+                        <th>Item</th>
+                        <th style="padding-left: 20px;">Violation</th>
+                        <th>Deficiency</th>
+                        <th>Supervisor/Board Staff Comments</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <apex:repeat value="{!violationsList}" var="a">
+                        <tr style="text-align: left;padding: 8px;">
+                            <td style="vertical-align: top;">{!a.displayOrder}</td>
+                            <td style="padding-left: 20px; vertical-align: top;">{!a.violationRule}</td>
+                            <td style="white-space: pre-line; max-width: 300px; vertical-align: top;">{!a.assessmentIndiComm}: This is a violation of {!a.violationRule} that states</td>
+                            <td style="white-space: pre-line; max-width: 300px; 9vertical-align: top;">{!a.boardStaffInspectorSupComments}</td>
+                        </tr>
+                    </apex:repeat>
+                </tbody>  
+            </table>
+            <div style="padding: 6px; font-weight: 400">
+                <apex:outputPanel rendered="{!AccPlaceDetails.boardName == 'Cosmetology & Barber Examiners'}">
+                    <p>All violations should be corrected immediately. A follow up inspection may be conducted 
+                        in the near future. Please be advised that if all violations are not corrected, an official 
+                        complaint may be filed against you and will remain a part of your permanent record. If you 
+                        have any questions do not hesitate to contact the Board Office. Thank you for your cooperation 
+                        regarding this matter.</p>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!AccPlaceDetails.boardName != 'Cosmetology & Barber Examiners'}">
+                    <p>Pursuant to 20 CSR 2197-5.020 (5) within thirty (30) days of receipt of this survey 
+                        inspection report, the Board must receive your written responses to each of the 
+                        violations identified above, along with your specific proposals for correcting 
+                        each noted violation, or proof that such violations have already been corrected. 
+                        If the Board does not receive a response from you, it will deem you to be in continued 
+                        violation of the referenced statutes and administrative rules and will proceed to take any 
+                        authorized and appropriate enforcement action to prevent the continued operation of this 
+                        business with existing uncorrected violations. Your business will be subject to re-inspection 
+                        in order to verify correction of the noted violations.</p>
+                </apex:outputPanel>
+            </div>
+            <div style="padding: 6px; font-weight: 400;margin-top: 10px">
+                 <apex:outputText value="Please submit all requested documents to the "/> 
+                 <apex:outputPanel rendered="{!AccPlaceDetails.boardName == 'Pharmacy'}">
+                             {!AccPlaceDetails.boardName}
+                         </apex:outputPanel>
+                         <apex:outputPanel rendered="{!AccPlaceDetails.boardName == 'Cosmetology & Barber Examiners'}">
+                             {!AccPlaceDetails.boardName}
+                         </apex:outputPanel>
+                         <apex:outputPanel rendered="{!AND(
+                                                     AccPlaceDetails.boardName != 'Cosmetology & Barber Examiners',
+                                                     AccPlaceDetails.boardName != 'Pharmacy')}">
+                             Central Investigations Unit (CIU)
+                         </apex:outputPanel>
+                <apex:outputText value=", {!AccPlaceDetails.boardPOBox} Jefferson City, MO 65102 or via email at {!AccPlaceDetails.boardEmailId}."/>
+            </div>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

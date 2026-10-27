@@ -1,0 +1,585 @@
+<!--
+  @description       : 
+  @author            : Garvit Jain
+  @group             : 
+  @last modified on  : 08-05-2024
+  @last modified by  : Bharath Kumar M
+-->
+<template>
+    <!--Added accordian for   S-55668 -->
+
+    <!-- <lightning-accordion allow-multiple-sections-open>
+        <lightning-accordion-section name="section1" label="Application Documents"> -->
+            <div class="slds-m-top--medium slds-m-bottom--medium">
+                <div if:true={showSpinner}>
+                    <lightning-spinner class="spins" size="medium" alternative-text="Loading..."
+                        data-text="Spinner is loading"></lightning-spinner>
+                </div>
+                <template if:true={showUploadModal}>
+                    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                        aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                        <div class="slds-modal__container">
+                            <!-- modal header start -->
+                            <header class="slds-modal__header">
+                                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                                    title="Close" onclick={hideModalBox}>
+                                    <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
+                                        size="small">
+                                    </lightning-icon>
+                                    <span class="slds-assistive-text">Close</span>
+                                </button>
+                                <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">{modalHeading}
+                                </h2>
+                            </header>
+
+                            <!-- modal body start -->
+                            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                                <div class="slds-p-around_medium lgc-bg">
+                                    <div if:true={isDeleteModal}>Are you sure you want to delete this file?</div>
+                                    <template if:true={is2x2Photo}>
+                                        <lightning-input if:false={newFileAttachment} type="file"
+                                            label="Upload New Document" onchange={handleFile}></lightning-input>
+                                        <div class="slds-p-left_xxx-small slds-p-top_medium">
+                                            <p if:true={newFileAttachment}>{newFileAttachment.name}</p>
+                                        </div>
+                                    </template>
+                                    <template if:false={isDeleteModal}>
+                                        <lightning-file-upload if:false={is2x2Photo} label="Attach file"
+                                            name="fileUploader" accept={acceptedFormats}
+                                            record-id={documentIdForFileUpload}
+                                            onuploadfinished={handleUploadFinishedOnbase}>
+                                        </lightning-file-upload>
+                                    </template>
+                                </div>
+                            </div>
+
+                            <!-- modal footer start-->
+                            <footer class="slds-modal__footer">
+                                <button disabled={buttonDisabled} class="slds-button slds-button_neutral"
+                                    onclick={hideModalBox}>Cancel</button>
+                                <button disabled={buttonDisabled} if:true={is2x2Photo}
+                                    class="slds-button slds-button_neutral" onclick={upload2By2Photo}>Save</button>
+                                <button disabled={buttonDisabled} if:true={isDeleteModal}
+                                    class="slds-button slds-button_brand slds-float_right"
+                                    onclick={handleFileDelete}>Delete</button>
+                            </footer>
+
+                        </div>
+                    </section>
+                    <div class="slds-backdrop slds-backdrop_open"></div>
+                </template>
+
+                <template if:true={isLoaded}>
+                    <template if:true={showNoDocumentsError}>
+                        <!-- <div class="slds-align_absolute-center">
+                            <lightning-button if:true={isDisabled} class="slds-p-around_x-small" label="New" onclick={handleNew}
+                                variant="brand"></lightning-button>
+                        </div>
+                        <div class="slds-box">
+                            <div class="slds-align-absolute_center">
+                                NO DOCUMENTS FOUND FOR THIS APPLICATION
+                            </div>
+                        </div> -->
+                        <div class="slds-illustration slds-illustration_large">
+                            <div class="slds-text-longform">
+                                <img src={noDataFound} alt="">
+                                <h3 class="slds-text-heading_medium">No Documents Found For This Application.</h3>
+                              </div>
+                        </div>
+                    </template>
+                    <template if:false={showNoDocumentsError}>
+                        <div class="slds-grid slds-grid--align-spread slds-grid--vertical-align-center slds-m-bottom--small">
+                            <h1 class="slds-text-title_bold">Uploaded Document</h1>
+                            <div>
+                                <lightning-button if:true={isDisabled} class="slds-p-around_x-small" label="Edit"
+                                onclick={handleEdit} variant="brand"></lightning-button>
+                                <!-- <lightning-button if:true={isDisabled} class="slds-p-around_x-small" label="New" onclick={handleNew}
+                                variant="brand"></lightning-button> -->
+                                <lightning-button if:false={isDisabled} class="slds-p-around_x-small" label="Save"
+                                onclick={handleSave} variant="brand"></lightning-button>
+                                <lightning-button if:false={isDisabled} class="slds-p-around_x-small" label="Cancel"
+                                onclick={handleCancel} variant="brand-outline"></lightning-button>
+                            </div>
+                        </div>
+                        <div class="slds-scoped-notification slds-media slds-media_center slds-theme_info m-b-medium"
+                            role="status">
+                            <div class="slds-media__figure">
+                                <span class="slds-icon_container slds-icon-utility-info" title="info">
+                                    <i class="material-icon material-icon-info_outline"></i>
+                                </span>
+                            </div>
+                            <div class="slds-media__body">
+                                <p>{header}</p>
+                            </div>
+                        </div>
+                        <template if:true={isFlowDocumentsPresent}>
+                            <div class="container lpiApplication">
+                                <div class="container-table">
+                                    <table class="slds-table"
+                                        aria-label="Application Documents">
+                                        <thead>
+                                            <tr class="slds-line-height_reset">
+                                                <th class="" scope="col">
+                                                    <div class="slds-truncate" title="Document Name">Document Name</div>
+                                                </th>
+                                                <th class="" scope="col">
+                                                    <div class="slds-truncate" title="Mode">Mode</div>
+                                                </th>
+                                                <th class="" scope="col">
+                                                    <div class="slds-truncate" title="Status">Status</div>
+                                                </th>
+                                                <th class="" scope="col">
+                                                    <div class="slds-truncate" title="Comments">Comments</div>
+                                                </th>
+                                                <th class="" scope="col">
+                                                    <div class="slds-truncate" title="files">Files</div>
+                                                </th>
+                                                <th class="" scope="col">
+                                                    <div class="slds-truncate" title="Action">Action</div>
+                                                </th>
+                                                <!-- <th class="" scope="col">
+                                                    <div class="slds-truncate" title="Source of Uploaded Document">Source of
+                                                        Uploaded Document</div>
+                                                </th> -->
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <template for:each={flowDocumentsList} for:item="document" for:index="index">
+                                                <tr class="slds-hint-parent" key={document.documentId}>
+                                                    <td data-label="Document Name">
+                                                        <div class="d-flex">
+                                                            <template if:true={document.isDocumentRequired}>
+                                                                <span class="c-red">**</span>
+                                                            </template>
+                                                            <div class="" style="max-width: 200px; white-space:normal;">
+                                                                {document.documentName}
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td data-label="Mode">
+                                                        <!--div class="slds-truncate">{document.documentMode}</div-->
+                                                        <div>
+                                                            <template if:true={isDisabled}>{document.documentMode}</template>
+                                                            <template if:false={isDisabled}>
+                                                                <lightning-combobox label="" disabled={isDisabled}
+                                                                    value={document.documentMode} options={options} data-id="flow"
+                                                                    data-index={index} onchange={handleModeChange}
+                                                                    variant="label-hidden">
+                                                                </lightning-combobox>
+                                                            </template>
+                                                        </div>
+                                                    </td>
+                                                    <td data-label="Status">
+                                                        <template if:true={isDisabled}>
+                                                            <div class={document.statusClass}>
+                                                                {document.status}
+                                                            </div> 
+                                                            <!-- <div class={document.statusClass}>
+                                                                Submitted
+                                                            </div> -->
+                                                        </template>
+                                                        <template if:false={isDisabled}>
+                                                            <lightning-combobox label="" disabled={isDisabled}
+                                                                value={document.status} options={statusOptions} data-id="flow"
+                                                                data-index={index} onchange={handleStatusChange}
+                                                                variant="label-hidden">
+                                                            </lightning-combobox>
+                                                        </template>
+                                                    </td>
+                                                   
+                                                    <td data-label="Comments">
+                                                        <div class="slds-truncate">
+                                                            <template if:true={isDisabled}>
+                                                                {document.comments}
+                                                            </template>
+                                                            <template if:false={isDisabled}>
+                                                                <lightning-textarea disabled={isDisabled} label=""
+                                                                    value={document.comments} data-index={index} data-id="flow"
+                                                                    onchange={handleCommentChange}
+                                                                    variant="label-hidden"></lightning-textarea>
+                                                            </template>
+                                                        </div>
+                                                    </td>
+                                                    <td data-label="files">
+                                                        <div class="slds-grid slds-grid--vertical-align-center">
+                                                                <template for:each={document.contentDocumentId} for:item="doc">
+                                                                    <div key={doc.key} class="slds-m-right_small" style="max-width: 200px; white-space:normal;word-break: break-all;">
+                                                                        {doc.value}
+                                                                    </div>
+                                                                    <div key={document.contentDocumentId}
+                                                                        class="slds-col slds-size_4-of-12 slds-text-align_left download-icon ">
+                                                                        <span class="slds-m-right_small">
+                                                                            <lightning-button-icon size="small"
+                                                                                icon-name="utility:download"
+                                                                                onclick={handleViewDocument} alternative-text="Download"
+                                                                                title="Download" data-docname={document.documentName}
+                                                                                data-parentid={document.documentId}
+                                                                                data-contentdocid={doc.key}>
+                                                                            </lightning-button-icon>
+                                                                        </span>
+                
+                                                                        <span if:false={disableDeleteForInteUser}>
+                                                                            <lightning-button-icon size="small"
+                                                                                icon-name="utility:delete" alternative-text="Delete"
+                                                                                title="Delete" data-parentid={document.documentId}
+                                                                                onclick={handleFileDeleteConfirmation}>
+                                                                            </lightning-button-icon>
+                                                                        </span>
+                
+                                                                    </div>
+                                                            </template>
+                                                            </div>
+        
+                                                            <div class="slds-grid">
+                                                        <template for:each={document.files} for:item="file">
+                                                            <div key={file.uniqueId} class=""
+                                                                style="max-width: 200px; white-space:normal;word-break: break-all;">
+                                                                {file.fileName}</div>
+        
+        
+                                                            <div key={file.uniqueId}
+                                                                class="slds-col slds-size_4-of-12 slds-text-align_left download-icon">
+                                                                <span class="slds-m-right_small">
+                                                                    <lightning-button-icon size="small"
+                                                                        icon-name="utility:download"
+                                                                        onclick={handleViewDocument} data-fileid={file.uniqueId}
+                                                                        data-parentid={file.parentRecId}
+                                                                        data-filename={file.fileName}>
+                                                                    </lightning-button-icon>
+                                                                </span>
+        
+                                                                <span>
+                                                                    <lightning-button-icon size="small"
+                                                                        icon-name="utility:delete" alternative-text="Delete"
+                                                                        title="Delete" data-parentid={file.parentRecId}
+                                                                        onclick={handleFileDeleteConfirmation}>
+                                                                    </lightning-button-icon>
+                                                                </span>
+                                                            </div>
+                                                        </template>
+                                                        </div>
+                                                    </td>
+                                                    <td data-label="Action">
+                                                        <div class="slds-truncate"><a onclick={handleUpload}
+                                                                aria-label="Upload Document"
+                                                                data-id={document.contentDocumentId}
+                                                                data-name={document.documentName}
+                                                                data-parentfilepresent={document.parentFilePresent}
+                                                                data-docid={document.documentId}>Upload</a> </div>
+                                                    </td>
+                                                    <!-- <td data-label="Mode">
+                                                        <div class="slds-truncate">{document.sourceOfDocUploadName}</div>
+                                                    </td> -->
+                                                </tr>
+                                            </template>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </template>
+                        <template if:true={islawfulDocumentsPresent}>
+                            <div>
+                                <h2 class="slds-m-top--x-large slds-m-bottom_medium slds-text-heading_medium">Lawful
+                                    Presence Documentation</h2>
+                            </div>
+                            <div class="container lpiApplication">
+                                <div class="container-table">
+                                    <table class="slds-table"
+                                        aria-label="Application Documents">
+                                        <thead>
+                                            <tr class="slds-line-height_reset">
+                                                <th class="" scope="col">
+                                                    <div class="slds-truncate" title="Document Name">Document Name</div>
+                                                </th>
+                                                <th class="" scope="col">
+                                                    <div class="slds-truncate" title="Mode">Mode</div>
+                                                </th>
+                                                <th class="" scope="col">
+                                                    <div class="slds-truncate" title="Status">Status</div>
+                                                </th>
+                                               
+                                                <th class="" scope="col">
+                                                    <div class="slds-truncate" title="Comments">Comments</div>
+                                                </th>
+                                                <th class="" scope="col">
+                                                    <div class="slds-truncate" title="files">Files</div>
+                                                </th>
+                                                <th class="" scope="col">
+                                                    <div class="slds-truncate" title="Action">Action</div>
+                                                </th>
+                                                <th class="" scope="col">
+                                                    <div class="slds-truncate" title="Source of Uploaded Document">Source of
+                                                        Uploaded Document</div>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <template for:each={lawfulPresenceDocumentsList} for:item="document"
+                                                for:index="index">
+                                                <tr class="slds-hint-parent" key={document.documentId}>
+                                                    <td data-label="Document Name">
+                                                        <div class="d-flex">
+                                                            <template if:true={document.isDocumentRequired}>
+                                                                <p><span class="c-red">**</span></p>
+                                                            </template>
+                                                            <div class="" style="max-width: 200px; white-space:normal;">
+                                                                {document.documentName}
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td data-label="Mode">
+                                                        <div class="slds-truncate" if:true={isDisabled}>{document.documentMode}</div>
+                                                        <div if:false={isDisabled}>
+                                                            <lightning-combobox label="" disabled={isDisabled}
+                                                                value={document.documentMode} options={options} data-id="lawful"
+                                                                data-index={index} onchange={handleModeChange}
+                                                                variant="label-hidden">
+                                                            </lightning-combobox>
+                                                        </div>
+                                                    </td>
+                                                    <td data-label="Status">
+                                                        <template if:true={isDisabled}>
+                                                            <div class={document.statusClass}>
+                                                                {document.status}
+                                                            </div> 
+                                                        </template>
+                                                        <div if:false={isDisabled}>
+                                                            <lightning-combobox label="" disabled={isDisabled}
+                                                                value={document.status} options={statusOptions} data-id="lawful"
+                                                                data-index={index} onchange={handleStatusChange}
+                                                                variant="label-hidden">
+                                                            </lightning-combobox>
+                                                        </div>
+                                                    </td>
+                                                    <td data-label="Comments">
+                                                        <div class="slds-truncate" if:true={isDisabled}>{document.comments}</div>
+                                                        <div class="slds-truncate" if:false={isDisabled}>
+                                                            <lightning-textarea disabled={isDisabled} label=""
+                                                                value={document.comments} data-index={index} data-id="lawful"
+                                                                onchange={handleCommentChange}
+                                                                variant="label-hidden"></lightning-textarea>
+                                                        </div>
+                                                    </td>
+                                                    <td data-label="files">
+                                                        <div class="slds-grid slds-grid--vertical-align-center">
+                                                            <template for:each={document.contentDocumentId} for:item="doc">
+                                                                <div key={doc.key} class="slds-m-right_small"
+                                                                    style="max-width: 200px; white-space:normal;word-break: break-all;">
+                                                                    {doc.value}</div>
+    
+                                                                <div key={document.contentDocumentId}
+                                                                    class="slds-col slds-size_4-of-12 slds-text-align_left download-icon">
+                                                                    <span class="slds-m-right_small">
+                                                                        <lightning-button-icon size="small"
+                                                                            icon-name="utility:download"
+                                                                            onclick={handleViewDocument}
+                                                                            data-docname={document.documentName}
+                                                                            data-parentid={document.documentId}
+                                                                            data-contentdocid={doc.key}>
+                                                                        </lightning-button-icon>
+                                                                    </span>
+    
+                                                                    <span>
+                                                                        <lightning-button-icon size="small"
+                                                                            icon-name="utility:delete" alternative-text="Delete"
+                                                                            title="Delete" data-parentid={document.documentId}
+                                                                            onclick={handleFileDeleteConfirmation}>
+                                                                        </lightning-button-icon>
+                                                                    </span>
+    
+                                                                </div>
+    
+    
+                                                            </template>
+                                                        </div>
+                                                        <div class="slds-grid slds-grid--vertical-align-center">
+                                                            <template for:each={document.files} for:item="file">
+                                                                <div key={file.uniqueId} class="slds-m-right_small"
+                                                                    style="max-width: 200px; white-space:normal;word-break: break-all;">
+                                                                    {file.fileName}</div>
+                                                                <div key={file.uniqueId}
+                                                                    class="slds-col slds-size_4-of-12 slds-text-align_left download-icon">
+                                                                    <span class="slds-m-right_small">
+                                                                        <lightning-button-icon size="small"
+                                                                            icon-name="utility:download"
+                                                                            onclick={handleViewDocument} data-fileid={file.uniqueId}
+                                                                            data-parentid={file.parentRecId}
+                                                                            data-filename={file.fileName}>
+                                                                        </lightning-button-icon>
+                                                                    </span>
+
+                                                                    <span>
+                                                                        <lightning-button-icon size="small"
+                                                                            icon-name="utility:delete" alternative-text="Delete"
+                                                                            title="Delete" data-parentid={file.parentRecId}
+                                                                            onclick={handleFileDeleteConfirmation}>
+                                                                        </lightning-button-icon>
+                                                                    </span>
+
+                                                                </div>
+
+                                                            </template>
+                                                        </div>
+                                                    </td>
+                                                    <td data-label="Action">
+                                                        <div class="slds-truncate"><a onclick={handleUpload}
+                                                                aria-label="Upload Document"
+                                                                data-id={document.contentDocumentId}
+                                                                data-name={document.documentName}
+                                                                data-parentfilepresent={document.parentFilePresent}
+                                                                data-docid={document.documentId}>Upload</a> </div>
+                                                        </td>
+                                                    <!-- <td data-label="Source of Uploaded Document">
+                                                        <div class="slds-truncate">{document.sourceOfDocUploadName}</div>
+                                                    </td> -->
+                                                </tr>
+                                            </template>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </template>
+                    </template>
+                    <c-lpi-image-compression></c-lpi-image-compression>
+
+                </template>
+
+                <!-- <div class="slds-clearfix additional-doc-border">
+                    <div class="slds-float_left" style="font-size:0.90rem;">
+                        <span aria-label={additionalUploadDocTxt}>{additionalUploadDocTxt}</span>
+                    </div>
+                    <div class="slds-float_right">
+                        <lightning-button style="font-size:0.90rem;" label="+ Add Documents" variant="neutral"
+                            title="Add Documents" onclick={addNewDoc}>
+                        </lightning-button>
+                    </div>
+                </div> -->
+
+                <template if:true={isShowAddModal}>
+
+                    <template if:true={addDocId}>
+
+                        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                            aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                            <div class="slds-modal__container">
+                                <header class="slds-modal__header">
+                                    <button
+                                        class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                                        title="Close" onclick={hideAddModalBox}>
+                                        <lightning-icon icon-name="utility:close" alternative-text="close"
+                                            variant="inverse" size="small"></lightning-icon>
+                                        <span class="slds-assistive-text">Close</span>
+                                    </button>
+                                    <h1 id="modal-heading-05" class="slds-text-heading_medium slds-hyphenate">Add Other
+                                        Documents
+                                    </h1>
+                                </header>
+
+
+                                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-05">
+                                    <p class="asterisk-caption m-b-medium">Asterisk (<span class="c-red">*</span>) indicates
+                                        required field</p>
+
+                                    <div class="slds-grid slds-wrap">
+                                        <div class="slds-col slds-size_1-of-1">
+                                            <lightning-input type="text" label="Document Name" required
+                                                value={newDocumentName} max-length="255" pattern="^((?!(<\s*|\s*>)).)*$"
+                                                class="new-doc"
+                                                message-when-pattern-mismatch="Invalid input. This field only accepts letters and numbers. Special characters are not allowed."
+                                                onchange={handleNewDocumentNameChange}></lightning-input>
+                                        </div>
+                                        <div class="slds-col slds-size_1-of-1">
+                                            <lightning-textarea label="Description" value={newDocumentDescription}
+                                                onchange={handleNewDocumentDescChange} maxlength="500"
+                                                message-when-too-long="A maximum of 500 characters are allowed.">
+                                            </lightning-textarea>
+                                        </div>
+                                        <div class="slds-col slds-size_1-of-1">
+                                            <span if:false={isfileUploaded}>
+                                                <lightning-file-upload if:true={addDocId} name="fileUploader"
+                                                    accept={acceptedFormats} record-id={addDocId}
+                                                    onuploadfinished={handleUploadFinishedOnbase} multiple>
+                                                </lightning-file-upload>
+
+
+                                                <div if:true={showAddpinner}>
+                                                    <lightning-spinner class="spinHolder" size="medium"
+                                                        alternative-text="Loading..."
+                                                        data-text="Loading"></lightning-spinner>
+                                                </div>
+
+                                            </span>
+
+                                            <span if:true={isfileUploaded}>
+                                                <div class="slds-m-top_small">
+                                                    <span> {newfilename}</span>
+                                                    <span>
+                                                        <lightning-button-icon style='margin-left:10px'
+                                                            class="slds-float_right" size="small"
+                                                            icon-name="utility:delete" alternative-text="Delete"
+                                                            title="Delete" data-parentid={addDocId}
+                                                            onclick={handleDelFile}>
+                                                        </lightning-button-icon>
+                                                    </span>
+                                                    <span>
+                                                        <lightning-button-icon style='margin-left:10px'
+                                                            class="slds-float_right" size="small"
+                                                            icon-name="utility:download" onclick={handleViewDocument}
+                                                            data-parentid={addDocId}>
+                                                        </lightning-button-icon>
+                                                    </span>
+                                                </div>
+                                            </span>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <footer class="slds-modal__footer">
+                                    <span if:false={addOtherDocDisabled}>
+                                        <button class="slds-button slds-button_neutral"
+                                            onclick={hideAddModalBox}>Cancel</button>
+                                        <button class="slds-button slds-button_brand" onclick={handleSaveNewDocument}
+                                            disabled={isFromValid}>Save</button>
+                                    </span>
+                                </footer>
+
+
+                            </div>
+                        </section>
+                        <div class="slds-backdrop slds-backdrop_open"></div>
+                    </template>
+                </template>
+                <template if:true={isShowDeleteModal}>
+                    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-03" aria-modal="true"
+                        aria-describedby="modal-content-id-3" class="dfs-modal slds-modal slds-fade-in-open">
+                        <div class="slds-modal slds-fade-in-open slds-backdrop">
+                            <div class="slds-modal__container">
+
+                                <header class="slds-modal__header ">
+
+                                    <h1 class="slds-grid_align-center slds-modal__title slds-hyphenatex"> Delete </h1>
+
+                                </header>
+
+
+                                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-5">
+                                    <div class="slds-p-around_medium lgc-bg">
+                                        Are you sure you want to delete this file?
+                                    </div>
+                                </div>
+
+                                <footer class="slds-modal__footer slds-grid_align-center">
+                                    <button class="slds-button slds-button_neutral"
+                                        onclick={handleFileDelete}>Delete</button>
+                                    <button class="slds-button slds-button_neutral"
+                                        onclick={handlecancel}>Cancel</button>
+                                </footer>
+                            </div>
+                        </div>
+                    </section>
+
+                </template>
+            </div>
+        <!-- </lightning-accordion-section>
+    </lightning-accordion> -->
+</template>

@@ -1,0 +1,24 @@
+<template>
+    <lightning-spinner if:true={isLoading}></lightning-spinner>
+    <lightning-card>
+        <div class="slds-m-bottom_medium slds-text-align_left">
+            <p>Required fields are marked with an asterisk (<span class="slds-required">*</span>)</p>
+          </div>
+       <div class="bordered_radio">
+            <lightning-radio-group name="amendmentType" options={amendmentTypeOption} value={selectedAmendtype} type="radio"  onchange={handleChange} label="Select Amendment Type" required="true"
+            message-when-value-missing="Error: Amendment Type is required."></lightning-radio-group>
+            <template if:true={isStatusChange}>
+                <lightning-radio-group label="Change status to" name="statusChange" options={statusChangeOptions} value={selectedStatus}  onchange={handleStatusChangeOptions} required="true"
+                message-when-value-missing="Error: Change status to is required."></lightning-radio-group>
+            </template>
+            <template if:true={isObtainLiceseSelected}>
+                <lightning-radio-group label="Select License Type" name="obtainLicenseType" options={licenseTypeOption} value={selectedLicenseType}  onchange={handleLicenseTypeSelection} required="true"
+                message-when-value-missing="Error: License Type is required."></lightning-radio-group>
+            </template>
+        </div>
+        <div slot="footer" class="footer">
+            <lightning-button variant="brand" label="Continue" title="Primary action" onclick={handleClick} class="slds-m-left_x-small"></lightning-button>
+        </div>
+    </lightning-card>
+
+</template>

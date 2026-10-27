@@ -1,0 +1,26 @@
+.breadcrumb {
+    .slds-breadcrumb__item {
+        a {
+            font-size: $font-size-14;
+            font-weight: $font-weight-semi-bold;
+            color: $text-breadcrumb;
+        }
+        &.active {
+            a{  
+                color: $primary-main;
+            }
+        }
+    }
+    &.breadcrumb-right .slds-grid .slds-grid {
+        justify-content: flex-end;
+    }
+    .active {
+        .slds-action_item {  
+             color: $primary-main;
+        }
+    }
+}
+.bread-crumb {
+    text-align: right;
+    font-size: $font-size-14;
+}

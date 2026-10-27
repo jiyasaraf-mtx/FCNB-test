@@ -1,0 +1,61 @@
+<template>
+            <div class="slds-grid slds-wrap slds-is-relative ">
+            <div style="position: fixed;z-index: 999999;top: 0;right: 0;">
+  <omnistudio-toast class="flexcard-toast-element" theme="slds" title="" message="" styletype=""> </omnistudio-toast>
+</div>
+            <div if:true={showLoader} class="slds-is-absolute vloc-loader_override" style="height: 100%; width: 100%; min-height:50px; background: transparent; z-index: 99;">
+  <div>
+   <omnistudio-spinner
+      variant="brand"
+      alternative-text="Loading content..."
+      size="medium"
+      theme="slds"
+      ></omnistudio-spinner>
+  </div>
+</div>
+            <template if:false={hasPermission}>
+              You don't have required permissions to view this card.
+            </template>
+            <template if:true={hasPermission}>
+              <template if:true={hasRecords}>
+                        <template for:each={_records} for:item="record" for:index="rindex">
+                            <omnistudio-flex-card-state if:true={record}  key={record._flex.uniqueKey} data-recordid={record.Id} record={record} data-statue="true"  data-index="0" data-rindex={rindex} class="cf-vlocity-state-0 cf-vlocity-state slds-size_12-of-12"  tracking-obj={_childCardTrackingObj} >
+      <div if:true={cardLoaded} class="slds-grid slds-wrap slds-card slds-p-around_x-small slds-m-bottom_x-small" style="">
+          <div data-style-id="state0element0" class="slds-col  label slds-size_12-of-12  condition-element" data-rindex={rindex} style="      
+         "  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-21","field":"EntitywithEscrowAccounts","operator":"!=","value":"null","type":"custom","hasMergeField":false}]}' ><omnistudio-output-field data-style-id="state0element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3EI%20will%20become%20the%20designated%20broker%20of%20the%20above-identified%20business%20and%20will%20be%20responsible%20for%20all%20the%20escrow%20account(s)%20of%20the%20entity%20that%20is%20currently%20registered%20with%20the%20Missouri%20Real%20Estate%20Commission.%3C/div%3E"  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-21","field":"EntitywithEscrowAccounts","operator":"!=","value":"null","type":"custom","hasMergeField":false}]}'  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element1" class="slds-col   slds-size_12-of-12 condition-element" data-rindex={rindex} style=""  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-7","field":"EntitywithEscrowAccounts","operator":"!=","value":"null","type":"custom","hasMergeField":false}]}' ><omnistudio-output-field data-style-id="state0element1_child"   card={card}  record={record}  placeholder=""  field-name="EntitywithEscrowAccounts"  label=""  type="text"  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-7","field":"EntitywithEscrowAccounts","operator":"!=","value":"null","type":"custom","hasMergeField":false}]}'  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element2" class="slds-col  label slds-size_12-of-12  condition-element" data-rindex={rindex} style="      
+         "  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-42","field":"EntitywithNOEscrowAccount","operator":"!=","value":"null","type":"custom","hasMergeField":false}]}' ><omnistudio-output-field data-style-id="state0element2_child"   card={card}  record={record}  merge-field="%3Cdiv%3EI%20will%20become%20the%20designated%20broker%20of%20the%20above-identified%20business.%20Currently,%20the%20Business%20does%20not%20maintain%20an%20escrow%20account(s)%20as%20it%20is%20using%20a%20title%20company,%20escrow%20company,%20or%20attorney;%20as%20the%20broker%20is%20a%20real%20estate%20Instructor;%20or%20as%20it%20will%20not%20sell,%20buy,%20exchange,%20rent,%20lease%20or%20manage%20residential%20or%20commercial%20property%20not%20it's%20own.%3C/div%3E"  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-42","field":"EntitywithNOEscrowAccount","operator":"!=","value":"null","type":"custom","hasMergeField":false}]}'  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element3" class="slds-col   slds-size_12-of-12 condition-element" data-rindex={rindex} style=""  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-0","field":"EntitywithNOEscrowAccount","operator":"!=","value":"null","type":"custom","hasMergeField":false}]}' ><omnistudio-output-field data-style-id="state0element3_child"   card={card}  record={record}  placeholder=""  field-name="EntitywithNOEscrowAccount"  label=""  type="text"  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-0","field":"EntitywithNOEscrowAccount","operator":"!=","value":"null","type":"custom","hasMergeField":false}]}'  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div>
+      </omnistudio-flex-card-state>
+                        </template>
+                      </template>
+                      <template if:false={hasRecords}>
+                            <omnistudio-flex-card-state  record={record} data-statue="false"  data-index="0" data-rindex={rindex} class="cf-vlocity-state-0 cf-vlocity-state slds-size_12-of-12"  tracking-obj={_childCardTrackingObj} >
+      <div if:true={cardLoaded} class="slds-grid slds-wrap slds-card slds-p-around_x-small slds-m-bottom_x-small" style="">
+          <div data-style-id="state0element0" class="slds-col  label slds-size_12-of-12  condition-element" data-rindex={rindex} style="      
+         "  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-21","field":"EntitywithEscrowAccounts","operator":"!=","value":"null","type":"custom","hasMergeField":false}]}' ><omnistudio-output-field data-style-id="state0element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3EI%20will%20become%20the%20designated%20broker%20of%20the%20above-identified%20business%20and%20will%20be%20responsible%20for%20all%20the%20escrow%20account(s)%20of%20the%20entity%20that%20is%20currently%20registered%20with%20the%20Missouri%20Real%20Estate%20Commission.%3C/div%3E"  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-21","field":"EntitywithEscrowAccounts","operator":"!=","value":"null","type":"custom","hasMergeField":false}]}'  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element1" class="slds-col   slds-size_12-of-12 condition-element" data-rindex={rindex} style=""  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-7","field":"EntitywithEscrowAccounts","operator":"!=","value":"null","type":"custom","hasMergeField":false}]}' ><omnistudio-output-field data-style-id="state0element1_child"   card={card}  record={record}  placeholder=""  field-name="EntitywithEscrowAccounts"  label=""  type="text"  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-7","field":"EntitywithEscrowAccounts","operator":"!=","value":"null","type":"custom","hasMergeField":false}]}'  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element2" class="slds-col  label slds-size_12-of-12  condition-element" data-rindex={rindex} style="      
+         "  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-42","field":"EntitywithNOEscrowAccount","operator":"!=","value":"null","type":"custom","hasMergeField":false}]}' ><omnistudio-output-field data-style-id="state0element2_child"   card={card}  record={record}  merge-field="%3Cdiv%3EI%20will%20become%20the%20designated%20broker%20of%20the%20above-identified%20business.%20Currently,%20the%20Business%20does%20not%20maintain%20an%20escrow%20account(s)%20as%20it%20is%20using%20a%20title%20company,%20escrow%20company,%20or%20attorney;%20as%20the%20broker%20is%20a%20real%20estate%20Instructor;%20or%20as%20it%20will%20not%20sell,%20buy,%20exchange,%20rent,%20lease%20or%20manage%20residential%20or%20commercial%20property%20not%20it's%20own.%3C/div%3E"  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-42","field":"EntitywithNOEscrowAccount","operator":"!=","value":"null","type":"custom","hasMergeField":false}]}'  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element3" class="slds-col   slds-size_12-of-12 condition-element" data-rindex={rindex} style=""  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-0","field":"EntitywithNOEscrowAccount","operator":"!=","value":"null","type":"custom","hasMergeField":false}]}' ><omnistudio-output-field data-style-id="state0element3_child"   card={card}  record={record}  placeholder=""  field-name="EntitywithNOEscrowAccount"  label=""  type="text"  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-0","field":"EntitywithNOEscrowAccount","operator":"!=","value":"null","type":"custom","hasMergeField":false}]}'  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div>
+      </omnistudio-flex-card-state>
+                      </template>
+            </template>
+            <template if:true={hasError}>
+            {error}
+            </template>
+            
+      <omnistudio-action action-wrapperclass="slds-hide" re-render-flyout class="action-trigger slds-col" onupdateos={updateOmniscript} onselectcards={updateSelectedCards} onsetvalue={updateAction} onfireactionevent={actionEvtHandler}>
+      
+      </omnistudio-action>
+  
+            <omnistudio-action class="execute-action" re-render-flyout action-wrapperclass="slds-hide" onupdateos={updateOmniscript} onselectcards={updateSelectedCards} onsetvalue={updateAction} onfireactionevent={actionEvtHandler}>
+            
+            </omnistudio-action>
+            </div>
+          </template>

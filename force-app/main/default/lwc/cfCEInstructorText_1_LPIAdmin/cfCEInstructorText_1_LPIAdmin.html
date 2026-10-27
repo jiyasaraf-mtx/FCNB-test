@@ -1,0 +1,53 @@
+<template>
+            <div class="slds-grid slds-wrap slds-is-relative ">
+            <div style="position: fixed;z-index: 999999;top: 0;right: 0;">
+  <omnistudio-toast class="flexcard-toast-element" theme="slds" title="" message="" styletype=""> </omnistudio-toast>
+</div>
+            <div if:true={showLoader} class="slds-is-absolute vloc-loader_override" style="height: 100%; width: 100%; min-height:50px; background: transparent; z-index: 99;">
+  <div>
+   <omnistudio-spinner
+      variant="brand"
+      alternative-text="Loading content..."
+      size="medium"
+      theme="slds"
+      ></omnistudio-spinner>
+  </div>
+</div>
+            <template if:false={hasPermission}>
+              You don't have required permissions to view this card.
+            </template>
+            <template if:true={hasPermission}>
+              <template if:true={hasRecords}>
+                        <template for:each={_records} for:item="record" for:index="rindex">
+                            <omnistudio-flex-card-state if:true={record}  key={record._flex.uniqueKey} data-recordid={record.Id} record={record} data-statue="true"  data-index="0" data-rindex={rindex} class="cf-vlocity-state-0 cf-vlocity-state slds-size_12-of-12 "  tracking-obj={_childCardTrackingObj} >
+      <div if:true={cardLoaded} class="slds-grid slds-wrap slds-p-vertical_x-small slds-m-bottom_x-small " style="      
+         ">
+          <div data-style-id="state0element0" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3EPlease%20click%20&lt;a%20href=%22%7BLabel.LPI_InstructorApplication%7D%22&gt;here&lt;/a&gt;%20to%20download%20the%20Instructor%20Application.%20Once%20downloaded,%20kindly%20fill%20out%20the%20details%20of%20the%20Instructor%20added%20and%20proceed%20to%20upload%20it%20under%20the%20Documents%20section.%3C/div%3E%0A%3Ctable%20class=%22list%22%20border=%220%22%20cellspacing=%220%22%20cellpadding=%220%22%3E%0A%3Ctbody%3E%0A%3Ctr%20class=%22dataRow%20odd%20highlight%22%3E%0A%3Ctd%20class=%22%20dataCell%20%20%22%3E%0A%3Ctable%20class=%22list%22%20border=%220%22%20cellspacing=%220%22%20cellpadding=%220%22%3E%0A%3Ctbody%3E%0A%3Ctr%20class=%22dataRow%20odd%20highlight%22%3E%0A%3Ctd%20class=%22%20dataCell%20%20%22%3E&nbsp;%3C/td%3E%0A%3C/tr%3E%0A%3C/tbody%3E%0A%3C/table%3E%0A%3C/td%3E%0A%3C/tr%3E%0A%3C/tbody%3E%0A%3C/table%3E%0A%3Cdiv%3E&nbsp;%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div>
+      </omnistudio-flex-card-state>
+                        </template>
+                      </template>
+                      <template if:false={hasRecords}>
+                            <omnistudio-flex-card-state  record={record} data-statue="false"  data-index="0" data-rindex={rindex} class="cf-vlocity-state-0 cf-vlocity-state slds-size_12-of-12 "  tracking-obj={_childCardTrackingObj} >
+      <div if:true={cardLoaded} class="slds-grid slds-wrap slds-p-vertical_x-small slds-m-bottom_x-small " style="      
+         ">
+          <div data-style-id="state0element0" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3EPlease%20click%20&lt;a%20href=%22%7BLabel.LPI_InstructorApplication%7D%22&gt;here&lt;/a&gt;%20to%20download%20the%20Instructor%20Application.%20Once%20downloaded,%20kindly%20fill%20out%20the%20details%20of%20the%20Instructor%20added%20and%20proceed%20to%20upload%20it%20under%20the%20Documents%20section.%3C/div%3E%0A%3Ctable%20class=%22list%22%20border=%220%22%20cellspacing=%220%22%20cellpadding=%220%22%3E%0A%3Ctbody%3E%0A%3Ctr%20class=%22dataRow%20odd%20highlight%22%3E%0A%3Ctd%20class=%22%20dataCell%20%20%22%3E%0A%3Ctable%20class=%22list%22%20border=%220%22%20cellspacing=%220%22%20cellpadding=%220%22%3E%0A%3Ctbody%3E%0A%3Ctr%20class=%22dataRow%20odd%20highlight%22%3E%0A%3Ctd%20class=%22%20dataCell%20%20%22%3E&nbsp;%3C/td%3E%0A%3C/tr%3E%0A%3C/tbody%3E%0A%3C/table%3E%0A%3C/td%3E%0A%3C/tr%3E%0A%3C/tbody%3E%0A%3C/table%3E%0A%3Cdiv%3E&nbsp;%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div>
+      </omnistudio-flex-card-state>
+                      </template>
+            </template>
+            <template if:true={hasError}>
+            {error}
+            </template>
+            
+      <omnistudio-action action-wrapperclass="slds-hide" re-render-flyout class="action-trigger slds-col" onupdateos={updateOmniscript} onselectcards={updateSelectedCards} onsetvalue={updateAction} onfireactionevent={actionEvtHandler}>
+      
+      </omnistudio-action>
+  
+            <omnistudio-action class="execute-action" re-render-flyout action-wrapperclass="slds-hide" onupdateos={updateOmniscript} onselectcards={updateSelectedCards} onsetvalue={updateAction} onfireactionevent={actionEvtHandler}>
+            
+            </omnistudio-action>
+            </div>
+          </template>

@@ -1,0 +1,12 @@
+.d-flex {
+    display: flex;
+}
+.link-underline{
+    line-height: 1.3rem;
+    width: 17rem;
+    white-space: normal;
+}
+
+.assessment-task-cmp lightning-dual-listbox{
+    min-width: 30rem;
+}

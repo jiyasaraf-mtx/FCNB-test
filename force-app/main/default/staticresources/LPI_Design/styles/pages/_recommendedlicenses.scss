@@ -1,0 +1,179 @@
+.recommended-licenses {
+    .header-grid {
+        padding-bottom: 1rem;
+        .page-heading {
+            padding-bottom: 0;
+        }
+       
+    }
+    .cards-section {
+        display: flex;
+        margin-bottom: 2rem;
+    }
+    .license-card {
+        margin-right: 1rem;
+        margin-top: 0;
+        min-width: 15.625rem;
+        min-height: 7.5rem;
+        padding: 1.5rem;
+        .license-name {
+            padding-bottom: 0.5rem;
+        }
+        .profession {
+            font-size:$font-size-18;
+            font-weight: $font-weight-bold;
+            color: $text-primary;
+            padding-bottom: 0.5rem;
+        }
+        .secondary-button .slds-button_neutral {
+            width: fit-content;
+            font-size: $font-size-13;
+            font-weight: $font-weight-semi-bold;
+            padding: 0 1rem;
+        }
+    }
+}
+.domain {
+    font-size: $font-size-12;
+    border-radius: $border-radius-medium;
+    padding: 0.125rem 0.25rem;
+    background-color: $primary-shades-4-p;
+    color: $primary-main;
+    font-weight: $font-weight-semi-bold;
+    margin-left: 1rem;
+    img {
+        padding-left: 0.3rem;
+    }
+}
+
+
+
+.modpr-licenselist-container{
+    .modpr-license-list{
+        .sort-button button {
+            border: 0;
+            button svg.slds-button__icon {
+                height: 1rem;
+                width: 1rem;
+            }
+        }
+        .know-more-accordion{
+            .slds-button.slds-section__title-action {
+                padding-left: 0;
+            }
+        }
+    }
+    .modpr-board-list{
+        .icon-position{
+            .slds-accordion__summary {
+                padding: 0;
+                .slds-accordion__summary-heading{
+                    .slds-button.slds-section__title-action{
+                        span{
+                            color: $text-primary;
+                            font-weight: 600;
+                            font-size: 1rem;
+                        }
+                        &:focus{
+                            background-color: transparent;
+                        }
+                    }
+                }
+            }
+        }
+        .Category-list{
+            li.slds-item.slds-action_item {
+                border-bottom: 0.063rem solid $table-border;
+                a {
+                    color: $black !important;
+                    font-weight: 600;
+                    padding: 0.8rem 0;
+                }
+            }
+        }
+    }
+}
+
+.search-account-wrap,
+.filter-account-wrap{
+    border: 0.0625rem solid $input-border;
+    position: relative;
+    border-radius: $border-radius-medium;
+    box-shadow: $box-shadow;
+    background: $white;
+    margin-top: 0.5rem;
+    padding: 0.3rem;
+}
+
+
+
+
+c-cf-renew-license, comm-page-custom-renew-license-details {
+    .slds-grid.slds-wrap.slds-card {
+        box-shadow: none; 
+        background: $background-light;
+        padding: 0;
+        omnistudio-block[data-style-id="state0element0_child"] {
+            div[data-style-id="state0element0block_element0"].slds-col.page-heading.slds-size_2-of-12 {
+                width: max-content;
+            }
+            div[data-style-id="state0element0block_element2"].slds-col {
+                margin-top: 1rem;
+            }
+        }
+        omnistudio-block[data-style-id="state0element0block_element1_child"] {
+            .slds-col.slds-size_6-of-12,.slds-col.slds-size_3-of-12 {
+                width: max-content;
+            }
+        }
+        .domain{
+            margin-top: 0.25rem;
+            width: max-content;
+            img {
+                width: 1.125rem;
+                padding-bottom: 0.25rem;
+            }
+        }
+        c-cf-licensing-table-row  { 
+            div[data-style-id="state0element0block_element5"] {
+                .block-container {
+                    .slds-col.slds-size_12-of-12 {
+                        background: $warning-shades-4-p;
+                        width: max-content;
+                        padding: 0.125rem 0.25rem;
+                        border-radius: $border-radius-medium;
+                        .slds-rich-text-editor__output {
+                            color: $warning-main;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+c-cf-renew-license-payment, c-cf-application-payment-details {
+    .secondary-button, .primary-button {
+        .slds-button_outline-brand, .slds-button_brand  {
+            width: 100%;
+        }
+        .slds-button_brand {
+            background: $primary-main;
+            padding: 0.1874rem;
+            font-size: $font-size-14;
+            border: toRem(1) solid $primary-main;
+        }
+    }
+}
+
+.recommended-radio{
+    padding: 0 !important;
+    margin: 0 !important;
+    .slds-form-element__control{
+        display: block !important;
+        .slds-radio{
+            width: 100% !important;
+            margin-bottom: $x-m-small;
+            margin-right: 0 !important;
+        }
+    }
+}

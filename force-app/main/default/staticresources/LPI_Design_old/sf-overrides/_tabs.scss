@@ -1,0 +1,123 @@
+// .custom-tab {
+//     .slds-tabs_default__nav {
+//         padding: 0.3rem 2rem;
+//         background: $white;
+//         box-shadow: 0 toRem(2) toRem(4) rgba(0, 0, 0, 0.1);
+//     }
+//     .slds-tabs_default__item:hover:after,
+//     .slds-tabs_default__item.slds-is-active:after {
+//         height: toRem(2) !important;
+//     }
+//     .slds-tabs_default__item.slds-is-active  {
+//         a {
+//             color: $primary-main !important;
+//         }
+//     }
+//     .slds-tabs_default__item {
+//         a {
+//             color: $text-secondary !important;
+//             text-transform: uppercase;
+//             font-weight: $font-weight-semi-bold;
+//         }
+//     }
+//     .slds-tabs_default__item:after {
+//         bottom: toRem(-4);
+//     }
+//     lightning-tab {
+//         background-color: $white;
+//     }
+//     .overview-container {
+//         ul {
+//             list-style: inside;
+//         }
+//     }
+//     ol {
+//         list-style: style;
+//     }
+//     .primary-button-bordered {
+//         &.apply-button {
+//             width: 11%;
+//         }
+//     }
+//     table td,
+//     th {
+//         padding: 0rem 2rem;
+//     }
+// }
+
+// .tab-cards {
+//     overflow: auto;
+//     -ms-overflow-style: none;
+//     scrollbar-width: none;
+//     &::-webkit-scrollbar {
+//         display: none;
+//     }
+//     .paragraph {
+//         font-weight: $font-weight-semi-bold;
+//         padding-bottom: 0.625rem !important;
+//     }
+//     .heading {
+//         font-weight: $font-weight-bold;
+//     }
+//     .slds-grid:first-of-type {
+//         flex-wrap: nowrap;
+//     }
+//     .card-container .slds-grid:first-of-type {
+//         flex-wrap: wrap;
+//     }
+//     &_licenses .card-container {
+//         width: 12.5%;
+//     }
+//     &_recommend .card-container {
+//         width: 17.8rem;
+//     }
+// }
+
+// .uiTabBar {
+//     padding: 0 2rem;
+//     background-color: $white;
+//     border-radius: $border-radius-medium;
+//     box-shadow: 0 toRem(2) toRem(4) 0 rgba(0,0,0,0.1);
+//     .tabs__nav {
+//         border: none;
+//     }
+// }
+// .uiTabset {
+//     &--default {
+//         background-color: transparent;
+//         .tabs__item, .uiTabOverflowMenuItem {
+//             a {
+//                 padding: 1rem 0.5rem 0.8rem !important;
+//                 text-transform: uppercase !important;
+//                 color: $text-secondary !important;
+//                 font-weight: 600;
+//                 &:hover, &:focus {
+//                     color: $primary-main !important;
+//                 }
+//             }
+//             &.active {
+//                 > a {
+//                     color: $primary-main !important;
+//                 }
+//             }
+//         }
+//     }
+//     .tabs__content {
+//         .page-heading {
+//             padding: 1.5rem 0 1rem;
+//             h1,h2,h3,h4,h5,h6 {
+//                 margin-bottom: 0;
+//             }
+//         }
+//         .sub-heading {
+//             text-transform: uppercase;
+//             font-size: 1rem;
+//         }
+//         .label {
+//             text-transform: initial;
+//         }
+//         .status-active {
+//             color: $success;
+//         }
+//     }
+// }

@@ -1,0 +1,78 @@
+.my-profile-page{
+    .profile-upload{
+        // text-align: center;
+        .profile-img{
+            border-radius: 50%;
+            width: 16rem;
+            height: 16rem;
+            object-fit: cover;
+            overflow: hidden;
+            @media all and (max-width: 48rem) {
+                width: 12rem;
+                height: 12rem;
+            }
+        }
+        .slds-file-selector__dropzone{
+            border: toRem(1) dotted rgba(151,153,155,0.4);
+            padding: $small;
+            color:#97999B;
+        }
+        .slds-file-selector__button{
+            // color: $text-dark-blue;
+            border-color: $secondary-main;
+            padding-top: 0.25rem;
+            padding-bottom: 0.25rem;
+            font-size: 1rem;
+        }
+    }
+    // .mandatory-text{
+    //     // color: $text-primary;
+    //     font-size: toRem(14);
+    // }
+
+    .profile-details{
+        .profile-details-heading{
+            @media all and (max-width: 48rem) {
+                flex-direction: column;
+                .page-heading{
+                    margin-bottom: 0rem;
+                }
+                .page-sub-heading{
+                    margin-left: 0;
+                    margin-bottom: 1rem;
+                }
+            }
+        }
+        .slds-form-element__label {
+            font-size: 0.875rem;
+            color: $text-primary;
+            font-weight: 600;
+        }
+    
+        .save-btn{
+            .slds-button_brand {
+                width: auto;
+                background: $text-dark-blue;
+                font-size: toRem(14);
+                padding: 0.25rem 1rem;
+            }
+        }
+    }
+    
+}
+
+.disclaimer-text {
+    margin: 2rem auto;
+    padding: 1rem;
+    background: $background-light;
+    font-size: 1rem;
+    border-left: 0.25rem solid $warning-main;
+}
+
+.onbase-testing-file-upload{
+    .slds-form-element__label {
+        font-size: 0.875rem;
+        color: $text-primary;
+        font-weight: 600;
+    }
+}

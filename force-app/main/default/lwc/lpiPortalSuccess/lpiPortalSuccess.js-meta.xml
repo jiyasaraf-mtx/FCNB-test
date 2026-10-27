@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>Portal Success Page</masterLabel>
+    <description>Shared success page for Employer, Agency Review, and AVR Pension portals. Licensing Portal is out of scope.</description>
+    <targets>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+        <target>lightningCommunity__Page_Layout</target>
+        <target>lightning__AppPage</target>
+        <target>lightning__HomePage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightningCommunity__Default">
+            <property
+                name="recordId"
+                type="String"
+                label="Record Id"
+                description="Optional context Id when not passed via URL c__ContextId"
+            />
+            <property
+                name="defaultFlow"
+                type="String"
+                label="Default Flow"
+                description="PremiumTax | AvrFiling | AgentReview | FinancialFiling | Generic"
+            />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

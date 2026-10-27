@@ -1,0 +1,139 @@
+<template>
+            <div class="slds-grid slds-wrap slds-is-relative ">
+            <div style="position: fixed;z-index: 999999;top: 0;right: 0;">
+  <omnistudio-toast class="flexcard-toast-element" theme="slds" title="" message="" styletype=""> </omnistudio-toast>
+</div>
+            <div if:true={showLoader} class="slds-is-absolute vloc-loader_override" style="height: 100%; width: 100%; min-height:50px; background: transparent; z-index: 99;">
+  <div>
+   <omnistudio-spinner
+      variant="brand"
+      alternative-text="Loading content..."
+      size="medium"
+      theme="slds"
+      ></omnistudio-spinner>
+  </div>
+</div>
+            <template if:false={hasPermission}>
+              You don't have required permissions to view this card.
+            </template>
+            <template if:true={hasPermission}>
+              <template if:true={hasRecords}>
+                        <template for:each={_records} for:item="record" for:index="rindex">
+                            <omnistudio-flex-card-state if:true={record}  key={record._flex.uniqueKey} data-recordid={record.Id} record={record} data-statue="true"  data-index="0" data-rindex={rindex} class="cf-vlocity-state-0 cf-vlocity-state slds-size_12-of-12 "  tracking-obj={_childCardTrackingObj} >
+      <div if:true={cardLoaded} class="slds-grid slds-wrap slds-card slds-p-around_x-small slds-m-bottom_x-small accordion-block" style="      
+         ">
+          <div data-style-id="state0element0" class="slds-col   slds-p-around_x-small accordion slds-size_12-of-12  " data-rindex={rindex} style="      
+         " >
+    <omnistudio-block data-style-id="state0element0_child"  card={card}  record={record}  label="License"  collapsible="true"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element0" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element0block_element0_child"   card={card}  record={record}  placeholder="-"  field-name="regAuthTypeName"  label="License Type"  type="text"  labelclass="label"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element1" class="slds-col   slds-p-around_x-small accordion slds-size_12-of-12  " data-rindex={rindex} style="      
+         " >
+    <omnistudio-block data-style-id="state0element1_child"  card={card}  record={record}  label="Personal Information"  collapsible="true"  collapsed-by-default="true"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element1block_element0" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><c-cf-m-o-d-p-r-personal-information-review data-style-id="state0element1block_element0_child"  tracking-obj={_childCardTrackingObj}  is-inside-parent={insideParent} parent-uniquekey={uniqueKey}  card-node=""  parent-record={record}  records={_records}  parent-mergefields={card}  record-id={recordId}  is-child-card-tracking-enabled="false"  parent-attribute='\{"parId":"{recordId}"}'  object-api-name={objectApiName}  theme="slds"  omni-json-def={omniJsonDef} omni-script-header-def={omniScriptHeaderDef} omni-custom-state={omniCustomState} omni-json-data={omniJsonData} omni-support-key={record._flex.uniqueKey}   onupdateparent={updateParentData}></c-cf-m-o-d-p-r-personal-information-review>
+    </div><div data-style-id="state0element1block_element1" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><c-cf-r-s-sales-personfetch-residence-address data-style-id="state0element1block_element1_child"  tracking-obj={_childCardTrackingObj}  is-inside-parent={insideParent} parent-uniquekey={uniqueKey}  card-node=""  parent-record={record}  records={_records}  parent-mergefields={card}  record-id={recordId}  is-child-card-tracking-enabled="false"  parent-attribute='\{"parId":"{recordId}"}'  object-api-name={objectApiName}  theme="slds"  omni-json-def={omniJsonDef} omni-script-header-def={omniScriptHeaderDef} omni-custom-state={omniCustomState} omni-json-data={omniJsonData} omni-support-key={record._flex.uniqueKey}   onupdateparent={updateParentData}></c-cf-r-s-sales-personfetch-residence-address>
+    </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element2" class="slds-col   slds-p-around_x-small accordion slds-size_12-of-12  condition-element" data-rindex={rindex} style="      
+         "  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[]}' >
+    <omnistudio-block data-style-id="state0element2_child"  card={card}  record={record}  label="Funeral Establishment Relationships"  collapsible="true"  collapsed-by-default="true"  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[]}'  data-preload-conditional-element="false"  theme="slds" if:true={record._flex.state0element2_child} ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element2block_element0" class="slds-col   slds-size_12-of-12" data-rindex={rindex} style="" >
+    <omnistudio-custom-lwc-wrapper class="" element-name="c-lpi-add-mulitple-location" property='\{}' data-rindex={rindex} records={records} record={record} record-id={recordId} card={card} ><c-lpi-add-mulitple-location  ></c-lpi-add-mulitple-location></omnistudio-custom-lwc-wrapper>
+    </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element3" class="slds-col   slds-p-around_x-small accordion slds-size_12-of-12  condition-element" data-rindex={rindex} style="      
+         "  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-4","field":"regAuthTypeName","operator":"==","value":"Embalmer Apprentice","type":"custom","hasMergeField":false}]}' >
+    <omnistudio-block data-style-id="state0element3_child"  card={card}  record={record}  label="License Questions"  collapsible="true"  collapsed-by-default="true"  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-4","field":"regAuthTypeName","operator":"==","value":"Embalmer Apprentice","type":"custom","hasMergeField":false}]}'  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element3block_element0" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><c-cf-e-f-d-embalmer-practicum-license-question data-style-id="state0element3block_element0_child"  tracking-obj={_childCardTrackingObj}  is-inside-parent={insideParent} parent-uniquekey={uniqueKey}  card-node=""  parent-record={record}  records={_records}  parent-mergefields={card}  record-id={recordId}  is-child-card-tracking-enabled="false"  parent-attribute='\{"parId":"{recordId}"}'  object-api-name={objectApiName}  theme="slds"  omni-json-def={omniJsonDef} omni-script-header-def={omniScriptHeaderDef} omni-custom-state={omniCustomState} omni-json-data={omniJsonData} omni-support-key={record._flex.uniqueKey}   onupdateparent={updateParentData}></c-cf-e-f-d-embalmer-practicum-license-question>
+    </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element4" class="slds-col   slds-p-around_x-small accordion slds-size_12-of-12  condition-element" data-rindex={rindex} style="      
+         "  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[]}' >
+    <omnistudio-block data-style-id="state0element4_child"  card={card}  record={record}  label="Military Questions"  collapsible="true"  collapsed-by-default="true"  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[]}'  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element4block_element0" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><c-cf-m-o-d-p-r-ind-military-service-ques-review data-style-id="state0element4block_element0_child"  tracking-obj={_childCardTrackingObj}  is-inside-parent={insideParent} parent-uniquekey={uniqueKey}  card-node=""  parent-record={record}  records={_records}  parent-mergefields={card}  record-id={recordId}  is-child-card-tracking-enabled="false"  parent-attribute='\{"parId":"{recordId}"}'  object-api-name={objectApiName}  theme="slds"   onupdateparent={updateParentData}></c-cf-m-o-d-p-r-ind-military-service-ques-review>
+    </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element5" class="slds-col   slds-p-around_x-small accordion slds-size_12-of-12  condition-element" data-rindex={rindex} style="      
+         "  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-1","field":"Parent.portalUser","operator":"!=","value":"true","type":"custom","hasMergeField":false}]}' >
+    <omnistudio-block data-style-id="state0element5_child"  card={card}  record={record}  label="Documents"  collapsible="true"  collapsed-by-default="true"  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-1","field":"Parent.portalUser","operator":"!=","value":"true","type":"custom","hasMergeField":false}]}'  data-preload-conditional-element="false"  theme="slds" if:true={record._flex.state0element5_child} ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element5block_element0" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><c-cf-review-documents data-style-id="state0element5block_element0_child"  tracking-obj={_childCardTrackingObj}  is-inside-parent={insideParent} parent-uniquekey={uniqueKey}  card-node=""  parent-record={record}  records={_records}  parent-mergefields={card}  record-id={recordId}  is-child-card-tracking-enabled="false"  parent-attribute='\{"parId":"{recordId}"}'  object-api-name={objectApiName}  theme="slds"   onupdateparent={updateParentData}></c-cf-review-documents>
+    </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element6" class="slds-col   slds-p-around_x-small accordion slds-size_12-of-12  condition-element" data-rindex={rindex} style="      
+         "  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[]}' >
+    <omnistudio-block data-style-id="state0element6_child"  card={card}  record={record}  label="Tax Compliance"  collapsible="true"  collapsed-by-default="true"  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[]}'  data-preload-conditional-element="false"  theme="slds" if:true={record._flex.state0element6_child} ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element6block_element0" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><c-cf-m-o-d-p-r-individual-tax-compliance data-style-id="state0element6block_element0_child"  tracking-obj={_childCardTrackingObj}  is-inside-parent={insideParent} parent-uniquekey={uniqueKey}  card-node=""  parent-record={record}  records={_records}  parent-mergefields={card}  record-id={recordId}  is-child-card-tracking-enabled="false"  parent-attribute='\{"parId":"{recordId}"}'  object-api-name={objectApiName}  theme="slds"   onupdateparent={updateParentData}></c-cf-m-o-d-p-r-individual-tax-compliance>
+    </div>
+        </div></omnistudio-block>
+    </div>
+        </div>
+      </omnistudio-flex-card-state>
+                        </template>
+                      </template>
+                      <template if:false={hasRecords}>
+                            <omnistudio-flex-card-state  record={record} data-statue="false"  data-index="0" data-rindex={rindex} class="cf-vlocity-state-0 cf-vlocity-state slds-size_12-of-12 "  tracking-obj={_childCardTrackingObj} >
+      <div if:true={cardLoaded} class="slds-grid slds-wrap slds-card slds-p-around_x-small slds-m-bottom_x-small accordion-block" style="      
+         ">
+          <div data-style-id="state0element0" class="slds-col   slds-p-around_x-small accordion slds-size_12-of-12  " data-rindex={rindex} style="      
+         " >
+    <omnistudio-block data-style-id="state0element0_child"  card={card}  record={record}  label="License"  collapsible="true"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element0" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element0block_element0_child"   card={card}  record={record}  placeholder="-"  field-name="regAuthTypeName"  label="License Type"  type="text"  labelclass="label"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element1" class="slds-col   slds-p-around_x-small accordion slds-size_12-of-12  " data-rindex={rindex} style="      
+         " >
+    <omnistudio-block data-style-id="state0element1_child"  card={card}  record={record}  label="Personal Information"  collapsible="true"  collapsed-by-default="true"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element1block_element0" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><c-cf-m-o-d-p-r-personal-information-review data-style-id="state0element1block_element0_child"  tracking-obj={_childCardTrackingObj}  is-inside-parent={insideParent} parent-uniquekey={uniqueKey}  card-node=""  parent-record={record}  records={_records}  parent-mergefields={card}  record-id={recordId}  is-child-card-tracking-enabled="false"  parent-attribute='\{"parId":"{recordId}"}'  object-api-name={objectApiName}  theme="slds"   onupdateparent={updateParentData}></c-cf-m-o-d-p-r-personal-information-review>
+    </div><div data-style-id="state0element1block_element1" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><c-cf-r-s-sales-personfetch-residence-address data-style-id="state0element1block_element1_child"  tracking-obj={_childCardTrackingObj}  is-inside-parent={insideParent} parent-uniquekey={uniqueKey}  card-node=""  parent-record={record}  records={_records}  parent-mergefields={card}  record-id={recordId}  is-child-card-tracking-enabled="false"  parent-attribute='\{"parId":"{recordId}"}'  object-api-name={objectApiName}  theme="slds"   onupdateparent={updateParentData}></c-cf-r-s-sales-personfetch-residence-address>
+    </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element2" class="slds-col   slds-p-around_x-small accordion slds-size_12-of-12  condition-element" data-rindex={rindex} style="      
+         "  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[]}' >
+    <omnistudio-block data-style-id="state0element2_child"  card={card}  record={record}  label="Funeral Establishment Relationships"  collapsible="true"  collapsed-by-default="true"  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[]}'  data-preload-conditional-element="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element2block_element0" class="slds-col   slds-size_12-of-12" data-rindex={rindex} style="" >
+    <omnistudio-custom-lwc-wrapper class="" element-name="c-lpi-add-mulitple-location" property='\{}' data-rindex={rindex} records={records} record={record} record-id={recordId} card={card} ><c-lpi-add-mulitple-location  ></c-lpi-add-mulitple-location></omnistudio-custom-lwc-wrapper>
+    </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element3" class="slds-col   slds-p-around_x-small accordion slds-size_12-of-12  condition-element" data-rindex={rindex} style="      
+         "  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-4","field":"regAuthTypeName","operator":"==","value":"Embalmer Apprentice","type":"custom","hasMergeField":false}]}' >
+    <omnistudio-block data-style-id="state0element3_child"  card={card}  record={record}  label="License Questions"  collapsible="true"  collapsed-by-default="true"  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-4","field":"regAuthTypeName","operator":"==","value":"Embalmer Apprentice","type":"custom","hasMergeField":false}]}'  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element3block_element0" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><c-cf-e-f-d-embalmer-practicum-license-question data-style-id="state0element3block_element0_child"  tracking-obj={_childCardTrackingObj}  is-inside-parent={insideParent} parent-uniquekey={uniqueKey}  card-node=""  parent-record={record}  records={_records}  parent-mergefields={card}  record-id={recordId}  is-child-card-tracking-enabled="false"  parent-attribute='\{"parId":"{recordId}"}'  object-api-name={objectApiName}  theme="slds"   onupdateparent={updateParentData}></c-cf-e-f-d-embalmer-practicum-license-question>
+    </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element4" class="slds-col   slds-p-around_x-small accordion slds-size_12-of-12  condition-element" data-rindex={rindex} style="      
+         "  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[]}' >
+    <omnistudio-block data-style-id="state0element4_child"  card={card}  record={record}  label="Military Questions"  collapsible="true"  collapsed-by-default="true"  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[]}'  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element4block_element0" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><c-cf-m-o-d-p-r-ind-military-service-ques-review data-style-id="state0element4block_element0_child"  tracking-obj={_childCardTrackingObj}  is-inside-parent={insideParent} parent-uniquekey={uniqueKey}  card-node=""  parent-record={record}  records={_records}  parent-mergefields={card}  record-id={recordId}  is-child-card-tracking-enabled="false"  parent-attribute='\{"parId":"{recordId}"}'  object-api-name={objectApiName}  theme="slds"   onupdateparent={updateParentData}></c-cf-m-o-d-p-r-ind-military-service-ques-review>
+    </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element5" class="slds-col   slds-p-around_x-small accordion slds-size_12-of-12  condition-element" data-rindex={rindex} style="      
+         "  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-1","field":"Parent.portalUser","operator":"!=","value":"true","type":"custom","hasMergeField":false}]}' >
+    <omnistudio-block data-style-id="state0element5_child"  card={card}  record={record}  label="Documents"  collapsible="true"  collapsed-by-default="true"  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-1","field":"Parent.portalUser","operator":"!=","value":"true","type":"custom","hasMergeField":false}]}'  data-preload-conditional-element="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element5block_element0" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><c-cf-review-documents data-style-id="state0element5block_element0_child"  tracking-obj={_childCardTrackingObj}  is-inside-parent={insideParent} parent-uniquekey={uniqueKey}  card-node=""  parent-record={record}  records={_records}  parent-mergefields={card}  record-id={recordId}  is-child-card-tracking-enabled="false"  parent-attribute='\{"parId":"{recordId}"}'  object-api-name={objectApiName}  theme="slds"   onupdateparent={updateParentData}></c-cf-review-documents>
+    </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element6" class="slds-col   slds-p-around_x-small accordion slds-size_12-of-12  condition-element" data-rindex={rindex} style="      
+         "  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[]}' >
+    <omnistudio-block data-style-id="state0element6_child"  card={card}  record={record}  label="Tax Compliance"  collapsible="true"  collapsed-by-default="true"  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[]}'  data-preload-conditional-element="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element6block_element0" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><c-cf-m-o-d-p-r-individual-tax-compliance data-style-id="state0element6block_element0_child"  tracking-obj={_childCardTrackingObj}  is-inside-parent={insideParent} parent-uniquekey={uniqueKey}  card-node=""  parent-record={record}  records={_records}  parent-mergefields={card}  record-id={recordId}  is-child-card-tracking-enabled="false"  parent-attribute='\{"parId":"{recordId}"}'  object-api-name={objectApiName}  theme="slds"   onupdateparent={updateParentData}></c-cf-m-o-d-p-r-individual-tax-compliance>
+    </div>
+        </div></omnistudio-block>
+    </div>
+        </div>
+      </omnistudio-flex-card-state>
+                      </template>
+            </template>
+            <template if:true={hasError}>
+            {error}
+            </template>
+            
+      <omnistudio-action action-wrapperclass="slds-hide" re-render-flyout class="action-trigger slds-col" onupdateos={updateOmniscript} onselectcards={updateSelectedCards} onsetvalue={updateAction} onfireactionevent={actionEvtHandler}>
+      
+      </omnistudio-action>
+  
+            <omnistudio-action class="execute-action" re-render-flyout action-wrapperclass="slds-hide" onupdateos={updateOmniscript} onselectcards={updateSelectedCards} onsetvalue={updateAction} onfireactionevent={actionEvtHandler}>
+            
+            </omnistudio-action>
+            </div>
+          </template>

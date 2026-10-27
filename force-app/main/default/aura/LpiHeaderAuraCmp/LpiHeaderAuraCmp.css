@@ -1,0 +1,73 @@
+.THIS .notification-wrapper {
+    display: inline-flex;
+    align-items: center;
+}
+
+.THIS .notification-btn {
+    position: relative;
+    background: transparent;
+    border: 0;
+    padding: 0.25rem;
+    cursor: pointer;
+    min-width: 44px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.THIS .notification-badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 1.1rem;
+    height: 1.1rem;
+    padding: 0 0.25rem;
+    border-radius: 0.75rem;
+    background: #ba0517;
+    color: #ffffff;
+    font-size: 0.65rem;
+    line-height: 1.1rem;
+    text-align: center;
+    font-weight: 700;
+}
+
+.THIS .notification-dropdown {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    right: 0;
+    width: 22rem;
+    max-width: 90vw;
+    z-index: 1000;
+    background: #ffffff;
+}
+
+.THIS .notification-body {
+    max-height: 18rem;
+    overflow-y: auto;
+}
+
+.THIS .notification-item:last-child {
+    border-bottom: 0 !important;
+}
+
+.THIS .notif-text {
+    margin: 0 0 0.25rem;
+    color: #181818;
+}
+
+.THIS .notif-date {
+    font-size: 0.75rem;
+}
+
+.THIS .d-flex {
+    display: flex;
+}
+
+.THIS .justify-content-between {
+    justify-content: space-between;
+}
+
+.THIS .dir-column {
+    flex-direction: column;
+}

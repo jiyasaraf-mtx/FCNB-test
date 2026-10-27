@@ -1,0 +1,200 @@
+<!--
+  @description       : 
+  @author            : Mounika Dasari
+  @group             : 
+  @last modified on  : 05-22-2024
+  @last modified by  : Mounika Dasari
+-->
+<template>
+    <div class="search-banner-main slds-container--center slds-container--x-large p-t-small container-padding">
+        <div class="slds-grid slds-grid--align-spread p-b-small">
+            <!-- Breadcrumbs or badges if needed -->
+        </div>
+        <div class="search-banner">
+            <div class="slds-grid slds-wrap slds-gutters slds-size--12-of-12">
+                <div class="slds-col slds-large-size--9-of-12 slds-medium-size--9-of-12 slds-size--9-of-12 border-right">
+                    <div class="p-b-medium">
+                        <h1 class="bold-24 text-white p-b-xs">{title} License Details</h1>
+                        <div class="text-white">{description}</div>
+                    </div>
+                    <div class="secondary-button-bordered">
+                        <lightning-button variant="brand-outline" label="Apply Online" title="Apply Online"
+                            onclick={handleClick}></lightning-button>
+                    </div>
+                </div>
+
+                <div class="slds-col slds-large-size--3-of-12 slds-medium-size--3-of-12 slds-size--3-of-12 slds-align--absolute-center slds-text-align_center">
+                    <template if:true={selectedData}>
+                        <div>
+                            <div class="text-white p-b-xs slds-text-no-wrap">Average Processing Time</div>
+                            <div class="bold-24 text-white slds-text-no-wrap">{selectedData.processingTime}</div>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </div>
+
+        <div class="custom-tab m-t-small">
+            <lightning-tabset>
+                <!-- 1. Overview Tab -->
+                <lightning-tab label="Overview" title="Overview">
+                    <template if:true={selectedData}>
+                        <div class="overview-container slds-m-top_medium slds-p-horizontal_x-large slds-p-vertical_medium">
+                            <p class="text-secondary p-b-xs">{selectedData.overview}</p>
+                            <template if:true={selectedData.linkUrl}>
+                                <a href={selectedData.linkUrl} target="_blank" aria-label={selectedData.linkText} class="regular-text-16">{selectedData.linkText}</a>
+                            </template>
+
+                            <div class="p-t-small">
+                                <div class="bold-16 p-b-xs">{selectedData.whoTitle}</div>
+                                <div class="text-secondary">{selectedData.whoSub}</div>
+                                <ul class="text-secondary">
+                                    <template for:each={selectedData.whoList} for:item="item">
+                                        <li key={item}>{item}</li>
+                                    </template>
+                                </ul>
+                            </div>
+                        </div>
+                    </template>
+                </lightning-tab>
+
+                <!-- 2. Requirements Tab -->
+                <lightning-tab label="Requirements" title="Requirements">
+                    <template if:true={selectedData}>
+                        <div class="slds-m-top_medium slds-p-horizontal_x-large slds-p-vertical_medium">
+                            <ol class="text-secondary m-l-small">
+                                <template for:each={selectedData.requirements} for:item="req">
+                                    <li key={req}>{req}</li>
+                                </template>
+                            </ol>
+                        </div>
+                    </template>
+                </lightning-tab>
+
+                <!-- 3. How to Apply Tab -->
+                <lightning-tab label="How to Apply" title="How to Apply">
+                    <template if:true={selectedData}>
+                        <div class="slds-m-top_medium slds-p-horizontal_x-large slds-p-vertical_medium">
+                            <ol class="text-secondary m-l-small">
+                                <template for:each={selectedData.howToApply} for:item="step">
+                                    <li key={step}>{step}</li>
+                                </template>
+                            </ol>
+                            <div class="primary-button-bordered apply-button slds-m-top_large">
+                                <lightning-button variant="brand" label="Start Application" onclick={handleOpenModal} title="Start Application"></lightning-button>
+                            </div>
+                        </div>
+                    </template>
+                </lightning-tab>
+
+                <!-- 4. Fees Tab -->
+                <lightning-tab label="Fees" title="Fees">
+                    <template if:true={selectedData}>
+                        <div class="slds-m-top_medium slds-p-horizontal_x-large slds-p-vertical_medium">
+                            <table class="slds-table slds-table_bordered slds-no-row-hover alpha-table-layout dashboard-table">
+                                <caption class="sr-only">Certification Fees</caption>
+                                <thead>
+                                    <tr class="slds-line-height_reset">
+                                        <th scope="col">
+                                            <div class="slds-truncate" title="Type">Type</div>
+                                        </th>
+                                        <th scope="col">
+                                            <div class="slds-truncate" title="Refundable">Refundable</div>
+                                        </th>
+                                        <th scope="col">
+                                            <div class="slds-truncate" title="Amount">Amount (CAD)</div>
+                                        </th>
+                                        <th scope="col">
+                                            <div class="slds-truncate" title="Comments">Comments</div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <template for:each={selectedData.fees} for:item="fee">
+                                        <tr class="slds-hint-parent" key={fee.type}>
+                                            <td>
+                                                <div class="slds-truncate">{fee.type}</div>
+                                            </td>
+                                            <td>
+                                                <div class="slds-truncate">{fee.refundable}</div>
+                                            </td>
+                                            <td>
+                                                <div class="slds-truncate">{fee.amount}</div>
+                                            </td>
+                                            <td>
+                                                <div class="slds-truncate">{fee.comments}</div>
+                                            </td>
+                                        </tr>
+                                    </template>
+                                </tbody>
+                            </table>
+                        </div>
+                    </template>
+                </lightning-tab>
+
+                <!-- 5. Duration & Processing Tab -->
+                <lightning-tab label="Duration & Processing" title="Duration & Processing">
+                    <template if:true={selectedData}>
+                        <div class="slds-m-top_medium slds-p-horizontal_x-large slds-p-vertical_medium">
+                            <table class="slds-table slds-table_bordered slds-no-row-hover alpha-table-layout dashboard-table">
+                                <caption class="sr-only">Duration & Processing</caption>
+                                <thead>
+                                    <tr class="slds-line-height_reset">
+                                        <th scope="col">
+                                            <div class="slds-truncate">Average Processing Time</div>
+                                        </th>
+                                        <th scope="col">
+                                            <div class="slds-truncate">Term/Duration</div>
+                                        </th>
+                                        <th scope="col">
+                                            <div class="slds-truncate">Renewable</div>
+                                        </th>
+                                        <th scope="col">
+                                            <div class="slds-truncate">Requirements for Full License</div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <template if:true={selectedData.duration}>
+                                        <tr class="slds-hint-parent">
+                                            <td>
+                                                <div class="slds-truncate">{selectedData.duration.processing}</div>
+                                            </td>
+                                            <td>
+                                                <div class="slds-truncate">{selectedData.duration.term}</div>
+                                            </td>
+                                            <td>
+                                                <div class="slds-truncate">{selectedData.duration.renewable}</div>
+                                            </td>
+                                            <td>
+                                                <div class="slds-truncate">{selectedData.duration.requirements}</div>
+                                            </td>
+                                        </tr>
+                                    </template>
+                                </tbody>
+                            </table>
+                        </div>
+                    </template>
+                </lightning-tab>
+
+                <!-- 6. Additional Info Tab -->
+                <lightning-tab label="Additional Info" title="Additional Info">
+                    <template if:true={selectedData}>
+                        <div class="slds-m-top_medium slds-p-horizontal_x-large slds-p-vertical_medium">
+                            <div class="text-secondary">{selectedData.additionalInfo}</div>
+                        </div>
+                    </template>
+                </lightning-tab>
+
+                <!-- 7. Find Assistance Tab -->
+                <lightning-tab label="Find Assistance" title="Find Assistance">
+                    <div class="slds-m-top_medium slds-p-horizontal_x-large slds-p-vertical_medium">
+                        <div class="paragraph">
+                            Need help with your New Brunswick Certification? Check out our <a href="#">Application FAQs</a>, <a href="#">Document Checklists</a>, or visit our <a href="#">Contact Support</a> page.
+                        </div>
+                    </div>
+                </lightning-tab>
+            </lightning-tabset>
+        </div>
+    </div>
+</template>

@@ -1,0 +1,299 @@
+<!--
+  @description       : 
+  @author            : Mohit Karani
+  @group             : 
+  @last modified on  : 08-14-2024
+  @last modified by  : MTX Group Product Team
+-->
+<template>
+	<template if:true={showSpinner} class="slds-is-relative">
+		<lightning-spinner size="medium" alternative-text="Loading"></lightning-spinner>
+	</template>
+	<!-- <div class="slds-card"> -->
+	<div class="slds-clearfix">
+		<h2 class="slds-float_left heading-small">
+
+			Document List
+		</h2>
+		<div class="slds-float_right">
+			<lightning-button icon-name="utility:add" label="Add Documents" variant="neutral" title="Add Documents"
+				data-id="AddDocumentButton" onclick={addOtherDocuments} class="other-document-btn">
+			</lightning-button>
+		</div>
+	</div>
+	<div class="document-vault-wrapper">
+		<template if:true={appDocumentList}>
+			<div class="section-header">
+				<table
+					class="slds-m-top_medium slds-table slds-table_bordered slds-no-row-hover document-upload_table alpha-table-layout">
+					<thead>
+						<tr>
+							<th scope="col" class="slds-is-resizable cl_one">Document Name</th>
+							<th scope="col" class="slds-is-resizable cl_two">Files</th>
+							<th scope="col">Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						<template for:each={appDocumentList} for:item="data" for:index="idx">
+							<template if:true={data.documentRecord}>
+								<tr key={data.documentRecord.Id}>
+									<template if:true={data}>
+										<td data-label="Document Name">
+											<div class="slds-cell-wrap docName">
+												<p class="docName">{data.documentRecord.Document_Name__c}
+													<span if:true={data.documentRecord.Is_Document_Required__c}
+														style="color: #b32020; padding-left: 1%;">*</span>
+												</p>
+											</div>
+										</td>
+										<td role="gridcell" class="table_gridcell cl_two" data-label="File">
+											<div if:true={data.documentRecord.ContentDocumentLinks}>
+												<div class="slds-grid slds-grid_vertical file-name">
+													<template
+														for:each={data.documentRecord.ContentDocumentLinks.records}
+														for:item="cv">
+														<div key={cv.Id} class="slds-grid slds-gutters slds-wrap">
+															<div class="slds-col slds-size_10-of-12">
+																<span><b>{cv.FileName}</b></span>
+															</div>
+															<div
+																class="slds-col slds-grid slds-grid--align-space slds-size_2-of-12">
+																<span class="download-icon">
+																	<lightning-button-icon size="medium"
+																		icon-name="utility:download" variant="bare"
+																		alternative-text="Download" title="Download"
+																		data-filename={cv.FileName}
+																		data-parentid={data.documentRecord.Id}
+																		aria-label={cv.downloadAriaLabelIcon}
+																		onclick={handleDownload}>
+																	</lightning-button-icon>
+
+																</span>
+																<span if:true={cv.showFileDelete} class="remove-icon">
+																	<lightning-button-icon size="medium"
+																		icon-name="utility:delete" variant="bare"
+																		alternative-text="Delete" title="Delete"
+																		data-index={idx}
+																		data-parentid={data.documentRecord.Id}
+																		aria-label={cv.deleteAriaLabelIcon}
+																		data-fromcvlist="true"
+																		onclick={handleDeleteConfirmation}>
+																	</lightning-button-icon>
+																</span>
+															</div>
+														</div>
+													</template>
+												</div>
+											</div>
+											<div if:true={data.files}>
+												<div class="slds-grid slds-grid_vertical file-name">
+													<template for:each={data.files} for:item="file">
+														<div key={file.parentRecId}
+															class="slds-grid slds-gutters slds-wrap">
+															<div class="slds-col slds-size_10-of-12">
+																<span><b>{file.fileName}</b></span>
+															</div>
+															<div
+																class="slds-col slds-grid slds-grid--align-space slds-size_2-of-12">
+																<span class="download-icon">
+																	<lightning-button-icon size="medium"
+																		icon-name="utility:download" variant="bare"
+																		alternative-text="Download" title="Download"
+																		data-filename={file.fileName}
+																		data-fileid={file.uniqueId}
+																		data-parentid={file.parentRecId}
+																		aria-label={file.downloadAriaLabelIcon}
+																		onclick={handleDownload}>
+																	</lightning-button-icon>
+																</span>
+																<span if:true={file.showDelete} class="remove-icon">
+																	<lightning-button-icon size="medium"
+																		icon-name="utility:delete" variant="bare"
+																		alternative-text="Delete" title="Delete"
+																		data-filename={file.fileName}
+																		data-fileid={file.fileId} data-index={idx}
+																		data-parentid={file.parentRecId}
+																		data-fromfilelist="true"
+																		aria-label={file.deleteAriaLabelIcon}
+																		onclick={handleDeleteConfirmation}>
+																	</lightning-button-icon>
+																</span>
+															</div>
+														</div>
+
+													</template>
+												</div>
+											</div>
+										</td>
+										<!--<template if:false={showDeficiencyRecor}>-->
+											<td data-label="Action">
+												<template
+													if:true={data.documentRecord.Is_Applicant_Submission_Required__c}>
+													<lightning-button variant="base" label="Upload" title="Upload"
+														icon-name="utility:upload" aria-label={data.uploadAriaLabel}
+														onclick={doFileUpload} data-docid={data.documentRecord.Id}
+														data-docname={data.documentRecord.Document_Name__c}
+														data-filepresentonparent={data.filePresentOnParent}
+														data-index={idx}>
+													</lightning-button>
+												</template>
+											</td>
+										<!--</template>-->
+									</template>
+								</tr>
+							</template>
+							<template if:false={data.documentRecord}>
+								<tr key={data.configuredDocumentRecord.Id}>
+									<template if:true={data}>
+										<td data-label="Document Name">
+											<div class="slds-cell-wrap docName">
+												<p class="docName">
+													{data.configuredDocumentRecord.Name_of_Document__c}
+													<span
+														if:true={data.configuredDocumentRecord.Is_Document_Required__c}
+														style="color: #b32020; padding-left: 1%;">*</span>
+												</p>
+											</div>
+										</td>
+										<td role="gridcell" class="table_gridcell cl_two" data-label="File"></td>
+										<td data-label="Action">
+											<lightning-button variant="brand-outline" label="Upload" title="Upload"
+												icon-name="utility:upload" aria-label={data.uploadAriaLabel}
+												onclick={doFileUpload}
+												data-filepresentonparent={data.filePresentOnParent}
+												data-docname={data.configuredDocumentRecord.Name_of_Document__c}>
+											</lightning-button>
+										</td>
+									</template>
+								</tr>
+							</template>
+						</template>
+					</tbody>
+				</table>
+			</div>
+		</template>
+	</div>
+	<!-- </div> -->
+	<!-- Add new Document modal Start -->
+	<template if:true={isAddNewShowModal}>
+		<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+			aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+			<div class="slds-modal__container">
+				<header class="slds-modal__header">
+					<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+						title="Close" onclick={hideAddModalBox}>
+						<lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
+							size="small"></lightning-icon>
+						<span class="slds-assistive-text">Close</span>
+					</button>
+					<h1 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Add Other Documents</h1>
+				</header>
+
+				<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+					<div class="slds-grid slds-wrap">
+						<p class="asterisk-caption m-b-medium">Asterisk (<span class="c-red">*</span>) indicates
+							required field</p>
+						<div class="slds-col slds-size_1-of-1 m-b-medium">
+							<lightning-input type="text" label="Document Name" data-id="newDocName" required
+								value={newDocumentName} onchange={handleNewDocumentNameChange}
+								placeholder="Enter Document Name"
+								message-when-value-missing="Error: Document Name is required."></lightning-input>
+						</div>
+						<div class="slds-col slds-size_1-of-1 m-b-medium">
+							<lightning-textarea label="Description" value={newDocumentDescription}
+								onchange={handleNewDocumentDescChange} placeholder="Enter description"
+								message-when-value-missing="Error: Description is required."></lightning-textarea>
+						</div>
+						<div class="slds-col slds-size_1-of-1 m-b-medium">
+							<lightning-file-upload required if:false={newFileAttachment} variant="label-hidden"
+								name="fileUploader" accept={acceptedFormats} record-id={docIdForUpload}
+								class="view-upload-doc" onuploadfinished={handleUploadFinishedNewDoc}>
+							</lightning-file-upload>
+							<div if:true={newFileAttachment} class="slds-p-left_xxx-small slds-p-top_medium">
+								<div class="slds-grid slds-gutters slds-wrap">
+									<div class="slds-col slds-size_8-of-12">
+										<span><b>{newFileAttachment.name}</b></span>
+									</div>
+									<div
+										class="slds-col slds-grid slds-grid--align-space slds-size_2-of-12 alpha-table-layout">
+										<span class="download-icon">
+											<lightning-button-icon size="medium" icon-name="utility:download"
+												alternative-text="Download" title="Download"
+												data-filename={newFileAttachment.name} data-parentid={docIdForUpload}
+												aria-label={newFileAttachment.downloadAriaLabelIcon} variant="bare"
+												onclick={handleDownload}>
+											</lightning-button-icon>
+										</span>
+										<span class="remove-icon">
+											<lightning-button-icon size="medium" icon-name="utility:delete"
+												alternative-text="Delete" title="Delete" data-parentid={docIdForUpload}
+												data-fromaddnew="true" variant="bare"
+												aria-label={newFileAttachment.deleteAriaLabelIcon}
+												onclick={handleDeleteConfirmation}>
+											</lightning-button-icon>
+										</span>
+									</div>
+								</div>
+							</div>
+						</div>
+						<p class="m-t-small text-secondary">{header} Documents marked with an asterisk must be uploaded
+							to submit a Deficiency Response.</p>
+					</div>
+				</div>
+				<footer class="slds-modal__footer">
+					<button class="slds-button slds-button_neutral" onclick={hideAddModalBox}>Cancel</button>
+					<button if:true={newFileAttachment} class="slds-button slds-button_brand"
+						onclick={handleSaveNewDocument}>Save</button>
+				</footer>
+			</div>
+		</section>
+		<div class="slds-backdrop slds-backdrop_open"></div>
+	</template>
+	<!-- Add new Document modal end -->
+	<!-- Upload modal start -->
+	<template if:true={isShowUploadModal}>
+		<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-02" aria-modal="true"
+			aria-describedby="modal-content-id-1" class="dfs-modal slds-modal slds-fade-in-open">
+			<div class="slds-modal__container">
+				<!-- modal header start -->
+				<div class="slds-modal__header">
+					<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+						title="Close" onclick={hideUploadModalBox}>
+						<lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
+							size="small"></lightning-icon>
+						<span class="slds-assistive-text">Close</span>
+					</button>
+					<h1 id="modal-heading-02" class="slds-modal__title slds-hyphenate slds-m-around--none">
+						{modalHeading}</h1>
+				</div>
+				<!-- modal body start -->
+				<div class="slds-modal__content" id="modal-content-id-2">
+					<template if:true={isDeleteModal}>
+						<p>Are you sure you want to delete this file ?</p>
+					</template>
+					<template if:false={isDeleteModal}>
+						<p class="asterisk-caption m-b-medium">Asterisk (<span class="c-red">*</span>) indicates
+							required field</p>
+						<lightning-file-upload name="fileUploader" accept={acceptedFormats} class="view-upload-doc"
+							variant="label-hidden" record-id={docIdForUpload} onuploadfinished={handleUploadFinished}>
+						</lightning-file-upload>
+						<p class="m-t-small text-secondary">{header} Documents marked with an asterisk must be uploaded
+							to submit a Deficiency Response.</p>
+					</template>
+					<!-- <div if:true={newFileAttachment} class="slds-p-left_xxx-small slds-p-top_medium">
+						<p> {newFileAttachment.name} </p>
+					</div> -->
+				</div>
+				<!-- modal footer start-->
+				<footer class="slds-modal__footer slds-grid_align-center">
+					<button class="slds-button slds-button_neutral" onclick={hideUploadModalBox}>Cancel</button>
+					<button if:true={isDeleteModal} class="slds-button slds-button_destructive"
+						onclick={handleDelete}>Delete</button>
+					<!-- <button class="slds-button slds-button_brand" onclick={handleUpload}>Upload</button> -->
+				</footer>
+			</div>
+		</section>
+		<div class="slds-backdrop slds-backdrop_open"></div>
+	</template>
+	<!-- Upload modal end -->
+</template>

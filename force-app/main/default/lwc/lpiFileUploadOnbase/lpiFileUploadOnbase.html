@@ -1,0 +1,118 @@
+<!--
+  @description       : 
+  @author            : Mohit Karani
+  @group             : 
+  @last modified on  : 06-21-2024
+  @last modified by  : Bharath Kumar M
+-->
+
+<template>
+    <div class="backdrop" if:true={showSpinner}>
+        <div class="spinner">
+            <lightning-spinner alternative-text="Loading..."></lightning-spinner>
+        </div>
+    </div>
+    <lightning-card>
+        <div if:true={uploadNotRequired}>
+            Configuration Missing for Upload to Onbase.
+        </div>
+        <div if:true={showCmp}>
+            <div class="onbase-cmp">
+                <div class="slds-grid slds-m-bottom--small slds-grid--vertical-align-center slds-grid--align-spread">
+                        <h1>Uploaded Files</h1>
+                        <lightning-button label="Upload new file" title="Upload new file" variant="outline"
+                            onclick={createAppDoc}>
+                        </lightning-button>
+                </div>
+                <div>
+                    <div class="slds-scoped-notification slds-media slds-media_center slds-theme_info m-b-medium"
+                        role="status">
+                        <div class="slds-media__figure">
+                            <span class="slds-icon_container slds-icon-utility-info" title="info">
+                                <i class="material-icon material-icon-info_outline"></i>
+                            </span>
+                        </div>
+                        <div class="slds-media__body">
+                            <p>{header}</p>
+                        </div>
+                    </div>
+                    <!-- <p>
+                        <b>
+                                {header}
+                            </b>
+                    </p> -->
+                </div>
+                <div class="slds-m-top_medium" if:true={displayFilesTable}>
+                    <div class="container lpiApplication onbase-table">
+                        <div class="container-table">
+                            <table class="slds-table">
+                                <thead>
+                                    <tr>
+                                        <template for:each={columns} for:item="column">
+                                            <th key={column.fieldName}>{column.label}</th>
+                                        </template>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <template for:each={uploadedFiles} for:item="file">
+                                        <tr key={file.fileId}>
+                                            <td>{file.fileName}</td>
+                                            <td>
+                                                <lightning-button-icon size="small" icon-name="utility:download"
+                                                    alternative-text="Download" title="Download" data-filename={file.fileName}
+                                                    data-fileid={file.fileId} data-parentid={file.parentRecId}
+                                                    onclick={handleDownload}> </lightning-button-icon>
+                                                <lightning-button-icon size="small" icon-name="utility:delete" 
+                                                    alternative-text="Delete" title="Delete"
+                                                    ata-filename={file.fileName} data-fileid={file.fileId}
+                                                    data-parentid={file.parentRecId} onclick={handleDeleteConfirmation} class="slds-m-left_x-small">
+                                                </lightning-button-icon>
+
+                                            </td>
+                                        </tr>
+                                    </template>
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <template if:true={displayModal}>
+                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                    aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open" onkeydown={handleClose}>
+                    <div class="slds-modal__container">
+                        <header class="slds-modal__header">
+                            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                                aria-label="Cancel" onclick={handleClose}>
+                                <lightning-icon icon-name="utility:close" variant="inverse" size="small">
+                                </lightning-icon>
+                            </button>
+                            <h1 id="modal-heading-01" class="section-heading slds-m-bottom_x-small">
+                                {modalHeading}</h1>
+                        </header>
+                        <div if:false={isDeleteModal} class="slds-modal__content slds-p-around_medium"
+                            id="modal-content-id-1">
+                            <lightning-file-upload label="Attach file" name="fileUploader" accept={acceptedFormats}
+                                record-id={appDocRecordId} onuploadfinished={handleUploadFinished}>
+                            </lightning-file-upload>
+
+                        </div>
+
+                        <footer class="slds-modal__footer">
+                            <lightning-button variant="outline" label="Cancel" title="Cancel"
+                                onclick={handleClose}>
+                            </lightning-button>
+                            <lightning-button if:true={isDeleteModal} variant="brand" label="Yes" title="Yes"
+                                onclick={handleDelete}>
+                            </lightning-button>
+                        </footer>
+                    </div>
+                </section>
+                <div class="slds-backdrop slds-backdrop_open"></div>
+            </template>
+        </div>
+    </lightning-card>
+
+</template>

@@ -1,0 +1,17 @@
+<!--
+  @description       : It is used in Quick Action of Individual Application of Approve PLS State Re-Exam Button
+  @author            : Sudhanshu Jain
+  @group             : 
+  @last modified on  : 10-10-2023
+  @last modified by  : 
+-->
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickActionWithoutHeader">
+  <aura:html tag="style">
+    .slds-modal {
+    visibility: hidden;
+    display: none;
+    }      
+  </aura:html>
+  <aura:handler name="init" value="{!this}" action="{!c.handleClose}"/>
+  <c:lpiProLandSurveyStateExam recordId ="{!v.recordId}" buttonName="Approve_PLS_State_Re_Exam" onmodalclose="{!c.handleClose}"/>
+</aura:component>

@@ -1,0 +1,712 @@
+<template>
+    <div class="main" id="financial-filings">
+        <template if:true={isLoading}>
+            <lightning-spinner alternative-text="Loading filings" size="medium"></lightning-spinner>
+        </template>
+
+        <h1>{labels.financialFilingRequirements}</h1>
+        <div class="subtitle">{labels.annualFinancialFilingRequirementsFor} {accountName}</div>
+        <div class="breadcrumb"><b>{labels.portalHome}</b> → {accountName} → {labels.filings} → <b>{labels.financialFilingRequirements}</b></div>
+
+        <section class="hero">
+            <div class="hero-top">
+                <div>
+                    <div class="hero-title">{heroTitle}</div>
+                    <div class="hero-sub">{labels.heroSub}</div>
+                </div>
+                <div class="actions">
+                    <button class="btn" type="button" onclick={handleOpenFiling}>{labels.openFiling}</button>
+                    <button class="btn primary" type="button" onclick={handleOpenAdd}>{labels.addAnnualFiling}</button>
+                </div>
+            </div>
+            <div class="status">
+                <div class="status-pill">{labels.parentLicence} <strong>{parentLicence}</strong></div>
+                <div class="status-pill">{labels.filingType} <strong>{filingTypeLabel}</strong></div>
+                <div class="status-pill">{labels.reportingYear} <strong>{heroYear}</strong></div>
+                <div class="status-pill">{labels.due} <strong>{heroDue}</strong></div>
+                <div class="status-pill">{labels.currentFiling} <strong>{heroCurrentId}</strong></div>
+            </div>
+        </section>
+
+        <section class="status-cards">
+            <div class={draftCardClass} data-status="Draft" onclick={handleStatusFilter} onkeydown={handleStatusFilter} role="button" tabindex="0">
+                <div class="status-icon" aria-hidden="true">📝</div>
+                <div>
+                    <div class="status-label">{labels.draft}</div>
+                    <div class="status-count">{countDraft}</div>
+                    <div class="status-caption">{labels.inProgress}</div>
+                </div>
+            </div>
+            <div class={submittedCardClass} data-status="Submitted" onclick={handleStatusFilter} role="button" tabindex="0">
+                <div class="status-icon" aria-hidden="true">↗</div>
+                <div>
+                    <div class="status-label">{labels.submitted}</div>
+                    <div class="status-count">{countSubmitted}</div>
+                    <div class="status-caption">{labels.underReview}</div>
+                </div>
+            </div>
+            <div class={requestMissingCardClass} data-status="Request Missing Schedule" onclick={handleStatusFilter} role="button" tabindex="0">
+                <div class="status-icon" aria-hidden="true">📋</div>
+                <div>
+                    <div class="status-label">{labels.requestMissingSchedule}</div>
+                    <div class="status-count">{countRequestMissingSchedule}</div>
+                    <div class="status-caption">{labels.missingScheduleCaption}</div>
+                </div>
+            </div>
+            <div class={missingSubmittedCardClass} data-status="Missing Schedule Submitted" onclick={handleStatusFilter} role="button" tabindex="0">
+                <div class="status-icon" aria-hidden="true">⬆</div>
+                <div>
+                    <div class="status-label">{labels.missingScheduleSubmitted}</div>
+                    <div class="status-count">{countMissingScheduleSubmitted}</div>
+                    <div class="status-caption">{labels.underReview}</div>
+                </div>
+            </div>
+            <div class={acceptedCardClass} data-status="Accepted" onclick={handleStatusFilter} role="button" tabindex="0">
+                <div class="status-icon" aria-hidden="true">✓</div>
+                <div>
+                    <div class="status-label">{labels.accepted}</div>
+                    <div class="status-count">{countAccepted}</div>
+                    <div class="status-caption">{labels.completed}</div>
+                </div>
+            </div>
+            <div class={rejectedCardClass} data-status="Rejected" onclick={handleStatusFilter} role="button" tabindex="0">
+                <div class="status-icon" aria-hidden="true">×</div>
+                <div>
+                    <div class="status-label">{labels.rejected}</div>
+                    <div class="status-count">{countRejected}</div>
+                    <div class="status-caption">{labels.actionRequired}</div>
+                </div>
+            </div>
+        </section>
+
+        <div class="status-filter-banner">
+            <span>{statusFilterText}</span>
+            <button class="btn" type="button" onclick={handleClearFilter}>{labels.clearFilter}</button>
+        </div>
+
+        <section class="applications-panel panel" data-id="applicationsPanel">
+            <div class="head">
+                <div>
+                    <div class="eyebrow">{labels.filingTransactions}</div>
+                    <div class="ptitle">{applicationsTitle}</div>
+                </div>
+                <div class="actions">
+                    <button class="btn" type="button" onclick={handleClearFilter}>{labels.showAll}</button>
+                </div>
+            </div>
+            <div class="applications-body">
+                <div class="application-grid">
+                    <template for:each={filteredFilings} for:item="f">
+                        <div key={f.id} class="application-card">
+                            <div class="application-top">
+                                <div>
+                                    <div class="application-id">{f.name}</div>
+                                    <div class="application-type">{f.filingType} · {f.reportingYear}</div>
+                                </div>
+                                <span class={f.chipClass}>{f.statusLabel}</span>
+                            </div>
+                            <div class="application-meta">
+                                <div class="meta-box"><small>{labels.parentLicence}</small><strong>{f.parentLicence}</strong></div>
+                                <div class="meta-box"><small>{labels.filer}</small><strong>{f.filerName}</strong></div>
+                                <div class="meta-box"><small>{labels.dueDate}</small><strong>{f.dueDateLabel}</strong></div>
+                                <div class="meta-box"><small>{labels.premiumsNb}</small><strong>{f.premiumsLabel}</strong></div>
+                            </div>
+                            <div class="application-actions">
+                                <template if:true={f.isEditable}>
+                                    <button class="edit-btn" type="button" data-id={f.id} onclick={handleEditDraft}>
+                                        <template if:true={f.isRequestMissingSchedule}>{labels.editMissingSchedule}</template>
+                                        <template if:false={f.isRequestMissingSchedule}>{labels.editDraft}</template>
+                                    </button>
+                                </template>
+                                <button class="details-btn" type="button" data-id={f.id} onclick={handleViewDetails}>{labels.viewDetails}</button>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+                <div class={emptyAppsClass}>{labels.noFilingsUnderStatus}</div>
+            </div>
+        </section>
+
+        <div class="grid">
+            <section class="panel">
+                <div class="head">
+                    <div>
+                        <div class="eyebrow">{labels.whatMustBeSubmitted}</div>
+                        <div class="ptitle">{labels.filingRequirementsChecklist}</div>
+                    </div>
+                    <button class="btn" type="button" onclick={handleToggleChecklist}>{toggleLabel}</button>
+                </div>
+                <div class={checklistBodyClass}>
+                    <div class="req-list">
+                        <div class="req">
+                            <div class="req-icon">1</div>
+                            <div class="req-content">
+                                <span class="badge required">{labels.required}</span>
+                                <div class="req-title">{labels.reportingPeriod}</div>
+                                <div class="req-desc">{labels.checklistReportingPeriodDesc}</div>
+                            </div>
+                        </div>
+                        <div class="req">
+                            <div class="req-icon">2</div>
+                            <div class="req-content">
+                                <span class="badge required">{labels.required}</span>
+                                <div class="req-title">{labels.filerContact}</div>
+                                <div class="req-desc">{labels.checklistFilerContactDesc}</div>
+                            </div>
+                        </div>
+                        <div class="req">
+                            <div class="req-icon">3</div>
+                            <div class="req-content">
+                                <span class="badge required">{labels.required}</span>
+                                <div class="req-title">{labels.checklistFinancialAmounts}</div>
+                                <div class="req-desc">{labels.checklistFinancialAmountsDesc}</div>
+                            </div>
+                        </div>
+                        <div class="req">
+                            <div class="req-icon">4</div>
+                            <div class="req-content">
+                                <span class="badge required">{labels.required}</span>
+                                <div class="req-title">{labels.annualStatements}</div>
+                                <div class="req-desc">{labels.checklistAnnualStatementsDesc}</div>
+                            </div>
+                        </div>
+                        <div class="req">
+                            <div class="req-icon">5</div>
+                            <div class="req-content">
+                                <span class="badge required">{labels.required}</span>
+                                <div class="req-title">{labels.attestation}</div>
+                                <div class="req-desc">{labels.checklistAttestationDesc}</div>
+                            </div>
+                        </div>
+                        <div class="req">
+                            <div class="req-icon">6</div>
+                            <div class="req-content">
+                                <span class="badge optional">{labels.optional}</span>
+                                <div class="req-title">{labels.checklistCertification}</div>
+                                <div class="req-desc">{labels.checklistCertificationDesc}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="panel">
+                <div class="head">
+                    <div>
+                        <div class="eyebrow">{labels.requirementProfile}</div>
+                        <div class="ptitle">{labels.filingSetup}</div>
+                    </div>
+                    <button class="btn" type="button" onclick={handleEditSetup}>{labels.editFilingSetup}</button>
+                </div>
+                <div class="body">
+                    <div class="info-grid">
+                        <div class="info"><div class="label">{labels.filingId}</div><div class="value">{setupFilingId}</div></div>
+                        <div class="info"><div class="label">{labels.status}</div><div class="value">{setupStatus}</div></div>
+                        <div class="info"><div class="label">{labels.parentLicence}</div><div class="value">{parentLicence}</div></div>
+                        <div class="info"><div class="label">{labels.licenceType}</div><div class="value">{licenceType}</div></div>
+                        <div class="info"><div class="label">{labels.reportingYear}</div><div class="value">{heroYear}</div></div>
+                        <div class="info"><div class="label">{labels.dueDate}</div><div class="value">{heroDue}</div></div>
+                    </div>
+
+                    <div class="section-title">{labels.requiredFinancialValues}</div>
+                    <table class="table">
+                        <thead>
+                            <tr><th>{labels.field}</th><th>{labels.required}</th><th class="right">{labels.value}</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>{labels.totalAssets}</td><td>{labels.yes}</td><td class="right">{setupAssets}</td></tr>
+                            <tr><td>{labels.totalLiabilities}</td><td>{labels.yes}</td><td class="right">{setupLiabilities}</td></tr>
+                            <tr><td>{labels.writtenPremiumsNb}</td><td>{labels.yes}</td><td class="right">{setupPremiums}</td></tr>
+                            <tr><td>{labels.otherNbAmounts}</td><td>{labels.no}</td><td class="right">{labels.asConfigured}</td></tr>
+                        </tbody>
+                    </table>
+
+                    <div class="section-title">{labels.documentsEvidence}</div>
+                    <div class="upload-card">
+                        <div class="upload-head">
+                            <div>
+                                <div class="upload-title">{labels.annualStatements} <span class="badge required">{labels.required}</span></div>
+                                <div class="upload-desc">{labels.uploadAnnualStatementsDesc}</div>
+                            </div>
+                        </div>
+                        <template if:true={uploadRecordId}>
+                            <div class="file-upload-wrap">
+                                <lightning-file-upload
+                                    label={labels.uploadDocument}
+                                    name="annualStatements"
+                                    accept={acceptedFormats}
+                                    record-id={uploadRecordId}
+                                    onuploadfinished={handleUploadFinished}
+                                ></lightning-file-upload>
+                            </div>
+                        </template>
+                        <template if:false={uploadRecordId}>
+                            <div class="dropzone">
+                                <div class="drop-icon">⇧</div>
+                                <div><b>{labels.createFilingFirst}</b></div>
+                                <div class="drop-hint">{labels.acceptedFileTypes}</div>
+                            </div>
+                        </template>
+
+                        <div class={uploadedDocClass}>
+                            <div class="doc-left">
+                                <div class="doc-file-icon">PDF</div>
+                                <div>
+                                    <div class="docname">{uploadedDocumentName}</div>
+                                    <div class="docmeta">{labels.uploadedToFiles}</div>
+                                </div>
+                            </div>
+                            <div class="doc-actions">
+                                <button class="linkbtn" type="button" onclick={handlePreviewUploaded}>{labels.preview}</button>
+                                <button class="linkbtn danger-link" type="button" onclick={handleRemoveUploaded}>{labels.remove}</button>
+                            </div>
+                        </div>
+
+                        <div class={sampleDocClass}>
+                            <div class="doc-left">
+                                <div class="doc-file-icon">PDF</div>
+                                <div>
+                                    <div class="docname">{labels.annualStatementsRequired}</div>
+                                    <div class="docmeta">{labels.uploadEvidence}</div>
+                                </div>
+                            </div>
+                            <span class="badge required">{labels.required}</span>
+                        </div>
+                    </div>
+
+                    <div class="callout">{labels.submissionRule}</div>
+                </div>
+            </section>
+        </div>
+
+        <section class="panel analysis">
+            <div class="head">
+                <div>
+                    <div class="eyebrow">{labels.staffReadyView}</div>
+                    <div class="ptitle">{labels.financialAnalysis}</div>
+                </div>
+                <button class="btn" type="button" onclick={handleStaffView}>{labels.openStaffAnalysis}</button>
+            </div>
+            <div class="body">
+                <div class="metrics">
+                    <div class="metric"><small>{labels.totalAssets}</small><strong>{metricAssets}</strong></div>
+                    <div class="metric"><small>{labels.totalLiabilities}</small><strong>{metricLiabilities}</strong></div>
+                    <div class="metric"><small>{labels.nbWrittenPremiums}</small><strong>{metricPremiums}</strong></div>
+                </div>
+                <div class="bar">
+                    <div class="barrow"><span>{labels.assets}</span><div class="track"><div class="fill" style={assetsBarStyle}></div></div><b>{metricAssets}</b></div>
+                    <div class="barrow"><span>{labels.liabilities}</span><div class="track"><div class="fill" style={liabilitiesBarStyle}></div></div><b>{metricLiabilities}</b></div>
+                    <div class="barrow"><span>{labels.nbPremiumsShort}</span><div class="track"><div class="fill" style={premiumsBarStyle}></div></div><b>{metricPremiums}</b></div>
+                </div>
+                <div class="callout">{labels.reviewRequirement}</div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Add Annual Filing -->
+    <template if:true={showAddModal}>
+        <div class="modal" onclick={handleModalBackdrop}>
+            <div class="box">
+                <h2>{labels.addAnnualFiling}</h2>
+                <p>{labels.addAnnualFilingHelp}</p>
+                <div class="formgrid">
+                    <div class="field">
+                        <label for="newYear">{labels.reportingYear}</label>
+                        <select id="newYear" value={newYear} onchange={handleNewYear}>
+                            <option value="2025">2025</option>
+                            <option value="2026">2026</option>
+                            <option value="2027">2027</option>
+                        </select>
+                    </div>
+                    <div class="field lookup-wrap">
+                        <label for="newParentLicence">{labels.parentLicence}</label>
+                        <input
+                            id="newParentLicence"
+                            type="text"
+                            autocomplete="off"
+                            placeholder={labels.searchLicensePlaceholder}
+                            value={newParentLicence}
+                            oninput={handleAddLicenceSearch}
+                            onfocus={handleAddLicenceFocus}
+                            onblur={handleLicenceBlur}
+                        >
+                        <div class="lookup-hint">{labels.searchByLicenseHint}</div>
+                        <template if:true={showAddLicenceSuggestions}>
+                            <div class="lookup-suggestions" role="listbox">
+                                <template if:true={hasLicenceSuggestions}>
+                                    <template for:each={licenceSuggestions} for:item="opt">
+                                        <button
+                                            key={opt.id}
+                                            type="button"
+                                            class="lookup-option"
+                                            data-id={opt.id}
+                                            data-name={opt.name}
+                                            data-context="add"
+                                            onmousedown={handleLicenceSelect}
+                                        >
+                                            {opt.label}
+                                        </button>
+                                    </template>
+                                </template>
+                                <template if:false={hasLicenceSuggestions}>
+                                    <div class="lookup-empty">{labels.noMatchingLicenses}</div>
+                                </template>
+                            </div>
+                        </template>
+                    </div>
+                    <div class="field">
+                        <label for="newStart">{labels.periodStart}</label>
+                        <input id="newStart" type="date" value={newStart} onchange={handleNewStart}>
+                    </div>
+                    <div class="field">
+                        <label for="newEnd">{labels.periodEnd}</label>
+                        <input id="newEnd" type="date" value={newEnd} onchange={handleNewEnd}>
+                    </div>
+                </div>
+                <div class="box-actions">
+                    <button class="btn" type="button" onclick={handleCloseAdd}>{labels.cancel}</button>
+                    <button class="btn primary" type="button" onclick={handleCreateDraft}>{labels.createDraft}</button>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- Edit Filing Setup -->
+    <template if:true={showEditModal}>
+        <div class="modal" onclick={handleModalBackdrop}>
+            <div class="box">
+                <h2>{labels.editFilingSetup}</h2>
+                <p>{labels.editFilingSetupHelp}</p>
+                <div class="formgrid">
+                    <div class="field">
+                        <label>{labels.reportingYear}</label>
+                        <input data-field="editYear" value={editYear} onchange={handleEditField}>
+                    </div>
+                    <div class="field lookup-wrap">
+                        <label for="editParentLicence">{labels.parentLicence}</label>
+                        <input
+                            id="editParentLicence"
+                            type="text"
+                            autocomplete="off"
+                            placeholder={labels.searchLicensePlaceholder}
+                            value={editParentLicence}
+                            oninput={handleEditLicenceSearch}
+                            onfocus={handleEditLicenceFocus}
+                            onblur={handleLicenceBlur}
+                        >
+                        <div class="lookup-hint">{labels.searchByLicenseHint}</div>
+                        <template if:true={showEditLicenceSuggestions}>
+                            <div class="lookup-suggestions" role="listbox">
+                                <template if:true={hasLicenceSuggestions}>
+                                    <template for:each={licenceSuggestions} for:item="opt">
+                                        <button
+                                            key={opt.id}
+                                            type="button"
+                                            class="lookup-option"
+                                            data-id={opt.id}
+                                            data-name={opt.name}
+                                            data-context="edit"
+                                            onmousedown={handleLicenceSelect}
+                                        >
+                                            {opt.label}
+                                        </button>
+                                    </template>
+                                </template>
+                                <template if:false={hasLicenceSuggestions}>
+                                    <div class="lookup-empty">{labels.noMatchingLicenses}</div>
+                                </template>
+                            </div>
+                        </template>
+                    </div>
+                    <div class="field">
+                        <label>{labels.periodStart}</label>
+                        <input type="date" data-field="editStart" value={editStart} onchange={handleEditField}>
+                    </div>
+                    <div class="field">
+                        <label>{labels.periodEnd}</label>
+                        <input type="date" data-field="editEnd" value={editEnd} onchange={handleEditField}>
+                    </div>
+                    <div class="field">
+                        <label>{labels.dueDate}</label>
+                        <input type="date" data-field="editDue" value={editDue} onchange={handleEditField}>
+                    </div>
+                    <div class="field">
+                        <label>{labels.filerAccount}</label>
+                        <input value={accountName} disabled>
+                    </div>
+                    <div class="field">
+                        <label>{labels.filerFirstName}</label>
+                        <input data-field="editFirst" value={editFirst} onchange={handleEditField}>
+                    </div>
+                    <div class="field">
+                        <label>{labels.filerLastName}</label>
+                        <input data-field="editLast" value={editLast} onchange={handleEditField}>
+                    </div>
+                    <div class="field">
+                        <label>{labels.filerEmail}</label>
+                        <input type="email" data-field="editEmail" value={editEmail} onchange={handleEditField}>
+                    </div>
+                    <div class="field">
+                        <label>{labels.filerPhone}</label>
+                        <input data-field="editPhone" value={editPhone} onchange={handleEditField}>
+                    </div>
+                </div>
+                <div class="box-actions">
+                    <button class="btn" type="button" onclick={handleCloseEdit}>{labels.cancel}</button>
+                    <button class="btn primary" type="button" onclick={handleSaveSetup}>{labels.saveChanges}</button>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- Open Filing wizard -->
+    <template if:true={showOpenModal}>
+        <div class="modal" onclick={handleModalBackdrop}>
+            <div class="box wide">
+                <div class="modalhead">
+                    <div>
+                        <div class="eyebrow">{accountName} → {labels.filings}</div>
+                        <h2 style="margin-top:2px">Annual Financial Filing — {setupFilingId}</h2>
+                    </div>
+                    <button class="btn" type="button" onclick={handleCloseOpen}>{labels.close}</button>
+                </div>
+                <div class="openflow">
+                    <div class="of-step active"><b>1</b><span>{labels.header}</span></div>
+                    <div class="of-step"><b>2</b><span>{labels.financials}</span></div>
+                    <div class="of-step"><b>3</b><span>{labels.documents}</span></div>
+                    <div class="of-step"><b>4</b><span>{labels.validation}</span></div>
+                    <div class="of-step"><b>5</b><span>{labels.submit}</span></div>
+                </div>
+                <div class="openbody">
+                    <div class="sectioncard">
+                        <h3>1. {labels.filingHeader}</h3>
+                        <div class="kv2">
+                            <div>{labels.filingType}</div><strong>{filingTypeLabel}</strong>
+                            <div>{labels.reportingYear}</div><strong>{openYear}</strong>
+                            <div>{labels.period}</div><strong>{openPeriod}</strong>
+                            <div>{labels.dueDate}</div><strong>{openDue}</strong>
+                            <div>{labels.parentLicence}</div><strong>{parentLicence}</strong>
+                            <div>{labels.filer}</div><strong>{openFiler}</strong>
+                        </div>
+                    </div>
+                    <div class="sectioncard">
+                        <h3>2. {labels.financials}</h3>
+                        <div class="metricrow">
+                            <div><small>{labels.totalAssets}</small><b>{openAssets}</b></div>
+                            <div><small>{labels.totalLiabilities}</small><b>{openLiabilities}</b></div>
+                            <div><small>{labels.nbWrittenPremiums}</small><b>{openPremiums}</b></div>
+                        </div>
+                    </div>
+                    <div class="sectioncard">
+                        <h3>3. {labels.documents}</h3>
+                        <div class="docpill">✓ {openDocName}</div>
+                    </div>
+                    <div class="sectioncard">
+                        <h3>4. {labels.validationAttestation}</h3>
+                        <div class="attestbox">✓ {labels.attestConfirm}</div>
+                    </div>
+                </div>
+                <div class="box-actions">
+                    <button class="btn" type="button" onclick={handleOpenEditFromWizard}>{labels.edit}</button>
+                    <button class="btn primary" type="button" onclick={handleOpenContinue}>{labels.continueToSubmit}</button>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- Detail / Edit modal -->
+    <template if:true={showDetailModal}>
+        <div class="modal" onclick={handleModalBackdrop}>
+            <div class="detail-box">
+                <div class="detail-box-head">
+                    <div>
+                        <div class="eyebrow">{accountName} › {labels.filings}</div>
+                        <div class="detail-title">{detailTitle}</div>
+                    </div>
+                    <button class="btn" type="button" onclick={handleCloseDetail}>{labels.close}</button>
+                </div>
+
+                <template if:true={isDetailView}>
+                    <template if:true={hasSelectedFiling}>
+                    <div class="detail-grid">
+                        <div class="detail-section">
+                            <h3>{labels.filingHeader}</h3>
+                            <div class="field-grid">
+                                <div class="k">{labels.reportingYear}</div><div class="v">{selectedReportingYear}</div>
+                                <div class="k">{labels.period}</div><div class="v">{selectedPeriodLabel}</div>
+                                <div class="k">{labels.dueDate}</div><div class="v">{selectedDueDateLabel}</div>
+                                <div class="k">{labels.parentLicence}</div><div class="v">{selectedParentLicence}</div>
+                            </div>
+                        </div>
+                        <div class="detail-section">
+                            <h3>{labels.filerContact}</h3>
+                            <div class="field-grid">
+                                <div class="k">{labels.filer}</div><div class="v">{selectedFilerName}</div>
+                                <div class="k">{labels.email}</div><div class="v">{selectedFilerEmail}</div>
+                                <div class="k">{labels.phone}</div><div class="v">{selectedFilerPhone}</div>
+                            </div>
+                        </div>
+                        <div class="detail-section">
+                            <h3>{labels.financials}</h3>
+                            <div class="field-grid">
+                                <div class="k">{labels.assets}</div><div class="v">{selectedAssetsLabel}</div>
+                                <div class="k">{labels.liabilities}</div><div class="v">{selectedLiabilitiesLabel}</div>
+                                <div class="k">{labels.nbWrittenPremiums}</div><div class="v">{selectedPremiumsLabel}</div>
+                            </div>
+                        </div>
+                        <div class="detail-section">
+                            <h3>{labels.evidence}</h3>
+                            <div class="field-grid">
+                                <div class="k">{labels.statements}</div><div class="v">{selectedDocumentName}</div>
+                                <div class="k">{labels.attestation}</div><div class="v">{selectedAttestation}</div>
+                                <div class="k">{labels.description}</div><div class="v">{selectedDescription}</div>
+                            </div>
+                        </div>
+                        <div class="detail-section full">
+                            <h3>{labels.workflow}</h3>
+                            <div class="callout">{workflowMessage}</div>
+                        </div>
+                    </div>
+                    <div class="detail-actions">
+                        <template if:true={selectedIsEditable}>
+                            <button class="btn primary" type="button" data-id={selectedFilingId} onclick={handleEditDraft}>
+                                <template if:true={selectedIsRequestMissing}>{labels.editMissingSchedule}</template>
+                                <template if:false={selectedIsRequestMissing}>{labels.editDraft}</template>
+                            </button>
+                        </template>
+                        <button class="btn" type="button" onclick={handleOpenWizard}>{labels.openFilingWizard}</button>
+                    </div>
+                    </template>
+                </template>
+
+                <template if:true={isDetailEdit}>
+                    <div class="detail-section">
+                        <h3>{labels.editableDraft}</h3>
+                        <div class="edit-form">
+                            <div class="edit-field">
+                                <label>{labels.reportingYear}</label>
+                                <input data-field="draftYear" value={draftYear} onchange={handleDraftField}>
+                            </div>
+                            <div class="edit-field">
+                                <label>{labels.dueDate}</label>
+                                <input type="date" data-field="draftDue" value={draftDue} onchange={handleDraftField}>
+                            </div>
+                            <div class="edit-field">
+                                <label>{labels.periodStart}</label>
+                                <input type="date" data-field="draftStart" value={draftStart} onchange={handleDraftField}>
+                            </div>
+                            <div class="edit-field">
+                                <label>{labels.periodEnd}</label>
+                                <input type="date" data-field="draftEnd" value={draftEnd} onchange={handleDraftField}>
+                            </div>
+                            <div class="edit-field">
+                                <label>{labels.filerFirstName}</label>
+                                <input data-field="draftFirst" value={draftFirst} onchange={handleDraftField}>
+                            </div>
+                            <div class="edit-field">
+                                <label>{labels.filerLastName}</label>
+                                <input data-field="draftLast" value={draftLast} onchange={handleDraftField}>
+                            </div>
+                            <div class="edit-field">
+                                <label>{labels.email}</label>
+                                <input data-field="draftEmail" value={draftEmail} onchange={handleDraftField}>
+                            </div>
+                            <div class="edit-field">
+                                <label>{labels.phone}</label>
+                                <input data-field="draftPhone" value={draftPhone} onchange={handleDraftField}>
+                            </div>
+                            <div class="edit-field">
+                                <label>{labels.totalAssets}</label>
+                                <input type="number" data-field="draftAssets" value={draftAssets} onchange={handleDraftField}>
+                            </div>
+                            <div class="edit-field">
+                                <label>{labels.totalLiabilities}</label>
+                                <input type="number" data-field="draftLiabilities" value={draftLiabilities} onchange={handleDraftField}>
+                            </div>
+                            <div class="edit-field">
+                                <label>{labels.nbWrittenPremiums}</label>
+                                <input type="number" data-field="draftPremiums" value={draftPremiums} onchange={handleDraftField}>
+                            </div>
+                            <div class="edit-field">
+                                <label>{labels.attestation}</label>
+                                <select data-field="draftAttestation" onchange={handleDraftField}>
+                                    <option value="Complete" selected={isDraftAttestationComplete}>{labels.complete}</option>
+                                    <option value="Not Complete" selected={isDraftAttestationNotComplete}>{labels.notComplete}</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="label" style="margin-top:10px">{labels.annualStatements} <span style="color:#b86b00">{labels.requiredStar}</span></div>
+                        <template if:true={hasPreviousFiles}>
+                            <div class="previous-files">
+                                <div class="previous-files-title">{labels.previouslyUploaded}</div>
+                                <template for:each={previousFiles} for:item="file">
+                                    <div class="edit-doc previous-doc" key={file.key}>
+                                        <button
+                                            class="docpill docpill-button"
+                                            type="button"
+                                            data-doc-id={file.contentDocumentId}
+                                            data-version-id={file.contentVersionId}
+                                            onclick={handleDownloadPrevious}
+                                            title={labels.download}
+                                        >✓ {file.displayName}</button>
+                                        <div class="edit-doc-actions">
+                                            <button
+                                                class="linkbtn"
+                                                type="button"
+                                                data-doc-id={file.contentDocumentId}
+                                                data-version-id={file.contentVersionId}
+                                                onclick={handleDownloadPrevious}
+                                            >{labels.download}</button>
+                                        </div>
+                                    </div>
+                                </template>
+                            </div>
+                        </template>
+                        <div class="edit-upload">
+                            <div class="edit-upload-head">
+                                <div>
+                                    <div class="edit-upload-title">{labels.annualStatementsDoc}</div>
+                                    <div class="edit-upload-help">{labels.uploadOrReplace}</div>
+                                </div>
+                            </div>
+                            <template if:true={editUploadRecordId}>
+                                <lightning-file-upload
+                                    label={labels.uploadDocument}
+                                    name="editAnnualStatements"
+                                    accept={acceptedFormats}
+                                    record-id={editUploadRecordId}
+                                    onuploadfinished={handleEditUploadFinished}
+                                ></lightning-file-upload>
+                            </template>
+                            <template if:true={showCurrentEditDocument}>
+                                <div class="edit-doc">
+                                    <div>
+                                        <div class="docpill">✓ {selectedDocumentName}</div>
+                                        <div class="edit-doc-meta">{labels.currentFilingEvidence}</div>
+                                    </div>
+                                    <div class="edit-doc-actions">
+                                        <button class="linkbtn" type="button" onclick={handlePreviewEditDoc}>{labels.preview}</button>
+                                        <button class="linkbtn danger-link" type="button" onclick={handleRemoveEditDoc}>{labels.remove}</button>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+                    <div class="detail-actions">
+                        <button class="btn" type="button" data-id={selectedFilingId} onclick={handleViewDetails}>{labels.cancel}</button>
+                        <template if:true={selectedIsRequestMissing}>
+                            <button class="btn success" type="button" onclick={handleSaveMissingSchedule}>{labels.saveUpdatedFiling}</button>
+                        </template>
+                        <template if:false={selectedIsRequestMissing}>
+                            <button class="btn primary" type="button" onclick={handleSaveDraft}>{labels.saveDraft}</button>
+                            <button class="btn success" type="button" onclick={handleSubmitDraft}>{labels.saveAndSubmit}</button>
+                        </template>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </template>
+
+    <div class={toastClass} role="status" aria-live="polite">{toastMessage}</div>
+</template>

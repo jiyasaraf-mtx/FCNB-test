@@ -1,0 +1,158 @@
+/*--------------------------------
+
+material-icon icon font
+Generated using nucleoapp.com
+
+-------------------------------- */
+
+$material-icon-font-path: "../fonts" !default;
+
+@font-face {
+  font-family: 'material-icon';
+  src: url('../media/fonts/material-icon.eot');
+  src: url('../media/fonts/material-icon.eot') format('embedded-opentype'),
+       url('../media/fonts/material-icon.woff2') format('woff2'),
+       url('../media/fonts/material-icon.woff') format('woff'),
+       url('../media/fonts/material-icon.ttf') format('truetype'),
+       url('../media/fonts/material-icon.svg') format('svg');
+}
+
+/* base class */
+.material-icon {
+  display: inline-block;
+  font: normal normal normal 1.5em/1 'material-icon';
+  color: inherit;
+  flex-shrink: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* size examples - relative units */
+.material-icon-sm {
+  font-size: 0.8em;
+}
+
+.material-icon-lg {
+  font-size: 1.2em;
+}
+
+/* size examples - absolute units */
+.material-icon-16 {
+  font-size: 16px;
+}
+
+.material-icon-32 {
+  font-size: 32px;
+}
+
+/* rotate the icon infinitely */
+.material-icon-is-spinning {
+  animation: material-icon-spin 1s infinite linear;
+}
+
+@keyframes material-icon-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* transform */
+.material-icon-rotate-90  {
+	transform: rotate(90deg);
+}
+
+.material-icon-rotate-180 {
+	transform: rotate(180deg);
+}
+
+.material-icon-rotate-270 {
+	transform: rotate(270deg);
+}
+
+.material-icon-flip-y {
+	transform: scaleY(-1);
+}
+
+.material-icon-flip-x {
+	transform: scaleX(-1);
+}
+
+/* icons */
+$icons: (
+  'down-arrow': 'ea03',
+  'services': 'ea04',
+  'contact': 'ea05',
+  'faq': 'ea06',
+  'home': 'ea07',
+  'about': 'ea08',
+  'print': 'ea09',
+  'search': 'ea0a',
+  'register': 'ea0b',
+  'file': 'ea0c',
+  'amend-license': 'ea0d',
+  'renew': 'ea0e',
+  'payment': 'ea0f',
+  'Request_for_Refund': 'ea0f',
+  'arrow_forward': 'ea10',
+  'arrow_back': 'ea11',
+  'close': 'ea12',
+  'keyboard_arrow_right': 'ea13',
+  'keyboard_arrow_left': 'ea14',
+  'add': 'ea15',
+  'twitter': 'ea16',
+  'facebook': 'ea18',
+  'arrow_drop_down': 'ea19',
+  'youtube': 'ea1b',
+  'Individual': 'ea1c',
+  'Business': 'ea1d',
+  'check_circle_outline': 'ea1e',
+  'delete_outline': 'ea1f',
+  'edit': 'ea20',
+  'badge': 'ea21',
+  'application': 'ea23',
+  'payment-1': 'ea24',
+  'dollor': 'ea25',
+  'apply-license': 'ea26',
+  'complaint': 'ea27',
+  'remove_red_eye': 'ea28',
+  'Inactive': 'ea29',
+  'Active': 'ea2a',
+  'Verified': 'ea2b',
+  'Expired': 'ea2c',
+  'All': 'ea2d',
+  'info_outline': 'ea2e',
+  'Approved': 'ea2f',
+  'Submitted': 'ea30',
+  'In_Progress': 'ea31',
+  'Draft': 'ea33',
+  'License_Issued': 'ea34',
+  'download': 'ea35',
+  'mail_outline': 'ea36',
+  'local_phone': 'ea37',
+  'access_time': 'ea38',
+  'select': 'ea39',
+  'complaints': 'ea3a', 
+  'power_settings_new': 'ea3c',
+  'person': 'ea3d',
+  'Void': 'ea3e',
+  'Default': 'ea3f',
+  'PreLicense': 'ea40',
+  'Icon': 'ea41',
+);
+
+@function unicode($str) {
+  @return unquote("\"\\#{$str}\"");
+}
+
+@each $name, $code in $icons {
+  .material-icon-#{""+$name}::before {
+    content: unicode($code);
+  }
+}
+.icon-main{
+  font-family: 'material-icon';
+  line-height: 100%;
+}

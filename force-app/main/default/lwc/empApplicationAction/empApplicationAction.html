@@ -1,0 +1,110 @@
+<!--
+  @description       : 
+  @author            : Vamsi Mudaliar
+  @group             : 
+  @last modified on  : 06-12-2024
+  @last modified by  : Bharath Kumar M
+-->
+<template>
+    <div if:true={showSpinner}>
+        <lightning-spinner size="medium" alternative-text="Loading"></lightning-spinner>
+    </div>
+    <div class="slds-grid slds-wrap">
+        <div class="slds-col slds-size_1-of-1 licenses-details licenses-details__right">
+            <div class="slds-card custom-card">
+                <lightning-spinner variant="brand" size="medium" if:true={isProcessing}
+                    alternative-text="Loading"></lightning-spinner>
+                <h2 class="m-b-medium">Application Actions</h2>
+                <div class="">
+                    <div class="slds-grid slds-wrap" if:false={hideDetails}>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12 m-b-medium">
+                            <div class="cc-col-field-values">
+                                <label class="cc-field-value-label">Application Number</label>
+                                <p class="cc-field-value" >{applicationData.Name}</p>
+                            </div>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12 m-b-medium">
+                            <div class="cc-col-field-values">
+                                <label class="cc-field-value-label">License Type</label>
+                                <p class="cc-field-value" >{applicationData.License_Type_Name__c}</p>
+                            </div>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12 m-b-medium">
+                            <div class="cc-col-field-values">
+                                <label class="cc-field-value-label">Application Type</label>
+                                <p class="cc-field-value" >{applicationData.ApplicationType}</p>
+                            </div>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12 m-b-medium">
+                            <div class="cc-col-field-values">
+                                <label class="cc-field-value-label">Applicant Full Name</label>
+                                <p class="cc-field-value" >{applicationData.Applicant_Full_Name__c}</p>
+                            </div>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12 m-b-medium">
+                            <div class="cc-col-field-values">
+                                <label class="cc-field-value-label">Submitted</label>
+                                <p class="cc-field-value" >{applicationData.Applicant_submission_Date__c}</p>
+                            </div>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12 m-b-medium">
+                            <div class="cc-col-field-values">
+                                <label class="cc-field-value-label">Status</label>
+                                <p class="cc-field-value" >{applicationData.Status}</p>
+                            </div>
+                        </div>
+                        <!-- <div class="slds-col slds-size_1-of-2">Application Number</div>
+                        <div class="slds-col slds-size_1-of-2">{applicationData.Name}</div>
+                        <div class="slds-col slds-size_1-of-2">License Type</div>
+                        <div class="slds-col slds-size_1-of-2">{applicationData.License_Type_Name__c}</div>
+                        <div class="slds-col slds-size_1-of-2">Application Type</div>
+                        <div class="slds-col slds-size_1-of-2">{applicationData.ApplicationType}</div>
+                        <div class="slds-col slds-size_1-of-2">Applicant Full Name</div>
+                        <div class="slds-col slds-size_1-of-2">{applicationData.Applicant_Full_Name__c}</div>
+                        <div class="slds-col slds-size_1-of-2">Submitted</div>
+                        <div class="slds-col slds-size_1-of-2">{applicationData.Applicant_submission_Date__c}</div>
+                        <div class="slds-col slds-size_1-of-2">Status</div>
+                        <div class="slds-col slds-size_1-of-2">{applicationData.Status}</div> -->
+                    </div>
+                    <!-- <template if:false={hideDetails}>
+                        <div class="m-t-large slds-grid slds-grid--align-end slds-wrap">
+                            <lightning-button class="slds-var-m-right_medium" variant="brand-outline" label='Previous'
+                                onclick={handleAction}>
+                            </lightning-button>
+                            <lightning-button class="slds-var-m-right_medium" variant="brand-outline"
+                                label='Download Application' onclick={handleAction}>
+                            </lightning-button>
+                        </div>
+                    </template> -->
+                </div>
+            </div>
+            <div class="slds-card custom-card">
+                <div>
+                    <lightning-input label="Upload Document" type="file" onchange={handleUploadFinished}></lightning-input>
+                    <p>{fileName}</p>
+                    <template if:true={showSubmitButton}>
+                        <div class="m-t-large slds-grid slds-wrap">
+                            <lightning-button label="Submit" variant="brand-outline" onclick={handleSubmitClick}></lightning-button>
+                        </div>
+                    </template>
+                </div>
+            </div>
+            <template if:true={isPortal}>
+                <p class="slds-m-top_small">
+                    <span class="c-red">*</span>
+                    <span> Please note credit/debit card transactions will
+                        incur a processing fee.</span>
+                </p>
+            </template>
+
+        </div>
+    </div>
+    <!-- Start - Added by Ayush S-56590 -->
+    <template if:true={showLicenseVerificationForm}>
+        <c-lpi-verification-of-licensure-document-verification application-id={recordId}
+            licensure-verification-button-j-s-o-n={licensureVerificationButtonJSON}
+            onclosemodal={closeVerificationModal}></c-lpi-verification-of-licensure-document-verification>
+    </template>
+    <!-- End - Added by Ayush S-56590 -->
+    <c-lpi-bad-check-warning record-id={recordId} if:false={isPortal}></c-lpi-bad-check-warning>
+</template>

@@ -1,0 +1,58 @@
+/* .docName {
+	font-size: 1rem;
+    font-weight: 600;
+    margin: 10px 0 5px;
+    color: #0B51B7;
+    line-height: 1.5;
+    display: block;
+    white-space: unset;
+}
+.slds-modal__container .slds-modal__footer {
+    text-align: center !important;
+}
+
+.docNameReview {
+	font-size: 1rem;
+    font-weight: 600;
+    margin: 10px 0 5px;
+    line-height: 1.5;
+    display: block;
+    white-space: unset;
+}
+
+.docName, .docNameReview, .file-name{
+    white-space: normal;
+    font-weight: normal;
+    word-break: break-word;
+}
+
+.file-name a{
+    width: 100%;
+}
+h2.section-heading{
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.375rem;
+    color: #1F2937;
+    font-family: "Francois One", sans-serif;
+}
+
+.additional-doc-border{
+    border: 1px solid #e5e5e5;
+    padding: 1rem 0.75rem;
+    margin-top: 1rem;
+}
+
+.delete-icon {
+    --slds-c-icon-color-foreground-default: #CB0015;
+   
+}
+
+.red-icon{
+    --lwc-colorTextIconDefault: #F62217;
+}
+
+.display_inline {
+    display: inline;
+} */
+.this{}

@@ -1,0 +1,35 @@
+<!--
+  @description       : 
+  @author            : Mohit Karani
+  @group             : 
+  @last modified on  : 08-03-2023
+  @last modified by  : Mohit Karani
+-->
+<template>
+    <div if:true={showSpinner}>
+        <lightning-spinner size="medium" alternative-text="Loading..."></lightning-spinner>
+    </div>
+    <template if:true={displayCmp}>
+        <header if:true={showHeaderUI} class="slds-modal__header">
+            <h2 class="slds-text-heading_medium slds-hyphenate">Edit Planned Start Date </h2>
+        </header>
+        <div class="slds-grid slds-wrap">
+            <div class="slds-col slds-size_12-of-12 slds-p-horizontal--medium slds-m-bottom_small">
+                <div class="input-group">
+                    <lightning-input disabled={isVisitRecEdit} type="date" date-style="short"
+                        lwc:ref="vPlannedStartTime" name="vPlannedStartTime" label="Planned Start Date"
+                        message-when-value-missing="Error:Planned Start Date is required." class="wf-input-box"
+                        onchange={handleChange} value={visitRec.vPlannedStartTime} required> </lightning-input>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="slds-p-around_large slds-m-bottom_medium">
+            <lightning-button variant="outline" label="Cancel" title="Cancel" onclick={handleCancel}
+                class="slds-float_left"></lightning-button>
+            <lightning-button variant="brand" label="Save" title="Save" onclick={handleSave} class="slds-float_right">
+            </lightning-button>
+        </div>
+    </template>
+</template>

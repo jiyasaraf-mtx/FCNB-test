@@ -1,0 +1,22 @@
+<template>
+    <template if:true={showSpinner}>
+        <lightning-spinner alternative-text="Loading"></lightning-spinner>
+    </template>
+    <template if:false={showSpinner}>
+        <template if:false={hasRecords}>
+            <span>No Inspections/Regulatory Code Violations Found</span>
+        </template>
+        <template if:true={hasRecords}>
+            <template if:false={isPortalUser}>
+                <lightning-datatable key-field="Id" data={records} columns={columns} draft-values={saveDraftValues}
+                    onsave={handleSave} hide-checkbox-column>
+                </lightning-datatable>
+            </template>
+            <template if:true={isPortalUser}>
+                <lightning-datatable key-field="Id" data={records} columns={portalColumns} draft-values={saveDraftValues}
+                    onsave={handlePortalSave} hide-checkbox-column>
+                </lightning-datatable>
+            </template>
+        </template>
+    </template>
+</template>

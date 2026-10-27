@@ -1,0 +1,67 @@
+<template>
+    <lightning-card title="Document Search Hub" icon-name="standard:document">
+        <div slot="actions">
+            <lightning-button label="Clear Search" onclick={handleClear}></lightning-button>
+        </div>
+        
+        <div class="slds-p-around_medium">
+            <!-- Filter Row -->
+            <div class="slds-grid slds-gutters slds-m-bottom_medium">
+                <div class="slds-col slds-size_1-of-4">
+                    <lightning-combobox
+                        name="category"
+                        label="Select Document Category"
+                        value={selectedCategory}
+                        options={categoryOptions}
+                        onchange={handleCategoryChange}>
+                    </lightning-combobox>
+                </div>
+                <div class="slds-col slds-size_1-of-4">
+                    <lightning-combobox
+                        name="type"
+                        label="Select Type"
+                        value={selectedType}
+                        placeholder="Choose type..."
+                        options={typeOptions}
+                        onchange={handleTypeChange}>
+                    </lightning-combobox>
+                </div>
+                <div class="slds-col slds-size_1-of-4">
+                    <lightning-combobox
+                        name="status"
+                        label="Status"
+                        value={selectedStatus}
+                        placeholder="Choose status..."
+                        options={statusOptions}
+                        onchange={handleStatusChange}>
+                    </lightning-combobox>
+                </div>
+                <div class="slds-col slds-size_1-of-4">
+                    <lightning-input
+                        type="search"
+                        label="Search by Parent Record Name / Number"
+                        placeholder="Type reference value and press ENTER..."
+                        value={searchKey}
+                        oncommit={handleSearchKeyChange}>
+                    </lightning-input>
+                </div>
+            </div>
+
+            <!-- Datatable -->
+            <template if:true={documents.length}>
+                <lightning-datatable
+                    key-field="Id"
+                    data={documents}
+                    columns={columns}
+                    hide-checkbox-column>
+                </lightning-datatable>
+            </template>
+
+            <template if:true={error}>
+                <div class="slds-text-color_error slds-p-around_small">
+                    {error}
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>

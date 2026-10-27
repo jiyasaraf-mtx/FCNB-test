@@ -1,0 +1,76 @@
+<!--
+  @description       : 
+  @author            : Bharath Kumar M
+  @group             : 
+  @last modified on  : 06-04-2024
+  @last modified by  : Bharath Kumar M
+-->
+<template>
+    <h1 class="m-b-small bold-32">Contact Us</h1>
+    <div class="slds-grid slds-wrap slds-gutters_direct-medium">
+        <div class="slds-col slds-large-size--8-of-12 slds-medium-size--12-of-12 slds-size--12-of-12">
+            <div class="slds-card unauth-contact_form">
+                <h2 class="m-b-small">Contact Form</h2>
+                <p class="m-b-small">If you have questions or need help, please submit a ticket by completing the form below.</p>
+                    <div class="slds-grid slds-gutters slds-wrap">
+                        <div class="slds-col slds-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12  p-b-small">
+                            <lightning-input type="text" label="First Name" name="firstName"
+                                onchange={handleChange} placeholder="Enter First Name"  required></lightning-input>
+                        </div>
+                        <div class="slds-col slds-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12 p-b-small">
+                            <lightning-input type="text" label="Last Name" name="lastName"
+                                 onchange={handleChange} placeholder="Enter Last Name" required></lightning-input>
+                        </div>
+                        <div class="slds-col slds-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_12-of-12 p-b-small">
+                            <lightning-input type="email" label="Email Address" name="customerEmail"
+                                onchange={handleChange} placeholder="Enter Email Address" required></lightning-input>
+                        </div>
+                        <div class="slds-col slds-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_12-of-12 p-b-small">
+                            <lightning-combobox name="ticketType" label="Ticket Type"  required
+                                placeholder="Select options from the dropdown list" options={ticketTypeOptions}
+                                onchange={handleChange}></lightning-combobox>
+                        </div>
+                        <template if:true={ifQuestion}>
+                            <div class="slds-col slds-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_12-of-12 p-b-small">
+                                <lightning-input type="text" label="Question/Help" name="externalComment" placeholder="Enter Question"
+                                    onchange={handleChange} required></lightning-input>
+                            </div>
+                        </template>
+                        <div class="slds-col slds-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_12-of-12 p-b-small">
+                            <lightning-input type="text" label="Subject" name="subject" placeholder="Enter Subject here"
+                                onchange={handleChange} required></lightning-input>
+                        </div>
+                        <div class="slds-col slds-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_12-of-12 p-b-small">
+                            <lightning-input type="text" label="Application Number" name="appNumber" placeholder="Enter Number here" onchange={handleChange} ></lightning-input>
+                        </div>
+                        <div class="slds-col slds-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_12-of-12 p-b-small">
+                            <lightning-textarea label="Description" name="description" placeholder="Enter Description here"
+                               onchange={handleChange} required></lightning-textarea>
+                        </div>
+                </div>
+                <div class="slds-text-align--right p-t-small">
+                    <lightning-button variant="brand" label="Submit" title="Submit" onclick={handleSubmit}
+                    ></lightning-button>
+                </div>
+            </div>
+        </div>
+        <div class="slds-col slds-large-size--4-of-12 slds-medium-size--12-of-12 slds-size--12-of-12">
+            <div class="slds-card">
+                <h2 class="bold-20 m-b-small">We are here to help you.</h2>
+                <p class="m-b-small">Thank you for your interest in LPI Services. We are here to assist you with any inquiries or support you may need regarding our services and programs.</p>
+                <div class="m-b-small">
+                    <p class="bold-16">Email us</p>
+                    <p class="regular-text-16 text-secondary">info@MTX.com</p>
+                </div>
+                <div class="m-b-small">
+                    <p class="bold-16">Phone number</p>
+                    <p class="regular-text-16 text-secondary">(123) 456-7890</p>
+                </div>
+                <div class="m-b-small">
+                    <p class="bold-16">Office hours</p>
+                    <p class="regular-text-16 text-secondary">Monday - Friday: 9:00 AM - 5:00 PM</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

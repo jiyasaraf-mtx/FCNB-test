@@ -1,0 +1,110 @@
+<!--
+  @description       : Portal Authenticated Homepage component updated for FCNB licensing, registration, and regulatory portal.
+  @author            : MTX Group Inc
+  @group             : 
+  @last modified on  : 08-27-2026
+  @last modified by  : Juhi Goel
+-->
+<template>
+    <div class="homepage">
+        <div class="slds-card m-b-medium">
+            <div class="slds-grid slds-wrap slds-gutters slds-grid--vertical-align-center">
+                <div class="slds-col slds-large-size--9-of-12 slds-medium-size--12-of-12 slds-size--12-of-12">
+                    <h1 class="bold-32 m-b-xms">{labels.welcomeTitle}</h1>
+                    <p>{labels.welcomeIntro}
+                    </p>
+                    <div class="divider"></div>
+                    <div class="slds-grid banner-btns">
+                       <!-- <c-lpi-institute-profile></c-lpi-institute-profile> -->
+                        <lightning-button variant="base" label={labels.applyLicenseRegistration} title={labels.applyLicenseRegistration} onclick={navigateToApplyForLicense} class="base-link base-apply-btn m-r-xl"></lightning-button>
+                        <lightning-button variant="base" label={labels.fileConsumerComplaint} title={labels.fileConsumerComplaint} onclick={navigateToFileComplaints} class="base-link base-file-btn"></lightning-button>
+                    </div>
+                </div>
+                <div class="slds-col slds-large-size--3-of-12 slds-medium-size--12-of-12 slds-size--12-of-12">
+                    <div class="slds-grid slds-grid--align-center slds-grid--vertical-align-center">
+                        <img src={dashboardImg} alt={labels.dashboardIllustrationAlt} srcset="">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="">
+            <c-lpi-need-attention></c-lpi-need-attention>
+            <c-lpi-dashboard-detail-container></c-lpi-dashboard-detail-container>
+        </div>
+    </div>
+
+    <!-- Start Business Account Modal Window Code -->
+    <template if:true={openBusinessModal}>
+        <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01"
+            class="slds-modal slds-fade-in-open lpi-modal slds-modal_medium">
+            <div class="slds-modal__container">
+                <!-- Modal header -->
+                <div class="slds-modal__header">
+                    <h1 id="modal-heading-02" class="slds-modal__title slds-hyphenate">{labels.selectAccountType}</h1>
+                </div>
+                <!-- Modal body -->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+                    <p class="asterisk-caption m-b-medium">{labels.asteriskRequired}</p>
+                    <div class="slds-grid homepage slds-gutters slds-wrap">
+                        <div class="slds-col slds-size_12-of-12 slds-medium-size_4-of-12 slds-large-size_4-of-12 anchor-card m-b-large">
+                            <a href="Javascript:void(0);" class="selectPersonal" label="Personal Account" data-name="Personal Account" onclick={handleAccount}>
+                                <div class="anchor-card-body">
+                                    <i class="material-icon material-icon-select"></i>
+                                    <h2 class="m-t-large bold-24">{labels.individualAccount}</h2>
+                                    <p class="text-secondary m-t-xs">{labels.individualAccountDesc}</p>
+                                    <i class="material-icon material-icon-arrow_forward"></i>
+                                </div>            
+                            </a>
+                        </div>
+                        <div class="slds-col slds-size_12-of-12 slds-medium-size_4-of-12 slds-large-size_4-of-12 anchor-card m-b-large">
+                            <a href="Javascript:void(0);" class="selectBusiness" label="Existing Business Account" data-name="Business Account" onclick={handleBusinessAccount}>
+                                <div class="anchor-card-body">
+                                    <i class="material-icon material-icon-select"></i>
+                                    <h2 class="m-t-large bold-24">{labels.existingBusinessEntity}</h2>
+                                    <p class="text-secondary m-t-xs">{labels.existingBusinessDesc}</p>
+                                    <i class="material-icon material-icon-arrow_forward"></i>
+                                </div>            
+                            </a>
+                        </div>
+                        <div class="slds-col slds-size_12-of-12 slds-medium-size_4-of-12 slds-large-size_4-of-12 anchor-card m-b-large">
+                            <a href="Javascript:void(0);" class="selectNewBusiness" label="New Business Account" data-name="New Business Account" onclick={handleNewBusiness}>
+                                <div class="anchor-card-body">
+                                    <i class="material-icon material-icon-select"></i>
+                                    <h2 class="m-t-large bold-24">{labels.newBusinessEntity}</h2>
+                                    <p class="text-secondary m-t-xs">{labels.newBusinessDesc}</p>
+                                    <i class="material-icon material-icon-arrow_forward"></i>
+                                </div>            
+                            </a>
+                        </div>
+                    </div>
+
+                    <template if:true={showBusinessAccountList}>
+                        <label for="FieldSelect" class="slds-form-element__label slds-no-flex">
+                            <abbr title="required" class="slds-required">*</abbr>
+                            {labels.selectBusinessEntity}
+                        </label>
+                        <select class="slds-select homepage-select-box" name="optionSelect" onchange={handleBusinessChange}>
+                            <option value="">{labels.pleaseSelectBusiness}</option>
+                            <template for:each={acrList} for:item="item">
+                                <option key={item} value={item.Id}>{item.Name}</option>
+                            </template>
+                        </select> 
+                        <!-- Display custom error message if Business Account selection is empty -->
+                        <template if:true={isSelectBusinessTypeAvailable}>
+                            <p class="slds-text-color_error">{selectBusinessTypeErrorMessage}</p>
+                        </template>
+                    </template>
+                </div>
+                <div class="slds-modal__footer">
+                    <lightning-button 
+                        variant="brand"
+                        label={labels.continue}
+                        onclick={handleConfirm}
+                    ></lightning-button>
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+    </template>
+    <!-- End Business Account Modal Window Code -->
+</template>

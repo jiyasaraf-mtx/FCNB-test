@@ -1,0 +1,43 @@
+<!--
+  @description       : 
+  @author            : Ayush Dev
+  @group             : 
+  @last modified on  : 07-22-2024
+  @last modified by  : Ayush Dev
+-->
+<template>
+    <lightning-card icon-name="standard:address">
+        <div if:true={showSpinner}>
+            <lightning-spinner size="medium" alternative-text="Loading"></lightning-spinner>
+        </div>
+        <h3 slot="title">
+            {title}
+            <template if:false={isAccount}>
+                <lightning-helptext
+                    content="To update or add addresses, click on the &quot;New&quot; button and to view address details click action and select View/Edit action.">
+                </lightning-helptext>
+            </template>
+        </h3>
+        <lightning-datatable key-field="Id" data={relatedListData} columns={columns} onrowaction={handleRowAction}
+            hide-checkbox-column="true" if:true={showTable}></lightning-datatable>
+        <template if:true={showViewAllLink}>
+            <button class="slds-button slds-button_neutral cust-view-all-btn" data-viewall=true
+                onclick={viewLocations}>View All</button>
+        </template>
+        <template if:false={isAccount}>
+            <lightning-button label="New" title="Non-primary action" onclick={addNewAuthAppRecord}
+                class="slds-float_right" slot="actions"></lightning-button>
+        </template>
+        <template if:true={isEditAuthAppPlace}>
+            <c-lpi-add-new-address auth-app-id={currRecordId} record-id={recordId} is-account={isAccount}
+                modal-heading={locationModalHeading} onclose={handleCloseAuthAppModal} onsave={handleAuthAppPlaceSave}>
+            </c-lpi-add-new-address>
+        </template>
+        <template if:true={addAuthApp}>
+            <c-lpi-add-new-address record-id={recordId} is-account={isAccount} modal-heading={locationModalHeading}
+                onclose={handleCloseAuthAppModal} onsave={handleAuthAppPlaceSave}>
+            </c-lpi-add-new-address>
+        </template>
+    </lightning-card>
+
+</template>

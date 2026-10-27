@@ -1,0 +1,54 @@
+<!--
+-->
+<apex:page controller="LPI_JetPayIntegrationController" title="Payment Gateway" showHeader="false" sidebar="false" action="{!redirectUser}">
+    <!-- <apex:page controller="LPI_JetPayIntegrationController" title="Payment Gateway" action="{!saveTransectionID}" showHeader="false" sidebar="false"> 
+    <div class="main-class" rendered="{!isPostActionDone}">
+        <form id="theForm" action="{!endpoint}" >
+            <input class="primary_nm" type="submit" id="submit" value="Confirm " />
+        </form> 
+        <script type="text/javascript">
+            window.onload = function () {
+                document.getElementById('submit').click();
+            };
+        </script>
+    </div> -->
+    <body>
+        <div rendered="{!isPostActionDone != null}">
+            No Data found please retry!
+        </div>
+        <div class="spinner" data-attempts="0" rendered="{!isPostActionDone == null}">
+            <div class="loading-spinner-inner">
+                <img alt="eec_logo" src="{!$Resource.Modpr_Spinner}" />
+                <p class="loading-text">Processing Request...</p>
+            </div>
+        </div>
+    </body>
+    <style>
+        .spinner {
+            display: block;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+            width: 100%;
+            height: 100%;
+            background: rgba(22, 50, 92, 0.6);
+            z-index: 9000;
+        }
+        .loading-spinner-inner {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            align-content: center;
+            height: 100%;
+            color: #ffffff;
+            text-transform: uppercase;
+        }
+        .spinner img {
+            max-width: 120px;
+        }
+    </style> 
+</apex:page>

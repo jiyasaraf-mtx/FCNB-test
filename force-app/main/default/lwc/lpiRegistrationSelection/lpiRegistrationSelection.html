@@ -1,0 +1,74 @@
+<template>
+    <template if:true={isRegistration}>
+        <div class="slds-grid slds-gutters slds-wrap">
+            <div class="slds-col slds-size_1-of-2 slds-medium-size_1-of-2 slds-large-size_1-of-2 anchor-card m-b-large m-t-large">
+                <a href="Javascript:void(0);" label={labels.regIndividual} onclick={landOnIndividualRegisteration}>
+                    <div class="anchor-card-body">
+                        <i class="material-icon material-icon-Individual"></i>
+                        <h2 class="m-t-large bold-24">{labels.regIndividual}</h2>
+                        <i class="material-icon material-icon-arrow_forward"></i>
+                    </div>
+                </a>
+            </div>
+            <div class="slds-col slds-size_1-of-2 slds-medium-size_1-of-2 slds-large-size_1-of-2 anchor-card m-b-large m-t-large">
+                <a href="Javascript:void(0);" label={labels.regBusiness} onclick={landOnBusinessRegisteration}>
+                    <div class="anchor-card-body">
+                        <i class="material-icon material-icon-Business"></i>
+                        <h2 class="m-t-large bold-24">{labels.regBusiness}</h2>
+                        <i class="material-icon material-icon-arrow_forward"></i>
+                    </div>
+                </a>
+            </div>
+            <div class="slds-col slds-size--12-of-12">
+                <h3 class="bold-18">{labels.regOverview}</h3>
+                <p class="text-secondary">{labels.regOverviewP1}</p>
+                <p class="slds-m-top_xx-small text-secondary">{labels.regOverviewNote}</p>
+            </div>
+            <div class="slds-col slds-size--12-of-12 slds-m-top_large ">
+                <h3 class="bold-18">{labels.regThirdPartyTitle}</h3>
+                <p class="text-secondary">{labels.regThirdPartyP1}</p>
+                <p class="slds-m-top_xx-small text-secondary">{labels.regThirdPartyNote}</p>
+            </div>
+            <div class="slds-col slds-size--12-of-12 slds-m-top_large ">
+                <h3 class="bold-18">{labels.regSoleTitle}</h3>
+                <p class="text-secondary">{labels.regSoleBody}</p>
+            </div>
+        </div>
+    </template>
+    <template if:true={isForgotusername}>
+        <div class="p-b-large">
+            <h1 class="focus_helper_title slds-page-header__title mainTitleClass">{labels.regForgotChoice}</h1>
+        </div>
+        <div class="slds-grid  slds-gutters slds-wrap">
+            <div class="slds-col slds-size_1-of-2 slds-medium-size_1-of-2 slds-large-size_1-of-2 dashboard-card">
+                <div class=" anchor-card">
+                    <a href="Javascript:void(0);" onclick={openIndividualForgotUsername}>
+                        <div class="anchor-card-body">
+                            <i class="material-icon material-icon-Individual"></i>
+                            <h2 class="bold-16 p-t-medium">{labels.regIndividualRegistration}</h2>
+                            <i class="material-icon material-icon-arrow_forward"></i>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="slds-col slds-size_1-of-2 slds-medium-size_1-of-2 slds-large-size_1-of-2 dashboard-card">
+                <div class=" anchor-card">
+                    <a href="Javascript:void(0);" onclick={openBusinessForgotUsername}>
+                        <div class="anchor-card-body">
+                            <i class="material-icon material-icon-Business"></i>
+                            <h2 class="bold-16 p-t-medium">{labels.regBusinessRegistration}</h2>
+                            <i class="material-icon material-icon-arrow_forward"></i>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="slds-text-align--center p-t-large slds-p-bottom--medium">
+            <p class="c-grey">{labels.regBackTo}
+                <a href="/s/login" aria-label={labels.regLogin} title={labels.regLogin} class="login-link bold-16">
+                    {labels.regLogin}
+                </a>
+            </p>
+        </div>
+    </template>
+</template>

@@ -1,0 +1,117 @@
+<template>
+            <div class="slds-grid slds-wrap slds-is-relative ">
+            <div style="position: fixed;z-index: 999999;top: 0;right: 0;">
+  <omnistudio-toast class="flexcard-toast-element" theme="slds" title="" message="" styletype=""> </omnistudio-toast>
+</div>
+            <div if:true={showLoader} class="slds-is-absolute vloc-loader_override" style="height: 100%; width: 100%; min-height:50px; background: transparent; z-index: 99;">
+  <div>
+   <omnistudio-spinner
+      variant="brand"
+      alternative-text="Loading content..."
+      size="medium"
+      theme="slds"
+      ></omnistudio-spinner>
+  </div>
+</div>
+            <template if:false={hasPermission}>
+              You don't have required permissions to view this card.
+            </template>
+            <template if:true={hasPermission}>
+              <template if:true={hasRecords}>
+                        <template for:each={_records} for:item="record" for:index="rindex">
+                            <omnistudio-flex-card-state if:true={record}  key={record._flex.uniqueKey} data-recordid={record.Id} record={record} data-statue="true"  data-index="0" data-rindex={rindex} class="cf-vlocity-state-0 cf-vlocity-state slds-size_12-of-12"  tracking-obj={_childCardTrackingObj} >
+      <div if:true={cardLoaded} class="slds-grid slds-wrap slds-card slds-p-around_x-small slds-m-bottom_x-small" style="">
+          <div data-style-id="state0element0" class="slds-col   slds-p-around_x-small slds-size_12-of-12 " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element0_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element0" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element0block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3E%3Cstrong%3EFaculty%3C/strong%3E%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element0block_element1" class="slds-col   slds-p-around_x-small slds-size_12-of-12 " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element0block_element1_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element1block_element0" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element0block_element1block_element0_child"   card={card}  record={record}  placeholder="-"  field-name="NursingSchoolFacultyQ9.NursingSchoolLQ9a"  label="Please provide the plan for hiring full time and part time theory and clinical faculty. This plan shall include full time equivalents, student to faculty ratios and full time to part time faculty ratios to meet initial and increasing enrollment."  type="text"  labelclass="label"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element0block_element1block_element1" class="slds-col   slds-size_12-of-12 condition-element" data-rindex={rindex} style=""  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-0","field":"NursingSchoolFacultyQ9.NursingSchoolLQ9a","operator":"==","value":"Provide Response Below","type":"custom","hasMergeField":false}]}' ><omnistudio-output-field data-style-id="state0element0block_element1block_element1_child"   card={card}  record={record}  placeholder="-"  field-name="NursingSchoolFacultyQ9.NursingSchoolLQ9aText"  label="Please Explain"  type="text"  labelclass="label"  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-0","field":"NursingSchoolFacultyQ9.NursingSchoolLQ9a","operator":"==","value":"Provide Response Below","type":"custom","hasMergeField":false}]}'  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element0block_element2" class="slds-col   slds-p-around_x-small slds-size_12-of-12 " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element0block_element2_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element2block_element0" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element0block_element2block_element0_child"   card={card}  record={record}  placeholder="-"  field-name="NursingSchoolFacultyQ9.NursingSchoolLQ9b"  label="What other positions will be utilized by the nursing program (i.e. clerical support, lab personnel, success coach, navigator, etc.)?"  type="text"  labelclass="label"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element0block_element2block_element1" class="slds-col   slds-size_12-of-12 condition-element" data-rindex={rindex} style=""  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-7","field":"NursingSchoolFacultyQ9.NursingSchoolLQ9b","operator":"==","value":"Provide Response Below","type":"custom","hasMergeField":false}]}' ><omnistudio-output-field data-style-id="state0element0block_element2block_element1_child"   card={card}  record={record}  placeholder="-"  field-name="NursingSchoolFacultyQ9.NursingSchoolLQ9bText"  label="Please Explain"  type="text"  labelclass="label"  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-7","field":"NursingSchoolFacultyQ9.NursingSchoolLQ9b","operator":"==","value":"Provide Response Below","type":"custom","hasMergeField":false}]}'  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element1" class="slds-col   slds-p-around_x-small slds-size_12-of-12 " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element1_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element1block_element0" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element1block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3E%3Cstrong%3EFacilities%3C/strong%3E%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element1block_element1" class="slds-col   slds-p-around_x-small slds-size_12-of-12 " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element1block_element1_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element1block_element1block_element0" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element1block_element1block_element0_child"   card={card}  record={record}  placeholder="-"  field-name="NursingSchoolFacilitiesQ11.NursingSchoolLQ11a"  label="Please provide a description of educational facilities to be used by the professional nursing program such as classrooms, library, offices, clinical skills and simulation laboratories, and other facilities."  type="text"  labelclass="label"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element1block_element1block_element1" class="slds-col   slds-size_12-of-12 condition-element" data-rindex={rindex} style=""  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-14","field":"NursingSchoolFacilitiesQ11.NursingSchoolLQ11a","operator":"==","value":"Provide Response Below","type":"custom","hasMergeField":false}]}' ><omnistudio-output-field data-style-id="state0element1block_element1block_element1_child"   card={card}  record={record}  placeholder="-"  field-name="NursingSchoolFacilitiesQ11.NursingSchoolLQ11aText"  label="Please Explain"  type="text"  labelclass="label"  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-14","field":"NursingSchoolFacilitiesQ11.NursingSchoolLQ11a","operator":"==","value":"Provide Response Below","type":"custom","hasMergeField":false}]}'  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element1block_element2" class="slds-col   slds-p-around_x-small slds-size_12-of-12 " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element1block_element2_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element1block_element2block_element0" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element1block_element2block_element0_child"   card={card}  record={record}  placeholder="-"  field-name="NursingSchoolFacilitiesQ11.NursingSchoolLQ11b"  label="Please provide a description of planned or available learning resources to include such items as equipment, supplies, library services, computers, simulation technology, and online educational resources to be utilized for instructional purposes."  type="text"  labelclass="label"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element1block_element2block_element1" class="slds-col   slds-size_12-of-12 condition-element" data-rindex={rindex} style=""  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-21","field":"NursingSchoolFacilitiesQ11.NursingSchoolLQ11b","operator":"==","value":"Provide Response Below","type":"custom","hasMergeField":false}]}' ><omnistudio-output-field data-style-id="state0element1block_element2block_element1_child"   card={card}  record={record}  placeholder="-"  field-name="NursingSchoolFacilitiesQ11.NursingSchoolLQ11bText"  label="Please Explain"  type="text"  labelclass="label"  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-21","field":"NursingSchoolFacilitiesQ11.NursingSchoolLQ11b","operator":"==","value":"Provide Response Below","type":"custom","hasMergeField":false}]}'  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div>
+        </div></omnistudio-block>
+    </div>
+        </div>
+      </omnistudio-flex-card-state>
+                        </template>
+                      </template>
+                      <template if:false={hasRecords}>
+                            <omnistudio-flex-card-state  record={record} data-statue="false"  data-index="0" data-rindex={rindex} class="cf-vlocity-state-0 cf-vlocity-state slds-size_12-of-12"  tracking-obj={_childCardTrackingObj} >
+      <div if:true={cardLoaded} class="slds-grid slds-wrap slds-card slds-p-around_x-small slds-m-bottom_x-small" style="">
+          <div data-style-id="state0element0" class="slds-col   slds-p-around_x-small slds-size_12-of-12 " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element0_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element0" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element0block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3E%3Cstrong%3EFaculty%3C/strong%3E%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element0block_element1" class="slds-col   slds-p-around_x-small slds-size_12-of-12 " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element0block_element1_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element1block_element0" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element0block_element1block_element0_child"   card={card}  record={record}  placeholder="-"  field-name="NursingSchoolFacultyQ9.NursingSchoolLQ9a"  label="Please provide the plan for hiring full time and part time theory and clinical faculty. This plan shall include full time equivalents, student to faculty ratios and full time to part time faculty ratios to meet initial and increasing enrollment."  type="text"  labelclass="label"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element0block_element1block_element1" class="slds-col   slds-size_12-of-12 condition-element" data-rindex={rindex} style=""  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-0","field":"NursingSchoolFacultyQ9.NursingSchoolLQ9a","operator":"==","value":"Provide Response Below","type":"custom","hasMergeField":false}]}' ><omnistudio-output-field data-style-id="state0element0block_element1block_element1_child"   card={card}  record={record}  placeholder="-"  field-name="NursingSchoolFacultyQ9.NursingSchoolLQ9aText"  label="Please Explain"  type="text"  labelclass="label"  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-0","field":"NursingSchoolFacultyQ9.NursingSchoolLQ9a","operator":"==","value":"Provide Response Below","type":"custom","hasMergeField":false}]}'  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element0block_element2" class="slds-col   slds-p-around_x-small slds-size_12-of-12 " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element0block_element2_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element2block_element0" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element0block_element2block_element0_child"   card={card}  record={record}  placeholder="-"  field-name="NursingSchoolFacultyQ9.NursingSchoolLQ9b"  label="What other positions will be utilized by the nursing program (i.e. clerical support, lab personnel, success coach, navigator, etc.)?"  type="text"  labelclass="label"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element0block_element2block_element1" class="slds-col   slds-size_12-of-12 condition-element" data-rindex={rindex} style=""  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-7","field":"NursingSchoolFacultyQ9.NursingSchoolLQ9b","operator":"==","value":"Provide Response Below","type":"custom","hasMergeField":false}]}' ><omnistudio-output-field data-style-id="state0element0block_element2block_element1_child"   card={card}  record={record}  placeholder="-"  field-name="NursingSchoolFacultyQ9.NursingSchoolLQ9bText"  label="Please Explain"  type="text"  labelclass="label"  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-7","field":"NursingSchoolFacultyQ9.NursingSchoolLQ9b","operator":"==","value":"Provide Response Below","type":"custom","hasMergeField":false}]}'  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element1" class="slds-col   slds-p-around_x-small slds-size_12-of-12 " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element1_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element1block_element0" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element1block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3E%3Cstrong%3EFacilities%3C/strong%3E%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element1block_element1" class="slds-col   slds-p-around_x-small slds-size_12-of-12 " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element1block_element1_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element1block_element1block_element0" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element1block_element1block_element0_child"   card={card}  record={record}  placeholder="-"  field-name="NursingSchoolFacilitiesQ11.NursingSchoolLQ11a"  label="Please provide a description of educational facilities to be used by the professional nursing program such as classrooms, library, offices, clinical skills and simulation laboratories, and other facilities."  type="text"  labelclass="label"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element1block_element1block_element1" class="slds-col   slds-size_12-of-12 condition-element" data-rindex={rindex} style=""  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-14","field":"NursingSchoolFacilitiesQ11.NursingSchoolLQ11a","operator":"==","value":"Provide Response Below","type":"custom","hasMergeField":false}]}' ><omnistudio-output-field data-style-id="state0element1block_element1block_element1_child"   card={card}  record={record}  placeholder="-"  field-name="NursingSchoolFacilitiesQ11.NursingSchoolLQ11aText"  label="Please Explain"  type="text"  labelclass="label"  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-14","field":"NursingSchoolFacilitiesQ11.NursingSchoolLQ11a","operator":"==","value":"Provide Response Below","type":"custom","hasMergeField":false}]}'  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element1block_element2" class="slds-col   slds-p-around_x-small slds-size_12-of-12 " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element1block_element2_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element1block_element2block_element0" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element1block_element2block_element0_child"   card={card}  record={record}  placeholder="-"  field-name="NursingSchoolFacilitiesQ11.NursingSchoolLQ11b"  label="Please provide a description of planned or available learning resources to include such items as equipment, supplies, library services, computers, simulation technology, and online educational resources to be utilized for instructional purposes."  type="text"  labelclass="label"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element1block_element2block_element1" class="slds-col   slds-size_12-of-12 condition-element" data-rindex={rindex} style=""  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-21","field":"NursingSchoolFacilitiesQ11.NursingSchoolLQ11b","operator":"==","value":"Provide Response Below","type":"custom","hasMergeField":false}]}' ><omnistudio-output-field data-style-id="state0element1block_element2block_element1_child"   card={card}  record={record}  placeholder="-"  field-name="NursingSchoolFacilitiesQ11.NursingSchoolLQ11bText"  label="Please Explain"  type="text"  labelclass="label"  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-21","field":"NursingSchoolFacilitiesQ11.NursingSchoolLQ11b","operator":"==","value":"Provide Response Below","type":"custom","hasMergeField":false}]}'  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div>
+        </div></omnistudio-block>
+    </div>
+        </div>
+      </omnistudio-flex-card-state>
+                      </template>
+            </template>
+            <template if:true={hasError}>
+            {error}
+            </template>
+            
+      <omnistudio-action action-wrapperclass="slds-hide" re-render-flyout class="action-trigger slds-col" onupdateos={updateOmniscript} onselectcards={updateSelectedCards} onsetvalue={updateAction} onfireactionevent={actionEvtHandler}>
+      
+      </omnistudio-action>
+  
+            <omnistudio-action class="execute-action" re-render-flyout action-wrapperclass="slds-hide" onupdateos={updateOmniscript} onselectcards={updateSelectedCards} onsetvalue={updateAction} onfireactionevent={actionEvtHandler}>
+            
+            </omnistudio-action>
+            </div>
+          </template>

@@ -1,0 +1,182 @@
+<!--
+  @description       : 
+  @author            : Ranjitha M U
+  @group             : 
+  @last modified on  : 07-19-2024
+  @last modified by  : MTX Group Inc
+-->
+<template>
+    <div class="backdrop" if:true={showSpinner}>
+        <div class="spinner">
+            <lightning-spinner alternative-text="Loading..."></lightning-spinner>
+        </div>
+    </div>
+   <div class="overflow-auto all-data-table">
+        <table class="slds-table slds-table_bordered slds-no-row-hover alpha-table-layout dashboard-table" aria-label={titledata}>
+            <template if:true={applicationdata}>
+                <caption class="sr-only slds-text-heading_large" aria-label={titledata}>My Applications Table</caption>
+            </template>
+            <template if:true={licensedata}>
+                <caption class="sr-only slds-text-heading_large" aria-label={titledata}>My Licenses Table</caption>
+            </template>
+            <template if:true={paymentdata}>
+                <caption class="sr-only" aria-label={titledata}>My Payment Table</caption>
+            </template>
+            <thead>
+                <tr class="table-heading-row">
+                    <template for:each={columns} for:item="column">
+                        <th key={column.fieldName}>{column.label}</th>
+                    </template>
+                </tr>
+            </thead>
+
+        
+            
+            <template if:true={applicationdata}>
+                 <tbody>
+                <template for:each={applicationData} for:item="item">
+                    <tr key={item.name} class="table-body-row">
+                        <td data-label="">{item.Name}</td>
+                        <td>{item.License_Type_Name__c}</td>
+                        <td>{item.Applicant_submission_Date__c}</td>
+                        <td><div class={item.statusClass}>{item.Status}</div></td>
+                        <td>
+                            <template if:true={item.showAction}>
+                                <template if:true={item.showAction}>
+                                    <lightning-button-menu class="action-btn" alternative-text="Application Action" aria-label={item.applicaitonNoAndStausAriaLabel} variant="bare"
+                                        icon-name="utility:threedots_vertical" menu-alignment="auto" title="show more">
+                                        <template for:each={item.menuItems} for:item="action">
+                                            <lightning-menu-item label={action.label} value={action.value}
+                                                key={action.label} onclick={handleClickApplication}
+                                                data-id={item.recordId} data-openurl={action.openUrl}
+                                                data-url={action.url}>
+                                            </lightning-menu-item>
+                                        </template>
+                                    </lightning-button-menu>
+                                </template>
+                            </template>
+            
+                                <lightning-button variant="bare" class="view-btn" label="View" alternative-text="View Application" aria-live="assertive" aria-label={item.applicationNumberAriaLabel}
+                                    data-id={item.viewUrl} onclick={applicationEyehandler} title="View Application" data-element={item.Name} ></lightning-button>
+                 
+                        </td>
+                    </tr>
+                </template>
+            </tbody>
+            </template>
+     
+        </table>
+   </div>
+    <!-- Modal window Code Start  -->
+    <template if:true={showWithdrawModal}>
+        <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01"
+            class="slds-modal slds-fade-in-open lpi-modal slds-modal_small">
+            <div class="slds-modal__container">
+                <!-- Modal header  -->
+                <div class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                        onclick={handleCloseModal}  aria-label="Close Confirmation For Withdraw" title="Close">
+                        <lightning-icon icon-name="utility:close" variant="inverse" size="small"
+                           ></lightning-icon>
+                    </button>
+                    <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Confirmation For Withdraw</h1>
+                </div>
+                <!-- Modal body  -->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <p>Please confirm that you wish to WITHDRAW this application.
+                    By selecting YES, you will no longer be able to retrieve this draft application and will need to
+                    start over with a new application.</p>
+                </div>
+                <div class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" aria-label="Deny"
+                        onclick={handleCloseModal}>No</button>
+                    <button class="slds-button slds-button_brand" onclick={handleWithdrawYes}>Yes</button>
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+    </template>
+    <!-- Modal window Code END  -->
+    <template if:true={showEnotifyModal}>
+        <c-lpi-modal is-headerless onclose={handleENotifyModalOnClose}>
+            <div slot="content">
+                <lightning-card variant="Narrow">
+                    <template if:true={headerNotifyMsg}>
+                        <b>{headerNotifyMsg}</b><p><br></p>
+                    </template>
+                    <template if:true={isColourGreen}>
+                        <div class="green-indicator slds-p-around_small">
+                            <div class="slds-m-bottom_medium">
+                                <lightning-formatted-rich-text class="eNotify-message"
+                                    value={enotifyMessageText}></lightning-formatted-rich-text>
+                            </div>
+                        </div>
+                    </template>
+                    <template if:true={isColourRed}>
+                        <div class="red-indicator slds-var-p-around_small">
+                            <div class="slds-m-bottom_medium">
+                                <lightning-formatted-rich-text class="eNotify-message"
+                                    value={enotifyMessageText}></lightning-formatted-rich-text>
+                            </div>
+                        </div>
+                    </template>
+                    <template if:true={isColourYellow}>
+                        <div class="yellow-indicator slds-p-around_small">
+                            <div class="slds-m-bottom_medium">
+                                <lightning-formatted-rich-text class="eNotify-message"
+                                    value={enotifyMessageText}></lightning-formatted-rich-text>
+                            </div>
+                        </div>
+                    </template>
+                    <template if:true={isError}>
+                        <div class="error-message">
+                            {enotifyMessageText}
+                        </div>
+                    </template>
+                </lightning-card>
+            </div>
+            <div slot="footer">
+                <lightning-button label="OK" name="confirm" onclick={handleENotifyModalOnClose}>
+                </lightning-button>
+            </div>
+        </c-lpi-modal>
+    </template>
+
+    <template if:true={showAmendModal}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+            aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open lpi-modal slds-modal_small" onkeydown={escCloseModal}>
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                        title="Close" aria-label="Close Select Amendment Type" onclick={hideModalBox}>
+                        <lightning-icon icon-name="utility:close" variant="inverse"
+                            size="small"></lightning-icon>
+                    </button>
+                    <h1 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">Select Amendment Type
+                    </h1>
+                </header>
+
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+                    <p class="asterisk-caption">Asterisk (<span class="c-red">*</span>) indicates
+                        required field</p>
+                    <lightning-radio-group name="selectType" class="radio-group m-t-medium" data-id="selecttype" label="Select Amendment Type"
+                        options={childButtonList} value={subtype} type="radio" onchange={handleChangeSubType} required>
+                    </lightning-radio-group>
+                    <template if:true={showChildOfchild}>
+                        <lightning-radio-group name="childType" class="radio-group m-t-medium" data-id={subtype} label={childHeadingValue}
+                            options={childOfchildOption} value={childValue} type="radio"
+                            onchange={handleChildChangeType} required>
+                        </lightning-radio-group>
+                    </template>
+
+                </div>
+                <footer class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" onclick={hideModalBox}>Cancel</button>
+                    <button class="slds-button slds-button_brand" onclick={handleAmendContinueButtton}>Continue</button>
+                </footer>
+
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>

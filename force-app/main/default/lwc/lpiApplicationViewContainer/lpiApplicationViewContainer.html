@@ -1,0 +1,417 @@
+<!-- sldsValidatorIgnore -->
+<!--
+  @description       : 
+  @author            : Vamsi Mudaliar
+  @group             : 
+  @last modified on  : 05-28-2024
+  @last modified by  : Bharath Kumar M
+-->
+<template>
+    <div if:true={showSpinner}>
+		<lightning-spinner size="medium" alternative-text="Loading"></lightning-spinner>
+	</div>
+    <div class="slds-grid slds-gutters slds-wrap licenses-details">
+        <div class="slds-col slds-size_2-of-3 licenses-details__left">
+            <div class="slds-card">
+                <lightning-button variant="base" class="base-link-btn"
+                label= "Back"
+                onclick={handleClickBackDashbaord}></lightning-button>
+                <h1 class="bold-24 m-b-large m-t-medium">License Details</h1>
+                <template if:true={showErrorForNoLicense}>
+                    <span style="color:red">{licenseNotPresentError}</span>
+                </template>
+                <ul class="slds-accordion" if:false={showErrorForNoLicense}>
+                    <template for:each={jsonData} for:item="item">
+                            <c-lpi-application-view-item
+                                section={item} key={item.SectionName} is-portal={isPortal}
+                                onchildbuttonclick={getButtonProperties}>
+                            </c-lpi-application-view-item>
+                    </template>
+                </ul>
+            </div>
+        </div>
+        <!-- HERE :
+            <c-l-p-i-d-o-c-g-e-n-english business-license-id={BusinessLicenseId}></c-l-p-i-d-o-c-g-e-n-english> -->
+        <template if:false={licenseeModification}>
+            <div class="slds-col slds-size_1-of-3 licenses-details__right">
+                <div if:true={showButtons}>
+                <div class="slds-card">
+                    <div class="slds-m-bottom_large">
+                        <h2 class="bold-20 text-primary m-b-medium">License Actions</h2>
+                        <div class="button-group">
+                            <template for:each={buttonData} for:item="item" for:index="ind">
+                                <lightning-button  key={item} variant="brand-outline" label={item.buttonLable} data-name={item.buttonJSONData} data-id={ind} onclick={handleButtton} class="slds-m-bottom_small"></lightning-button>
+                            </template>
+                        </div>
+                        <!-- added by neeraj mani sai S-45809 Start -->
+                        <template if:true={showAddOrRemoveAddressButtons}>
+                            <div class="button-group">
+                                <lightning-button variant="brand-outline" label="Add an Additional Address" class="slds-m-bottom_small addAdditionBtn" onclick={handleAddOrRemoveAddressButton}></lightning-button>
+                            </div>
+                            <div class="button-group">
+                                <lightning-button variant="brand-outline" label="Remove Existing Address" class="slds-m-bottom_small removeBtn" onclick={handleAddOrRemoveAddressButton}></lightning-button>
+                            </div>
+                        </template>
+                        <!-- added by neeraj mani sai S-45809 End -->
+                        <!-- added by Vamsi Mudaliar S-55042 Start -->
+                        <template if:true={showVisitRCVRecords}>
+                            <div class="button-group">
+                                <lightning-button variant="brand-outline" label="View Visits & Regulatory Code Violations" class="slds-m-bottom_small" onclick={handleViewVisits}></lightning-button>
+                            </div>
+                        </template>
+                        <!-- added by Vamsi Mudaliar S-55042 Ends -->
+                        <!-- Added By Sukanya S-43410 Started Here-->
+                        <template if:true={showPharmacyReportForm}>
+                            <div class="button-group">
+                                <lightning-button variant="brand-outline" label="Discipline/State or Federal Action Reporting Form" class="slds-m-bottom_small" onclick={handlePharmacyReportForm}></lightning-button>
+                            </div>
+                        </template>
+                        <!-- Added By Sukanya S-43410 Ended Here-->
+                    </div>
+                </div>
+                </div>
+<!--                 <template if:true ={isPortal}>
+                    <p class="slds-m-top_small">
+                        <lightning-icon icon-name="utility:info_alt" alternative-text="Info Image" size="x-small"></lightning-icon>
+                        <span> Please note credit/debit card transactions will incur a 
+                            processing fee.</span>
+                    </p>
+                </template> -->
+            </div>
+        </template>
+        <!-- added by neeraj mani sai S-51784 Start -->
+        <template if:false={showErrorForNoLicense}>
+            <template if:true={isStudentDataAvailable}>
+                <div class="slds-col slds-size_2-of-3 licenses-details__left student-applications-table">
+                    <div class="slds-card" title="Student Applications">
+                        <div style="overflow: auto;">
+                            <table class="slds-table slds-table_bordered slds-no-row-hover alpha-table-layout slds-border_left slds-border_right">
+                                <thead>
+                                    <tr>
+                                        <template for:each={columns} for:item="column">
+                                            <th key={column.fieldName}>{column.label}</th>
+                                        </template>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <template for:each={studentsData} for:item="item">
+                                        <tr key={item.Id}>
+                                            <td>{item.sNo}</td>
+                                            <td>{item.Name}</td>
+                                            <td>{item.studentName}</td>
+                                            <td>{item.licenseTypeName}</td>
+                                            <td>{item.studentAppliedDate}</td>
+                                            <td>{item.Status__c}</td>
+                                            <td>
+                                                <lightning-button class="view-btn" data-id={item.Id} variant="bare"
+                                                    icon-name="utility:preview" alternative-text="View Application"
+                                                    data-appurl={item.appUrl}
+                                                    onclick={handleSchoolRelatedStudentApplicationRowAction}>
+                                                </lightning-button>
+                                            </td>
+                                        </tr>
+                                    </template>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </template>
+        <!-- added by neeraj mani sai S-51784 End -->
+    </div>
+      <!-- Add new Document modal Start -->
+    <template if:true={showModal}>
+		<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+			aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+			<div class="slds-modal__container">
+				<header class="slds-modal__header">
+					<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+						title="Close" onclick={hideModalBox}>
+						<lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
+							size="small"></lightning-icon>
+						<span class="slds-assistive-text">Close</span>
+					</button>
+					<h1 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">{modalHeaderTitle}
+                    </h1>
+				</header>
+
+				<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <p class="asterisk-caption m-b-medium">Asterisk (<span class="c-red">*</span>) indicates
+                        required field</p>
+                    <lightning-radio-group name="selectType"
+                                        class="radio-group"
+                                        data-id="selecttype"
+                                        label={modalHeaderTitle}
+                                        options={childButtonList}
+                                        value={subtype}
+                                        type="radio"
+                                        onchange={handleChangeSubType} 
+                                        required>
+                    </lightning-radio-group>
+                    <template if:true={showChildOfchild}>
+                        <lightning-radio-group name="childType"
+                                        data-id={subtype}
+                                        class="radio-group"
+                                        label={childHeadingValue}
+                                        options={childOfchildOption}
+                                        value={childValue}
+                                        type="radio"
+                                        onchange={handleChildChangeType} 
+                                        required>
+                    </lightning-radio-group>
+                    </template>
+
+				</div>
+				<footer class="slds-modal__footer">
+					<button class="slds-button slds-button_neutral" onclick={hideModalBox}>Cancel</button>
+					<button class="slds-button slds-button_brand" onclick={handleButtton}>Continue</button>
+				</footer>
+
+			</div>
+		</section>
+		<div class="slds-backdrop slds-backdrop_open"></div>
+	</template>
+    <!-- getEmailLink -->
+    <!-- Add new Document modal end -->
+    <template if:true={showEnotifyModal}>
+        <c-lpi-modal is-headerless onclose={handleENotifyModalOnClose}>
+            <div slot="content">
+                <div class="slds-card" variant="Narrow">
+                    <template if:true={headerNotifyMsg}>
+                        <b>{headerNotifyMsg}</b><p><br></p>
+                    </template>
+                    <template if:true={isColourGreen}>
+                        <div class="green-indicator slds-p-around_small">
+                            <div class="slds-m-bottom_medium">
+                                <lightning-formatted-rich-text class="eNotify-message" value={enotifyMessageText}></lightning-formatted-rich-text>
+                            </div>
+                        </div>
+                    </template>
+                    <template if:true={isColourRed}>
+                        <div class="red-indicator slds-var-p-around_small">
+                            <div class="slds-m-bottom_medium">
+                                <lightning-formatted-rich-text class="eNotify-message" value={enotifyMessageText}></lightning-formatted-rich-text>
+                            </div>
+                        </div>
+                    </template>
+                    <template if:true={isColourYellow}>
+                        <div class="yellow-indicator slds-p-around_small">
+                            <div class="slds-m-bottom_medium">
+                                <lightning-formatted-rich-text class="eNotify-message" value={enotifyMessageText}></lightning-formatted-rich-text>
+                            </div>
+                        </div> 
+                    </template>
+                    <template if:true={isError}>
+                        <div class="error-message">
+                            {enotifyMessageText}
+                        </div>
+                      </template>
+                    </div>
+            </div>
+            <div slot="footer">
+                <lightning-button label="OK" name="confirm" onclick={handleENotifyModalOnClose}>
+                </lightning-button>
+            </div>
+        </c-lpi-modal>
+    </template>
+
+     <!-- added by neeraj mani sai S-45809 Start -->
+    <template if:true={showAddressModal}>
+        <div if:true={showSpinner}>
+            <lightning-spinner size="medium" alternative-text="Loading"></lightning-spinner>
+        </div>
+		<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+			aria-describedby="modal-content-id-2" class="slds-modal slds-fade-in-open  " onkeydown={handleEscKeyDown}>
+			<div class="slds-modal__container">
+				<header class="slds-modal__header">
+					<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+						title="Close" onclick={handleCloseAddOrRemoveAddressButton}>
+						<lightning-icon icon-name="utility:close" variant="inverse"
+							size="small"></lightning-icon>
+						<span class="slds-assistive-text">Close Modal {addressModalLabel}</span>
+					</button>
+					<h1 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">{addressModalLabel}
+                    </h1>
+				</header>
+
+				<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+                    <template if:true={showAddAddressModal}>
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-1 slds-var-p-around_x-small">
+                                <div class="slds-text-heading_small slds-p-vertical_small mandatory-text">
+                                    Required fields are marked with an asterisk(<span class="mandatory-mark">*</span>)
+                                </div>
+                                <span>
+                                    <lightning-input type="text" label="Street Address" name = "streetAddress"
+                                    message-when-value-missing="Error: Street Address is required." class = "validate"  
+                                    onchange={handleAddressInputChanges} maxlength="255"
+                                    pattern={patternObj.text}
+                                    message-when-pattern-mismatch="Invalid input. Special characters are not allowed." 
+                                    required></lightning-input>
+                                </span>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-var-p-around_x-small">
+                                <span>
+                                    <lightning-combobox label="Country" name="country" 
+                                                        message-when-value-missing="Error: Country is required."
+                                                        options={countryOptions}  value={addressDataObj.country}
+                                                        onchange={handleAddressInputChanges} class = "validate" required>
+                                    </lightning-combobox>
+                                </span>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-var-p-around_x-small">
+                                <span>
+                                    <lightning-input type="text" label="City" name = "city" 
+                                    message-when-value-missing="Error: City is required." 
+                                    class = "validate" onchange={handleAddressInputChanges} 
+                                    pattern={patternObj.text} maxlength="40"
+                                    message-when-pattern-mismatch="Invalid input. Special characters are not allowed." 
+                                    required></lightning-input>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-2 slds-var-p-around_x-small">
+                                <span>
+                                    <template if:false={isAddressCountryUS}>
+                                        <lightning-input type="text" label="State" name = "stateText"
+                                            message-when-value-missing="Error: State is required."
+                                            class = "validate" onchange={handleAddressInputChanges} 
+                                            pattern={patternObj.text} maxlength="40"
+                                            message-when-pattern-mismatch="Invalid input. Special characters are not allowed." 
+                                            required></lightning-input>
+                                    </template>
+                                    <template if:true={isAddressCountryUS}>
+                                        <lightning-combobox label="State" name="state" value={addressDataObj.state}
+                                            message-when-value-missing="Error: State is required." options={stateOptions}
+                                            onchange={handleAddressInputChanges} class = "validate" required>
+                                    </lightning-combobox>
+                                    </template>
+                                </span>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2 slds-var-p-around_x-small" style="position:relative;">
+                                <span>
+                                    <template if:false={isStateMO}>
+                                        <lightning-input type="text" label="County" name = "county" 
+                                        onchange={handleAddressInputChanges} pattern={patternObj.text}
+                                        message-when-pattern-mismatch="Invalid input. Special characters are not allowed." maxlength="40"></lightning-input>
+                                    </template>
+                                    <template if:true={isStateMO}>
+                                        <lightning-input label="County" type="search" class = "validate combobox_input countyMO"
+                                            message-when-value-missing="Error: County is required." name="countyLookup"  onkeydown={handleKeyDown}
+                                            onchange={search} value={selectedValue} required>
+                                        </lightning-input>
+                                        <div if:true={searchResults} style="margin-top:-0.75rem;" id="listbox-id-5" class="slds-dropdown slds-dropdown_length-with-icon-7 slds-dropdown_fluid" role="listbox">
+                                            <ul class="slds-listbox slds-listbox_vertical" role="presentation">
+                                                <template for:each={searchResults} for:item="searchResult">
+                                                    <li key={searchResult.value} data-name={searchResult.label} role="presentation"
+                                                        onclick={selectSearchResult} class="slds-listbox__item">
+                                                        <div class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small "
+                                                            role="option">
+                                                            <span class="slds-media__body">
+                                                                <span class="slds-truncate" title={searchResult.label}>
+                                                                    {searchResult.label}
+                                                                </span>
+                                                            </span>
+                                                        </div>
+                                                    </li>
+                                                </template>
+                                            </ul>
+                                        </div>
+                                    </template>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-2 slds-var-p-around_x-small">
+                                <span>
+                                    <lightning-input type="text" label="Zip Code" name = "zipCode" 
+                                    message-when-value-missing="Error: Zip Code is required."
+                                    max-length="5" class = "validate"  onchange={handleAddressInputChanges}
+                                    pattern={patternObj.zipCode} required
+                                    message-when-pattern-mismatch="Please enter correct Zip/Postal Code" ></lightning-input>
+                                </span>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2 slds-var-p-around_x-small">
+                                <span>
+                                    <lightning-input type="tel" label="Telephone Number" name = "telephoneNum" min-length="14" 
+                                    max-length="14" onchange={handleAddressInputChanges} pattern={patternObj.phone}
+                                    message-when-pattern-mismatch="Please enter a valid Telephone Number" value={addressDataObj.telephoneNum}></lightning-input>
+                                </span>
+                            </div>
+                        </div>
+                    </template>
+                    <template if:true={showRemoveExistingAddressModal}>
+                        <template if:true={isRemoveBranchAddressDataFound}>
+                            <template for:each={branchAddresslist} for:item="branchAddress">
+                                <div title="" class="card-border slds-m-bottom_medium" key={branchAddress.branchAddId}>
+                                    <div class="slds-box"> 
+                                        <lightning-input  class="removeCheckbox branchaddress-cb mainBranchAddressClass" type="checkbox" label={branchAddress.branchNumName} 
+                                        name="RemoveCheckBox" onchange={handleAddressInputChanges} data-id={branchAddress.branchAddId}>
+                                        </lightning-input> 
+                                        <div class="license-branch-address" style="word-wrap: break-word;">
+                                            <span>{branchAddress.streetAddress}, {branchAddress.city}, </span>
+                                            <span if:true={branchAddress.state}>{branchAddress.state}, </span>
+                                            <span if:true={branchAddress.stateText}>{branchAddress.stateText}, </span>
+                                            <template if:true={branchAddress.county}>
+                                                <span if:true={branchAddress.telephoneNum}>{branchAddress.country}, {branchAddress.zipCode}, {branchAddress.county},</span>
+                                            </template>
+                                            <template if:false={branchAddress.county}>
+                                                <span if:true={branchAddress.telephoneNum}>{branchAddress.country}, {branchAddress.zipCode}, </span>
+                                            </template>
+                                            <template if:true={branchAddress.county}>
+                                                <span if:false={branchAddress.telephoneNum}>{branchAddress.country}, {branchAddress.zipCode}, {branchAddress.county}</span>
+                                            </template>
+                                            <template if:false={branchAddress.county}>
+                                                <span if:false={branchAddress.telephoneNum}>{branchAddress.country}, {branchAddress.zipCode}</span>
+                                            </template>
+                                            <div if:true={branchAddress.telephoneNum} class="slds-m-top_xx-small">{branchAddress.telephoneNum}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </template>
+                        </template>
+                        <template if:false={isRemoveBranchAddressDataFound}>
+                            No Branch Address Found Related to this License
+                        </template>
+                    </template>
+				</div>
+				<footer class="slds-modal__footer">
+					<button class="slds-button slds-button_neutral" name = "Cancel" onclick={handleCloseAddOrRemoveAddressButton}>Cancel</button>
+					<button class="slds-button slds-button_brand" name = "Continue" onclick={handleAddressContinueButton}>Continue</button>
+				</footer>
+			</div>
+		</section>
+		<div class="slds-backdrop slds-backdrop_open"></div>
+	</template>
+    <!-- added by neeraj mani sai S-45809 End -->
+    <!-- Start - Added by Nitish S-56015 -->
+    <template if:true={showNursingDownloadModal}>
+		<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+			aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+			<div class="slds-modal__container">
+				<header class="slds-modal__header">
+					<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+						title="Close" onclick={closeNursingModal}>
+						<lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
+							size="small"></lightning-icon>
+						<span class="slds-assistive-text">Close</span>
+					</button>
+                    <h1 id="modal-heading-03" class="slds-text-heading_medium slds-hyphenate">Download a copy of my License</h1>
+				</header>
+
+				<div class="slds-modal__content slds-p-around_medium">
+                    <p>Verify your licensure from Nursys QuickConfirm. QuickConfirm License Verification is an online license look-up system that allows you to verify nurse licensure status.</p>
+				</div>
+				<footer class="slds-modal__footer">
+					<button class="slds-button slds-button_neutral" onclick={closeNursingModal}>Cancel</button>
+					<button class="slds-button slds-button_brand" onclick={handleNursingDownloadProceed}>Proceed</button>
+				</footer>
+
+			</div>
+		</section>
+		<div class="slds-backdrop slds-backdrop_open"></div>
+	</template>
+    <!-- End - Added by Nitish S-56015 -->
+</template>

@@ -1,0 +1,8 @@
+.recaptcha-registration {
+    transform: scale(0.8) !important;
+    margin-right: 12.5rem !important;
+}/*# sourceMappingURL=modpr_business_registeration_page.css.map */
+
+.add-coorporate-Ownership-modal .slds-modal__content{
+    overflow: inherit;
+}

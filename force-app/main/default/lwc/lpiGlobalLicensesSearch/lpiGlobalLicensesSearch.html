@@ -1,0 +1,161 @@
+<!--
+  @description       : 
+  @author            : Bharath Kumar M
+  @group             : 
+  @last modified on  : 06-18-2024
+  @last modified by  : Bharath Kumar M
+-->
+<template>
+    <div class="search-banner-main slds-container--center slds-container--x-large p-t-small container-padding">
+        <div class="search-banner">
+            <h1 class="bold-24 text-white">Know Your License Details</h1>
+            <div class="search-container">
+                <div class="search-wrap">
+                    <lightning-input name="enter-search" label="Search License here" type="search"
+                        placeholder="Search License here" variant="label-hidden" onchange={handleSearch}>
+                    </lightning-input>
+                    <lightning-combobox name="progress" label="Sort By" value={sortBy} placeholder="Sort By"
+                        options={sortOptions} onchange={handleSortChange} variant="label-hidden"
+                        class="landing-picklist slds-m-left_small">
+                    </lightning-combobox>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="slds-container--center slds-container--x-large container-padding">
+        <div class="search-result">
+            <p class="p-b-xms regular-text-14 text-secondary p-t-small">{pageMessage}</p>
+            <div class="slds-grid slds-wrap slds-gutters">
+                <div class="slds-col slds-large-size--8-of-12 slds-medium-size--12-of-12 slds-size--12-of-12">
+                    <template if:true={dataJSON}>
+                        <template for:each={dataJSON} for:item="data">
+                            <div class="slds-grid slds-wrap slds-card landing-card" key={data.Id}>
+                                <div
+                                    class="slds-col card-details slds-large-size--9-of-12 slds-medium-size--9-of-12 slds-size--12-of-12">
+                                    <span class="slds-badge m-b-xs slds-theme_info">{data.badgeContent}</span>
+                                    <h2 class="bold-18 m-b-xs text-brand">{data.title}</h2>
+                                    <p class="regular-text-14 text-secondary m-b-xs">{data.description}</p>
+                                </div>
+                                <div
+                                    class="slds-col card-view-button slds-large-size--3-of-12 slds-medium-size--3-of-12 slds-size--12-of-12">
+                                    <lightning-button variant="brand-outline" label="View Details" title="View Details"
+                                        onclick={handleClick} data-id={data.Id} data-title={data.title} data-description={data.description} class="slds-m-left_x-small"></lightning-button>
+                                </div>
+                            </div>
+                        </template>
+                    </template>
+                    <template if:false={dataJSON}>
+                        <p>No Data Found !!</p>
+                    </template>
+                    <template if:true={dataJSON}>
+                        <div class="slds-grid slds-grid--align-spread slds-m-top--xx-large slds-wrap">
+                            <lightning-button label="Previous" onclick={handlePrevPage} icon-position="left" icon-name="utility:chevronleft" disabled={isDisablePrevious}></lightning-button>
+                            <lightning-button label="Next" onclick={handleNextPage} icon-position="right" icon-name="utility:chevronright" disabled={isDisableNext}></lightning-button>
+                        </div>
+                    </template>
+                </div>
+                <div class="slds-col slds-large-size--4-of-12 slds-medium-size--12-of-12 slds-size--12-of-12">
+                    <div class="search-section-container">
+                        <div class="slds-accordion">
+                            <div class="slds-accordion__list-item">
+                                <section class={sectionClass1}>
+                                    <div class="slds-accordion__summary">
+                                        <h3 class="slds-accordion__summary-heading">
+                                            <div class="slds-accordion__summary-action" aria-controls="referenceId-44"
+                                                aria-expanded="true" data-name="Accordion Information"
+                                                title="Accordion Information">
+                                                <span class="slds-accordion__summary-content bold-16">Category
+                                                    <div class="serach-sel-value semiBold-12 text-brand">All Categories
+                                                    </div>
+                                                </span>
+                                                <div class="slds-accordion__summary-content-icon">
+                                                    <lightning-button variant="base"
+                                                        class="base-accordion-btn base-link-btn" data-name="category"
+                                                        label="Toggle" title="Category" aria-label="Category"
+                                                        onclick={handleAccordianClick}></lightning-button>
+                                                </div>
+                                            </div>
+                                        </h3>
+                                    </div>
+                                    <div class="slds-accordion__content cc-card-body" id="referenceId-42">
+                                        <div class="search-inputs">
+                                            <lightning-input name="enter-search" label="Select Category"
+                                                class="input-box" placeholder="Search here"
+                                                type="search"></lightning-input>
+                                            <ul class="search-results-list">
+                                                <li>
+                                                    <a href="javascript:void(0);" class="active">All Category</a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:void(0);">Employer Information</a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:void(0);">General Business Information</a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:void(0);">Legal Structures</a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:void(0);">Professional Licenses</a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:void(0);">Tax Information</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </section>
+                                <section class={sectionClass2}>
+                                    <div class="slds-accordion__summary">
+                                        <h3 class="slds-accordion__summary-heading">
+                                            <div class="slds-accordion__summary-action" aria-controls="referenceId-43"
+                                                aria-expanded="false" data-name="Accordion Information new"
+                                                title="Accordion Information">
+                                                <span class="slds-accordion__summary-content bold-16">Agency
+                                                    <div class="serach-sel-value semiBold-12 text-brand">All Agencies
+                                                    </div>
+                                                </span>
+                                                <div class="slds-accordion__summary-content-icon">
+                                                    <lightning-button variant="base"
+                                                        class="base-accordion-btn base-link-btn" data-name="agency"
+                                                        label="Toggle" title="Agency" aria-label="Agency"
+                                                        onclick={handleAccordianClick}></lightning-button>
+                                                </div>
+                                            </div>
+                                        </h3>
+                                    </div>
+                                    <div class="slds-accordion__content cc-card-body" id="referenceId-43">
+                                        <div class="search-inputs">
+                                            <lightning-input name="enter-search" label="Select Agency" class="input-box"
+                                                placeholder="Search here" type="search"></lightning-input>
+                                            <ul class="search-results-list">
+                                                <li>
+                                                    <a href="javascript:void(0);" class="active">All Agency</a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:void(0);">Employer Information</a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:void(0);">General Business Information</a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:void(0);">Legal Structures</a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:void(0);">Professional Licenses</a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:void(0);">Tax Information</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

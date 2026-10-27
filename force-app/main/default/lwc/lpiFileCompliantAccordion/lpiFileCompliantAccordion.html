@@ -1,0 +1,194 @@
+<!--
+  @description       : 
+  @author            : Vamsi Mudaliar
+  @group             : 
+  @last modified on  : 05-29-2024
+  @last modified by  : Bharath Kumar M
+-->
+<template>
+    <div class="slds-grid slds-grid--align-spread slds-grid--vertical-align-center">
+        <h3 class="bold-18">{labels.complaintAddOtherEntities}</h3>
+        <lightning-button class="add-btn buttonFocusClass" label={buttonLabel} title={buttonLabel}
+        onclick={modalToggleController} disabled={disableButton} aria-label={buttonLabel} data-id={displayConfig.uniqueName}>
+        </lightning-button>
+    </div>
+       
+
+        <template if:true={isModalOpen}>
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01"
+            aria-modal="true" aria-describedby="modal-content-id-1"
+            class="slds-modal slds-fade-in-open slds-modal_small" onkeydown={handleEscKeyDown}>
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button
+                        class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" aria-label={modalCloseAriaLabel} onclick={handleModalClose}>
+                        <lightning-icon icon-name="utility:close"
+                            variant="inverse" size="small"></lightning-icon>
+                    </button>
+                    <h1 id="modal-heading-01" class="section-heading slds-m-bottom_x-small">
+                        {labels.complaintAddEditOtherEntities} </h1>                            
+                    <!-- <div class="slds-grid slds-grid_vertical">
+                        <div class="slds-col">
+                        </div>
+                    </div> -->
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <div class="slds-col slds-text-align_left slds-text-heading_small">
+                        <p class="asterisk-caption m-b-medium">{labels.complaintAsterisk} (<span class="c-red">*</span>) {labels.complaintAsteriskRequiredField}</p>
+                        <p class="m-b-medium">{labels.complaintPleaseType} <strong>{labels.complaintUnknown}</strong> {labels.complaintRequiredFieldsUnknown}</p>
+                    </div>
+
+                    <div class="slds-grid slds-grid_vertical slds-gutters">
+                        <!-- <div class="slds-col" if:true={isEntity}>
+                            <lightning-radio-group required
+                            label="Is this entity a business or individual?"
+                            class="validate slds-m-top_small radio-button-label entityModalFirstEleFocus" 
+                            name="individualOrBusiness"
+                            options={authTypeOptions} 
+                            value={record.individualOrBusiness}
+                            type="radio" 
+                            onchange={handleInputChange} data-index={index}>
+                            </lightning-radio-group>
+                        </div> -->
+                         <div class="slds-col  slds-size_12-of-12">
+                                    <!-- <template if:false={isIndividual}> -->
+                                        <lightning-input type="text" required placeholder={labels.complaintEnterEntityName}
+                                        class="respondentWitness" pattern={patternObj.text}
+                                        label={nameFieldLabel}
+                                        value={record.entityName} name="entityName"
+                                        max-length="255" onchange={handleInputChange}
+                                        data-index={index} message-when-value-missing={labels.complaintEntityNameRequiredError}>
+                                        </lightning-input>
+                                    <!-- </template>
+                                    <template if:true={isIndividual}>
+                                        <div class="slds-grid slds-gutters slds-wrap">
+                                            <div class="slds-col  slds-size_6-of-12">
+                                                <lightning-input type="text" required
+                                                class="respondentWitness" pattern={patternObj.text}
+                                                label="First Name"
+                                                value={record.firstName} name="firstName"
+                                                max-length="40" onchange={handleInputChange}
+                                                data-index={index} message-when-value-missing="First Name is Required">
+                                                </lightning-input>
+                                            </div>
+                                            <div class="slds-col  slds-size_6-of-12">
+                                                <lightning-input type="text"
+                                                class="respondentWitness" pattern={patternObj.text}
+                                                label="Middle Name"
+                                                value={record.middleName} name="middleName"
+                                                max-length="40" onchange={handleInputChange}
+                                                data-index={index}>
+                                                </lightning-input>
+                                            </div>
+                                            <div class="slds-col  slds-size_6-of-12">
+                                                <lightning-input type="text" required
+                                                class="respondentWitness" pattern={patternObj.text}
+                                                label="Last Name"
+                                                value={record.lastName} name="lastName"
+                                                max-length="80" onchange={handleInputChange}
+                                                data-index={index} message-when-value-missing="Last Name is Required Field">
+                                                </lightning-input>
+                                            </div>
+                                        </div>
+                                    </template> -->
+                                  
+                        </div>
+                        <div class="slds-col  slds-size_12-of-12" if:true={isEntity}> 
+                            <lightning-input type="text" required placeholder={labels.complaintEnterEntityRepresentativeContacted}
+                            class="respondentWitness" pattern={patternObj.text}
+                            label={labels.complaintEntityRepresentativeContacted}
+                            value={record.entityRepresentative} name="entityRepresentative"
+                            max-length="255" onchange={handleInputChange}
+                            data-index={index} message-when-value-missing={labels.complaintEntityRepresentativeRequiredError}>
+                            </lightning-input>
+                        </div>
+                        <div class="slds-col slds-m-top_large slds-size_12-of-12">
+                            <h2 id="modal-heading-06" class="section-heading slds-m-bottom_x-small ">
+                                {labels.complaintEntity} Address
+                            </h2>
+                        </div>
+                        <div class="slds-col">
+                            <lightning-input type="text" data-address="true"
+                            class="respondentWitness" pattern={patternObj.text}
+                            label={labels.complaintStreetAddress} name="streetOne" placeholder={labels.complaintEnterStreetAddress}
+                            value={record.addressData.streetOne}
+                            max-length="255" onchange={handleInputChange}
+                            data-index={index} message-when-value-missing={labels.complaintStreetAddressRequiredError}>
+                            </lightning-input>
+                        </div>
+    
+                        <div class="slds-col">
+                           <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_6-of-12">
+                                    <lightning-input type="text" data-address="true"
+                                    class="respondentWitness" pattern={patternObj.text}
+                                    label={labels.complaintCityTown} placeholder={labels.complaintEnterCityTown}
+                                    value={record.addressData.city} disabled={userId} name="city"
+                                    max-length="40" onchange={handleInputChange}
+                                    data-index={index} message-when-value-missing={labels.complaintCityRequiredError}>
+                                    </lightning-input>
+                                </div>
+    
+                                <div class="slds-col slds-size_6-of-12">
+                                   
+                                    <lightning-combobox label={labels.complaintState} options={stateOptions} 
+                                    value={record.addressData.state} name="state"
+                                    data-address="true" max-length="80" class="respondentWitness"
+                                    data-index={index} placeholder={labels.complaintSelectState}
+                                    onchange={handleInputChange} message-when-value-missing={labels.complaintStateRequiredError}>
+                                </lightning-combobox>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="slds-col slds-size_6-of-12">
+                            <lightning-input type="text" label={labels.complaintZipCode}
+                            name="zipCode" data-address="true"
+                            value={record.addressData.zipCode} max-length="10" 
+                            min-length="5" pattern={patternObj.zipCode} placeholder={labels.complaintEnterZipCode}
+                            message-when-pattern-mismatch={labels.complaintZipCodePatternError}
+                            message-when-value-missing={labels.complaintZipCodeRequiredError}
+                            class="respondentWitness" onchange={handleInputChange}>
+                            </lightning-input>
+                        </div>
+                        
+                        <div class="slds-col" if:true={isEntity}>
+                            <div class="slds-grid slds-gutters">
+                                 <div class="slds-col slds-size_6-of-12">
+                                    
+                                     <lightning-input type="tel" label={phoneFieldLabel} class="phoneNumberField"
+                                                            value={record.telephone} name="telephone" placeholder={labels.complaintEnterTelephoneNumber}
+                                                            max-length="14" onchange={handleInputChange} 
+                                                            pattern={patternObj.digits}
+                                                            message-when-pattern-mismatch={labels.complaintEntryDoesNotMatchPattern}
+                                                            message-when-value-missing={labels.complaintTelephoneNumberRequiredError}
+                                                            >
+                                    </lightning-input>
+                                 </div>
+                                 <div class="slds-col slds-size_6-of-12">
+                                     <lightning-input type="email" name="email" label={emailFieldLabel}
+                                     value={record.email} max-length="80"
+                                     pattern={patternObj.email} placeholder={labels.complaintEnterEmailAddress}
+                                     onchange={handleInputChange} 
+                                     message-when-pattern-mismatch={labels.complaintEntryDoesNotMatchPattern}
+                                     >
+                                 </lightning-input>
+                                 </div>
+                             </div>
+                         </div>
+    
+                    </div>
+
+                </div>
+                <footer class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" onclick={handleModalClose}
+                    title="Cancel">{labels.complaintCancel}</button>
+                    <button class="slds-button slds-button_brand" onclick={saveModalDetails} onkeydown={handleFocusBackToModal}
+                    title="Save">{labels.complaintSave}</button>
+                </footer>
+            </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
+
+</template>

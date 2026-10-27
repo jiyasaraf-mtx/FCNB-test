@@ -1,0 +1,54 @@
+// c-cf-sucess-page{
+//     .download-app-container,
+//     .download-pdf-btn{
+//         .sub-heading{
+//            color: $text-dark-blue;
+//            text-align: left;
+//         }
+//         .slds-icon{
+//             fill: $text-dark-blue !important;
+//         }
+//         .blue-text{
+//             text-align: left;
+//             a {
+//                 color: $text-dark-blue !important;
+//             }
+//         }
+//     }
+//     @media all and (max-width: 64rem) {
+//         .download-app-container,
+//         .download-pdf-btn{
+//             padding-left: 3rem;
+//             .sub-heading{
+//                 text-align: center;
+//              }
+//              .blue-text{
+//                 text-align: center;
+//             }
+//             .slds-col {
+//                 width: 100%;
+//             }
+//         }
+//     }
+// }
+// @media all and (max-width: 30rem) {
+//     .sub-heading ,.blue-text {
+    
+//             text-align: left !important;
+//     }
+    
+// }
+
+// .application_status{
+//     max-width: 30rem;
+//     margin: 0 auto;
+// }
+
+// .success-container{
+//     .blue-text{
+//         span.slds-action_text {
+//             font-size: 1rem;
+//             font-weight: bold;
+//         }
+//     }
+// }

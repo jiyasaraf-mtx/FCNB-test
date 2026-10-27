@@ -1,0 +1,72 @@
+<template>
+    <div if:true={showSpinner}>
+		<lightning-spinner size="medium" alternative-text="Loading"></lightning-spinner>
+	</div>
+    <div class="slds-grid slds-gutters slds-wrap licenses-details licenses-search-details">
+        <div class="slds-col slds-size_3-of-3 licenses-details__left">
+            <div class="slds-m-vertical_large">
+                <lightning-button
+                    variant="base"
+                    label="Back to Licensee Search Page"
+                    title="Back to Licensee Search Page"
+                    onclick={handleBackToLicenseSearch}
+                >
+                </lightning-button>
+            </div>
+            <lightning-card>
+                <template if:true={showErrorForNoLicense}>
+                    <span style="color:red">You have provided Invalid Licesne Number!!</span>
+                </template>
+                <template if:false={showErrorForNoLicense}>
+                    <section class="slds-accordion__section slds-is-open">
+                        <div class="slds-accordion__summary">
+                            <h2 class="slds-accordion__summary-heading">
+                                <span class="slds-accordion__summary-content">Licensee Details</span>
+                            </h2>
+                        </div>
+                        <div class="slds-accordion__content">
+                            <template for:each={jsonData} for:item="section" for:index="ind">
+                                <hr if:true={ind} key={section.headingName} />
+                                <h2 key={section.headingName}><b>{section.headingName}</b></h2>
+                                <div key={section.headingName} class="slds-grid slds-gutters slds-wrap slds-m-bottom_small slds-m-top_small">
+                                    <template for:each={section.headingFieldValue} for:item="fields" for:index="ind">
+                                        <template if:true={fields.isCoverCompleteWidth}>
+                                            <div key={fields} class="slds-m-bottom_medium slds-col slds-size_1-of-3">
+                                                <div class="slds-grid slds-wrap slds-gutters">
+                                                    <div class="slds-col label slds-large-size_12-of-12 slds-medium-size_12-of-12 slds-small-size_12-of-12 slds-size_12-of-12">
+                                                        <span><div>{fields.label}</div></span>
+                                                    </div>
+                                                    <div class="slds-col value text-input slds-size_12-of-12">
+                                                        <div>
+                                                            <span if:true={fields.value}><div>{fields.value}</div></span>
+                                                            <span if:false={fields.value}><div>-</div></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </template>
+                                        <template if:false={fields.isCoverCompleteWidth}>
+                                            <div key={fields} class="slds-col slds-large-size_4-of-12 slds-medium-size_4-of-12 slds-small-size_12-of-12 slds-size_12-of-12 slds-m-bottom_medium">
+                                                <div class="slds-grid slds-wrap slds-gutters">
+                                                    <div class="slds-col label slds-large-size_12-of-12 slds-medium-size_12-of-12 slds-small-size_12-of-12 slds-size_12-of-12">
+                                                        <span><div>{fields.label}</div></span>
+                                                    </div>
+                                                    <div class="slds-col value text-input slds-size_12-of-12">
+                                                        <div>
+                                                            <span if:true={fields.value}><div>{fields.value}</div></span>
+                                                            <span if:false={fields.value}><div>-</div></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </template>
+                                    </template> 
+                                </div>  
+                            </template>
+                        </div>
+                    </section>
+                </template>
+            </lightning-card>
+        </div>
+    </div>
+</template>

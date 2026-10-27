@@ -1,0 +1,179 @@
+<!--
+  @description       : LPI Need Your Attention Portal Component
+  @author            : Bharath Kumar M
+  @last modified on  : 09-17-2026
+-->
+<template>
+    <template if:true={showSpinner}>
+        <lightning-spinner size="medium" alternative-text="Loading..."></lightning-spinner>
+    </template>
+
+    <!-- Instruction Box -->
+    <div if:true={showInstructionText} class="slds-p-vertical_x-small slds-grid warning-message-box_cool slds-m-right_small slds-m-bottom_medium">                                
+        <lightning-icon icon-name="utility:info_alt" alternative-text="Info!" variant="info" class="slds-col slds-m-right_small" title="info icon" size="small"></lightning-icon>
+        <div class="slds-media__body">
+            <div>{labels.importantInformation}</div>
+            <lightning-formatted-text value={insText} class="slds-p-right_medium"></lightning-formatted-text>
+        </div>
+        <button class="slds-button slds-button_icon-inverse" title="Close" aria-label={closeinsText} onclick={handleShowInstructionText}>
+            <lightning-icon icon-name="utility:close" variant="inverse" size="x-small"></lightning-icon>
+        </button>
+    </div>
+
+    <!-- Notification Cards -->
+    <template if:true={showNotification}>
+        <div class="need-attention slds-card">
+            <div class="bold-18 m-b-small">{labels.needYourAttention}</div>
+            <div class="lpi-card">
+                <template for:each={notificationList} for:item="data">
+                    <div class="notifications" key={data.Id}>
+                        <div class="slds-grid justify-content-between notification-card" style={data.cardBorderStyle}>
+                            <div class="license slds-grid">
+                                <div class="icon"> <img src={data.iconUrl} title={data.iconUrl} alt="notification icon"></div>
+                                <div class="details">
+                                    <lightning-formatted-rich-text value={data.Description__c}></lightning-formatted-rich-text>
+                                </div>
+                            </div>
+                            <div class="link secondary-button" if:true={data.Button_Label__c}>
+                                <button
+                                    data-type={data.Type__c}
+                                    data-desc={data.Description__c}
+                                    data-det={data.Id}
+                                    data-id={data.Url_Param_Json__c}
+                                    data-name={data.Navigate_Component_API_Name__c}
+                                    data-field={data.Navigation_Type__c}
+                                    data-button={data.Button_Label__c}
+                                    class="slds-button slds-button_neutral"
+                                    onclick={handleButton}
+                                >
+                                    {data.Button_Label__c}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </template>
+
+    <!-- Confirmation Modal Window -->
+    <template if:true={openModal}>
+        <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01" class="slds-modal slds-fade-in-open lpi-modal" onkeydown={handleEscCloseModal}>
+            <div class="slds-modal__container">
+                <div class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" onclick={handleCloseModal} aria-label="Close Confirmation Modal Button">
+                        <lightning-icon icon-name="utility:close" variant="inverse" size="small"></lightning-icon>
+                    </button>
+                    <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Confirmation</h1>
+                </div>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <lightning-formatted-rich-text value={modalBody}></lightning-formatted-rich-text>
+                </div>
+                <div class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" aria-label="Deny" onclick={handleWrong}>Deny</button>
+                    <button class="slds-button slds-button_brand" onclick={handleRight}>Approve</button>
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+    </template>
+
+    <!-- Business Account Modal Window -->
+    <template if:true={openBusinessModal}>
+        <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-02" class="slds-modal slds-fade-in-open lpi-modal">
+            <div class="slds-modal__container">
+                <div class="slds-modal__header">
+                    <h1 id="modal-heading-02" class="slds-modal__title slds-hyphenate">Account Selection</h1>
+                </div>
+                <div class="slds-modal__content slds-p-around_medium label-bold" id="modal-content-id-2">
+                    <p>Required fields are marked with an asterisk (<span class="slds-required">*</span>)</p>
+                    <lightning-radio-group
+                        name="selectType"
+                        data-id="selecttype"
+                        label="Select Account Type"
+                        options={selectedAccountList}
+                        value={selectedType}
+                        type="radio"
+                        onchange={handleChangeAccount}
+                        required
+                    ></lightning-radio-group>
+                    <template if:true={showBusinessAccountList}>
+                        <label for="FieldSelect" class="slds-form-element__label slds-no-flex">
+                            <abbr title="required" class="slds-required">*</abbr> Select Business Account
+                        </label>
+                        <select class="slds-select" name="optionSelect" onchange={handleBusinessChange}>
+                            <option value="">Please Select Account</option>
+                            <template for:each={acrList} for:item="item">
+                                <option key={item} value={item.Id}>{item.Name}</option>
+                            </template>
+                        </select> 
+                    </template>
+                </div>
+                <div class="slds-modal__footer">
+                    <lightning-button variant="brand" label="Continue" onclick={handleConfirm}></lightning-button>
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+    </template>
+
+    <!-- Add More Info Modal Window -->
+    <template if:true={openRmiModal}>
+        <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="rmi-modal-heading" class="slds-modal slds-fade-in-open lpi-modal">
+            <div class="slds-modal__container">
+                <div class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" onclick={handleCloseRmiModal} title="Close">
+                        <lightning-icon icon-name="utility:close" variant="inverse" size="small"></lightning-icon>
+                    </button>
+                    <h1 id="rmi-modal-heading" class="slds-modal__title slds-hyphenate">Add More Information</h1>
+                </div>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-rmi">
+                    <div class="slds-m-bottom_small">
+                        <strong>Application Number:</strong> {selectedRmiAppNumber}
+                    </div>
+                    <div class="slds-m-bottom_medium">
+                        <strong>Reviewer Comments:</strong>
+                        <div class="slds-box slds-theme_shade slds-m-top_x-small" style="background-color: #f3f3f3; padding: 10px; border-radius: 4px;">
+                            <lightning-formatted-text value={selectedRmiComments}></lightning-formatted-text>
+                        </div>
+                    </div>
+                    <div class="slds-form-element slds-m-bottom_medium">
+                        <lightning-textarea
+                            label="Additional Comments / Response"
+                            value={applicantRmiComments}
+                            onchange={handleApplicantRmiCommentsChange}
+                            placeholder="Enter additional comments or details in response to the request..."
+                            rows="4"
+                        ></lightning-textarea>
+                    </div>
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label">Upload Supporting Documents (Optional)</label>
+                        <lightning-file-upload
+                            label="Upload Documents"
+                            name="fileUploader"
+                            accept={acceptedFormats}
+                            record-id={selectedRmiAppId}
+                            onuploadfinished={handleFileUploadFinished}
+                            multiple
+                        ></lightning-file-upload>
+                        <template if:true={hasUploadedFiles}>
+                            <div class="slds-m-top_x-small">
+                                <strong>Uploaded Files:</strong>
+                                <ul>
+                                    <template for:each={uploadedFiles} for:item="file">
+                                        <li key={file.documentId} style="color: #2e844a;">✓ {file.name}</li>
+                                    </template>
+                                </ul>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+                <div class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" onclick={handleCloseRmiModal}>Cancel</button>
+                    <button class="slds-button slds-button_brand" onclick={handleSubmitRmi}>Submit Information</button>
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+    </template>
+</template>

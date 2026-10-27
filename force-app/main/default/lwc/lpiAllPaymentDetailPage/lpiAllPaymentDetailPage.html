@@ -1,0 +1,36 @@
+<!--
+  @description       : 
+  @author            : Ranjitha M U
+  @group             : 
+  @last modified on  : 07-09-2024
+  @last modified by  : Mounika Dasari
+-->
+<template>
+    <div class="backdrop" if:true={showSpinner}>
+        <div class="spinner">
+            <lightning-spinner alternative-text="Loading..."></lightning-spinner>
+        </div>
+    </div>
+    <h1 if:true={isAllPayment} class="bold-32 m-b-medium">{labels.allPayments}</h1>
+    <h1 if:false={isAllPayment} class="bold-32 m-b-medium">{labels.myPayments}</h1>
+    <div class="warning-message-box slds-p-top_none slds-list_horizontal">
+        <lightning-icon class=" slds-icon-utility-info-alt slds-icon_container slds-m-right_small" icon-name="utility:info_alt" title={labels.warning}>
+            <span style="--sds-c-icon-color-background: var(--slds-c-icon-color-background, transparent)" part="boundary">
+                <lightning-primitive-icon size="medium" variant="">...</lightning-primitive-icon>
+                <span class="slds-assistive-text">{labels.warning}</span>
+            </span>
+        </lightning-icon>
+        <div class="slds-media__body">
+            <div>{labels.importantNotice}</div>
+            <p>{labels.noticePayment}</p>
+        </div>
+    </div>
+    <div class='slds-m-vertical_large dashboard-table-details all-payment-table'>
+        <div class="slds-card">
+            <h2 class="slds-m-bottom_small">{childCardTitle}</h2>
+            <c-lpi-dashboard-table-details onchildmethod={callFromChild} paymentdata={paymentdata}
+                applicationdata={applicationdata} licensedata={licensedata} columns={myPaymentsColumns}
+                recordsdata={recordsData} titledata={childCardTitle}></c-lpi-dashboard-table-details>
+        </div>
+    </div>
+</template>

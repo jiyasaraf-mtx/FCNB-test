@@ -1,0 +1,13 @@
+<template>
+    <template if:true={isLoading}>
+        <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+    </template>
+    <template if:false={isLoading}>
+        <lightning-card title="Instructions" icon-name="standard:note">
+            <div class="slds-m-around_medium">
+                <lightning-formatted-rich-text value={instruction} if:true={instruction}></lightning-formatted-rich-text>
+                <span if:false={instruction}> No Instruction Found.</span>
+            </div>
+        </lightning-card>
+    </template>
+</template>

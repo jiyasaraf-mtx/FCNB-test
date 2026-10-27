@@ -1,0 +1,24 @@
+<!-- sldsValidatorIgnore -->
+<template>
+    <lightning-quick-action-panel header="Deposit and Reconciliation Application Actions">
+        <div if:true={showSpinner}>
+            <lightning-spinner size="medium" alternative-text="Loading"></lightning-spinner>
+        </div>
+        <div class="slds-col slds-size_1-of-1 licenses-details__right">
+            <div if:true={showButtons}>
+                <lightning-card>
+                    <div class="slds-m-bottom_large">
+                        <div class="button-group">
+                            <template for:each={buttons} for:item="item" for:index="ind">
+                                <lightning-button  key={item.name} variant="brand" label={item.label} data-name={item.buttonJSONData} data-id={ind} onclick={handleMakePayment} class="slds-m-around_x-small slds-m-bottom_xx-small"></lightning-button>
+                            </template>
+                        </div>
+                    </div>
+                </lightning-card>
+            </div>
+            <div class="slds-p-around_medium" if:false={showButtons}>
+                <p>No action available.</p>
+            </div>
+        </div>
+    </lightning-quick-action-panel>
+</template>

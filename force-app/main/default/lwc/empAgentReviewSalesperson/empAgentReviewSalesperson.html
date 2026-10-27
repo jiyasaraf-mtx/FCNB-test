@@ -1,0 +1,181 @@
+<template>
+    <div class="ar-root">
+        <div if:true={isLoading} class="spinner-overlay" role="status" aria-live="polite">
+            <lightning-spinner alternative-text={labels.loadingQueue}></lightning-spinner>
+        </div>
+
+        <template if:true={showHeader}>
+            <section class="page-intro">
+                <h1>{labels.agentReview}</h1>
+                <!-- <p class="sub">{labels.subtitle}</p> -->
+                <!-- <div class="note">{labels.demoBoundary}</div> -->
+            </section>
+        </template>
+
+        <template if:true={hasLoadError}>
+            <div class="state-banner error" role="alert">{loadError}</div>
+        </template>
+
+        <template if:true={isEmptyQueue}>
+            <div class="state-banner empty-state" role="status">{labels.emptyQueue}</div>
+        </template>
+
+        <section class="status-cards" aria-label={labels.statusSummary}>
+            <div
+                class={submittedCardClass}
+                data-status="Submitted to Agent"
+                role="button"
+                tabindex="0"
+                onclick={handleStatusTile}
+                onkeydown={handleStatusTile}
+            >
+                <div class="status-icon" aria-hidden="true">1</div>
+                <div>
+                    <div class="status-label">{labels.submittedToAgent}</div>
+                    <div class="status-count">{countSubmitted}</div>
+                    <div class="status-caption">{labels.underReview}</div>
+                </div>
+            </div>
+            <div
+                class={infoSubmittedCardClass}
+                data-status="Information Submitted"
+                role="button"
+                tabindex="0"
+                onclick={handleStatusTile}
+                onkeydown={handleStatusTile}
+            >
+                <div class="status-icon" aria-hidden="true">ℹ</div>
+                <div>
+                    <div class="status-label">{labels.informationSubmitted}</div>
+                    <div class="status-count">{countInfoSubmitted}</div>
+                    <div class="status-caption">{labels.infoResubmitted}</div>
+                </div>
+            </div>
+            <div
+                class={rmiCardClass}
+                data-status="Agency Require More Info"
+                role="button"
+                tabindex="0"
+                onclick={handleStatusTile}
+                onkeydown={handleStatusTile}
+            >
+                <div class="status-icon" aria-hidden="true">↩</div>
+                <div>
+                    <div class="status-label">{labels.agencyRequireMoreInfo}</div>
+                    <div class="status-count">{countRmi}</div>
+                    <div class="status-caption">{labels.returnedToApplicant}</div>
+                </div>
+            </div>
+            <template if:true={isDashboardMode}>
+                <div
+                    class={approvedCardClass}
+                    data-status="Submitted to FCNB"
+                    role="button"
+                    tabindex="0"
+                    onclick={handleStatusTile}
+                    onkeydown={handleStatusTile}
+                >
+                    <div class="status-icon" aria-hidden="true">✓</div>
+                    <div>
+                        <div class="status-label">{labels.submittedToFcnb}</div>
+                        <div class="status-count">{countApproved}</div>
+                        <div class="status-caption">{labels.sentToFcnb}</div>
+                    </div>
+                </div>
+                <div
+                    class={deniedCardClass}
+                    data-status="Agency Denied"
+                    role="button"
+                    tabindex="0"
+                    onclick={handleStatusTile}
+                    onkeydown={handleStatusTile}
+                >
+                    <div class="status-icon" aria-hidden="true">×</div>
+                    <div>
+                        <div class="status-label">{labels.agencyDenied}</div>
+                        <div class="status-count">{countDenied}</div>
+                        <div class="status-caption">{labels.deniedByAgency}</div>
+                    </div>
+                </div>
+            </template>
+        </section>
+
+        <!-- <div class="status-filter-banner">
+            <span>{statusFilterText}</span>
+            <button class="btn" type="button" onclick={handleClearStatusFilter}>{labels.clearFilter}</button>
+        </div> -->
+
+        <section class="workspace workspace-full">
+            <div class="panel">
+                <div class="head">
+                    <div>
+                        <div class="eyebrow">{labels.salespersonLicensing}</div>
+                        <div class="ptitle">{queueTitleLabel}</div>
+                    </div>
+                    <div class="actions">
+                        <button class="btn" type="button" onclick={handleRefresh}>↻ {labels.refresh}</button>
+                        <button class="btn" type="button" onclick={handleToggleFilters}>⚱ {labels.filters}</button>
+                    </div>
+                </div>
+                <div class={toolbarClass}>
+                    <lightning-input
+                        type="search"
+                        label="Search"
+                        variant="label-hidden"
+                        placeholder={labels.searchPlaceholder}
+                        value={searchTerm}
+                        onchange={handleSearch}
+                    ></lightning-input>
+                    <lightning-combobox
+                        name="statusFilter"
+                        label="Status"
+                        variant="label-hidden"
+                        value={statusFilter}
+                        options={statusOptions}
+                        onchange={handleStatusFilter}
+                    ></lightning-combobox>
+                </div>
+                <div class="table-wrap">
+                    <table>
+                        <caption class="sr-only">{labels.queueTitle}</caption>
+                        <thead>
+                            <tr>
+                                <th scope="col">{labels.applicationNumber}</th>
+                                <th scope="col">{labels.applicant}</th>
+                                <th scope="col">{labels.licence}</th>
+                                <th scope="col">{labels.agency}</th>
+                                <th scope="col">{labels.submitted}</th>
+                                <th scope="col">{labels.status}</th>
+                                <th scope="col"><span class="sr-only">{labels.review}</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <template for:each={tableRows} for:item="app">
+                                <tr key={app.id}>
+                                    <td data-label="Application Number">
+                                        <div class="name">{app.applicationNumber}</div>
+                                    </td>
+                                    <td data-label="Applicant">
+                                        <div class="name">{app.applicantName}</div>
+                                        <div class="small">{app.email}</div>
+                                    </td>
+                                    <td data-label="Licence">{app.licenceType}</td>
+                                    <td data-label="Agency">{app.agency}</td>
+                                    <td data-label="Submitted">{app.submittedOn}</td>
+                                    <td data-label="Status"><span class={app.statusClass}>{app.statusLabel}</span></td>
+                                    <td data-label="Action">
+                                        <button class="rowbtn" type="button" data-id={app.id} onclick={handleRowAction}>
+                                            {app.actionLabel}
+                                        </button>
+                                    </td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                    <div class={emptyStateClass}>{labels.selectApplication}</div>
+                </div>
+                <div class="foot">{showingLabel}</div>
+            </div>
+        </section>
+    </div>
+</template>

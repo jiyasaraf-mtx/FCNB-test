@@ -1,0 +1,351 @@
+<!--
+  @description       : 
+  @author            : Mohit Karani
+  @group             : 
+  @last modified on  : 06-20-2024
+  @last modified by  : Bharath Kumar M
+-->
+<template>
+    <div class="internal-screen">
+        <lightning-accordion allow-multiple-sections-open active-section-name="section1" class="internal-accordion">
+            <lightning-accordion-section name="section1" label="Basic Details" data-section="section1">
+                <template if:true={isCaseObj}>
+                    <lightning-record-view-form object-api-name="Case" record-id={contextId}>
+                        <div class="slds-grid slds-wrap slds-gutters">
+                            <div class="slds-col slds-size_1-of-2">
+                                <div class="internal-details">
+                                    <div class="internal-details-label">Business Name</div>
+                                    <div class="internal-details-value"> <a href={businessNameLink}>{businessName}</a>
+                                    </div>
+                                </div>
+                                <!-- <div class="slds-grid slds-wrap slds-gutters slds-p-vertical_x-small">
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <div class="slds-form-element__label slds-m-left_xx-small">Business Name</div>
+                                    </div>
+                                    <div class="slds-col slds-size_2-of-3" style="padding-left: 0.25rem;">
+                                        <a href={businessNameLink}>{businessName}</a>
+                                    </div>
+                                </div> -->
+                            </div>
+                            <div class="slds-col slds-size_1-of-2">
+                                <div class="internal-details">
+                                    <div class="internal-details-label">Doing Business As (DBA) or Trade Name</div>
+                                    <div class="internal-details-value"> {dbaName}</div>
+                                </div>
+                                <!-- <div class="slds-grid slds-wrap slds-gutters slds-p-vertical_x-small">
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <div class="slds-form-element__label slds-m-left_xx-small">Doing Business As (DBA) or Trade Name</div>
+                                    </div>
+                                    <div class="slds-col slds-size_2-of-3" style="padding-left: 0.25rem;">
+                                        {dbaName}
+                                    </div>
+                                </div> -->
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-wrap slds-gutters">
+                            <div class="slds-col slds-size_1-of-2">
+                                <div class="internal-details">
+                                    <div class="internal-details-label">ContextId</div>
+                                    <div class="internal-details-value"> <lightning-output-field variant="label-hidden"
+                                            field-name={caseNumberField}></lightning-output-field></div>
+                                </div>
+                                <!-- <div class="slds-grid slds-wrap slds-gutters slds-p-vertical_x-small">
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <div class="slds-form-element__label slds-m-left_xx-small">ContextId</div>
+                                    </div>
+                                    <div class="slds-col slds-size_2-of-3" style="padding-left: 0.25rem;">
+                                        <lightning-output-field variant="label-hidden" field-name={caseNumberField}></lightning-output-field>
+                                    </div>
+                                </div> -->
+                            </div>
+                            <div class="slds-col slds-size_1-of-2">
+                                <div class="internal-details">
+                                    <div class="internal-details-label">Discipline</div>
+                                    <div class="internal-details-value"> {disciplineVal}</div>
+                                </div>
+                                <!-- <div class="slds-grid slds-wrap slds-gutters slds-p-vertical_x-small">
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <div class="slds-form-element__label slds-m-left_xx-small">Discipline</div>
+                                    </div>
+                                    <div class="slds-col slds-size_2-of-3" style="padding-left: 0.25rem;">
+                                        {disciplineVal}
+                                    </div>
+                                </div> -->
+                            </div>
+                        </div>
+
+                    </lightning-record-view-form>
+                </template>
+                <lightning-record-view-form object-api-name={objectApiName} record-id={_recordId} onload={handleLoad}>
+                    <template if:false={isCaseObj}>
+                        <div class="slds-grid slds-wrap slds-gutters">
+                            <div class="slds-col slds-size_1-of-2">
+                                <div class="internal-details">
+                                    <div class="internal-details-label">Doing Business As (DBA) or Trade Name</div>
+                                    <div class="internal-details-value"> {dbaName}</div>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2">
+                                <div class="internal-details">
+                                    <div class="internal-details-label">ContextId</div>
+                                    <div class="internal-details-value"> <lightning-output-field variant="label-hidden"
+                                            field-name={contextField}></lightning-output-field></div>
+                                </div>
+                                <!-- <div class="slds-grid slds-wrap slds-gutters slds-p-vertical_x-small">
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <div class="slds-form-element__label slds-m-left_xx-small">ContextId</div>
+                                    </div>
+                                    <div class="slds-col slds-size_2-of-3" style="padding-left: 0.25rem;">
+                                        <lightning-output-field variant="label-hidden" field-name={contextField}></lightning-output-field>
+                                        <a href={businessNameLink}>{businessName}</a>
+                                    </div>
+                                </div> -->
+                            </div>
+                        </div>
+                        <!-- <div class="slds-grid slds-wrap slds-gutters">
+                            
+                        </div> -->
+                    </template>
+
+                    <div class="slds-grid slds-wrap slds-gutters">
+                        <div class="slds-col slds-size_1-of-2">
+                            <div class="internal-details">
+                                <div class="internal-details-label">Location</div>
+                                <div class="internal-details-value"> <a href={placeIdLink}>{placeName}</a></div>
+                            </div>
+                            <!-- <div class="slds-grid slds-wrap slds-gutters slds-p-vertical_x-small">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <div class="slds-form-element__label slds-m-left_xx-small">Location</div>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3" style="padding-left: 0.25rem;">
+                                    <lightning-output-field variant="label-hidden" field-name={placeField}></lightning-output-field>
+                                    <a href={placeIdLink}>{placeName}</a>
+                                </div>
+                            </div> -->
+                        </div>
+                        <div class="slds-col slds-size_1-of-2">
+                            <div class="internal-details">
+                                <div class="internal-details-label">Last Inspection Date</div>
+                                <div class="internal-details-value">{lastInspectionDate} </div>
+                            </div>
+                            <!-- <div class="slds-grid slds-wrap slds-gutters slds-p-vertical_x-small">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <div class="slds-form-element__label slds-m-left_xx-small">Last Inspection Date</div>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3" style="padding-left: 0.25rem;">
+                                    {lastInspectionDate}
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+                    <div class="slds-grid slds-wrap slds-gutters">
+                        <template key={_recordId} for:each={fieldsList} for:item="field">
+                            <div key={field} class="slds-col slds-size_1-of-2">
+                                <lightning-output-field class="internal-details"
+                                    field-name={field}></lightning-output-field>
+                            </div>
+                        </template>
+
+                        <template lwc:if={showRemedialFields}>
+                            <div class="slds-col slds-size_1-of-2">
+                                <div class="internal-details">
+                                    <div class="internal-details-label">Remedial Action Sent</div>
+                                    <div class="internal-details-value"><lightning-output-field variant="label-hidden"
+                                            field-name={remedialInfo.remedialActionSent}></lightning-output-field>
+                                    </div>
+                                </div>
+                                <!-- <div class="slds-grid slds-wrap slds-gutters slds-p-vertical_x-small">
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <div class="slds-form-element__label slds-m-left_xx-small">Remedial Action Sent</div>
+                                    </div>
+                                    <div class="slds-col slds-size_2-of-3" style="padding-left: 0.25rem;">
+                                        <lightning-output-field variant="label-hidden" field-name={remedialInfo.remedialActionSent}></lightning-output-field>
+                                    </div>
+                                </div> -->
+                            </div>
+                            <div class="slds-col slds-size_1-of-2">
+                                <div class="internal-details">
+                                    <div class="internal-details-label">Remedial Response Due</div>
+                                    <div class="internal-details-value"><lightning-output-field variant="label-hidden"
+                                            field-name={remedialInfo.remedialDueResponse}></lightning-output-field>
+                                    </div>
+                                </div>
+                                <!-- <div class="slds-grid slds-wrap slds-gutters slds-p-vertical_x-small">
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <div class="slds-form-element__label slds-m-left_xx-small">Remedial Response Due</div>
+                                    </div>
+                                    <div class="slds-col slds-size_2-of-3" style="padding-left: 0.25rem;">
+                                        <lightning-output-field variant="label-hidden" field-name={remedialInfo.remedialDueResponse}></lightning-output-field>
+                                    </div>
+                                </div> -->
+                            </div>
+                            <div class="slds-col slds-size_1-of-2">
+                                <div class="internal-details">
+                                    <div class="internal-details-label">Remedial Response Recieved</div>
+                                    <div class="internal-details-value"> <lightning-output-field variant="label-hidden"
+                                            field-name={remedialInfo.remedialResponseRecieved}></lightning-output-field>
+                                    </div>
+                                </div>
+
+                                <!-- <div class="slds-grid slds-wrap slds-gutters slds-p-vertical_x-small">
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <div class="slds-form-element__label slds-m-left_xx-small">Remedial Response Recieved</div>
+                                    </div>
+                                    <div class="slds-col slds-size_2-of-3" style="padding-left: 0.25rem;">
+                                        <lightning-output-field variant="label-hidden" field-name={remedialInfo.remedialResponseRecieved}></lightning-output-field>
+                                    </div>
+                                </div> -->
+                            </div>
+                        </template>
+
+                        <div class="slds-col slds-size_1-of-2">
+                            <div class="internal-details">
+                                <div class="internal-details-label">Start Date</div>
+                                <div class="internal-details-value">
+                                    <lightning-output-field variant="label-hidden"
+                                        field-name={startDate}></lightning-output-field>
+                                </div>
+                            </div>
+
+                            <!-- <div class="slds-grid slds-wrap slds-gutters slds-p-vertical_x-small">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <div class="slds-form-element__label slds-m-left_xx-small">Start Date</div>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3" style="padding-left: 0.25rem;">
+                                    <lightning-output-field variant="label-hidden" field-name={startDate}></lightning-output-field>
+                                </div>
+                            </div> -->
+                        </div>
+
+                        <div class="slds-col slds-size_1-of-2">
+                            <div class="internal-details">
+                                <div class="internal-details-label">Inspection Result</div>
+                                <div class="internal-details-value">
+                                    <lightning-output-field variant="label-hidden"
+                                        field-name={assessmentResultField}></lightning-output-field>
+                                </div>
+                            </div>
+                            <!-- <div class="slds-grid slds-wrap slds-gutters slds-p-vertical_x-small">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <div class="slds-form-element__label slds-m-left_xx-small">Inspection Result</div>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3" style="padding-left: 0.25rem;">
+                                    <lightning-output-field variant="label-hidden" field-name={assessmentResultField}></lightning-output-field>
+                                </div>
+                            </div> -->
+                        </div>
+                        <div class="slds-col slds-size_1-of-2">
+                            <div class="internal-details">
+                                <div class="internal-details-label">Attested by the Licensee/Applicant/Representative
+                                </div>
+                                <div class="internal-details-value">
+                                    <lightning-output-field variant="label-hidden"
+                                        field-name={attestationCheckBox}></lightning-output-field>
+                                </div>
+                            </div>
+                            <!-- <div class="slds-grid slds-wrap slds-gutters slds-p-vertical_x-small">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <div class="slds-form-element__label slds-m-left_xx-small">Attested by the Licensee/Applicant/Representative</div>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-output-field variant="label-hidden" field-name={attestationCheckBox}></lightning-output-field>
+                                </div>
+                            </div> -->
+                        </div>
+                        <div class="slds-col slds-size_1-of-2">
+                            <div class="internal-details">
+                                <div class="internal-details-label">Name of Licensee/Applicant/Representative</div>
+                                <div class="internal-details-value">
+                                    <lightning-output-field variant="label-hidden"
+                                        field-name={nameOfLicensee}></lightning-output-field>
+                                </div>
+                            </div>
+                            <!-- <div class="slds-grid slds-wrap slds-gutters slds-p-vertical_x-small">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <div class="slds-form-element__label slds-m-left_xx-small">Name of Licensee/Applicant/Representative</div>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-output-field variant="label-hidden" field-name={nameOfLicensee}></lightning-output-field>
+                                </div>
+                            </div> -->
+                        </div>
+                        <div class="slds-col slds-size_1-of-2">
+                            <div class="internal-details">
+                                <div class="internal-details-label">Title</div>
+                                <div class="internal-details-value">
+                                    <lightning-output-field variant="label-hidden"
+                                        field-name={title}></lightning-output-field>
+                                </div>
+                            </div>
+                            <!-- <div class="slds-grid slds-wrap slds-gutters slds-p-vertical_x-small">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <div class="slds-form-element__label slds-m-left_xx-small">Title</div>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-output-field variant="label-hidden" field-name={title}></lightning-output-field>
+                                </div>
+                            </div> -->
+                        </div>
+                        <div class="slds-col slds-size_1-of-2">
+                            <div class="internal-details">
+                                <div class="internal-details-label">Licensee/Applicant/Representative Signed Date</div>
+                                <div class="internal-details-value">
+                                    <lightning-output-field variant="label-hidden"
+                                        field-name={licenseeSignedDate}></lightning-output-field>
+                                </div>
+                            </div>
+                            <!-- <div class="slds-grid slds-wrap slds-gutters slds-p-vertical_x-small">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <div class="slds-form-element__label slds-m-left_xx-small">Licensee/Applicant/Representative Signed Date</div>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-output-field variant="label-hidden" field-name={licenseeSignedDate}></lightning-output-field>
+                                </div>
+                            </div> -->
+                        </div>
+                        <div class="slds-col slds-size_1-of-2">
+                            <div class="internal-details">
+                                <div class="internal-details-label">Inspector Signed Date</div>
+                                <div class="internal-details-value">
+                                    <lightning-output-field variant="label-hidden"
+                                        field-name={inspectorSignedDate}></lightning-output-field>
+                                </div>
+                            </div>
+                            <!-- <div class="slds-grid slds-wrap slds-gutters slds-p-vertical_x-small">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <div class="slds-form-element__label slds-m-left_xx-small">Inspector Signed Date</div>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-output-field variant="label-hidden" field-name={inspectorSignedDate}></lightning-output-field>
+                                </div>
+                            </div> -->
+                        </div>
+                        <div class="slds-col slds-size_1-of-2" if:true={isNursingSchoolLicenseType}>
+                            <div class="internal-details">
+                                <div class="internal-details-label">Trigger Site Visit Notification</div>
+                                <div class="internal-details-value">
+                                    <lightning-output-field variant="label-hidden"
+                                        field-name={triggerSiteSurveyEmailNotificationField}></lightning-output-field>
+                                </div>
+                            </div>
+                            <!-- <div class="slds-grid slds-wrap slds-gutters slds-p-vertical_x-small">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <div class="slds-form-element__label slds-m-left_xx-small">Trigger Site Visit Notification</div>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-output-field variant="label-hidden" field-name={triggerSiteSurveyEmailNotificationField}></lightning-output-field>
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+                </lightning-record-view-form>
+            </lightning-accordion-section>
+           <!--  <lightning-accordion-section name="section2" label="Employee Details" data-section="section2">
+                <c-lpi-visit-employee record-id={_recordId}></c-lpi-visit-employee>
+            </lightning-accordion-section>
+            <lightning-accordion-section name="section3" label="Business Relationships" data-section="section3">
+                <c-lpi-business-relationships></c-lpi-business-relationships>
+            </lightning-accordion-section>-->
+        </lightning-accordion>
+    </div>
+</template>

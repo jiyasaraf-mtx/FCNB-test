@@ -1,0 +1,27 @@
+.recaptcha-registration {
+  transform: scale(0.8) !important;
+  margin-right: 200px !important;
+}
+
+.register-content-col {
+  position: relative;
+}
+
+.register-language-selector {
+  position: absolute;
+  top: 1rem;
+  right: 1.25rem;
+  z-index: 5;
+  min-width: 9rem;
+  background: #fff;
+  border-radius: 0.25rem;
+}
+
+@media (max-width: 48em) {
+  .register-language-selector {
+    position: static;
+    margin: 0.75rem 1rem 0 auto;
+    display: flex;
+    justify-content: flex-end;
+  }
+}

@@ -1,0 +1,86 @@
+// .pending-checklist {
+//     background-color: $white;
+//    // width: calc(100% - 20.25rem);
+//     margin: toRem(0) auto;
+//     padding: 1.5rem;
+//     padding-right: 2.5rem;
+//     .slds-accordion__section{
+//         border: 0.063rem solid $input-border;
+//         border-radius: 0.25rem;
+//         padding: 1.875rem 1.75rem;
+//         .slds-accordion__summary-heading .slds-button:focus {
+//             text-decoration: none;
+//         }
+//         .slds-accordion__summary-content {
+//             font-size: 1rem;
+//             color: $primary-main;
+//             font-weight: $font-weight-semi-bold;
+//             font-family: $font-family;
+//         }
+//        .slds-accordion__summary-action{
+//             display: flex;
+//             flex-direction: row-reverse;
+//             align-items: center;
+//             justify-content: space-between;
+//             width: 100%;
+//             flex: 1;
+//             padding: 0.25rem 0;
+//             padding-left: 0;
+//             padding-right: 0.75rem;
+//             svg.slds-icon{
+//                 height: 1rem;
+//                 width: 1rem;
+//             }
+//        }
+//        .slds-accordion__content {
+//             margin: toRem(-12);
+//             margin-top: 0.5rem;
+//         }
+//     }
+//     .page-heading{
+//         font-family: $font-family !important;
+//     }
+//     &__item {
+//         margin-bottom: 1.5rem;
+//         &:last-child{
+//             margin-bottom: 0;
+//         }
+//         .pending-checklist__title{
+//             font-size: $font-size-14;
+//             color: $text-dark-gray;
+//             img {
+//                 margin-right: 0.75rem;
+//                 width: toRem(20);
+//             }
+//         }
+//         .pending-checklist__content {
+//             padding: 0.5rem;
+//             border: toRem(1) solid $input-border;
+//             border-radius: toRem(5);
+//             margin-top: 0.5rem;
+//             .pending-checklist__comment-header {
+//                 margin-bottom: 0.2rem;
+//                 color: $text-dark-gray;
+//                 font-size: $font-size-12;
+//             }
+//             .pending-checklist__comment-text {
+//                 font-size: $font-size-14;
+//             }
+//         }
+//     }
+// }
+
+// .application-review-header {
+//     //width: calc(100% - 20.25rem);
+//     margin: 0rem auto;
+//     .slds-button{
+//         font-size: 1rem;
+//         color: $secondary-main;
+//     }
+//     .page-heading{
+//         font-family: $font-family;
+//         font-weight: $font-weight-regular;
+//         font-size: $font-size-24 !important;
+//         color: $secondary-main;
+//     }
+// }

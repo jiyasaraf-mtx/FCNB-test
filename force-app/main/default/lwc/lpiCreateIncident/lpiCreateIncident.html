@@ -1,0 +1,147 @@
+<!--
+  @description       : 
+  @author            : Mohit Karani
+  @group             : 
+  @last modified on  : 05-30-2023
+  @last modified by  : Mohit Karani
+-->
+<template>
+    <div if:true={showSpinner}>
+        <lightning-spinner size="medium" alternative-text="Loading..."></lightning-spinner>
+    </div>
+    <div>
+        <header class="slds-modal__header" if:false={fromQuickAction}>
+            <h2 class="slds-text-heading_medium slds-hyphenate">Add New Incident</h2>
+        </header>
+        <div class="slds-grid slds-gutters slds-wrap slds-p-around_large">
+            <div class="slds-col slds-size_6-of-12">
+                <span>
+                    <lightning-input max={maxDateValue} lwc:ref="beginDateRef" required label="Begin Date" name="beginDate" type="date"
+                        date-style="short" value={dataObj.beginDate} onchange={handleChange}
+                        message-when-range-overflow="Date cannot be greater than today"></lightning-input>
+                </span>
+            </div>
+            <div class="slds-col slds-size_6-of-12">
+                <span>
+                    <lightning-input max={maxDateValue} required label="End Date" name="endDate" type="date"
+                        date-style="short" value={dataObj.endDate} onchange={handleChange}
+                        message-when-range-overflow="Date cannot be greater than today"></lightning-input>
+                </span>
+            </div>
+            <div class="slds-col slds-size_6-of-12">
+                <span>
+                    <lightning-input required label="Affected Person" name="affectedPerson" type="text"
+                        value={dataObj.affectedPerson} max-length="160" onchange={handleChange}></lightning-input>
+                </span>
+            </div>
+            <div class="slds-col slds-size_6-of-12">
+                <span>
+                    <lightning-input max={maxDateValue} label="Affected Person DOB" name="affectedPersonDob" type="date"
+                        date-style="short" value={dataObj.affectedPersonDob} onchange={handleChange}
+                        message-when-range-overflow="Date cannot be greater than today"></lightning-input>
+                </span>
+            </div>
+            <div class="slds-col slds-size_6-of-12">
+                <span>
+                    <lightning-input label="Money Paid" name="moneyPaid" type="number" formatter="currency" step="0.01"
+                        value={dataObj.moneyPaid} onchange={handleChange} min="0"></lightning-input>
+                </span>
+            </div>
+            <div class="slds-col slds-size_6-of-12" if:true={injurySevevrityOptions}>
+                <span>
+                    <lightning-combobox label="Injury Severity" name="injurySeverity" value={dataObj.injurySeverity}
+                        onchange={handleChange} options={injurySevevrityOptions}>
+                    </lightning-combobox>
+                </span>
+            </div>
+            <div class="slds-col slds-size_6-of-12" if:true={locationCategoryOptions}>
+                <span>
+                    <lightning-combobox label="Location Category" name="locationCategory"
+                        value={dataObj.locationCategory} onchange={handleChange} options={locationCategoryOptions}>
+                    </lightning-combobox>
+                </span>
+            </div>
+
+            <div class="slds-col slds-size_6-of-12" if:true={publicComplaintId}>
+                <span>
+                    <c-custom-look-up icon-name="standard:custom" name="addressLoc" s-object-api-name="Address"
+                        label="Location Address" onlookupupdate={lookupRecord} onlookupaddrecord={lookupAddRecord}
+                        placeholder="Search Location Address here..." search-required="true" minimum-length-required="3"
+                        default-record-id={dataObj.addressId} onlookupremove={handleRemoveAddress} from-incident="true"
+                        public-complaint-id={publicComplaintId}>
+                    </c-custom-look-up>
+                </span>
+            </div>
+            <template if:true={addressRec}>
+                <div class="slds-col slds-size_6-of-12 slds-p-horizontal--medium slds-m-bottom_small">
+                    <div class="input-group">
+                        <lightning-input name="street" label="Street" class="wf-input-box" value={addressRec.Street}
+                            message-when-value-missing="Error: Street is required." onchange={handleChange} disabled>
+                        </lightning-input>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_6-of-12 slds-p-horizontal--medium slds-m-bottom_small">
+                    <div class="input-group">
+                        <lightning-input name="city" label="City" class="wf-input-box" value={addressRec.City}
+                            message-when-value-missing="Error: City is required." onchange={handleChange} disabled>
+                        </lightning-input>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_6-of-12 slds-p-horizontal--medium slds-m-bottom_small"
+                    if:true={stateOptions}>
+                    <div class="input-group">
+                        <lightning-combobox class="validate" name="state" label="State" disabled
+                            value={addressRec.StateCode} message-when-value-missing="Error: State is required."
+                            onchange={handleChange} options={stateOptions}>
+                        </lightning-combobox>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_6-of-12 slds-p-horizontal--medium slds-m-bottom_small">
+                    <div class="input-group">
+                        <lightning-input name="zipCode" value={addressRec.PostalCode} disabled
+                            message-when-value-missing="Error: Zip Code is required." label="Zip Code"
+                            class="wf-input-box" onchange={handleChange}></lightning-input>
+                    </div>
+                </div>
+
+                <template if:true={dataObj.urgency}>
+                    <div class="slds-col slds-size_6-of-12" if:true={urgencyOptions}>
+                        <span>
+                            <lightning-combobox required label="Urgency" name="urgency" value={dataObj.urgency}
+                                onchange={handleChange} options={urgencyOptions}>
+                            </lightning-combobox>
+                        </span>
+                    </div>
+                    <div class="slds-col slds-size_6-of-12" if:true={impactOptions}>
+                        <span>
+                            <lightning-combobox required label="Impact" name="impact" value={dataObj.impact}
+                                onchange={handleChange} options={impactOptions}></lightning-combobox>
+                        </span>
+                    </div>
+                    <div class="slds-col slds-size_6-of-12" if:true={priorityOptions}>
+                        <span>
+                            <lightning-combobox required label="Priority" name="priority" value={dataObj.priority}
+                                onchange={handleChange} options={priorityOptions}>
+                            </lightning-combobox>
+                        </span>
+                    </div>
+                    <div class="slds-col slds-size_6-of-12">
+                        <span>
+                            <lightning-input type="text" required label="Subject" name="subject" value={dataObj.subject}
+                                onchange={handleChange} max-length="255"></lightning-input>
+                        </span>
+                    </div>
+                </template>
+            </template>
+
+        </div>
+        <div class="slds-p-around_large slds-m-bottom_medium">
+            <lightning-button variant="outline" label="Cancel" title="Cancel" onclick={handleCancel}
+                class="slds-float_left"></lightning-button>
+            <lightning-button variant="brand" label="Save" title="Save" onclick={handleSave} class="slds-float_right">
+            </lightning-button>
+        </div>
+
+    </div>
+
+</template>

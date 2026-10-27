@@ -1,0 +1,7 @@
+/* Shared portal sidebar uses LPI_Design Employer/Licensing colors via theme CSS.
+   Keep this file minimal — no portal-specific color overrides. */
+:host {
+    display: block;
+    width: 100%;
+    height: 100%;
+}

@@ -1,0 +1,10 @@
+.icon_withoutBg{
+    --slds-c-icon-color-background: none;
+}
+.scaled-down {
+    transform: scale(0.75);
+}
+.slds-modal__container{
+	width: 60% !important;
+	max-width: 60% !important;
+}

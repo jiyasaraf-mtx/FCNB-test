@@ -1,0 +1,51 @@
+<template>
+    <lightning-card title="Clinical Trials Search" icon-name="standard:search">
+        <div class="slds-m-around_medium">
+            <!-- Search Filters -->
+            <lightning-layout multiple-rows alignment-bump="bottom">
+                <lightning-layout-item size="12" small-device-size="5" class="slds-p-around_x-small">
+                    <lightning-input 
+                        label="Condition / Disease (e.g., Asthma)" 
+                        value={condition} 
+                        onchange={handleConditionChange}>
+                    </lightning-input>
+                </lightning-layout-item>
+                
+                <lightning-layout-item size="12" small-device-size="4" class="slds-p-around_x-small">
+                    <lightning-combobox 
+                        label="Trial Status" 
+                        value={status} 
+                        options={statusOptions} 
+                        onchange={handleStatusChange}>
+                    </lightning-combobox>
+                </lightning-layout-item>
+                
+                <lightning-layout-item size="12" small-device-size="3" class="slds-p-around_x-small slds-p-top_large">
+                    <lightning-button label="Search Trials" variant="brand" onclick={handleSearch}></lightning-button>
+                </lightning-layout-item>
+            </lightning-layout>
+            
+            <!-- Loading Spinner -->
+            <template if:true={isLoading}>
+                <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+            </template>
+            
+            <!-- Error Message -->
+            <template if:true={error}>
+                <div class="slds-text-color_error slds-m-vertical_medium">{error}</div>
+            </template>
+            
+            <!-- Results Table -->
+            <template if:true={hasData}>
+                <div style="height: 400px;" class="slds-m-top_medium">
+                    <lightning-datatable
+                        key-field="nctId"
+                        data={data}
+                        columns={columns}
+                        hide-checkbox-column="true">
+                    </lightning-datatable>
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>

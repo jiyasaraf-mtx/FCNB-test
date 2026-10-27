@@ -1,0 +1,271 @@
+// .wf-heading {
+//     font-size:$font-size-18;
+//     font-weight: $font-weight-semi-bold;
+//     color: $text-primary;
+// }
+// .wf-input-box.search {
+//     .slds-input {
+//         padding-left: 2rem;
+//     }
+// }
+// lightning-record-edit-form {
+//     .wf-input-box {
+//         padding-left: 0 !important;
+//     }
+// }
+// .wf-input-box {
+//     .slds-form-element__label {
+//         font-size: $font-size-15;
+//         font-weight: $font-weight-medium !important;
+//         color: $text-primary;
+//         padding-bottom: 0.3rem;
+//     }
+//     .slds-input,
+//     .slds-combobox__input,.slds-textarea {
+//         padding: 0.2rem 1rem;
+//         border: 0.063rem solid $input-border;
+//         color: $text-primary;
+//         font-size: $font-size-14;
+//         &::placeholder {
+//             font-size: $font-size-14;
+//             font-weight: $font-weight-regular;
+//             color: $text-secondary;
+//         }
+//     }
+//     .slds-input[readonly] {
+//         border: none;
+//     }
+// }
+// .search-grid {
+//     padding: 0.625rem 1.125rem;
+//     .slds-button_brand {
+//         width: 9.375rem;
+//         background-color: $blue;
+//         padding: 0.125rem;
+//     }
+// }
+// lightning-datatable {
+//     &.wf-table {
+//         .dt-outer-container {
+//             padding: 2rem 1rem;
+//         }  
+//     }
+//     th, td {
+//         font-size: $font-size-14;
+//     }
+//     .slds-table th {
+//         padding-left: 0;
+//     }
+//     lightning-primitive-header-factory .slds-cell-fixed {
+//         position: unset;
+//         padding-left: 0.5rem;
+//     }
+//     .slds-table_header-fixed_container {
+//         padding-top: 0;
+//         border-left: 0.063rem solid $light-xx-grey;
+//         border-right: 0.063rem solid $light-xx-grey;
+//     }
+//     .slds-table [role=gridcell]:focus, .slds-table th:focus {
+//         box-shadow: none !important;
+//     }
+//      thead lightning-primitive-icon {
+//        .slds-is-sortable__icon {
+//         display: inline-block;
+//        }
+//      }
+//      th .slds-button_icon-bare {
+//         display: none;
+//      }
+//      .slds-resizable__handle {
+//         right: unset;
+//      }
+//     .slds-th__action {
+//         padding: 0;
+//         height: 2.5rem;
+//         background: $light-x-grey !important;
+//         font-weight: $font-weight-semi-bold;
+//         font-size: $font-size-14;
+//         color: $text-primary;
+//     }
+//     .slds-th__action:hover {
+//         background: $table-bg;
+//     }
+//     .slds-resizable__divider {
+//         display: none;
+//     }
+//     .slds-table td {
+//         height: 2.8rem;
+//     }
+//     .slds-table_header-fixed_container::before, .slds-scrollable_y::before {
+//         border-bottom: none !important;
+//     }
+//     .slds-is-resizable .slds-th__action:focus {
+//         background: $table-bg !important;
+//         box-shadow: none !important;
+//     }
+//     .slds-has-focus.slds-is-resizable .slds-th__action,
+//     .slds-has-focus.slds-is-resizable .slds-th__action:focus,
+//     .slds-has-focus.slds-is-resizable .slds-th__action:hover,
+//     .slds-has-focus.slds-is-resizable .slds-th__action:focus:hover,
+//     .slds-is-resizable .slds-th__action:focus,
+//     .slds-is-resizable .slds-th__action:focus:hover {
+//         background-color: $table-bg !important;
+//         box-shadow: none !important;
+//     }
+// }
+// .pagination {
+//     .slds-grid {
+//         align-items: center;
+//         justify-content: center;
+//         .slds-slot  {
+//             align-items: center;
+//             display: flex;
+//             gap: 1rem;
+//         }
+//         .slds-button_neutral {
+//             padding: 0 0.5rem;
+//             border: 0.063rem solid $border-blue-lyt;
+//             .slds-button__icon {
+//                 margin: 0;
+//                 fill: $border-blue-lyt;
+//             }
+//         }
+//         .slds-button_neutral:disabled {
+//             border:0.063rem solid $grey;
+//             .slds-button__icon {
+//                 fill:$grey;
+//             }
+//         }
+//     }
+// }
+// .footer-btns{
+//     gap: 1rem;
+//     background: $white;
+//     border: none;
+//     box-shadow: none;
+//     .cancel-btn {
+//         .slds-button_brand , &.slds-button_brand{
+//             background-color: $btn-grey;
+//             color: $text-primary;
+//             border: none;
+//         }
+//     }
+//     .slds-button {
+//         min-width: 8.125rem;
+//         padding: 0.25rem;
+//         font-size: $font-size-15;
+//     }
+//     .next-btn,.save-btn {
+//         .slds-button_brand, &.slds-button_brand {
+//             background-color: $blue;
+//             color: $white;
+//             border: none;
+//         }
+//         .slds-button_brand:disabled {
+//             background-color: $btn-grey;
+//             border: none;
+//             color: $text-primary;
+//         }
+//     }
+//     .previous-btn {
+//         .slds-button_neutral {
+//             border: 0.063rem solid $blue;
+//             color: $blue;
+//         }
+//     }
+// }
+// .wf-accordion {
+//     .slds-accordion__list-item {
+//         padding: 0.6rem;
+//         border: none;
+//         .slds-accordion__content {
+//             margin: 1rem;
+//             margin-top: 1rem;
+
+//             .slds-table tbody tr th {
+//                 padding-left: 0.75rem;
+//                 .slds-cell-wrap {
+//                     white-space: pre-wrap;
+//                     word-break: break-all;
+//                 } 
+//             }
+//         }
+//         .slds-accordion__summary-action {
+//             background: $bg-x-grey;
+//         }
+//         .slds-accordion__section.slds-is-open {
+//             border: 0.063rem solid $dark-grey;
+//             margin: 0 0.6rem;
+//         }
+//         .slds-accordion__section {
+//             margin: 0 0.6rem;
+//         }
+//     }
+// }
+// c-gasos-preview-workflow {
+//     .slds-table th {
+//         padding-left: 0.625rem;
+//     }
+// }
+// c-gasos-work-flow-line-items {
+//     .slds-card__footer {
+//         border: none;
+//     }
+// }
+
+// /* New  7 - Sep - 22*/
+// .workflow{
+//     font-size: 0.75rem;
+//     h2{
+//         span{
+//             font-size: $font-size-15;
+//         }
+//     }
+//     .wf-heading{
+//         font-size: $font-size-15;
+//     }
+// }
+// .slds-path__track{
+//     font-size: 0.75rem;
+// }
+// c-lpi-application-due-diligence{
+//     lightning-combobox.dueDiligence label {
+//         display: none;
+//     }   
+// }
+
+// .internal-pagination-block{
+//     width: 100%;
+//     .slds-grid{
+//         justify-content: end !important;
+//     }
+// }
+
+// app_flexipage-lwc-app-flexipage-internal{
+//     .slds-modal__header .slds-modal__close {
+//         top: 50%;
+//         right: toRem(10px);
+//         transform: translateY(-50%);
+//     }
+//     .slds-modal__header .slds-modal__close svg {
+//         fill: $black;
+//     }
+//     footer.slds-modal__footer {
+//         background: $white;
+//         box-shadow: unset;
+//         border: none;
+//         .slds-button_brand{
+//             background: $blue !important;
+//         }
+//         .slds-button {
+//             min-width: 6.25rem;
+//         }
+//     }
+// }
+// c-create-gasos-workflow-line-item-clone .slds-modal__content {
+//     min-height: 11.875rem;
+// }
+
+// .record_modal{
+//     min-height: 12.5rem;
+// }

@@ -1,0 +1,517 @@
+// c-cf-document-vault {
+//     .slds-grid.slds-wrap.slds-card {
+//         background: $background-light;
+//         box-shadow: none;
+//         padding: 0;
+//     }
+//     .omniscript-step__body {
+//         padding-top: 0;
+//     }
+//     div[data-style-id="state0element4"] {
+//         &.slds-col {
+//             margin-top: 2rem;
+//             .slds-button_brand {
+//                 padding: 0.125rem 0.25rem;
+//                 width: 100%;
+//             }
+//         }
+//     }
+// }
+// .view-button {
+//     background: $bg-grey;
+//     padding: 1.16rem;
+// }
+// .document-cards-section {
+//     margin-top: 1rem;
+//     .landing-card {
+//         margin-bottom: 1rem;
+//     }
+//     .card-details {
+//         .update,
+//         .exp-date {
+//             font-size: $font-size-14;
+//             color: $text-secondary;
+//             .input {
+//                 font-weight: $font-weight-semi-bold;
+//                 width: fit-content;
+//             }
+//             .label {
+//                 width: max-content;
+//             }
+//         }
+//         .update {
+//             border-right: 0.0625rem solid $text-secondary;
+//             width: max-content;
+//             padding-right: 0.5rem;
+//         }
+//         .exp-date {
+//             margin-left: 0.5rem;
+//         }
+//     }
+//     .view-button {
+//         .slds-col.slds-size_1-of-1 {
+//             .slds-grid.slds-wrap {
+//                 align-items: center;
+//                 justify-content: center;
+//                 margin: 3.05rem auto;
+//             }
+//         }
+//         .secondary-button {
+//             margin: 0;
+//         }
+//         div[data-style-id="state0element1block_element1"].slds-col.slds-size_1-of-12 {
+//             margin-left: 2rem;
+//             &.vertical-menu {
+//                 svg.slds-button__icon {
+//                     fill: $primary-main;
+//                     width: 1.4rem ;
+//                     height: 1.4rem ;
+//                 }
+//             }
+//         }
+//     }
+// }
+// .upload-file-filter {
+//     padding-left: 2rem;
+//     .omniscript-body {
+//         background-color: $white;
+//         padding-bottom: 1rem;
+//         .vlc-separator {
+//             display: none;
+//         }
+//         .slds-button_brand {
+//             padding: 0.1874rem;
+//             font-size: $font-size-14;
+//         }
+//     }
+//     omnistudio-omniscript-file[data-omni-key="UploadFile"] {
+//         .slds-form-element__label {
+//             font-size:$font-size-20;
+//             font-weight: $font-weight-bold;
+//             padding-bottom: 1rem;
+//         }
+//         .slds-file-selector__dropzone {
+//             border: 0.0625rem dashed $primary-main;
+//             padding: 4rem;
+//             display: flex;
+//             justify-content: center;
+//             background: rgba(11, 81, 183, 0.06);
+//         }
+//         .slds-file-selector__button {
+//             border: none;
+//         }
+//     }
+// }
+// .other-document-btn{
+//     button{
+//         color: $primary-main;
+//         border-color: $primary-main;
+//         padding: 0.125rem 0.625rem;
+//     }
+//     .slds-button {
+//         margin-left: 0.25rem;
+//     }
+// }
+// .document-vault-wrapper{
+//     .top-heading {
+//         font-weight: 700;
+//     }
+
+//     .search-wrapper{
+//         label {
+//             font-size: 0.8125rem;
+//             font-weight: 600;
+//             color: $black;
+//             line-height: 0.5rem;
+//         }
+//         input{
+//             padding-left: 1.25rem !important;
+//         }
+//         input, button.slds-combobox__input {
+//             padding-top: 0.625rem;
+//             padding-bottom: 0.625rem;
+//             border-color: $input-border;
+//             border-radius: 0.25rem;
+//             font-size: 0.75rem;
+//         }
+//         .brand-btn{
+//             align-self: flex-end;
+//             button{
+//                 width: 100%;
+//                 padding: 0.625rem;
+//             }
+//         }
+//     }
+
+//     .document-section{
+//         height: 65vh;
+//         overflow: auto;
+//     }
+
+//     .box-container {
+//         background-color: $white;
+//         box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1);
+//         border-radius: 0.25rem;
+//         overflow: hidden;
+
+//         .box-container-inner{
+//             align-items: center;
+//             border-left: 0.25rem solid $error-dark;
+
+//             &.documentuploaded {
+//                 border-left: 0.25rem solid $success;
+//             }
+
+//             .download-btn button {
+//                 min-width: 8.625rem;
+//             }
+
+//             lightning-file-upload{
+//                 lightning-input{
+//                     padding: 0.625rem;
+//                 }
+//                 .slds-form-element__label{
+//                     display: none;
+//                 }
+//                 .slds-file-selector__dropzone {
+//                     border: none !important;
+//                     .slds-file-selector__button {
+//                         padding: 0.313rem 1.25rem;
+//                         border-color: $primary-main;
+//                     }
+//                     .slds-file-selector__text {
+//                         display: none;
+//                     }
+//                     input[disabled]{
+//                         &~ .slds-file-selector__body>.slds-file-selector__button{
+//                             color: $text-secondary !important;
+//                             border-color: $text-secondary;
+//                         }
+//                     }
+//                 }
+//             }
+
+//             .blue-txt {
+//                 font-size: $font-size-16;
+//                 font-weight: 600;
+//                 text-transform: capitalize;
+//                 margin: 0.625rem 0 0.3125rem;
+//                 color: $primary-main;
+//                 line-height: 1.5;
+//                 display: block;
+//                 white-space: unset;
+//             }
+
+//             .uploaded-file {
+//                 font-size: $font-size-14;
+//                 color: $text-secondary;
+//             }
+            
+//             .remove-icon svg {
+//                 cursor: pointer;
+//                 fill: $error-dark;
+//             }            
+            
+//             .upload-date, .expire-date {
+//                 color: $text-secondary;
+//                 font-size: 0.6875rem;
+//                 display: inline-block;
+//             }
+            
+//             p.file-name-badge {
+//                 width: fit-content;
+//                 background: $file-name-badge-bg;
+//                 padding: 0.1875rem 0.625rem;
+//                 border-radius: 0.25rem;
+//                 color: $success_badge;
+//                 font-size: $font-size-12;
+//                 font-weight: 600;
+//             }
+
+//             .bth-wrapper{
+//                 background: $bg-grey;
+//                 height: 100%;
+//                 padding: 1rem 1.25rem;
+//                 text-align: center;
+//                 min-height: 5.938rem;
+
+//                 button {
+//                     padding: 0.3125rem 1.25rem;
+//                     border-color: $primary-main;
+//                     font-size: 0.875rem;
+                    
+//                     &.slds-button_neutral{
+//                         min-width: 6.25rem;
+//                     }
+//                 }
+
+//                 .vertical_menu{
+//                     button {
+//                         padding: 0 !important;
+//                         border: none;
+//                         margin-left: 0.625rem;
+//                         color: $primary-main;
+
+//                         svg {
+//                             height: 1.25rem;
+//                             width: 1.5625rem;
+//                         }
+
+//                         [data-key="down"] {
+//                             display: none;
+//                         }
+//                     }
+//                     .slds-dropdown.slds-dropdown_left {
+//                         font-size: 0.75rem;
+//                         z-index: 1;
+//                     }
+//                 }
+//             }
+//         }
+//     }
+
+//     .upload-box{
+//         .upload-box-inner {
+//             background: $white;
+//             padding: 0.9375rem;
+            
+//             .uploaded-files {
+//                 display: flex;
+//                 align-items: center;
+//                 gap: 0.3125rem;
+//                 flex-wrap: wrap;
+
+//                 div {
+//                     width: fit-content;
+//                     padding: 0.3125rem 0.625rem;
+//                     border-radius: 0.25rem;
+//                     color: $green;
+//                     font-size: 0.75rem;
+//                     font-weight: 600;
+//                     background: $file-name-badge-bg;
+//                 }
+//             }
+
+//             label{
+//                 font-size: 0.6875rem;
+//                 font-weight: 600;
+//                 color: $black;
+//                 line-height: 0.625rem;
+//                 margin: 0.625rem 0;
+//             }
+
+//             input,.slds-combobox__input {
+//                 padding-top: 0.375rem;
+//                 padding-bottom: 0.375rem;
+//                 font-size: 0.75rem;
+//             }
+
+//             .slds-checkbox__label{
+//                 .slds-checkbox_faux{
+//                     width: 1.25rem;
+//                     height: 1.25rem;
+    
+//                     &:after{
+//                         width: 0.625rem !important;
+//                         height: 0.375rem !important;
+//                     }
+//                 }
+//                 .slds-form-element__label {
+//                     font-size: 0.6875rem !important;
+//                     color: $black;
+//                     font-weight: normal;
+//                 }
+//             }
+            
+//             .upload-btn {
+//                 display: block;
+
+//                 button {
+//                     width: 100%;
+//                     padding: 0.625rem;
+//                     font-size: 0.875rem;
+//                 }
+//             }
+
+//             .upload-content {
+//                 position: relative;
+//                 text-align: center;
+//                 padding: 1.5625rem 0.625rem;
+//                 background: rgba(11, 81, 183, 0.06);
+//                 display: block;
+//                 margin: 0.9375rem 0 0;
+//                 border: 0.125rem dashed $primary-main;
+//                 overflow: hidden;
+//                 cursor: pointer;
+
+//                 p {
+//                     font-size: 0.75rem;
+//                 }
+
+//                 lightning-file-upload{
+//                     position: absolute;
+//                     top: 0;
+//                     width: 100%;
+//                     bottom: 0;
+//                     left: 0;
+//                     z-index: 99;
+//                     opacity: 0;
+
+//                     .slds-form-element__label{
+//                         display: none !important;
+//                     }
+
+//                     *{
+//                         display: block;
+//                         height: 100%;
+//                         width: 100%;
+//                         background: transparent !important;
+//                         border: none !important;
+//                     }
+//                 }
+//             }
+//         }
+//     }
+// }
+
+// /* Document Vault Popup */
+// .document-vault-popup{
+//     .document-popup-container{
+//         max-width: 75%;
+
+//         .slds-modal__content{
+//             padding: 0 2rem;
+
+//             .search-wrapper{
+//                 .slds-form-element__control{
+//                     padding-bottom: 0 !important;
+//                 }
+//                 button{
+//                     font-size: 0.875rem;
+//                 }
+//             }
+
+//             .slds-form-element__label{
+//                 font-size: 0.8125rem !important;
+//                 margin-bottom: 0.3125rem !important;
+//                 font-weight: 600 !important;
+//             }
+
+//             .upload-box{
+//                 box-shadow: 0rem 0.125rem 0.25rem rgba(0, 0, 0, 0.1);
+//                 border-radius: 0.25rem;
+
+//                 .upload-box-inner{
+//                     .slds-form-element_stacked {
+//                         margin-bottom: 1rem !important;
+//                     }
+//                 }
+//             }
+//         }
+
+//         .slds-accordion__list-item {
+//             margin-top: 0 !important;
+//             padding-bottom: 0;
+
+//             .slds-accordion__section {
+//                 margin-bottom: 0.625rem;
+
+//                 &.slds-is-open {
+//                     margin: 0;
+//                 }                
+//                 .file-name{
+//                     font-size: 0.875rem;
+//                 }
+//                 .slds-button {
+//                     font-size: 0.875rem !important;
+//                 }
+//             }
+//         }
+
+//         .slds-modal__footer{
+//             display: none !important;
+//         }
+//     }
+// }
+
+// /* Modal */
+// c-upload-document .slds-modal__container{
+//     .slds-modal__header {
+//         background: $white;
+//         border-bottom: 0.063rem solid $grey!important;
+
+//         .slds-modal__close {
+//             top: 50%;
+//             right: 0.625rem;
+//             //transform: translateY(-50%);
+
+//             svg {
+//                 fill: $black;
+//                 width: 1rem;
+//             }
+//         }
+//     }
+    
+//     .slds-modal__footer {
+//         text-align: right !important;
+
+//         .slds-button-group-item{
+//             button {
+//                 padding: 0 2.5rem;
+//             }
+//             &:last-child button {
+//                 background: $primary-main;
+//                 color: $white;
+//             }
+//         }
+//     }
+//     .slds-file-selector__dropzone {
+//         border: 0.0625rem dashed $primary-main !important;
+//         padding: 5rem;
+//         display: flex;
+//         justify-content: center;
+//         background-color: $bg-gray;
+//         .slds-file-selector__button {
+//             white-space: nowrap;
+//         }
+//     }
+// }
+// /* Document Step */
+// .document-step{
+//     .upload-document-block {
+//         background: $white;
+//         padding: $x-m-small;
+
+//         .combobox {
+//             width: 30%;
+//             margin-bottom: 1.25rem;
+
+//             .slds-combobox_container {
+//                 font-size: $font-size-14;
+//             }
+//         }
+//         .file-upload {
+//             min-height: 18.75rem;
+//             display: flex;
+//             align-items: center;
+//             justify-content: center;
+//             text-align: center;
+//             background: $file-upload-background;
+//             border: 0.0625rem dashed $primary-main;
+//             .slds-file-selector__button {
+//                 color: $primary-main;
+//             }
+//         }
+//     }
+//     .uploaded-documents {
+//         background: $white;
+//         padding: $x-m-small;
+//     }
+// }
+// .documentUploadData {
+// 	margin-top: 1rem;
+// 	 .download{
+// 		margin-right: toRem(15);
+// 		cursor: pointer;
+//   }
+// }

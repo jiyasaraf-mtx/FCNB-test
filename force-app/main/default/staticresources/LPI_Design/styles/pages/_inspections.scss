@@ -1,0 +1,212 @@
+c-cf-noncompliance-inspections-table-header{
+    .table-header .block-container .slds-size_2-of-12 {
+        width: 13%;
+    }
+    c-cf-noncompliance-inspections-table-row{
+        .table-row omnistudio-block .block-container .slds-size_2-of-12 {
+            width: 13%;
+        }
+        .actions{
+            .slds-col.slds-size_1-of-1{
+                padding: 0;
+            }
+        }
+    }
+}
+c-cf-inspection{
+    .heading-small{
+        margin-bottom: 1rem;
+    }
+    .card-statics{
+        lightning-formatted-rich-text{
+            div{
+                font-size: 1rem;
+                font-weight: 600;
+            }
+        }
+    }
+}
+c-cf-inspection-report{
+    .inspection-block{
+        padding: 1rem;
+        margin-bottom: 1rem;
+        border: 0.063rem solid $input-border;
+        border-radius: 0.25rem;
+    }
+    .sub-heading{
+        margin-bottom: 1.25rem;
+    }
+    .label {
+        font-size: 0.875rem;
+        font-weight: 600;
+        line-height: 1.375rem;
+        color: $text-secondary;
+        margin-bottom: 0.25rem;
+    }
+    .text-input {
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.375rem;
+        color: $text-primary;
+    }
+    .accordion-block{
+        padding-right: 0;
+    }
+}
+.application-table{
+    border: 0.063rem solid $input-border;
+    border-radius: 0.25rem;
+    c-cf-inspections-application-table-header{
+        .table-header .block-container .slds-size_2-of-12,.table-row omnistudio-block .block-container .slds-size_2-of-12 {
+            width: 16.6666666667%;
+        }
+        .visit-table{
+            padding: 1rem;
+            .heading-small{
+                font-size: 1.125rem;
+                font-weight: 600;
+                line-height: 1.125rem;
+                color: $primary-main;
+                margin-bottom: 1.5rem;
+            }
+        }
+        .failed{
+            .slds-rich-text-editor__output{
+                div{
+                    font-weight: bold;
+                    background: $error-light;
+                    display: inline-block;
+                    color: $error-dark;
+                    padding: 0.313rem 0.625rem;
+                    border-radius: 0.25rem;
+                }
+            }
+            
+        }
+    }
+}
+c-cf-non-compliance-inspection-application-table-header{
+    .table-header .block-container .slds-size_2-of-12,.table-row omnistudio-block .block-container .slds-size_2-of-12 {
+        width: 14.28%;
+    }
+   .heading-small{
+        margin-bottom: 1rem;
+       div{
+            display: inline-block;
+            font-size: 0.938rem;
+            font-weight: 600;
+            line-height: 1.5rem;
+            
+            &:nth-child(2){
+                color: $primary-main;
+                margin-left: 2rem;
+            }
+       }
+    }
+}
+c-inspection-inspection-report-english{
+    article.slds-card{
+        background: transparent;
+        box-shadow: none;
+        padding: 0;
+    }
+    .omniscript-body{
+        padding: 0;
+        margin: 0;
+        border: none !important;
+    }
+    .slds-page-header__title{
+        display: none;
+        margin: 0;
+    }
+    [data-omni-key="CustomLWC1"]{
+        padding: 0;
+    }
+    .omniscript-btn-save-for-later{
+        position: absolute;
+        bottom: -0.4rem;
+        right: 9rem;
+        .slds-button{
+            display: flex;
+            justify-content: center;
+            width: 7.5rem;
+            border: 0.0625rem solid $secondary-main;
+            padding: 0.1875rem;
+            font-weight: 600;
+        }
+    }
+    .omniscript-btn-next{
+            width: 7.5rem;
+        .slds-button_brand{
+            background-color: $secondary-main;
+            padding: 0.25rem;
+            top: 0.9rem;
+        }
+    }
+   .slds-grid .slds-order_1{
+        padding: 0;
+    }
+   .app-status{
+        color: $secondary-main;
+        font-weight: 700;
+        .slds-rich-text-editor__output{
+            background: rgba(42, 118, 244, 0.12);
+            display: inline-block;
+            padding: 0.313rem 0.625rem;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+        }
+   }
+   .actionFlyout { 
+    .slds-modal {
+        .slds-modal__header{
+            .slds-modal__close{
+                justify-content: end;
+            }
+        } 
+    }
+}
+}
+c-inspection-inspection-report-modal-english,c-case-case-modal-english{
+    .omniscript-body{
+        padding: 0;
+        margin: 0;
+        border: none !important;
+    }
+    .slds-file-selector__dropzone{
+        border: 0.0625rem dashed $secondary-main !important;
+        padding: 5rem;
+        display: flex;
+        justify-content: center;
+        background-color: $bg-blue;
+    }
+    [data-omni-key="Block1"],[data-omni-key="Block2"],[data-omni-key="Block3"],[data-omni-key="Block4"]{
+        border: 0.063rem solid $input-border;
+        border-radius: 0.25rem;
+        margin-bottom: 1rem;
+    }
+    .slds-page-header__title{
+        display: block;
+        font-size: 1rem;
+        font-weight: 600 !important;
+        line-height: 1.625rem;
+        margin: 2rem 0;
+    }
+   button span:first-child{
+        justify-content: center !important; 
+    }
+    [data-omni-key="TextBlock1"],[data-omni-key="TextBlock3"],[data-omni-key="TextBlock4"]{
+        h2{
+            font-size: 1.125rem;
+            font-weight: 600;
+            line-height: 1.125rem;
+            color: $primary-main;
+        }
+    }
+    .omniscript-btn-save-for-later{
+        button{
+            border: 0.0625rem solid rgba(200, 45, 45, 1) !important;
+            color: $error-dark;
+        }
+    }
+}

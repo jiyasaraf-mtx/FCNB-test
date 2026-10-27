@@ -1,0 +1,39 @@
+.refund-page {
+    padding: 1.5rem;
+}
+
+.page-heading {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.section-heading {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin: 0 0 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #dddbda;
+}
+
+.refund-section {
+    padding: 1rem 0;
+}
+
+.backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.6);
+    z-index: 9000;
+}
+
+.spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.m-b-medium {
+    margin-bottom: 1rem;
+}

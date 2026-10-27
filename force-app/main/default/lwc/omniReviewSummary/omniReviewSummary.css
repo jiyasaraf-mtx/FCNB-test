@@ -1,0 +1,140 @@
+/* Generic OmniScript Review Summary — SLDS-aligned, no card chrome */
+.review-container {
+    font-family: 'Salesforce Sans', Arial, sans-serif;
+    background: #fff;
+    padding: 0;
+    margin: 0;
+}
+
+.review-header {
+    background-color: #eef4fb;
+    padding: 0.625rem 1rem;
+    border: 1px solid #d8dde6;
+}
+
+.header-title {
+    font-size: 1rem;
+    font-weight: 400;
+    color: #181818;
+}
+
+.header-underline {
+    height: 3px;
+    background-color: #003768;
+    margin-bottom: 1.25rem;
+}
+
+.section {
+    margin-bottom: 1.25rem;
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0;
+    cursor: pointer;
+}
+
+.section-header:focus-visible {
+    outline: 2px solid #003768;
+    outline-offset: 2px;
+}
+
+.section-title {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: #181818;
+}
+
+.chevron-icon {
+    --slds-c-icon-color-foreground-default: #706e6b;
+}
+
+.section-content {
+    padding: 0.5rem 0 0 1.5rem;
+}
+
+.field-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 0.75rem 1rem;
+}
+
+.span-6 {
+    grid-column: span 6;
+}
+
+.span-12 {
+    grid-column: span 12;
+}
+
+.field-label {
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: #181818;
+    margin-bottom: 0.125rem;
+}
+
+.field-value {
+    font-size: 0.875rem;
+    color: #3e3e3c;
+    word-break: break-word;
+}
+
+.disclosure {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid #d8dde6;
+}
+
+.disclosure-title {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: #181818;
+    margin-bottom: 0.5rem;
+}
+
+.disclosure-text {
+    font-size: 0.875rem;
+    color: #3e3e3c;
+    margin-bottom: 0.75rem;
+    line-height: 1.5;
+}
+
+.attestation-error {
+    color: #ba0517;
+    font-size: 0.8125rem;
+    margin-top: 0.35rem;
+}
+
+.review-actions {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 1.25rem;
+    padding-top: 1rem;
+    border-top: 1px solid #d8dde6;
+}
+
+.empty-state {
+    color: #706e6b;
+}
+
+@media (max-width: 768px) {
+    .field-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .span-6,
+    .span-12 {
+        grid-column: span 1;
+    }
+
+    .section-content {
+        padding-left: 1rem;
+    }
+}

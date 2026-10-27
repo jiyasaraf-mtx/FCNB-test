@@ -1,0 +1,11 @@
+<!--
+  @description       : 
+  @author            : Mohit Karani
+  @group             : 
+  @last modified on  : 06-02-2023
+  @last modified by  : Mohit Karani
+-->
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickActionWithoutHeader">
+    <c:lpiEditPlannedVisitDate recordId ="{!v.recordId}" onclose="{!c.closeQuickAction}"/>
+
+</aura:component>

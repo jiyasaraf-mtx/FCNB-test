@@ -1,0 +1,88 @@
+<!--
+  @description       : 
+  @author            : Mohit Karani
+  @group             : 
+  @last modified on  : 10-16-2023
+  @last modified by  : Ranjitha M U
+-->
+<template>
+    <div if:true={showSpinner}>
+        <lightning-spinner size="medium" alternative-text="Loading..."></lightning-spinner>
+    </div>
+
+    <div class="downloadable-listings">
+        <div class="content-header slds-col search-page-container slds-p-around_x-small slds-size_12-of-12">
+            <div class="download-parent">
+                <h1 class="download-parent heading-class heading">Downloadable Listings - Active License Only</h1>
+                <p class="slds-p-around_medium">The information contained in "Downloadable Listings" and "Licensee
+                    Search" is updated nightly. If you
+                    are
+                    unable to locate licensee information or have questions regarding any of the information supplied,
+                    please contact the individual licensing board directly.</p>
+            </div>
+
+            <div class="combobox-selection slds-m-top_x-large slds-size_8-of-12 slds-float_left">
+                <div class="slds-grid slds-gutters slds-p-around_medium">
+                    <div class="slds-col slds-size_2-of-3">
+                        <span>
+                            <lightning-combobox class="boardSelectionFocus" name="boardselection" variant="label-hidden" value={selectedBoard}
+                                placeholder="Select Board here" options={boardNames} onchange={handleChange}>
+                            </lightning-combobox>
+                        </span>
+                    </div>
+                    <div class="slds-col slds-size_1-of-3">
+                        <span>
+                            <lightning-button class="slds-button_stretch" role="alert" variant="brand" label="Submit" title="Submit"
+                                onclick={handleSubmit}>
+                            </lightning-button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div if:true={filesList} class="details-section slds-p-around_small slds-m-top_medium">
+            <h2 class="section-heading">{selectedBoard}</h2>
+            <div class="slds-text-heading_small slds-p-vertical_small slds-m-top_small">
+                The files below are Professional Registration Directories and have been tab delimited and can be easily
+                imported
+                into various databases, spreadsheets, or word processors.</div>
+            <div class="slds-text-heading_small slds-m-top_small"><span class="imp-text">Right Click</span> on the
+                *.ZIP file you
+                wish to download and select <span class="imp-text">Save As</span>. Place the file where you can access
+                it
+                easily.
+                The file description contains information on the type of fields contained in the data file and how large the
+                fields are. This will help you set up a spreadsheet or database. After setting up your document, spreadsheet
+                or
+                database you must import the data file (*.txt) into it.</div>
+    
+            <div class="slds-text-heading_small slds-m-top_small"><span class="imp-text">MAC USERS:</span> These files can
+                be
+                unpacked by using the free utility "<span class="imp-text">Stuffit Expander</span>".
+            </div>
+            <div class="warning-message slds-m-top_large slds-m-bottom_large">
+                <lightning-icon icon-name="utility:info_alt" alternative-text="Info Image"></lightning-icon>
+                <span class="slds-m-left_x-small">Downloadable Listings are not provided for
+                    verification of discipline. To determine licensee discipline utilize Licensee Search or contact the
+                    Licensure Board.</span>
+            </div>
+            <div class="slds-m-top_small slds-grid slds-gutters slds-wrap dl-card-container">
+                <template for:each={filesList} for:item="file">
+                    <div key={file.fileName} class="slds-col slds-size_2-of-4 slds-medium-size_4-of-12 slds-large-size_3-of-12 card-class">
+                        <lightning-card>
+                            <p class="slds-p-horizontal_small license-name">{file.licenseName}</p>
+    
+                            <p class="slds-p-horizontal_small slds-p-top_small imp-text">{file.fileName}</p>
+    
+                            <lightning-button class="slds-p-horizontal_small slds-p-top_small" data-url={file.fileUrl}
+                                variant="brand-outline" label="Download" onclick={handleDownload} aria-label={file.ariaLabel}></lightning-button>
+                        </lightning-card>
+                    </div>
+                </template>
+    
+            </div>
+    
+    
+        </div>
+    </div>
+</template>

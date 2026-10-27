@@ -1,0 +1,60 @@
+<template>
+    <div class="success-page" role="main">
+        <template if:true={isLoading}>
+            <div class="slds-align_absolute-center slds-p-around_large" role="status">
+                <lightning-spinner alternative-text={loadingLabel} size="medium"></lightning-spinner>
+            </div>
+        </template>
+
+        <template if:true={errorMessage}>
+            <div class="slds-notify slds-notify_alert slds-alert_error" role="alert">
+                {errorMessage}
+            </div>
+        </template>
+
+        <template if:false={isLoading}>
+            <div class="success-container slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-1 slds-large-size_9-of-12 success-main">
+                    <h1 class="success-title">{title}</h1>
+                    <p class="success-body">{body}</p>
+
+                    <div class="application-row">
+                        <div class="application-label">
+                            <span class="label-text">{idLabel}:</span>
+                            <span class="value-text">{displayRecordNumber}</span>
+                        </div>
+                        <div class="application-label">
+                            <span class="label-text">Status:</span>
+                            <span class="value-text status-pill">{displayStatus}</span>
+                        </div>
+                    </div>
+
+                    <div class="next-steps">
+                        <div class="next-steps-title">{nextStepsTitle}</div>
+                        <ul>
+                            <template for:each={nextStepItems} for:item="step">
+                                <li key={step.key}>{step.text}</li>
+                            </template>
+                        </ul>
+                    </div>
+
+                    <div class="actions">
+                        <lightning-button
+                            variant="brand"
+                            label={ctaLabel}
+                            onclick={handleBack}
+                        ></lightning-button>
+                    </div>
+                </div>
+
+                <div class="slds-col slds-size_1-of-1 slds-large-size_3-of-12 success-visual slds-align_absolute-center">
+                    <lightning-icon
+                        icon-name="action:approval"
+                        size="large"
+                        alternative-text={title}
+                    ></lightning-icon>
+                </div>
+            </div>
+        </template>
+    </div>
+</template>

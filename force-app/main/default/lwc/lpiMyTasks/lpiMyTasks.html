@@ -1,0 +1,109 @@
+<!--
+  @description       : 
+  @author            : Ramadevi M 
+  @group             : 
+  @last modified on  : 10-21-2023
+  @last modified by  : mohit.karani@mtxb2b.com
+-->
+<template>
+    <div class="backdrop" if:true={showSpinner}>
+        <div class="spinner">
+            <lightning-spinner alternative-text="Loading..."></lightning-spinner>
+        </div>
+    </div>
+    <template if:true={isTaskDataLoaded}>
+        <template if:false={isTaskAvailable}>
+            <div class="slds-illustration slds-illustration_small">
+                <img alt={labels.noTaskAvailable}  src={noRecord}>
+                <div class="slds-text-longform m-t-medium">
+                    <h3 class="slds-text-heading_medium">{labels.noTaskAvailable}</h3>
+                </div>
+            </div>
+        </template>
+    </template>
+
+    <template if:true={isTaskAvailable}>
+        <div class="my-tasks-container overflow-auto">
+            <h1 class="slds-m-bottom_small bold-20">{labels.allTasks}</h1>
+            <table class="slds-table slds-table_bordered slds-no-row-hover alpha-table-layout dashboard-table">
+                <caption class="sr-only">{labels.allTasksTableCaption}</caption>
+                <thead>
+                    <tr class="table-heading-row">
+                        <template for:each={columns} for:item="column">
+                            <th key={column.fieldName}>{column.label}</th>
+                        </template>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template for:each={taskRecords} for:item="item">
+                        <tr key={item.taskId} class="table-body-row">
+                            <td data-label={labels.subject}>{item.taskSubject}</td>
+                            <td data-label={labels.dueDate}>{item.taskDueDate}</td>
+                            <td data-label={labels.status}>{item.displayStatus}</td>
+                            <td data-label={labels.dateReceived}>{item.taskReceivedDate}</td>
+                            <td data-label={labels.results}>{item.taskResult}</td>
+                            <td data-label={labels.files} style="min-width: 10rem;">
+                                <template for:each={item.filesList} for:item="file">
+                                    <div class="slds-m-vertical_xx-small" key={file.fileId}>
+                                        <a class="link-underline slds-m-right_x-small" target="_Self" data-filename={file.fileName}
+                                            data-fileid={file.fileId} tabindex="0" title={file.fileName}
+                                            onkeydown={handleKeyDown}  aria-label={file.downloadAriaLabel} data-parentid={file.parentRecId}
+                                            onclick={handleDownload}>
+                                            {file.fileName} </a> 
+                                        <lightning-button-icon size="small" icon-name="utility:delete" 
+                                            alternative-text={labels.remove} title={labels.remove}
+                                            data-filename={file.fileName} data-fileid={file.fileId} data-taskid={item.taskId}
+                                            data-parentid={file.parentRecId} onclick={handleDeleteConfirmation} aria-label={file.deleteAriaLabel}>
+                                        </lightning-button-icon>
+                                    </div>
+                                </template>
+                            </td>
+                            <td data-label={labels.action}>
+                                <template if:false={item.isStatusCompleted}>
+                                    <lightning-button class="slds-p-around_x-small no-truncate uploadbtn" label={labels.uploadFiles} data-recordid={item.taskId} data-ownerid={item.ownerId} data-metadata={item.onbaseMetadata}
+                                    data-board={item.boardName} data-casenumber={item.numberValue} data-casesubject={item.caseSubject} data-accountid={item.accountId}
+                                    data-status={item.taskStatus} data-ownername={item.ownerName} data-duedate={item.taskDueDate} data-taskaction={item.actionActivity} onclick={handleFile}
+                                    variant="outline" aria-label={item.fileUploadAriaLabel}></lightning-button>
+                                </template>
+                            </td>
+                        </tr>
+                    </template>
+                </tbody>
+
+            </table>
+        </div>
+    </template>
+
+    <template if:true={displayModal}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+            aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open" onkeydown={handleEscCloseModal}>
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                        title={labels.close} onclick={handleClose}>
+                        <lightning-icon icon-name="utility:close" variant="inverse" size="small">
+                        </lightning-icon>
+                        <span class="slds-assistive-text">{labels.close} {modalHeading}</span>
+                    </button>
+                    <h1 id="modal-heading-01" class="section-heading slds-m-bottom_x-small">
+                        {modalHeading}</h1>
+                </header>
+                <div if:false={isDeleteModal} class="slds-modal__content slds-p-around_medium"
+                    id="modal-content-id-1">
+                    <lightning-file-upload label={labels.attachFile} class="view-upload-doc" name="fileUploader" accept={acceptedFormats}
+                        record-id={appDocRecordId} onuploadfinished={handleUploadFinished}>
+                    </lightning-file-upload>
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning-button variant="outline" label={labels.cancel} title={labels.cancel}
+                        onclick={handleClose}>
+                    </lightning-button>
+                    <lightning-button if:true={isDeleteModal} class="slds-m-left_x-small"  variant="brand" label={labels.yes} title={labels.yes}
+                                onclick={handleDelete}>
+                    </lightning-button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>

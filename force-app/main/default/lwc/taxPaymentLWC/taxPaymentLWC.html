@@ -1,0 +1,112 @@
+<template>
+    <div class="payment-panel">
+        <!-- Summary -->
+        <section class="section">
+            <h3 class="section-title">Summary</h3>
+            <div class="summary-grid">
+                <div class="summary-item">
+                    <div class="k">Context</div>
+                    <div class="v">{contextText}</div>
+                </div>
+                <div class="summary-item">
+                    <div class="k">Return ID</div>
+                    <div class="v">{returnId}</div>
+                </div>
+                <div class="summary-item">
+                    <div class="k">Payment status</div>
+                    <div class="v">{paymentStatus}</div>
+                </div>
+                <div class="summary-item">
+                    <div class="k">Amount due</div>
+                    <div class="v">{amountDue}</div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider" />
+
+        <!-- Payment method -->
+        <section class="section">
+            <h3 class="section-title">Payment method</h3>
+            <div class="radio-row" role="radio" aria-checked="true">
+                <span class="radio-dot" aria-hidden="true"></span>
+                <strong>Pay online</strong>
+                <span class="selected-hint">Selected</span>
+            </div>
+
+            <!-- Gateway panel -->
+            <template if:true={showGateway}>
+                <div class="gateway">
+                    <template if:true={showGatewayStep1}>
+                        <div class="gateway-icon" aria-hidden="true">◉</div>
+                        <div class="gateway-title">Payment Gateway</div>
+                        <div class="gateway-hint">
+                            Staged mock payment only — no real card details are accepted.
+                        </div>
+                        <div class="amount-box">
+                            <div class="k">Amount to authorize</div>
+                            <div class="v">{gatewayAmount}</div>
+                        </div>
+                        <div class="gateway-actions">
+                            <button class="btn primary" type="button" onclick={handleAuthorize}>
+                                Authorize Payment
+                            </button>
+                            <button class="btn" type="button" onclick={handleCancelGateway}>
+                                Cancel
+                            </button>
+                        </div>
+                    </template>
+
+                    <template if:true={showGatewayStep2}>
+                        <div class="spinner" aria-hidden="true"></div>
+                        <div class="gateway-title">Authorizing staged payment…</div>
+                        <div class="gateway-hint">Gateway is processing the request.</div>
+                    </template>
+
+                    <template if:true={showGatewayStep3}>
+                        <div class="check-icon" aria-hidden="true">✓</div>
+                        <div class="gateway-title">Gateway authorization successful</div>
+                        <div class="gateway-actions">
+                            <button
+                                class="btn success"
+                                type="button"
+                                onclick={handleCompleteStubPayment}
+                            >
+                                Complete Stub Payment
+                            </button>
+                        </div>
+                    </template>
+                </div>
+            </template>
+
+            <!-- Payment success banner -->
+            <template if:true={showPaymentResult}>
+                <div class="success-box">
+                    <strong>Payment successful</strong><br />
+                    Payment status: <strong>Paid after stub</strong><br />
+                    Receipt ID: <strong>{receiptId}</strong>
+                </div>
+            </template>
+        </section>
+
+        <hr class="divider" />
+
+        <!-- Cheque alternate -->
+        <section class="section">
+            <h3 class="section-title">Cheque alternate</h3>
+            <div class="field">
+                <label class="field-label">Payee</label>
+                <div class="display">The Financial and Consumer Services Commission</div>
+            </div>
+        </section>
+
+        <!-- Pay button (bottom right, matching preview) -->
+        <div class="actions">
+            <template if:true={showPayButton}>
+                <button class="btn primary pay-btn" type="button" onclick={handlePayClick}>
+                    Pay — Pending Gateway
+                </button>
+            </template>
+        </div>
+    </div>
+</template>

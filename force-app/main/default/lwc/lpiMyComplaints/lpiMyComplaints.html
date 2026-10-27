@@ -1,0 +1,74 @@
+<!--
+  @description       : 
+  @author            : Mounika Dasari
+  @group             : 
+  @last modified on  : 07-17-2024
+  @last modified by  : Uzma Md
+-->
+<template>
+    <div class="slds-grid slds-wrap slds-grid--align-spread m-b-medium">
+        <h1 class="bold-32 ">My Complaints</h1>
+        <lightning-button variant="brand" label="File Complaint" onclick={handleClickComplaints}
+            title="File Compliant"></lightning-button>
+    </div>
+    <template if:true={isComplaintDataLoaded}>
+        <template if:false={isComplaintAvailable}>
+           <div style="overflow:auto; margin-top:20px;"   class="my-tasks-container">
+                <h3>No Complaints Available</h3>
+             </div>
+          
+        </template>
+    </template>
+    <template if:true={isComplaintAvailable}>
+    <div class="slds-card">
+        <div class="slds-grid m-b-small slds-grid--vertical-align-center">
+            <h2 class="semiBold-18 m-r-small">All Complaints</h2>
+            
+        </div>
+       
+    
+        <div class="overflow-auto">
+            <table class="slds-table slds-table_bordered slds-no-row-hover alpha-table-layout dashboard-table">
+                <caption class="slds-assistive-text">Identification Cards Table</caption>
+                <thead>
+                    <tr>
+                        <th>Complaint Number</th>
+                        <th>Agency Name</th>
+                        <th>Date Submitted</th>
+                        <th>Status</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                   <template for:each={complaintRecords} for:item="item">
+                        <tr key={item.ComplaintId}>
+                      <td>{item.ComplaintNumber}</td>
+                      <td>{item.BoardName}</td>
+                      <td>{item.SubmittedDate}</td>
+                      <td>{item.ComplaintStatus}</td>
+                      <!-- <td>{item.status}</td> -->
+                      <td class="slds-grid">
+   <!--   <lightning-button-menu class="action-btn" alternative-text="License Action" variant="bare"
+                              icon-name="utility:threedots_vertical">
+                              <template for:each={item.menuItems} for:item="action">
+                                  <lightning-menu-item 
+                                      label={action.label} 
+                                      value={action.value}
+                                      key={action.label} 
+                                      data-icid={item.icId}
+                                      data-regauthid={item.regAuthId}
+                                      data-type={item.applicationType}
+                                      data-subtype={item.applicationSubType}
+                                      onclick={handleClickEvent}>
+                                  </lightning-menu-item>
+                              </template>
+                          </lightning-button-menu> -->
+                      </td>
+                  </tr>
+              </template> 
+                </tbody>
+            </table>
+        </div>
+    </div>
+</template>
+</template>

@@ -1,0 +1,96 @@
+<template>
+    <lightning-card title='All Identification Cards' if:true={hasIcCardData}>
+        <div style="overflow:auto;">
+            <table class="slds-table slds-table_bordered slds-no-row-hover alpha-table-layout dashboard-table">
+                <caption class="slds-assistive-text">Identification Cards Table</caption>
+                <thead>
+                    <tr>
+                        <template for:each={columns} for:item="column">
+                            <th key={column.fieldName}>{column.label}</th>
+                        </template>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template for:each={recordsdata} for:item="item">
+                        <tr key={item.LicenseNumber}>
+                            <td>{item.cardNumber}</td>
+                            <td>{item.type}</td>
+                            <td>{item.issuanceDate}</td>
+                            <td>{item.expiryDate}</td>
+                            <td class="slds-grid">
+                                <lightning-button-menu class="action-btn" alternative-text="License Action" variant="bare"
+                                    icon-name="utility:threedots_vertical">
+                                    <template for:each={item.menuItems} for:item="action">
+                                        <lightning-menu-item 
+                                            label={action.label} 
+                                            value={action.value}
+                                            key={action.label} 
+                                            data-icid={item.icId}
+                                            data-regauthid={item.regAuthId}
+                                            data-type={item.applicationType}
+                                            data-subtype={item.applicationSubType}
+                                            onclick={handleClickEvent}>
+                                        </lightning-menu-item>
+                                    </template>
+                                </lightning-button-menu>
+                            </td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+            <template if:true={idCardModalDetails.showModal}>
+                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                    aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                    <div class="slds-modal__container">
+                        <header class="slds-modal__header">
+                            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" 
+                                aria-label="Close" title="Close" onclick={hideModalBox}>
+                                <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
+                                    size="small"></lightning-icon>
+                                <span class="slds-assistive-text">Close</span>
+                            </button>
+                            <h1 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">Identification Card Information
+                            </h1>
+                        </header>
+                        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+                            <div class="slds-grid slds-wrap slds-p-horizontal_small">
+                                <div class="slds-col slds-size_1-of-2 slds-m-bottom_x-small" tabindex="0">
+                                    <p><b><label for="contestant-name">Contestant Name:</label></b></p>
+                                    <p id="contestant-name">{idCardModalDetails.contestantName}</p>
+                                </div>
+                                <div class="slds-col slds-size_1-of-2 slds-m-bottom_x-small" tabindex="0">
+                                    <p><b><label for="id-issuing-commission">ID Issuing Commission:</label></b></p>
+                                    <p id="id-issuing-commission">{idCardModalDetails.idIssuingCommission}</p>
+                                </div>
+                                <div class="slds-col slds-size_1-of-2 slds-m-bottom_x-small" tabindex="0">
+                                    <p><b><label for="id-date-issued">ID Date Issued:</label></b></p>
+                                    <p id="id-date-issued">{idCardModalDetails.idDateIssued}</p>
+                                </div>
+                                <div class="slds-col slds-size_1-of-2 slds-m-bottom_x-small" tabindex="0">
+                                    <p><b><label for="id-type">ID Type:</label></b></p>
+                                    <p id="id-type">{idCardModalDetails.idType}</p>
+                                </div>
+                                <div class="slds-col slds-size_1-of-2 slds-m-bottom_x-small" tabindex="0">
+                                    <p><b><label for="expiry-date">ID Expiration Date:</label></b></p>
+                                    <p id="expiry-date">{idCardModalDetails.expiryDate}</p>
+                                </div>
+                                <div class="slds-col slds-size_1-of-2 slds-m-bottom_x-small" if:true={idCardModalDetails.nationalIDNumber} tabindex="0">
+                                    <p><b><label for="national-id">National ID Number:</label></b></p>
+                                    <p id="national-id">{idCardModalDetails.nationalIDNumber}</p>
+                                </div>
+                                <div class="slds-col slds-size_1-of-2 slds-m-bottom_x-small" if:true={idCardModalDetails.federalIDNumber} tabindex="0">
+                                    <p><b><label for="federal-id">Federal ID Number:</label></b></p>
+                                    <p id="federal-id">{idCardModalDetails.federalIDNumber}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <footer class="slds-modal__footer">
+                            <button class="slds-button slds-button_neutral" aria-label="Cancel" onclick={hideModalBox}>Cancel</button>
+                        </footer>
+                    </div>
+                </section>
+                <div class="slds-backdrop slds-backdrop_open"></div>
+            </template>
+        </div>
+    </lightning-card>
+</template>

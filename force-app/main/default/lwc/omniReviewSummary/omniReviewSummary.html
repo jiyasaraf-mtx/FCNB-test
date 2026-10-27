@@ -1,0 +1,103 @@
+<template>
+    <div class="review-container" lang={htmlLang}>
+        <template lwc:if={hasTitle}>
+            <div class="review-header">
+                <span class="header-title">{displayTitle}</span>
+            </div>
+            <div class="header-underline"></div>
+        </template>
+
+        <template lwc:if={isLoading}>
+            <div class="slds-align_absolute-center slds-p-around_large">
+                <lightning-spinner alternative-text={labels.loading} size="medium"></lightning-spinner>
+            </div>
+        </template>
+
+        <template lwc:if={showContent}>
+            <template lwc:if={hasSections}>
+                <template for:each={sections} for:item="section">
+                    <div key={section.id} class="section">
+                        <div
+                            class="section-header"
+                            data-section-id={section.id}
+                            onclick={handleSectionToggle}
+                            onkeydown={handleSectionKeydown}
+                            tabindex="0"
+                            role="button"
+                            aria-expanded={section.isExpanded}
+                            aria-controls={section.contentId}
+                        >
+                            <lightning-icon
+                                icon-name={section.chevronIcon}
+                                size="x-small"
+                                class="chevron-icon"
+                                aria-hidden="true"
+                            ></lightning-icon>
+                            <span class="section-title">{section.title}</span>
+                        </div>
+
+                        <template lwc:if={section.isExpanded}>
+                            <div class="section-content" id={section.contentId}>
+                                <div class="field-grid">
+                                    <template for:each={section.fields} for:item="field">
+                                        <div key={field.id} class={field.spanClass}>
+                                            <div class="field-label">{field.label}</div>
+                                            <div class="field-value">{field.displayValue}</div>
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </template>
+            </template>
+
+            <template lwc:else>
+                <div class="slds-box slds-m-around_medium empty-state">
+                    <div class="slds-align_absolute-center">
+                        <lightning-icon
+                            icon-name="utility:info"
+                            size="small"
+                            class="slds-m-right_small"
+                            aria-hidden="true"
+                        ></lightning-icon>
+                        <span>{labels.noData}</span>
+                    </div>
+                </div>
+            </template>
+
+            <template lwc:if={showDisclosure}>
+                <div class="disclosure">
+                    <div class="disclosure-title">{labels.disclosure}</div>
+                    <p class="disclosure-text">{labels.disclosureText}</p>
+                    <lightning-input
+                        type="checkbox"
+                        name="attestation"
+                        label={labels.attestation}
+                        checked={attestationConfirmed}
+                        onchange={handleAttestationChange}
+                        data-id="attestation"
+                    ></lightning-input>
+                    <template lwc:if={showAttestationError}>
+                        <div class="attestation-error" role="alert">{labels.attestationRequired}</div>
+                    </template>
+                </div>
+            </template>
+
+            <!-- <div class="review-actions">
+                <lightning-button
+                    variant="neutral"
+                    label={labels.back}
+                    onclick={handleBackClick}
+                    disabled={isSubmitting}
+                ></lightning-button>
+                <lightning-button
+                    variant="brand"
+                    label={labels.submit}
+                    onclick={handleSubmitClick}
+                    disabled={isSubmitting}
+                ></lightning-button>
+            </div> -->
+        </template>
+    </div>
+</template>

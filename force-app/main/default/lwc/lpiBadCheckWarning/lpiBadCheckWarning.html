@@ -1,0 +1,60 @@
+<!-- sldsValidatorIgnore -->
+<template>
+    <template if:true={showSpinner}>
+		<lightning-spinner class="spins" size="medium" variant="brand" alternative-text="loading.."></lightning-spinner>
+	</template>
+	<div class="slds-notify slds-notify_alert slds-alert_warning" role="alert" if:true={isBadCheckPresent}>
+		<span class="slds-assistive-text">warning</span>
+		<span
+			class="slds-icon_container slds-icon-utility-warning slds-m-right_x-small"
+			title="Description of icon when needed"
+		>
+			<lightning-icon
+				icon-name="utility:warning"
+				variant="inverse"
+				size="x-small"
+				class="icon_withoutBg"
+			></lightning-icon>
+		</span>
+		<h2>
+			Bad Check Applicant.&nbsp;
+			<a href="#" onclick={handleOpenModal}>More Information</a>
+		</h2>
+		<div class="slds-notify__close">
+			<lightning-icon
+				icon-name="action:close"
+				variant="inverse"
+				size="x-small"
+				class="icon_withoutBg"
+				onclick={handleClose}
+			></lightning-icon>
+		</div>
+	</div>
+	<section
+		role="dialog"
+		tabindex="-1"
+		aria-modal="true"
+		aria-labelledby="modal-heading-01"
+        class="slds-modal slds-fade-in-open slds-backdrop"
+        if:true={isModalOpen}
+	>
+		<div class="slds-modal__container">
+			<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse">
+				<lightning-icon
+				    icon-name="action:close"
+				    variant="inverse"
+				    size="small"
+				    class="icon_withoutBg"
+				    onclick={handleCloseModal}
+			    ></lightning-icon>
+				<span class="slds-assistive-text">Cancel and close</span>
+			</button>
+			<div class="slds-modal__header">
+				<h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate" tabindex="-1">Bad Check Details</h1>
+			</div>
+			<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                <lightning-datatable data={badCheckList} columns={columns} key-field="feeId" hide-checkbox-column="true" onrowaction={callRowAction}></lightning-datatable>        
+			</div>
+		</div>
+	</section>
+</template>

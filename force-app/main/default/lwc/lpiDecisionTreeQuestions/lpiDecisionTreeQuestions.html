@@ -1,0 +1,157 @@
+<!--
+  @description       : Decision tree questions (EN/FR)
+  @last modified on  : 09-16-2026
+-->
+<template>
+  <template if:true={showSpinner}>
+    <lightning-spinner size="medium" alternative-text="Loading..."></lightning-spinner>
+  </template>
+  <article class="slds-card">
+    <h1 class="bold-20 m-b-medium">
+      {labels.dtIntro}
+    </h1>
+    <div>
+      <p class="asterisk-caption m-b-medium">{labels.asteriskRequired}</p>
+        <div  class="slds-grid slds-wrap slds-gutters" >
+        <template for:each={updatedQuestionsData} for:item="question">
+            <template if:true={question.showQuestion}>
+              <template if:true={question.questionConditionMeet} >
+                <div if:true={question.isRadio}  key={question.name} aria-label={question.userResponse} class="slds-col slds-size_12-of-12 focusOnFirstRadio m-b-medium">
+                  <div if:true={question.showLabel}>
+                    <label  for="FieldSelect" class="slds-form-element__label slds-no-flex">
+                      <div class="slds-grid ">
+                        <div class="">
+                          <abbr if:true={question.required} title="required" class="slds-required">*</abbr>
+                        </div>
+                        <div class=" listOfQuestn">
+                          <lightning-formatted-rich-text value={question.description} name={question.description}
+                            label={question.description}></lightning-formatted-rich-text>
+                        </div>
+                      </div>
+                    </label>
+                  </div>
+                    <lightning-radio-group if:true={question.isRadio} name={question.name} required={question.required}
+                      data-questionid={question.id} onchange={handleChange} variant="label-hidden" class="radio-group"
+                      options={question.questionValues} type="radio" message-when-value-missing={question.errorText} ></lightning-radio-group>
+                </div>
+                <div if:true={question.isPicklist}  key={question.name} aria-label={question.userResponse} class="slds-col slds-size_6-of-12 focusOnFirstRadio m-b-medium">
+                  <div if:true={question.showLabel}>
+                    <label  for="FieldSelect" class="slds-form-element__label slds-no-flex">
+                      <div class="slds-grid ">
+                        <div class="">
+                          <abbr if:true={question.required} title="required" class="slds-required">*</abbr>
+                        </div>
+                        <div class=" listOfQuestn">
+                          <lightning-formatted-rich-text value={question.description} name={question.description}
+                            label={question.description}></lightning-formatted-rich-text>
+                        </div>
+                      </div>
+                    </label>
+                  </div>
+                    <lightning-combobox name={question.name} required={question.required}
+                      data-questionid={question.id} options={question.questionValues} variant="label-hidden"
+                      onchange={handleChange} message-when-value-missing={question.errorText}></lightning-combobox>
+                </div>
+                <div if:true={question.isTextInput}  key={question.name} aria-label={question.userResponse} class="slds-col slds-size_6-of-12 focusOnFirstRadio m-b-medium">
+                      <div if:true={question.showLabel}>
+                        <label  for="FieldSelect" class="slds-form-element__label slds-no-flex">
+                          <div class="slds-grid ">
+                            <div class="">
+                              <abbr if:true={question.required} title="required" class="slds-required">*</abbr>
+                            </div>
+                            <div class=" listOfQuestn">
+                              <lightning-formatted-rich-text value={question.description} name={question.description}
+                                label={question.description}></lightning-formatted-rich-text>
+                            </div>
+                          </div>
+                        </label>
+                      </div>
+                      <lightning-input name={question.name} variant="label-hidden"
+                        required={question.required} data-option={question.forInputNamedPage} data-questionid={question.id}
+                        onchange={handleInputChange} pattern="[0-9]*" minlength="10" max-length="10" message-when-value-missing={question.errorText}></lightning-input>
+                  </div>
+                <div class="slds-m-top_small" if:true={question.isText}  key={question.name}>
+                  <lightning-formatted-rich-text class="color-green" value={question.description}  name={question.name} label={question.description}></lightning-formatted-rich-text>
+                </div>
+              </template>
+            </template>
+          </template>
+        </div>
+      <template if:true={showError}>
+        <template if:false={openDuplicateModal}>
+          <p class="focus-helper color-red text-align_initial" aria-live="assertive" role="alert" tabindex="0" aria-label={errorMessage} aria-atomic="true">{errorMessage}</p>
+          <br/>
+        </template>
+      </template>
+      <template if:true={showBottomHelp}>
+        <p class="focus-helper text-align_initial" aria-live="assertive" role="alert" tabindex="0" aria-atomic="true">{bottomHelpText}</p>
+      </template>
+    </div>
+
+    <div class="slds-grid slds-wrap slds-grid_align-spread slds-grid_vertical-align-center p-b-medium p-t-medium">
+      <lightning-button label={labels.dtExit} variant="brand-outline" onclick={handleClickBack}></lightning-button>
+        <template if:false={showError}>
+          <lightning-button class="focusOnNext" variant="brand" label={labels.dtNext} onclick={handleClick}></lightning-button>
+        </template>
+    </div>
+  </article>
+
+  <template if:true={openConfirmationModal}>
+    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+      aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open" onkeydown={handleEscKeyDown}>
+      <div class="slds-modal__container">
+        <header class="slds-modal__header">
+          <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+            onclick={handleCancelConfirmation}>
+            <lightning-icon icon-name="utility:close" variant="inverse" size="small"></lightning-icon>
+            <span class="slds-assistive-text">{labels.dtCloseModal}</span>
+          </button>
+          <div id="modal-heading-03" class="section-heading slds-grid slds-grid--vertical-align-center">
+            <i class="material-icon material-icon-info_outline text-brand m-r-xms"></i>
+              <h1>{labels.dtImportantReminder}</h1>
+          </div>
+        </header>
+        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-03">
+          <p>{labels.dtModalBody}</p>
+          <p>{labels.dtModalConfirmHint}</p>
+        </div>
+        <footer class="slds-modal__footer">
+          <lightning-button label={labels.dtCancel} name="Cancel" onclick={handleCancelConfirmation}>
+          </lightning-button>
+          <lightning-button label={labels.dtConfirm} class="slds-m-left_medium" variant="brand" name="OK"
+            onclick={handleOkConfirmation}>
+          </lightning-button>
+        </footer>
+      </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+  </template>
+
+  <template if:true={openDuplicateModal}>
+    <section role="dialog" tabindex="-1" aria-labelledby="duplicate-modal-heading" aria-modal="true"
+      aria-describedby="duplicate-modal-content" class="slds-modal slds-fade-in-open" onkeydown={handleEscKeyDown}>
+      <div class="slds-modal__container">
+        <header class="slds-modal__header">
+          <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+            onclick={handleCloseDuplicateModal}>
+            <lightning-icon icon-name="utility:close" variant="inverse" size="small"></lightning-icon>
+            <span class="slds-assistive-text">{labels.dtClose}</span>
+          </button>
+          <div id="duplicate-modal-heading" class="section-heading slds-grid slds-grid--vertical-align-center">
+            <i class="material-icon material-icon-error_outline text-brand m-r-xms"></i>
+            <h1>{labels.dtDuplicateTitle}</h1>
+          </div>
+        </header>
+        <div class="slds-modal__content slds-p-around_medium" id="duplicate-modal-content">
+          <p>{labels.dtDuplicateApp}</p>
+        </div>
+        <footer class="slds-modal__footer">
+          <lightning-button label={labels.dtClose} variant="brand" name="Close"
+            onclick={handleCloseDuplicateModal}>
+          </lightning-button>
+        </footer>
+      </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+  </template>
+</template>

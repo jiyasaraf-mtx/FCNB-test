@@ -1,0 +1,403 @@
+<!--
+  @description       : 
+  @author            : Mohit Karani
+  @group             : 
+  @last modified on  : 01-24-2024
+  @last modified by  : Vamsi Mudaliar
+-->
+<template>
+    <div if:true={showSpinner}>
+        <lightning-spinner size="medium" alternative-text="Loading..."></lightning-spinner>
+    </div>
+    <template if:true={displayCmp}>
+        <lightning-quick-action-panel header={modalLabel}>
+                <div class="lgc-bg">
+                        <div class="slds-grid slds-wrap">
+                            <template if:true={showNewAddress}>
+                                <div class="slds-col slds-size_12-of-12 slds-p-horizontal--medium slds-m-bottom_small">
+                                    <div class="input-group">
+                                        <c-custom-look-up from-visit="true" icon-name="standard:custom" name="addressLoc"
+                                            s-object-api-name="Address" label="Place" onlookupupdate={lookupRecord}
+                                            onlookupaddrecord={lookupAddRecord} placeholder="Search Place here..."
+                                            search-required="true" minimum-length-required="3" default-record-id={defaultAddressRecId}
+                                            show-add-option="true" add-label="New Address"
+                                            onlookupremove={handleRemoveAddress} editremove={disabledFields}></c-custom-look-up>
+                                    </div>
+                                </div>
+                                <template if:true={showAddressDisabled}>
+                                    <div class="slds-col slds-size_6-of-12 slds-p-horizontal--medium slds-m-bottom_small">
+                                        <div class="input-group">
+                                            <lightning-input name="street" label="Street" class="wf-input-box" value={addressRec.Street}
+                                                message-when-value-missing="Error: Street is required." onchange={handleChange}
+                                                disabled={showAddressDisabled}></lightning-input>
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-size_6-of-12 slds-p-horizontal--medium slds-m-bottom_small">
+                                        <div class="input-group">
+                                            <lightning-input name="city" label="City" class="wf-input-box" value={addressRec.City}
+                                                message-when-value-missing="Error: City is required." onchange={handleChange}
+                                                disabled={showAddressDisabled}></lightning-input>
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-size_6-of-12 slds-p-horizontal--medium slds-m-bottom_small">
+                                        <div class="input-group">
+                                            <lightning-combobox class="validate" name="state" label="State"
+                                                disabled={showAddressDisabled} value={addressRec.StateCode}
+                                                message-when-value-missing="Error: State is required." options={stateOptions}
+                                                onchange={handleChange}>
+                                            </lightning-combobox>
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-size_6-of-12 slds-p-horizontal--medium slds-m-bottom_small">
+                                        <div class="input-group">
+                                            <lightning-input type="text" name="county" value={addressRec.County__c} disabled={showAddressDisabled}
+                                                message-when-value-missing="Error: County is required." label="County"
+                                                class="wf-input-box" onchange={handleChange} maxlength="40"></lightning-input>
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-size_6-of-12 slds-p-horizontal--medium slds-m-bottom_small">
+                                        <div class="input-group">
+                                            <lightning-input name="zipCode" value={addressRec.PostalCode} disabled={showAddressDisabled}
+                                                message-when-value-missing="Error: Zip Code is required." label="Zip Code"
+                                                class="wf-input-box" onchange={handleChange}></lightning-input>
+                                        </div>
+                                    </div>
+                                </template>
+                            </template>
+                            <template if:false={showNewAddress}>
+                                <div class="slds-col slds-size_6-of-12 slds-p-horizontal--medium slds-m-bottom_small">
+                                    <a onclick={handleShowLookup}>Select an exisiting record</a>
+                                    <div class="input-group">
+                                        <lightning-input name="locationName" label="Location Name" class="wf-input-box" max-length="255"
+                                            message-when-value-missing="Error: Location Name is required." onchange={handleChange}
+                                            required>
+                                        </lightning-input>
+                                    </div>
+                                </div>
+                                <div class="slds-col slds-size_6-of-12 slds-p-horizontal--medium slds-m-bottom_small">
+                                    <div class="input-group">
+                                        <lightning-combobox name="locationType" label="Location Type" class="wf-input-box"
+                                            dropdown-alignment="auto" placeholder="-Select-"
+                                            message-when-value-missing="Error: Location Type is required."
+                                            options={locationTypePicklist} onchange={handleChange} required></lightning-combobox>
+                                    </div>
+                                </div>
+                                <div class="slds-col slds-size_6-of-12 slds-p-horizontal--medium slds-m-bottom_small">
+                                    <div class="input-group">
+                                        <lightning-input name="street" label="Street" class="wf-input-box" max-length="255"
+                                            message-when-value-missing="Error: Street is required." onchange={handleChange} required>
+                                        </lightning-input>
+                                    </div>
+                                </div>
+                                <div class="slds-col slds-size_6-of-12 slds-p-horizontal--medium slds-m-bottom_small">
+                                    <div class="input-group">
+                                        <lightning-input name="city" label="City" class="wf-input-box" max-length="255"
+                                            message-when-value-missing="Error: City is required." onchange={handleChange} required>
+                                        </lightning-input>
+                                    </div>
+                                </div>
+                                <div class="slds-col slds-size_6-of-12 slds-p-horizontal--medium slds-m-bottom_small">
+                                    <div class="input-group">
+                                        <lightning-combobox class="validate" name="state" label="State" required
+                                            message-when-value-missing="Error: State is required." options={stateOptions}
+                                            onchange={handleChange}>
+                                        </lightning-combobox>
+                                    </div>
+                                </div>
+                                <div class="slds-col slds-size_6-of-12 slds-p-horizontal--medium slds-m-bottom_small">
+                                    <div class="input-group">
+                                        <lightning-input name="county" label="County" class="wf-input-box" max-length="40"
+                                            message-when-value-missing="Error: County is required." onchange={handleChange}>
+                                        </lightning-input>
+                                    </div>
+                                </div>
+                                <div class="slds-col slds-size_6-of-12 slds-p-horizontal--medium slds-m-bottom_small">
+                                    <div class="input-group">
+                                        <lightning-input name="zipCode" max-length="255"
+                                            message-when-value-missing="Error: Zip Code is required." label="Zip Code"
+                                            class="wf-input-box" onchange={handleChange} required></lightning-input>
+                                    </div>
+                                </div>
+                
+                            </template>
+                            <template if:true={isVisitOnEditMode}>
+                                <div class="slds-col slds-size_12-of-12 slds-p-horizontal--medium slds-m-bottom_small">
+                                    <lightning-input type="checkbox" label="Unable to Inspect" name="unableToInspect" 
+                                                field-level-help="By Selecting this Option, The Inspection will be Marked Unable to Inspect and will not be available in any of the reports."
+                                                checked={visitRec.unableToInspect} onchange={handleChange}>
+                                    </lightning-input>     
+                                </div>
+                            </template>
+                            <template if:false={isAdhocVisit}>
+                                <div class="slds-col slds-size_6-of-12 slds-p-horizontal--medium slds-m-bottom_small">
+                                    <div class="input-group">
+                                        <lightning-combobox disabled={disabledFields} name="vPriority" label="Visit Priority"
+                                            class="wf-input-box" dropdown-alignment="auto" placeholder="-Select-" options={vistPriority}
+                                            onchange={handleChange} value={visitRec.vPriority}></lightning-combobox>
+                                    </div>
+                                </div>
+                                <div class="slds-col slds-size_6-of-12 slds-p-horizontal--medium slds-m-bottom_small">
+                                    <div class="input-group">
+                                        <lightning-combobox disabled={disabledFields} name="vStatus" label="Visit Status"
+                                            class="wf-input-box" dropdown-alignment="auto" placeholder="-Select-" options={visitStatus}
+                                            onchange={handleChange} value={visitRec.vStatus}>
+                                        </lightning-combobox>
+                                    </div>
+                                </div>
+                                <div class="slds-col slds-size_12-of-12 slds-p-horizontal--medium slds-m-bottom_small">
+                                    <div class="input-group">
+                                        <c-custom-look-up from-visit="true" icon-name="standard:custom" s-object-api-name="Account"
+                                            default-record-id={visitRec.vAccount} name="vAccount" label="Account"
+                                            onlookupupdate={lookupRecord} placeholder="Search Account here..." search-required="true"
+                                            minimum-length-required="3" if:true={showAccLookup} show-add-option="false"
+                                            editremove={disabledFields}></c-custom-look-up>
+                
+                                        <lightning-input name="vAccount" label="Account" class="wf-input-box" value={accName}
+                                            if:false={showAccLookup} disabled>
+                                        </lightning-input>
+                                    </div>
+                                </div>
+                                <div class="slds-col slds-size_6-of-12 slds-p-horizontal--medium slds-m-bottom_small">
+                                    <div class="input-group">
+                                        <lightning-combobox disabled={disableInspectionType} name="vInspectionType" label="Inspection Type"
+                                            class="wf-input-box" dropdown-alignment="auto" placeholder="-Select-"
+                                            message-when-value-missing="Error: Inspection Type is required." options={inspectionType}
+                                            onchange={handleChange} value={visitRec.vInspectionType} required
+                                            if:false={isAddtionalInspection}></lightning-combobox>
+                                        <lightning-input if:true={isAddtionalInspection} name="additionalInspectionType"
+                                            label="Inspection Type" value="Additional Inspection" class="wf-input-box" max-length="50"
+                                            disabled="true">
+                                        </lightning-input>
+                                    </div>
+                                </div>
+                                <div if:false={hideInspectionReason} class="slds-col slds-size_6-of-12 slds-p-horizontal--medium slds-m-bottom_small">
+                                    <div class="input-group">
+                                        <lightning-combobox disabled={disabledFields} name="inspectionReason" label="Inspection Reason"
+                                            class="wf-input-box" dropdown-alignment="auto" placeholder="-Select-"
+                                            message-when-value-missing="Error: Inspection Reason is required."
+                                            options={inspectionReason} onchange={handleChange} value={visitRec.inspectionReason}
+                                            required></lightning-combobox>
+                                    </div>
+                                </div>
+                                <div if:true={showDisciplineField} class="slds-col slds-size_6-of-12 slds-p-horizontal--medium slds-m-bottom_small">
+                                    <div class="input-group">
+                                        <lightning-combobox disabled={disabledFields} name="vDiscipline" label="Discipline"
+                                            class="wf-input-box" dropdown-alignment="auto" placeholder="-Select-"
+                                            options={visitDiscipline} onchange={handleChange} value={visitRec.vDiscipline}>
+                                        </lightning-combobox>
+                                    </div>
+                                </div>
+                                <div class="slds-col slds-size_6-of-12 slds-p-horizontal--medium slds-m-bottom_small"
+                                    if:true={showReccurance}>
+                                    <div class="input-group">
+                                        <lightning-combobox name="recurrence" label="Recurrence" class="wf-input-box"
+                                            dropdown-alignment="auto" placeholder="-Select-" options={recurrenceOptions}
+                                            onchange={handleChange} value={visitRec.recurrence}></lightning-combobox>
+                                    </div>
+                                </div>
+                                <div class="slds-col slds-size_6-of-12 slds-p-horizontal--medium slds-m-bottom_small">
+                                    <div class="input-group">
+                                        <lightning-combobox disabled={disabledFields} name="result" label="Inspection Result" class="wf-input-box"
+                                            dropdown-alignment="auto" placeholder="-Select-" options={resultOptions}
+                                            required={makeResultReqd}
+                                            onchange={handleChange} value={visitRec.result}>
+                                        </lightning-combobox>
+                                    </div>
+                                </div>
+                               <div  if:true={makeResultReqd} class="slds-col slds-size_6-of-12 slds-p-horizontal--medium slds-m-bottom_small">
+                                    <div if:true={subreasonVisible} class="input-group">
+                                        <lightning-combobox disabled={disabledFields} name="subReason" label="Sub Reason" class="wf-input-box"
+                                            dropdown-alignment="auto" placeholder="-Select-" options={subreasonValue}
+                                            required=true
+                                            onchange={handleChange} value={visitRec.subReason}>
+                                        </lightning-combobox>
+                                    </div>
+                                </div>
+                                <!-- Start - Added by Ankit-->
+                                <template if:false={hideRemFields}>
+                                    <div class="slds-col slds-size_6-of-12 slds-p-horizontal--medium slds-m-bottom_small">
+                                        <div class="input-group">
+                                            <lightning-input disabled={disabledFields} type="date" date-style="short"
+                                                name="vRemedialActionSent" label="Remedial Action Sent" class="wf-input-box"
+                                                onchange={handleChange} value={visitRec.vRemedialActionSent}> </lightning-input>
+                    
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-size_6-of-12 slds-p-horizontal--medium slds-m-bottom_small">
+                                        <div class="input-group">
+                                            <lightning-input disabled={disabledFields} type="date" date-style="short"
+                                                name="vRemedialResponseDue" label="Remedial Response Due" class="wf-input-box"
+                                                onchange={handleChange} value={visitRec.vRemedialResponseDue}> </lightning-input>
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-size_6-of-12 slds-p-horizontal--medium slds-m-bottom_small">
+                                        <div class="input-group">
+                                            <lightning-input disabled={disabledFields} type="date" date-style="short"
+                                                name="vRemedialResponseReceived" label="Remedial Response Received" class="wf-input-box"
+                                                onchange={handleChange} value={visitRec.vRemedialResponseReceived}> </lightning-input>
+                    
+                                        </div>
+                                    </div>
+                                </template>
+                                <!--end-->
+                                <!-- Start - Added by Nitish I-225518 -->
+                                <div class="slds-col slds-size_6-of-12 slds-p-horizontal--medium slds-m-bottom_small" if:true={isNursingSchoolLicenseType}>
+                                    <div class="input-group">
+                                        <lightning-input type="checkbox" label="Trigger Site Visit Notification" name="triggerSiteSurveyEmailNotification" 
+                                            field-level-help="Check this box if you want the system to automatically send an email notification to the licensee, prompting them to submit a Routine site survey form."
+                                            disabled={disabledFields} checked={visitRec.triggerSiteSurveyEmailNotification} onchange={handleChange}>
+                                        </lightning-input>
+                                    </div>
+                                </div>
+                                <div if:true={requireLicenseTypeSelection} class="slds-col slds-size_6-of-12 slds-p-horizontal--medium slds-m-bottom_small">
+                                    <div class="input-group">
+                                        <c-custom-look-up icon-name="standard:custom" name="licenseTypeName"
+                                            s-object-api-name="RegulatoryAuthorizationType" label="License Type"
+                                            onlookupupdate={lookupRecord} placeholder="Search License Type..."
+                                            search-required="true" minimum-length-required="2"
+                                            default-record-id={visitRec.licenseTypeName} onlookupremove={handleRemoveSelection}
+                                            editremove={disabledFields}></c-custom-look-up>
+                                    </div>
+                                </div>
+                                <div if:true={displayInspectorField} class="slds-col slds-size_12-of-12 slds-p-horizontal--medium slds-m-bottom_small">
+                                    <div class="input-group">
+                                        <c-custom-look-up from-visit-user="true" inspection-board={boardName} icon-name="standard:custom" name="visitor"
+                                            s-object-api-name="User-Visit" default-record-id={visitRec.visitor} label="Inspector Name"
+                                            onlookupupdate={lookupRecord} placeholder="Search User here..."   onlookupremove={handleRemoveSelection}
+                                            minimum-length-required="2" search-required={visitorId}></c-custom-look-up>
+                                    </div>
+                                </div>
+                
+                            </template>
+                
+                            <div class="slds-col slds-size_12-of-12 slds-p-horizontal--medium slds-m-bottom_small"
+                                if:true={isAdhocVisit}>
+                                <div class="input-group">
+                                    <c-custom-look-up from-adhoc-visit="true" icon-name="standard:custom" name="licenseTypeName"
+                                        s-object-api-name="RegulatoryAuthorizationType" label="License Type"
+                                        onlookupupdate={lookupRecord} onlookupaddrecord={lookupAddRecord}
+                                        placeholder="Search License Type..." search-required="true" minimum-length-required="3"
+                                        default-record-id={visitRec.licenseTypeName} onlookupremove={handleRemoveSelection}
+                                        editremove={disabledFields}></c-custom-look-up>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_12-of-12 slds-p-horizontal--medium slds-m-bottom_small"
+                                if:true={isAdhocVisit}>
+                                <div class="input-group">
+                                    <c-custom-look-up from-adhoc-visit="true" icon-name="standard:custom" name="visitor"
+                                        s-object-api-name="User-Visit" default-record-id={adhocInspector} label="Inspector"
+                                        onlookupupdate={lookupRecord} placeholder="Search User here..." search-required="true"
+                                        minimum-length-required="3"></c-custom-look-up>
+                                </div>
+                            </div>
+                
+                            <div class="slds-col slds-size_6-of-12 slds-p-horizontal--medium slds-m-bottom_small">
+                                <div class="input-group">
+                                    <lightning-input disabled={disabledFields} type="date" date-style="short"
+                                        lwc:ref="vPlannedStartTime" name="vPlannedStartTime" label="Start Date"
+                                        class="wf-input-box" onchange={handleDateValidation} value={visitRec.vPlannedStartTime}
+                                        required={dateAssignedRequired}> </lightning-input>
+                
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12 slds-p-horizontal--medium slds-m-bottom_small"
+                                if:false={isAdhocVisit}>
+                                <div class="input-group">
+                                    <lightning-input type="date" disabled={disabledFields} date-style="short" lwc:ref="vPlannedEndTime"
+                                        name="vPlannedEndTime" label="Due Date" class="wf-input-box" onchange={handleDateValidation}
+                                        value={visitRec.vPlannedEndTime}>
+                                    </lightning-input>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_12-of-12 slds-p-horizontal--medium slds-m-bottom_small" if:true={showVisitComment}>
+                                <span>
+                                    <lightning-textarea name="visitComment" label="Comments" max-length="9999" value={visitRec.visitComment}
+                                        onchange={handleChange}></lightning-textarea>
+                    
+                                </span>
+                            </div>
+                            
+                            <div if:true={isInspectionMarkedCompleted} class="slds-col slds-size_6-of-12 slds-p-horizontal--medium slds-m-bottom_small">
+                                <div if:false={isAdhocVisit}>
+                                    <div class="input-group">
+                                        <lightning-input type="date" disabled={disabledFields} date-style="short" lwc:ref="vActualEndTime"
+                                            name="vActualEndTime" label="Inspection Completed Date" class="wf-input-box"
+                                            onchange={handleDateValidation} value={visitRec.vActualEndTime} required={isInspectionMarkedCompleted}>
+                                        </lightning-input>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_12-of-12 slds-p-horizontal--medium slds-m-bottom_small"
+                                if:true={showInspectionFormQues}>
+                                <lightning-dual-listbox class="dualListClass" data-multipicklist="true" name="inspectionFormsList"
+                                    label={isBoardNursingLabel} required value={visitRec.inspectionFormsList}
+                                    options={inspectionFormOptions} onchange={handleChange}></lightning-dual-listbox>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12 slds-p-horizontal--medium slds-m-bottom_small"
+                                if:true={showInspFormForNursingRoutine}>
+                                <div class="input-group">
+                                    <lightning-combobox name="inspectionFormsList" label="Inspection Criteria Template" class="wf-input-box"
+                                        dropdown-alignment="auto" placeholder="-Select-" options={inspectionFormOptions}
+                                        message-when-value-missing="Error: Inspection Criteria Template is required."
+                                        onchange={handleChange} value={visitRec.inspectionFormsList} required></lightning-combobox>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12 slds-p-horizontal--medium slds-m-bottom_small"
+                            if:true={showInspectionClosedDate}>
+                                <div class="input-group">
+                                    <lightning-input required type="date" date-style="short" lwc:ref="ClosedDate"
+                                        name="inspectionClosedDate" label="Closed Date" class="wf-input-box" onchange={handleDateValidation}
+                                        value={visitRec.inspectionClosedDate}>
+                                    </lightning-input>
+                                </div>
+                            </div>
+                               <!-- Inspection Signature Section Starts - Vamsi -->
+                            <template if:false={isAdhocInspection}>
+                                <template if:true={isInspectionMarkedCompleted}>
+                                    <div class="slds-col slds-size_12-of-12 slds-p-horizontal--medium slds-m-bottom_small" >
+                                        <p> <strong> Signature Details </strong> </p>
+                                    </div>
+                                    <div class="slds-col slds-size_12-of-12 slds-p-horizontal--medium slds-m-bottom_small">
+                                        <lightning-input type="checkbox" label="Attested by the Licensee/Applicant/Representative"
+                                            name="attestation" disabled={disabledFields} aria-disabled={disabledFields}
+                                            checked={visitRec.attestation} onchange={handleChange} required={isInspectionMarkedCompleted}>
+                                        </lightning-input>
+                                    </div>
+                                    <div class="slds-col slds-size_6-of-12 slds-p-horizontal--medium slds-m-bottom_small">
+                                        <lightning-input type="text" disabled={disabledFields} name="nameOfLicenseeRep"
+                                            label="Name of Licensee/Applicant/Representative" class="wf-input-box" onchange={handleChange}
+                                            value={visitRec.nameOfLicenseeRep} max-length="255" required={isInspectionMarkedCompleted}>
+                                        </lightning-input>
+                                    </div>
+                                    <div class="slds-col slds-size_6-of-12 slds-p-horizontal--medium slds-m-bottom_small">
+                                        <lightning-input type="text" disabled={disabledFields} name="title"
+                                            label="Title" class="wf-input-box" onchange={handleChange}
+                                            value={visitRec.title} max-length="255" required={isInspectionMarkedCompleted}>
+                                        </lightning-input>
+                                    </div>
+                                    <div class="slds-col slds-size_6-of-12 slds-p-horizontal--medium slds-m-bottom_small">
+                                        <lightning-input type="date" disabled={disabledFields} date-style="short" lwc:ref="licenseeSignedDate"
+                                            name="licenseeSignedDate" label="Licensee/Applicant/Representative Signed Date" class="wf-input-box"
+                                            value={visitRec.licenseeSignedDate} onchange={handleChange} required={isInspectionMarkedCompleted}>
+                                        </lightning-input>
+                                    </div>
+                                    <div class="slds-col slds-size_6-of-12 slds-p-horizontal--medium slds-m-bottom_small">
+                                        <lightning-input type="date" disabled={disabledFields} date-style="short" lwc:ref="inspectorSignedDate"
+                                            name="inspectorSignedDate" label="Inspector Signed Date" class="wf-input-box"
+                                            value={visitRec.inspectorSignedDate} onchange={handleChange} required={isInspectionMarkedCompleted}>
+                                        </lightning-input>
+                                    </div>
+                                </template>
+                            </template>
+                            <!-- Inspection Signature Section Ends - Vamsi -->
+                        </div>
+                </div>
+                <div slot="footer">
+                    <lightning-button variant="neutral" label="Cancel" onclick={closeQuickAction}
+                        class="slds-m-right_xx-small">
+                    </lightning-button>
+                    <button class="slds-button slds-button_brand custom-brand-btn" onclick={handleCreateNewVisit}>Save</button>
+                </div>
+        </lightning-quick-action-panel>
+    </template>
+</template>

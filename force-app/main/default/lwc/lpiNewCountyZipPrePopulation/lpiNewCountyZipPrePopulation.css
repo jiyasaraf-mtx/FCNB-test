@@ -1,0 +1,6 @@
+.error-message {
+	color: red;
+	font-size: 0.75rem;
+	margin-top: 0.125rem;
+	font-family: "Tahoma", sans-serif !important;
+}

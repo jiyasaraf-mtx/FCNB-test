@@ -1,0 +1,37 @@
+<!--
+  @description       : 
+  @author            : MTX Group Inc.
+  @group             : 
+  @last modified on  : 04-19-2024
+  @last modified by  : MTX Group Inc.
+-->
+<template>
+    <template if:true = {result.isRenewalAllowed}>
+        <div class="slds-grid slds-wrap">
+            <div class="slds-col slds-size_1-of-1 licenses-details licenses-details__right">
+                <lightning-card>
+                    <lightning-spinner if:true={showSpinner}></lightning-spinner>
+                    <h2>Identification Card Actions</h2>
+                    <div class="slds-p-left_medium slds-p-right_medium">
+                        <div class="slds-m-top_medium">
+                            <div  class="slds-m-bottom_small">
+                                <lightning-button stretch variant = "brand" label = "Renew" aria-label = "Renew"
+                                name = 'icRenewButton' onclick= {handleIcCardRenewal}>
+                                </lightning-button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-p-left_medium slds-p-right_medium">
+                        <div class="slds-m-top_medium">
+                            <div  class="slds-m-bottom_small">
+                                <lightning-button stretch variant = "brand" label = "Deposit and Reconciliation Renew" aria-label = "Renew"
+                                 name = 'icCrrRenewButton' onclick={navigateToPaymentPage}>
+                                </lightning-button>
+                            </div>
+                        </div>
+                    </div>
+            </lightning-card>
+        </div>
+    </div>
+</template>
+</template>

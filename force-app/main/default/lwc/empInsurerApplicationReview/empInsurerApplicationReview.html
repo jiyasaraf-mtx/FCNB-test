@@ -1,0 +1,201 @@
+<template>
+    <div class="sir-root">
+        <div if:true={isLoading} class="spinner-overlay" role="status" aria-live="polite">
+            <lightning-spinner alternative-text="Loading application"></lightning-spinner>
+        </div>
+
+        <template if:true={hasLoadError}>
+            <div class="state-banner error" role="alert">{loadError}</div>
+        </template>
+
+        <section class="workspace workspace-full">
+            <div class="panel">
+                <div class="panel-head">
+                    <div>
+                        <div class="crumb">
+                            <button type="button" class="back-link" onclick={handleBack}>{labels.sirQueueTitle}</button>
+                            › <span>{detailCrumb}</span>
+                        </div>
+                        <div class="panel-title">{labels.sirDetailTitle}</div>
+                    </div>
+                    <div class="head-actions">
+                        <button class="btn btn-warning" type="button" onclick={handleReturn} disabled={actionsDisabled}>
+                            {labels.sirReturnRmi}
+                        </button>
+                        <button class="btn btn-success" type="button" onclick={handleApprove} disabled={actionsDisabled}>
+                            {labels.sirApproveSponsorship}
+                        </button>
+                        <button class="btn btn-danger" type="button" onclick={handleReject} disabled={actionsDisabled}>
+                            {labels.sirReject}
+                        </button>
+                    </div>
+                </div>
+
+                <div class="detail">
+                    <template if:true={showAlert}>
+                        <div class={alertClass} role="alert">{alertMessage}</div>
+                    </template>
+
+                    <template if:true={hasSelection}>
+                        <div class="cards">
+                            <div class="card card-applicant">
+                                <h3>{labels.sirApplicantInfo}</h3>
+                                <div class="kv">
+                                    <div class="k">{labels.sirApplicationNumber}</div><div class="v">{selectedApp.applicationNumber}</div>
+                                    <div class="k">{labels.sirApplicantName}</div><div class="v">{selectedApp.applicantName}</div>
+                                    <div class="k">{labels.sirDob}</div><div class="v">{selectedApp.dateOfBirth}</div>
+                                    <div class="k">{labels.sirCipr}</div><div class="v">{selectedApp.ciprNumber}</div>
+                                    <div class="k">{labels.email}</div><div class="v">{selectedApp.email}</div>
+                                    <div class="k">{labels.phone}</div><div class="v">{selectedApp.phone}</div>
+                                    <div class="k">{labels.licenceType}</div><div class="v">{selectedApp.licenceType}</div>
+                                </div>
+                            </div>
+
+                            <div class="card card-docs">
+                                <h3>{labels.documentReview}</h3>
+                                <div class="checks">
+                                    <template if:true={hasDocuments}>
+                                        <template for:each={documentRows} for:item="doc">
+                                            <div key={doc.key} class="check">
+                                                <span class="checkmark" aria-hidden="true">✓</span>
+                                                <div class="doc-body">
+                                                    <strong>{doc.label}</strong>
+                                                    <template if:true={doc.fileName}>
+                                                        <br />
+                                                        <span class="small doc-filename">{doc.fileName}</span>
+                                                    </template>
+                                                    <template if:true={doc.contentDocumentId}>
+                                                        <div class="doc-actions">
+                                                            <button
+                                                                type="button"
+                                                                class="linkbtn"
+                                                                data-content-id={doc.contentDocumentId}
+                                                                data-url={doc.downloadUrl}
+                                                                onclick={handleDocumentAction}
+                                                            >
+                                                                {labels.download}
+                                                            </button>
+                                                        </div>
+                                                    </template>
+                                                </div>
+                                            </div>
+                                        </template>
+                                    </template>
+                                    <template if:false={hasDocuments}>
+                                        <div class="doc-empty">{labels.noDocumentsUploaded}</div>
+                                    </template>
+                                </div>
+                            </div>
+
+                            <div class="card card-review">
+                                <h3>{labels.reviewSummary}</h3>
+                                <template if:true={hasReviewSummary}>
+                                    <div class="review-summary-host">
+                                        <c-intake-form-review-summary
+                                            key={reviewSummaryKey}
+                                            title=""
+                                            form-data={reviewFormDataJson}
+                                            label-data={reviewLabelDataJson}
+                                            hide-empty-fields="true"
+                                        ></c-intake-form-review-summary>
+                                    </div>
+                                </template>
+                                <template if:false={hasReviewSummary}>
+                                    <div class="review-empty">{labels.reviewSummaryUnavailable}</div>
+                                </template>
+                            </div>
+
+                            <div class="card card-summary">
+                                <h3>{labels.sirAppInfo}</h3>
+                                <div class="kv">
+                                    <div class="k">{labels.sirTerm}</div><div class="v">{selectedApp.term}</div>
+                                    <div class="k">{labels.sirAgencyFirm}</div><div class="v">{selectedApp.agency}</div>
+                                    <div class="k">{labels.sirSupervisor}</div><div class="v">{selectedApp.supervisor}</div>
+                                    <div class="k">{labels.sirSubmittedOn}</div><div class="v">{selectedApp.submittedOn}</div>
+                                    <div class="k">{labels.sirTransactionId}</div><div class="v">{selectedApp.applicationNumber}</div>
+                                    <div class="k">{labels.sirCurrentStatus}</div>
+                                    <div class="v"><span class={statusChipClass}>{selectedStatusLabel}</span></div>
+                                </div>
+                            </div>
+
+                            <div class="card decision">
+                                <h3>{labels.sirInsurerDecision}</h3>
+                                <lightning-combobox
+                                    name="decision"
+                                    label={labels.sirInsurerDecision}
+                                    value={decisionValue}
+                                    options={decisionOptions}
+                                    onchange={handleDecisionChange}
+                                    disabled={actionsDisabled}
+                                ></lightning-combobox>
+                                <label class="select-label" for="insurer-comments">{labels.sirComments}</label>
+                                <textarea
+                                    id="insurer-comments"
+                                    class="full"
+                                    placeholder="Enter comments…"
+                                    value={comments}
+                                    onchange={handleCommentsChange}
+                                    disabled={actionsDisabled}
+                                ></textarea>
+                                <div class="decision-note">
+                                    Decision updates IndividualApplication Status ({labels.sirApprovedByInsurer} / More Info Require / {labels.sirDeniedByInsurer}), Admin Action Status, and Sponsoring Insurer details (SI_Status). A denied application is not deleted.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="detail-actions">
+                            <button class="btn" type="button" onclick={handleCancel} disabled={actionsDisabled}>{labels.cancel}</button>
+                            <button class="btn btn-primary" type="button" onclick={handleSave} disabled={actionsDisabled}>
+                                {labels.save}
+                            </button>
+                        </div>
+                    </template>
+
+                    <template if:false={hasSelection}>
+                        <div class="empty show">{labels.sirSelectApp}</div>
+                    </template>
+                </div>
+            </div>
+        </section>
+
+        <template if:true={showModal}>
+            <div
+                class="modal-backdrop show"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="sir-modal-title"
+                tabindex="-1"
+                onclick={handleModalBackdrop}
+                onkeydown={handleModalKeydown}
+            >
+                <div class="modal">
+                    <h2 id="sir-modal-title">{modalTitle}</h2>
+                    <p>{modalText}</p>
+
+                    <template if:true={isRmiModal}>
+                        <div class="modal-comments-block" style="margin-top: 12px; margin-bottom: 16px; text-align: left;">
+                            <label class="select-label" for="modal-insurer-comments" style="display: block; font-weight: 600; margin-bottom: 6px;">
+                                {labels.sirComments}
+                            </label>
+                            <textarea
+                                id="modal-insurer-comments"
+                                class="full"
+                                rows="4"
+                                style="width: 100%; border: 1px solid #c9c9c9; border-radius: 4px; padding: 8px;"
+                                placeholder="Enter comments for requesting more information…"
+                                value={modalComments}
+                                oninput={handleModalCommentsChange}
+                                onchange={handleModalCommentsChange}
+                            ></textarea>
+                        </div>
+                    </template>
+
+                    <div class="modal-actions">
+                        <button class="btn" type="button" onclick={handleModalCancel}>{labels.cancel}</button>
+                        <button class="btn btn-primary" type="button" onclick={handleModalConfirm}>{modalConfirmButtonLabel}</button>
+                    </div>
+                </div>
+            </div>
+        </template>
+    </div>
+</template>

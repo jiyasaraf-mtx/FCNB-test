@@ -1,0 +1,45 @@
+<!--
+  Employer Portal theme — unified on Licensing Portal chrome (lpiHeader + lpiSidebarPrimary).
+-->
+<aura:component implements="forceCommunity:themeLayout" description="Employer Portal theme (Licensing Portal standard)" access="global" controller="LPI_WithoutSharingUtility">
+    <aura:attribute name="newHeader" type="Aura.Component[]" />
+    <aura:attribute name="showSidebar" type="Boolean" default="false" />
+    <aura:attribute name="headerHide" type="Boolean" default="false" />
+    <aura:attribute name="landingHeader" type="Boolean" default="false" />
+    <aura:attribute name="guestClass" type="Boolean" default="false" />
+    <aura:attribute name="userVar" type="Boolean" default="false" />
+    <aura:attribute name="newFooter" type="Aura.Component[]" />
+    <aura:attribute name="usertype" type="String" description="Type of user" />
+    <ltng:require styles="{!join(',',$Resource.LPI_Design + '/styles/main.css')}" />
+    <ltng:require styles="{!join(',',$Resource.LPI_Design_old + '/main.css')}" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="currentUserName" type="String"/>
+    <div class="content-container">
+        <aura:if isTrue="{!v.headerHide}">
+            <header class="newHeader" role="banner">
+                <a class="skip-link" tabindex="0" href="#main-content-1">Skip to main content</a>
+                <c:lpiHeader></c:lpiHeader>
+            </header>
+        </aura:if>
+        <aura:if isTrue="{!v.userVar}">
+            <header class="newHeader" role="banner">
+                <a class="skip-link" tabindex="0" href="#main-content-1">Skip to main content</a>
+                <c:lpiLandingHeader></c:lpiLandingHeader>
+            </header>
+        </aura:if>
+        <div class="content lpiContent" id="main-content-1">
+            <div class="slds-grid body-content">
+                <aura:if isTrue="{!v.showSidebar}">
+                    <div class="slds-col nav-sidebar close">
+                        <c:lpiSidebarPrimary></c:lpiSidebarPrimary>
+                    </div>
+                </aura:if>
+                <div class="{! if ( v.guestClass, 'main-content' , 'full-content' ) }" role="main" id="main-content">
+                    {!v.body}
+                </div>
+                <div class="slds-col notification-sidebar slds-hide">
+                </div>
+            </div>
+        </div>
+    </div>
+</aura:component>

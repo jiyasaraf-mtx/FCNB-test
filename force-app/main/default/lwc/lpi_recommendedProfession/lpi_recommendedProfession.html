@@ -1,0 +1,131 @@
+<!--
+  @description       : 
+  @author            : Ranjitha M U
+  @group             : 
+  @last modified on  : 05-25-2024
+  @last modified by  : Bharath Kumar M
+-->
+<template>
+    <div class="backdrop" if:true={showSpinner}>
+        <div class="spinner">
+            <lightning-spinner alternative-text={labels.loading}></lightning-spinner>
+        </div>
+    </div>
+    <div class="slds-grid slds-wrap">
+        <h1 class="bold-24 m-b-large">{labels.applyNewCertificate}</h1>
+    </div>
+    <div class="slds-grid slds-wrap slds-gutters">
+        <div
+            class="slds-col slds-large-size--8-of-12 slds-medium-size--12-of-12 slds-size--12-of-12">
+            
+                    <lightning-input type="search" class="license-searchbox-input search-input m-b-medium" placeholder={searchAriaLabelLicense}
+                        variant="label-hidden" onchange={searchLicenseAction}
+                        value={licenseNameSearch}></lightning-input>
+            <p class="m-b-xms regular-text-12 text-secondary">{labels.recommended}</p>
+            <template for:each={professionData} for:item="profession" for:index="index">
+                <div class="slds-size_12-of-12 slds-m-bootom_large" key={profession.id}>
+                    <div class="slds-grid slds-wrap slds-card slds-p-around_x-small slds-m-bottom_x-small landing-card">
+                        <div
+                            class="slds-col slds-p-around_x-small card-details slds-large-size_9-of-12 slds-medium-size_12-of-12 slds-small-size_12-of-12 slds-size_12-of-12">
+                                <div class="sub-heading">
+                                    <h2 class="semiBold-16 text-brand m-t-xs" title={profession.name}>{profession.name}</h2>
+                                    <p class="regular-text-14 text-secondary m-t-xs">{labels.getALicense}</p>
+                                </div>
+                        </div>
+                        <div
+                            class="slds-col slds-grid slds-grid--align-center slds-p-around_x-small slds-large-size_3-of-12 slds-medium-size_12-of-12 slds-small-size_12-of-12 slds-size_12-of-12">
+                            <lightning-button variant="brand-outline" aria-label={profession.ariaName} data-id={profession.id} data-decision={profession.exemptDecisonTree}
+                            data-reg={profession.regAuthId} onclick={handleApplyOnline} label={labels.applyOnline} title={profession.ariaName}
+                               ></lightning-button>
+                        </div>
+                    </div>
+                </div>
+            </template>
+            <!-- EnotifyModal start -->
+            <template if:true={showEnotifyModal}>
+                <c-lpi-modal is-headerless onclose={handleENotifyModalOnClose}>
+                    <div slot="content">
+                        <lightning-card variant="Narrow">
+                            <template if:true={headerNotifyMsg}>
+                                <b>{headerNotifyMsg}</b>
+                                <p><br></p>
+                            </template>
+                            <template if:true={isColourGreen}>
+                                <div class="green-indicator slds-p-around_small">
+                                    <div class="slds-m-bottom_medium">
+                                        <lightning-formatted-rich-text class="eNotify-message"
+                                            value={enotifyMessageText}></lightning-formatted-rich-text>
+                                    </div>
+                                </div>
+                            </template>
+                            <template if:true={isColourRed}>
+                                <div class="red-indicator slds-var-p-around_small">
+                                    <div class="slds-m-bottom_medium">
+                                        <lightning-formatted-rich-text class="eNotify-message"
+                                            value={enotifyMessageText}></lightning-formatted-rich-text>
+                                    </div>
+                                </div>
+                            </template>
+                            <template if:true={isColourYellow}>
+                                <div class="yellow-indicator slds-p-around_small">
+                                    <div class="slds-m-bottom_medium">
+                                        <lightning-formatted-rich-text class="eNotify-message"
+                                            value={enotifyMessageText}></lightning-formatted-rich-text>
+                                    </div>
+                                </div>
+                            </template>
+                            <template if:true={isError}>
+                                <div class="error-message">
+                                    {enotifyMessageText}
+                                </div>
+                            </template>
+                        </lightning-card>
+                    </div>
+                    <div slot="footer">
+                        <lightning-button label={labels.ok} name="confirm" onclick={handleENotifyModalOnClose}>
+                        </lightning-button>
+                    </div>
+                </c-lpi-modal>
+            </template>
+            <!-- EnotifyModal End -->
+        </div>
+        <div class="slds-col slds-large-size--4-of-12 slds-medium-size--12-of-12 slds-size--12-of-12">
+            <div class="search-section-container p-l-small">
+                <div class="slds-accordion">
+                    <div class="slds-accordion__list-item">
+                        <section class={sectionClass1}>
+                            <div class="slds-accordion__summary">
+                                <h3 class="slds-accordion__summary-heading">
+                                    <div class="slds-accordion__summary-action"
+                                        aria-controls="referenceId-44" aria-expanded="true"
+                                        data-name="Accordion Information"
+                                        title="Accordion Information">
+                                        <span class="slds-accordion__summary-content bold-16">{labels.selectLicenseType}
+                                            <div class="serach-sel-value semiBold-12 text-brand" >{labels.noSelection}</div>
+                                        </span>
+                                        <div class="slds-accordion__summary-content-icon">
+                                            <lightning-button variant="base" class="base-accordion-btn base-link-btn" 
+                                                data-name="category" label={labels.category}
+                                                title={labels.category} aria-label={labels.category} onclick={handleAccordianClick}></lightning-button>
+                                        </div>
+                                    </div>
+                                </h3>
+                            </div>
+                            <div class="slds-accordion__content cc-card-body" id="referenceId-42">
+                                <div class="search-inputs">
+                                    <lightning-input name="enter-search" label={labels.category} class="input-box" variant="label-hidden" placeholder={labels.searchHere} type="search"></lightning-input>
+                                </div>
+                                <div class="bordered_radio">
+                                    <lightning-radio-group options={filterRegType} value={selectedRegType}
+                                        title="Press arrow keys to change the selection" onchange={handleSelectedRegType} type="radio"
+                                        variant="label-stacked" class="radio-group recommended-radio">
+                                    </lightning-radio-group>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

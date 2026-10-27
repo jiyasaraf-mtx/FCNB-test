@@ -1,0 +1,568 @@
+<!--
+  @author            : Saurabh Singh 
+  @description       : Registration Page for FCNB Licensing & Permitting Portal
+  @last modified on  : 08-27-2026
+  @last modified by  : Juhi Goel
+-->
+<template>
+    <template if:true={showSpinner}>
+        <div class="slds-is-relative">
+            <lightning-spinner class="spins" size="medium" variant="brand"
+                alternative-text="loading.."></lightning-spinner>
+        </div>
+    </template>
+    <div class="custom-layout-register-container">
+        <div class="slds-grid slds-wrap">
+            <div class="slds-col slds-large-size--4-of-12 slds-medium-size--1-of-1 slds-size--1-of-1 bg-blue">
+                <div class="background-img slds-grid justify-content-between direction-column">
+                    <div class="custom-layout-right-sec">
+                        <div class="slds-grid">
+                            <div class="slds-col slds-size_1-of-1 slds-large-size_10-of-12 slds-m-vertical_xx-large">
+                                <div class="brand-name">
+                                    <div class="logo-main" tabindex="0" title="FCNB Logo" onclick={navigateToLoginPage}>
+                                        <img src={logo} alt="FCNB Logo - Financial and Consumer Services Commission" aria-label="FCNB Logo">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="register-carousel-main">
+                            <div class="slds-box slds-text-align_center register-carousel slds-p-around--none">
+                                <lightning-carousel>
+                                    <lightning-carousel-image header=""
+                                        description={labels.regSidebarIntro}>
+                                    </lightning-carousel-image>
+                                </lightning-carousel>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="copyright-text d-flex center between">
+                        <p>{labels.regCopyright}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-col slds-large-size--8-of-12 slds-medium-size--1-of-1 slds-size--1-of-1 bg-white register-content-col">
+                <div class="register-language-selector">
+                    <lightning-combobox
+                        name="portalLanguage"
+                        label={labels.language}
+                        value={selectedLanguage}
+                        placeholder={labels.language}
+                        options={languageOptions}
+                        onchange={handleLanguageChange}
+                        variant="label-hidden"
+                        disabled={languageUpdating}
+                    ></lightning-combobox>
+                </div>
+                <template if:true={cmpLoaded}>
+                    <div class="custom-layout__registerSec slds-p-around--xx-large">
+                        <article class="slds-card">
+                            <div class="register-heading">
+                                <lightning-button variant="base" if:true={showSelection} label={labels.regGoBackHome}
+                                    title={labels.regGoBackHome} onclick={navigateToLoginPage}
+                                    class="base-link-left"></lightning-button>
+                                <lightning-button variant="base" if:false={showSelection} label={labels.regGoBackSelection}
+                                    title={labels.regGoBackSelection} onclick={goBackToSelection}
+                                    class="base-link-left"></lightning-button>
+                                <h1 aria-live="assertive" aria-label={labels.regTitle} class="bold-40 m-b-xms m-t-small"
+                                    tabindex="-1">{labels.regTitle}</h1>
+                                <p class="text-primary" if:false={hasSuccess}>{labels.regAlready} <a href="/s/login"
+                                        aria-label={labels.regLogin} title={labels.regLogin}
+                                        class="login-link bold-16 m-l-xs">{labels.regLogin}
+                                    </a>
+                                </p>
+                                <div class="divider" if:false={showSelection}></div>
+                            </div>
+                            <template if:true={hasError}>
+                                <div class="form-error" aria-live="assertive" aria-atomic="true">
+                                    <div class="errorMessage slds-notify slds-notify_toast slds-theme_error"
+                                        tabindex="-1">
+                                        <lightning-icon icon-name="utility:error" alternative-text="Error!"
+                                            title="Error"></lightning-icon>
+                                        <lightning-formatted-rich-text value={errorMessage}>
+                                        </lightning-formatted-rich-text>
+                                        <span class="sr-only focus-helper" tabindex="0"> {errorMessage}</span>
+                                    </div>
+                                </div>
+                            </template>
+                            <div class="slds-m-top_medium" if:true={hasSuccess}>
+                                <div class="slds-scoped-notification slds-media slds-media_center slds-theme_success m-b-medium"
+                                    role="status">
+                                    <div class="slds-media__figure">
+                                        <span class="slds-icon_container slds-icon-utility-success" title="success">
+                                            <i class="material-icon material-icon-check_circle_outline"></i>
+                                        </span>
+                                    </div>
+                                    <div class="slds-media__body">
+                                        <p><strong>Registration Successful</strong></p>
+                                        <lightning-formatted-rich-text class="text-primary"
+                                            value={successMessage}></lightning-formatted-rich-text>
+                                    </div>
+                                    <div aria-live="assertive" aria-atomic="true" role="alert">
+                                        <span class="sr-only" if:true={isSpanVisible}>Thank you for registering. An email has been sent to your provided email address containing your User ID. You must click the verification link in the email to set your password and activate your FCNB account.</span>
+                                    </div>
+                                </div>
+                                <lightning-button variant="brand" label="Back to login page" title="Back to login page"
+                                    onclick={navigateToLoginPage} class=""></lightning-button>
+                            </div>
+                            <div if:true={showOtp} class="slds-m-top_medium slds-p-horizontal_medium success-msg">
+                                <div if:true={otpResent} class="slds-m-top_x-large slds-m-bottom_medium">
+                                    A One-Time Password has been resent to your registered email address.
+                                </div>
+                                <div if:false={otpResent} class="slds-m-top_x-large slds-m-bottom_medium">
+                                    Enter the One-Time Password sent to your registered email address.
+                                </div>
+
+                                <lightning-input class="verify" name="otp" type="text" value={otp}
+                                    label="One-Time Password" placeholder="Enter One-Time Password" required
+                                    message-when-value-missing="Error: OTP is required." onchange={handleOtp}>
+                                </lightning-input>
+
+                                <lightning-button variant="base" label="Resend OTP" title="Resend OTP"
+                                    onclick={resendOTPHandler}></lightning-button>
+                                <div class="slds-m-top_small" if:false={showSecurityCodeEmailSuccessMsg}>
+                                    <lightning-button variant="brand" label="Verify OTP" title="Verify OTP"
+                                        onclick={verifyOTPHandler}></lightning-button>
+                                </div>
+                                <div class="slds-m-top_small" if:true={showSecurityCodeEmailSuccessMsg}>
+                                    <lightning-button variant="brand" label="Verify OTP" title="Verify OTP"
+                                        onclick={verifyOTPForAccClaimHandler}></lightning-button>
+                                </div>
+                            </div>
+
+                            <template if:true={isShowRegistrationForm}>
+                                <div
+                                    class="slds-card__body slds-card__body_inner card-style slds-m-around--none slds-p-around--none">
+                                    <template if:true={showSelection}>
+                                        <c-lpi-registration-selection onhideselection={hideselection}
+                                            is-registration=true></c-lpi-registration-selection>
+                                    </template>
+                                    <template if:false={showSelection}>
+
+                                        <p class="asterisk-caption">{labels.regRequiredHint}</p>
+                                        <ul class="list-items m-t-small">
+                                            <li>{labels.regHaveLicenseHelp}</li>
+                                            <li>{labels.regNoLicenseHelp}</li>
+                                        </ul>
+
+                                        <div class="m-t-medium">
+                                            <lightning-radio-group label={labels.regSelectOption}
+                                                class="focusOnFirstRadio" options={isUserLicensedOptions} required
+                                                type="radio" onchange={handleIsUserLicensedQuestions}
+                                                message-when-value-missing="Error: Please select an option to proceed.">
+                                            </lightning-radio-group>
+                                        </div>
+
+                                        <template if:true={showNoLicenseRegistrationForm}>
+                                            <template if:true={showLicenseQueResponse}>
+                                                <template if:false={isUserLicensed}>
+                                                    <div class="slds-grid slds-wrap slds-gutters_direct">
+                                                        <div class="slds-col slds-large-size--1-of-1 slds-medium-size--1-of-1 slds-size--1-of-1">
+                                                            <h2 class="bold-20 m-b-medium m-t-small">{labels.regBasicContact}</h2>
+                                                        </div>
+                                                        <!-- Contact Type-->
+                                                        <div class="slds-col slds-large-size--1-of-2 slds-medium-size--1-of-2 slds-size--1-of-1">
+                                                            <lightning-combobox class="validate" name="Contact"
+                                                                label={labels.regContactType} placeholder={labels.regSelectAnOption} value={selectedValue} required
+                                                                message-when-value-missing="Error: Contact Type is required."
+                                                                options={contactTypeOptions} onchange={handleChange}>
+                                                            </lightning-combobox>
+                                                        </div>
+                                                        <div class="slds-col slds-large-size--1-of-2 slds-medium-size--1-of-2 slds-size--1-of-1">
+                                                        </div>
+                                                       
+                                                        <!-- First Name -->
+                                                        <div class="slds-col slds-large-size--1-of-2 slds-medium-size--1-of-2 slds-size--1-of-1">
+                                                            <lightning-input class="validate" type="text"
+                                                                label={labels.regFirstName} placeholder={labels.regFirstNamePh}
+                                                                name="firstName" maxlength="40"
+                                                                value={dataObj.firstName} onchange={handleInputs}
+                                                                required
+                                                                message-when-value-missing="Error: First Name is required."
+                                                                pattern="^[A-Za-z0-9 \-.]+$"
+                                                                message-when-pattern-mismatch="Invalid input. Only letters, numbers, spaces, hyphens, and periods allowed.">
+                                                            </lightning-input>
+                                                        </div>
+                                                        <!-- Middle Name -->
+                                                        <div class="slds-col slds-large-size--1-of-2 slds-medium-size--1-of-2 slds-size--1-of-1">
+                                                            <lightning-input class="validate" type="text"
+                                                                label={labels.regMiddleName} placeholder={labels.regMiddleNamePh}
+                                                                name="middleName" maxlength="40"
+                                                                value={dataObj.middleName} onchange={handleInputs}
+                                                                pattern="^[A-Za-z0-9 \-.]+$"
+                                                                message-when-pattern-mismatch="Invalid input. Only letters, numbers, spaces, hyphens, and periods allowed.">
+                                                            </lightning-input>
+                                                        </div>
+                                                        <!-- Last Name -->
+                                                        <div class="slds-col slds-large-size--1-of-2 slds-medium-size--1-of-2 slds-size--1-of-1">
+                                                            <lightning-input class="validate" type="text"
+                                                                label={labels.regLastName} placeholder={labels.regLastNamePh}
+                                                                name="lastName" maxlength="80" value={dataObj.lastName}
+                                                                onchange={handleInputs} required
+                                                                message-when-value-missing="Error: Last Name is required."
+                                                                pattern="^[A-Za-z0-9 \-.]+$"
+                                                                message-when-pattern-mismatch="Invalid input. Only letters, numbers, spaces, hyphens, and periods allowed.">
+                                                            </lightning-input>
+                                                        </div>
+                                                        <!-- Date of Birth -->
+                                                        <div class="slds-col slds-large-size--1-of-2 slds-medium-size--1-of-2 slds-size--1-of-1 dob-input-with-helptext">
+                                                            <lightning-input class="validate" type="date"
+                                                                label={labels.regDob} placeholder={labels.regDobPh}
+                                                                name="birthdate" maxlength="40"
+                                                                field-level-help="Select or enter date of birth"
+                                                                onchange={handleInputs} required onblur={handleDobError}
+                                                                data-id="birthdate" pattern="^[A-Za-z0-9 ]+$"
+                                                                message-when-value-missing="Error: Date of Birth is required."
+                                                                message-when-pattern-mismatch="Special characters are not allowed"
+                                                                max={todayDate} date-style="short">
+                                                            </lightning-input>
+                                                        </div>
+                                                        <!-- Phone Number -->
+                                                        <div class="slds-col slds-large-size--1-of-2 slds-medium-size--1-of-2 slds-size--1-of-1">
+                                                            <lightning-input class="validate" type="tel"
+                                                                label={labels.regTelephone}
+                                                                placeholder={labels.regTelephonePh} name="phone"
+                                                                field-level-help="10 digits required, e.g. 5065550199"
+                                                                maxlength="10" min-length="10" pattern="[0-9\(\)\-\s]*"
+                                                                onclick={recoverOrignalPhone} onblur={formatPhoneNumber}
+                                                                message-when-pattern-mismatch="Please enter a valid 10-digit phone number."
+                                                                onchange={handleInputs} value={dataObj.phone}
+                                                                message-when-value-missing="Error: Telephone Number is required.">
+                                                            </lightning-input>
+                                                        </div>
+                                                        <!-- Email Address -->
+                                                        <div class="slds-col slds-large-size--1-of-2 slds-medium-size--1-of-2 slds-size--1-of-1">
+                                                            <lightning-input class="validate" type="email"
+                                                                label={labels.regEmail} placeholder={labels.regEmailPh}
+                                                                name="email" maxlength="80" value={dataObj.email}
+                                                                pattern="^([A-Za-z0-9_\-\.\+]+)@([A-Za-z0-9_\-\.]+)\.([A-Za-z]{2,10})$"
+                                                                message-when-pattern-mismatch="Invalid email format."
+                                                                required onchange={handleInputs}
+                                                                message-when-value-missing="Error: Email Address is required.">
+                                                            </lightning-input>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="divider"></div>
+                                                    <div class="slds-grid slds-wrap slds-gutters">
+                                                        <div class="slds-col slds-large-size--1-of-1 slds-medium-size--1-of-1 slds-size--1-of-1">
+                                                            <h2 class="bold-20 m-b-medium">{labels.regResidentialAddress}</h2>
+                                                        </div>
+                                                        <!-- Country -->
+                                                        <div class="slds-col slds-large-size--1-of-2 slds-medium-size--1-of-2 slds-size--1-of-1">
+                                                            <lightning-combobox class="validate" name="country"
+                                                                label={labels.regCountry} placeholder={labels.regSelectAnOption} value={dataObj.country} required
+                                                                message-when-value-missing="Error: Country is required."
+                                                                options={countryOptions} onchange={handleInputs}>
+                                                            </lightning-combobox>
+                                                        </div>
+
+                                                        <!-- Street Address -->
+                                                        <div class="slds-col slds-large-size--1-of-2 slds-medium-size--1-of-2 slds-size--1-of-1">
+                                                            <lightning-input class="validate" type="text"
+                                                                label={labels.regStreet}
+                                                                placeholder={labels.regStreetPh} name="street1"
+                                                                maxlength="255" value={dataObj.street1}
+                                                                onchange={handleInputs} required
+                                                                message-when-value-missing="Error: Street Address is required."
+                                                                pattern="^((?!(<)|(>)).)*$"
+                                                                message-when-pattern-mismatch="Invalid characters entered.">
+                                                            </lightning-input>
+                                                        </div>
+
+                                                        <!-- Postal Code -->
+                                                        <template if:true={showFiveDigitZIP}>
+                                                            <div class="slds-col slds-large-size--1-of-2 slds-medium-size--1-of-2 slds-size--1-of-1">
+                                                                <lightning-input class="validate" type="text"
+                                                                    label={labels.regPostal} placeholder="A1A 1A1"
+                                                                    name="zipcode" minlength="5" maxlength="7"
+                                                                    value={dataObj.zipcode} onchange={handleInputs}
+                                                                    required
+                                                                    message-when-value-missing="Error: Postal Code is required."
+                                                                    pattern="^[a-zA-Z0-9\s\-]*$"
+                                                                    message-when-pattern-mismatch="Please enter a valid Postal Code.">
+                                                                </lightning-input>
+                                                            </div>
+                                                        </template>
+                                                        <template if:false={showFiveDigitZIP}>
+                                                            <div class="slds-col slds-large-size--1-of-2 slds-medium-size--1-of-2 slds-size--1-of-1">
+                                                                <lightning-input class="validate" type="text"
+                                                                    label={labels.regPostal} placeholder="A1A 1A1"
+                                                                    name="zipcode" minlength="5" maxlength="10"
+                                                                    value={dataObj.zipcode} onchange={handleInputs}
+                                                                    required
+                                                                    message-when-value-missing="Error: Postal Code is required."
+                                                                    pattern="^[a-zA-Z0-9\s\-]*$"
+                                                                    message-when-pattern-mismatch="Please enter a valid Postal Code.">
+                                                                </lightning-input>
+                                                            </div>
+                                                        </template>
+
+                                                        <!-- Province Picklist-->
+                                                        <template if:true={isCA}>
+                                                            <div class="slds-col slds-large-size--1-of-2 slds-medium-size--1-of-2 slds-size--1-of-1">
+                                                                <lightning-combobox class="validate" name="state"
+                                                                    placeholder="Select Province" label="Province / Territory"
+                                                                    value={dataObj.state} required
+                                                                    message-when-value-missing="Error: Province is required."
+                                                                    options={stateOptions} onchange={handleInputs}>
+                                                                </lightning-combobox>
+                                                            </div>
+                                                        </template>
+
+                                                        <!-- Province Text-->
+                                                        <template if:false={isCA}>
+                                                            <div class="slds-col slds-large-size--1-of-2 slds-medium-size--1-of-2 slds-size--1-of-1">
+                                                                <lightning-input class="validate" type="text"
+                                                                    label={labels.regProvince} placeholder={labels.regProvincePh}
+                                                                    name="stateText" maxlength="40"
+                                                                    value={dataObj.stateText} onchange={handleInputs}
+                                                                    required
+                                                                    message-when-value-missing="Error: Province/State is required."
+                                                                    pattern="^((?!(<)|(>)).)*$"
+                                                                    message-when-pattern-mismatch="Invalid characters entered.">
+                                                                </lightning-input>
+                                                            </div>
+                                                        </template>
+
+                                                        <!-- City -->
+                                                        <div class="slds-col slds-large-size--1-of-2 slds-medium-size--1-of-2 slds-size--1-of-1">
+                                                            <lightning-input class="validate" type="text" label={labels.regCity}
+                                                                placeholder={labels.regCityPh} name="city" maxlength="40"
+                                                                value={dataObj.city} onchange={handleInputs} required
+                                                                message-when-value-missing="Error: City is required."
+                                                                pattern="^((?!(<)|(>)).)*$"
+                                                                message-when-pattern-mismatch="Invalid characters entered.">
+                                                            </lightning-input>
+                                                        </div>
+
+                                                        <!-- County / District -->
+                                                        <div class="slds-col slds-large-size--1-of-2 slds-medium-size--1-of-2 slds-size--1-of-1">
+                                                            <lightning-input class="validate" type="text" label={labels.regCounty}
+                                                                placeholder={labels.regCountyPh} name="county" maxlength="40"
+                                                                value={dataObj.county} onchange={handleInputs}
+                                                                pattern="^((?!(<)|(>)).)*$"
+                                                                message-when-pattern-mismatch="Invalid characters entered.">
+                                                            </lightning-input>
+                                                        </div>
+                                                    </div>
+                                                    <div class="divider"></div>
+                                                    <!-- Security Questions -->
+                                                    <div class="slds-grid slds-wrap slds-gutters">
+                                                        <div class="slds-col slds-large-size--1-of-1 slds-medium-size--1-of-1 slds-size--1-of-1">
+                                                            <h2 class="bold-20 m-b-medium">{labels.regSecurityTitle}</h2>
+                                                            <div>
+                                                                <lightning-combobox name="Question1" label={labels.regSecurityQ1} placeholder={labels.regSelectAnOption}
+                                                                    message-when-value-missing="Please select Security Question 1"
+                                                                    options={getSecurityQues1Options}
+                                                                    onchange={handleQuestions}
+                                                                    class="validate sq-combobox"
+                                                                    value={secQue1SelectedValue} required>
+                                                                </lightning-combobox>
+                                                                <template if:true={selectedSecurityQuestions.Question1}>
+                                                                    <lightning-input class="validate" type="text"
+                                                                        label={labels.regAnswer}
+                                                                        placeholder={labels.regAnswerPh}
+                                                                        name="que1Answer" maxlength="40"
+                                                                        onchange={handleQuestions} required
+                                                                        message-when-value-missing="Please enter an answer."
+                                                                        pattern="^((?!(<)|(>)).)*$"
+                                                                        message-when-pattern-mismatch="Invalid characters entered.">
+                                                                    </lightning-input>
+                                                                </template>
+                                                            </div>
+                                                            <div>
+                                                                <lightning-combobox name="Question2" label={labels.regSecurityQ2} placeholder={labels.regSelectAnOption}
+                                                                    message-when-value-missing="Please select Security Question 2"
+                                                                    options={getSecurityQues2Options}
+                                                                    onchange={handleQuestions}
+                                                                    class="validate sq-combobox"
+                                                                    value={secQue1SelectedValue} required>
+                                                                </lightning-combobox>
+                                                                <template if:true={selectedSecurityQuestions.Question2}>
+                                                                    <lightning-input class="validate" type="text"
+                                                                        label={labels.regAnswer}
+                                                                        placeholder={labels.regAnswerPh}
+                                                                        name="que2Answer" maxlength="40"
+                                                                        onchange={handleQuestions} required
+                                                                        message-when-value-missing="Please enter an answer."
+                                                                        pattern="^((?!(<)|(>)).)*$"
+                                                                        message-when-pattern-mismatch="Invalid characters entered.">
+                                                                    </lightning-input>
+                                                                </template>
+                                                            </div>
+                                                            <div>
+                                                                <lightning-combobox name="Question3" label={labels.regSecurityQ3} placeholder={labels.regSelectAnOption}
+                                                                    message-when-value-missing="Please select Security Question 3"
+                                                                    options={getSecurityQues3Options}
+                                                                    onchange={handleQuestions}
+                                                                    class="validate sq-combobox"
+                                                                    value={secQue1SelectedValue} required>
+                                                                </lightning-combobox>
+                                                                <template if:true={selectedSecurityQuestions.Question3}>
+                                                                    <lightning-input class="validate" type="text"
+                                                                        label={labels.regAnswer}
+                                                                        placeholder={labels.regAnswerPh}
+                                                                        name="que3Answer" maxlength="40"
+                                                                        onchange={handleQuestions} required
+                                                                        message-when-value-missing="Please enter an answer."
+                                                                        pattern="^((?!(<)|(>)).)*$"
+                                                                        message-when-pattern-mismatch="Invalid characters entered.">
+                                                                    </lightning-input>
+                                                                </template>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- Recaptcha -->
+                                                        <div class="recaptchaCheckbox2" style={recaptchaDivStyle}
+                                                            tabindex={recaptchaDivTabIndex}></div>
+
+                                                        <!-- Register Button -->
+                                                        <div class="slds-col slds-large-size--1-of-1 slds-medium-size--1-of-1 slds-p-top--large slds-size--1-of-1">
+                                                            <lightning-button variant="brand" label={labels.regComplete}
+                                                                class="slds-align--absolute-center register-btn"
+                                                                title={labels.regComplete} onclick={checkAutomationAndNext}>
+                                                            </lightning-button>
+                                                        </div>
+                                                    </div>
+                                                </template>
+
+                                                <template if:true={isUserLicensed}>
+                                                    <!-- Demo: commented government-issued ID question
+                                                    <template if:false={showSecurityCodeEmailSuccessMsg}>
+                                                        <lightning-radio-group
+                                                            label="Do you have a government-issued identification or reference number on file with FCNB?"
+                                                            options={yesNoOptions} required type="radio"
+                                                            onchange={handleIsUserLicensedQuestions}
+                                                            message-when-value-missing="Error: Please answer the identification question."
+                                                            class="radio-group-label-bold ssnQuestion">
+                                                        </lightning-radio-group>
+                                                    </template>
+                                                    -->
+                                                    <div class="slds-grid slds-wrap slds-gutters m-t-medium">
+                                                        <div class="slds-col slds-large-size--1-of-2 slds-medium-size--1-of-2 slds-size--1-of-1">
+                                                            <lightning-input type="text"
+                                                                label={labels.regFcnbLicenseNumber}
+                                                                placeholder={labels.regFcnbLicensePh}
+                                                                name="fcnbLicenseNumber"
+                                                                value={demoLicenseFields.fcnbLicenseNumber}
+                                                                onchange={handleDemoLicenseInputs}>
+                                                            </lightning-input>
+                                                        </div>
+                                                        <div class="slds-col slds-large-size--1-of-2 slds-medium-size--1-of-2 slds-size--1-of-1">
+                                                            <lightning-input type="text"
+                                                                label={labels.regDriversLicense}
+                                                                placeholder={labels.regDriversPh}
+                                                                name="driversLicenseNumber"
+                                                                value={demoLicenseFields.driversLicenseNumber}
+                                                                onchange={handleDemoLicenseInputs}>
+                                                            </lightning-input>
+                                                        </div>
+                                                        <div class="slds-col slds-large-size--1-of-2 slds-medium-size--1-of-2 slds-size--1-of-1">
+                                                            <lightning-input type="text"
+                                                                label={labels.regFullLegalName}
+                                                                placeholder={labels.regFullLegalPh}
+                                                                name="fullLegalName"
+                                                                value={demoLicenseFields.fullLegalName}
+                                                                onchange={handleDemoLicenseInputs}>
+                                                            </lightning-input>
+                                                        </div>
+                                                        <div class="slds-col slds-large-size--1-of-2 slds-medium-size--1-of-2 slds-size--1-of-1">
+                                                            <lightning-input type="date"
+                                                                label={labels.regDob}
+                                                                placeholder={labels.regDobPh}
+                                                                name="dateOfBirth"
+                                                                value={demoLicenseFields.dateOfBirth}
+                                                                onchange={handleDemoLicenseInputs}
+                                                                date-style="short">
+                                                            </lightning-input>
+                                                        </div>
+                                                        <div class="slds-col slds-large-size--1-of-1 slds-medium-size--1-of-1 slds-size--1-of-1 m-t-medium">
+                                                            <h2 class="bold-20 m-b-medium">{labels.regResidentialAddress}</h2>
+                                                        </div>
+                                                        <!-- Country -->
+                                                        <div class="slds-col slds-large-size--1-of-2 slds-medium-size--1-of-2 slds-size--1-of-1">
+                                                            <lightning-combobox name="country"
+                                                                label={labels.regCountry}
+                                                                placeholder={labels.regSelectAnOption}
+                                                                value={demoLicenseFields.country}
+                                                                options={countryOptions}
+                                                                required
+                                                                onchange={handleDemoLicenseInputs}>
+                                                            </lightning-combobox>
+                                                        </div>
+                                                        <!-- Street Address -->
+                                                        <div class="slds-col slds-large-size--1-of-2 slds-medium-size--1-of-2 slds-size--1-of-1">
+                                                            <lightning-input type="text"
+                                                                label="Street Address"
+                                                                placeholder="Enter Street Address"
+                                                                name="streetAddress"
+                                                                value={demoLicenseFields.streetAddress}
+                                                                required
+                                                                onchange={handleDemoLicenseInputs}>
+                                                            </lightning-input>
+                                                        </div>
+                                                        <!-- Postal Code -->
+                                                        <div class="slds-col slds-large-size--1-of-2 slds-medium-size--1-of-2 slds-size--1-of-1">
+                                                            <lightning-input type="text"
+                                                                label={labels.regPostal}
+                                                                placeholder={labels.regPostalPh}
+                                                                name="postalCode"
+                                                                value={demoLicenseFields.postalCode}
+                                                                required
+                                                                onchange={handleDemoLicenseInputs}>
+                                                            </lightning-input>
+                                                        </div>
+                                                        <!-- Province / State / Region -->
+                                                        <div class="slds-col slds-large-size--1-of-2 slds-medium-size--1-of-2 slds-size--1-of-1">
+                                                            <lightning-input type="text"
+                                                                label={labels.regProvince}
+                                                                placeholder={labels.regProvincePh}
+                                                                name="provinceStateRegion"
+                                                                value={demoLicenseFields.provinceStateRegion}
+                                                                required
+                                                                onchange={handleDemoLicenseInputs}>
+                                                            </lightning-input>
+                                                        </div>
+                                                        <!-- City / Town -->
+                                                        <div class="slds-col slds-large-size--1-of-2 slds-medium-size--1-of-2 slds-size--1-of-1">
+                                                            <lightning-input type="text"
+                                                                label="City"
+                                                                placeholder="Enter City or Town"
+                                                                name="cityTown"
+                                                                value={demoLicenseFields.cityTown}
+                                                                required
+                                                                onchange={handleDemoLicenseInputs}>
+                                                            </lightning-input>
+                                                        </div>
+                                                        <!-- County / District (Optional) -->
+                                                        <div class="slds-col slds-large-size--1-of-2 slds-medium-size--1-of-2 slds-size--1-of-1">
+                                                            <lightning-input type="text"
+                                                                label="County"
+                                                                placeholder="Enter County or District"
+                                                                name="countyDistrict"
+                                                                value={demoLicenseFields.countyDistrict}
+                                                                onchange={handleDemoLicenseInputs}>
+                                                            </lightning-input>
+                                                        </div>
+                                                        <div class="slds-col slds-large-size--1-of-1 slds-medium-size--1-of-1 slds-p-top--large slds-size--1-of-1">
+                                                            <lightning-button variant="brand"
+                                                                label="Validate"
+                                                                class="slds-align--absolute-center register-btn"
+                                                                title="Validate"
+                                                                onclick={handleDemoValidateLicense}>
+                                                            </lightning-button>
+                                                        </div>
+                                                    </div>
+                                                </template>
+                                            </template>
+                                        </template>
+                                    </template>
+                                </div>
+                            </template>
+                        </article>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+</template>

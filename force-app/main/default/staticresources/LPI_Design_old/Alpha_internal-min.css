@@ -1,0 +1,1500 @@
+.d-flex {
+    display: flex;
+}
+
+.d-flex.center {
+    align-items: center;
+}
+
+.sr-only {
+    border: 0;
+    clip: rect(0, 0, 0, 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+
+.c-red {
+    color: #ed0202 !important;
+}
+
+.lpiApplication {
+    width: 100%;
+    overflow: auto;
+    min-height: 250px;
+}
+
+.lpiApplication table {
+    background: #f8f7f7;
+    border-radius: 12px;
+    padding: 10px;
+}
+
+.lpiApplication thead th {
+    padding: 10px 16px;
+    /* background:#0176d2; */
+    background-color: rgb(243, 243, 243);
+    /* color:#fff; */
+}
+
+.lpiApplication tbody td,
+.lpiApplication tbody th {
+    padding: 5px 15px;
+}
+
+/* .lpiApplication tbody tr:nth-child(even){
+    background-color: rgb(243, 243, 243);
+    color:#000;
+} */
+.lpiApplication tbody tr {
+    background-color: #fff;
+}
+
+.oneContent .cmp-body .slds-textarea {
+    background: #fff;
+    max-height: 45px !important;
+    min-height: 45px !important;
+}
+
+c-mtx-lpi_-application-due-diligence .lpiApplication .slds-textarea {
+    resize: auto;
+}
+
+.lpiApplication .slds-textarea {
+    min-width: 200px;
+}
+
+/* .slds-form-element__label, label{
+    display:none!important;
+} */
+.lpiApplication .slds-icon-utility-edit svg {
+    width: 18px;
+    height: 18px;
+}
+
+.lpiApplication .slds-icon-utility-success.slds-icon_container svg {
+    width: 25px;
+    height: 25px;
+    fill: green;
+}
+
+.lpiApplication .slds-icon-utility-clear.slds-icon_container svg {
+    width: 25px;
+    height: 25px;
+    fill: #c33232;
+}
+
+.lpiApplication thead th:first-child {
+    width: 210px;
+}
+
+.lpiApplication thead th:nth-child(3) {
+    width: 170px;
+}
+
+c-lpi-application-due-diligence lightning-combobox.dueDiligence label {
+    display: none;
+}
+
+c-application-document-review table.slds-table th {
+    background: #F1F4F9;
+    padding: 10px;
+}
+
+c-application-document-review [data-label="Action"] {
+    text-align: center;
+}
+
+c-application-document-review .textarea-container textarea {
+    height: 36px;
+    display: block;
+}
+
+c-application-document-review .slds-table td {
+    padding: 10px;
+}
+
+c-application-document-review lightning-button-icon svg {
+    fill: #0077d3 !important;
+}
+
+.licenses-details__right .button-group {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Accordion Start*/
+
+.accordion .label-color-onexpand {
+    color: #3E5677 !important;
+}
+
+.accordion a {
+    font-size: 0.875rem;
+    color: #3E5677;
+}
+
+.accordion-block {
+    padding: 0;
+}
+
+.accordion-block button {
+    width: 100%;
+    margin: 0;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.accordion-block button.slds-button:focus,
+.accordion-block button.slds-button:active,
+.accordion-block button.slds-button {
+    box-shadow: unset;
+    border: none;
+}
+
+.accordion-block button span:first-child {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.accordion-block .slds-text-heading_small {
+    color: #3E5677;
+    width: 100%;
+    text-align: left;
+    font-weight: 600;
+}
+
+.accordion-block .accordion {
+    margin-bottom: 1rem;
+    border: 0.063rem solid #E0E3ED;
+    border-radius: 0.25rem;
+    padding: 0;
+}
+
+.accordion-block .accordion-heading {
+    color: #3E5677;
+    margin: 0.6rem 0;
+    font-weight: 600;
+}
+
+/* .accordion-block .accordion-subsection {
+    border-top: 0.063rem solid #E0E3ED;
+    margin-top: 1.25rem; *
+} */
+
+.accordion-block .accordion .label, 
+.accordion-block .accordion .slds-form-element__label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #1f2937 !important;
+}
+
+.accordion-block .accordion .label .field-value {
+    font-weight: normal;
+}
+
+.accordion-block .accordion .text-input {
+    font-size: 1rem;
+    font-weight: 400;
+    color: #1F2937;
+}
+
+.accordion-block .accordion .accordion-row {
+    margin-bottom: 1rem;
+}
+
+.accordion-block .accordion .block-header {
+    padding: 1rem;
+}
+
+.accordion-block .accordion .blockSlot {
+    padding-left: 0;
+    padding-top: 0.6rem;
+}
+
+.accordion-block .accordion a {
+    color: #1F2937;
+}
+
+/*--- Accordion End ---*/
+
+/*--- Intake flow footer button UI START ---*/
+
+.omniscript-step__body {
+    position: relative;
+}
+
+.oneContent .save-m-btn {
+    position: absolute;
+    right: 1rem;
+    /* z-index: 10; */
+    margin-top: 0.5rem;
+    bottom: -2.3rem !important;
+    padding-bottom: 0.35rem !important;
+    z-index: 1;
+}
+
+.omniscript-btn-previous {
+    position: relative;
+    right: 5rem;
+}
+
+/*--- Intake flow footer button UI END ---*/
+
+/* Warning message box Start */
+.warning-message-box {
+    padding: 0.5rem !important;
+    font-size: 1rem;
+    font-weight: 400;
+    color: #9f5b09;
+    border: 1px solid #9f5b09 !important;
+    border-radius: 0.25rem !important;
+    background: #f6eee3;
+}
+
+.warning-message-box .slds-icon {
+    fill: #9f5b09;
+}
+
+.warning-message-box .slds-col.slds-size_1-of-1 .slds-grid.slds-wrap {
+    align-items: center;
+}
+
+.warning-message-box .slds-size_1-of-12 {
+    width: 6%;
+}
+
+/* Warning message box End */
+
+/* Sussess message Start */
+.success-container {
+    padding: 1rem;
+    text-align: center;
+}
+
+.success-container .success-icon {
+    display: flex;
+    justify-content: center;
+    margin-top: 1.281rem;
+}
+
+.success-container .success-icon img {
+    width: 7.5rem;
+    height: 7.56rem;
+}
+
+.success-container .success-text {
+    text-align: center;
+    font-size: 2.5rem;
+    letter-spacing: 0.00498rem;
+    font-weight: 600;
+    margin-top: 1.875rem;
+}
+
+/* Sussess message End */
+
+/* Edit block Start */
+
+omnistudio-omniscript-edit-block .slds-truncate {
+    white-space: normal;
+    text-overflow: unset;
+    flex: 1;
+    word-break: break-word;
+}
+
+omnistudio-omniscript-edit-block[data-omni-key="CourseInformationEditBlock"] .slds-truncate.slds-text-align_right {
+    text-align: center;
+}
+
+/* Edit block End */
+
+/* Personal Information css START */
+
+[data-omni-key=PersonalInformation] c-cf-info-box-orange .slds-card,
+[data-omni-key=PersonalInformation] c-cf-info-box-orange .slds-col.slds-p-around_x-small.slds-size_12-of-12,
+[data-omni-key=PersonalInformationNameAmendment] c-cf-info-box-orange .slds-card,
+[data-omni-key=PersonalInformationNameAmendment] c-cf-info-box-orange .slds-col.slds-p-around_x-small.slds-size_12-of-12 {
+    padding: 0
+}
+
+[data-omni-key=PersonalInformation] c-cf-info-box-orange .heading,
+[data-omni-key=PersonalInformationNameAmendment] c-cf-info-box-orange .heading {
+    padding-bottom: .625rem
+}
+
+[data-omni-key=PersonalInformation] c-cf-info-box-orange .info-box,
+[data-omni-key=PersonalInformationNameAmendment] c-cf-info-box-orange .info-box {
+    padding-bottom: 1.5rem;
+    margin: 1rem 0
+}
+
+[data-omni-key=PersonalInformation] c-cf-info-box-orange .info-box .slds-col.slds-size_1-of-1 .slds-grid.slds-wrap,
+[data-omni-key=PersonalInformationNameAmendment] c-cf-info-box-orange .info-box .slds-col.slds-size_1-of-1 .slds-grid.slds-wrap {
+    align-items: center
+}
+
+[data-omni-key=PersonalInformation] c-cf-info-box-orange .info-box .slds-col.slds-size_1-of-1,
+[data-omni-key=PersonalInformationNameAmendment] c-cf-info-box-orange .info-box .slds-col.slds-size_1-of-1 {
+    padding: 1rem;
+    font-size: 1rem;
+    font-weight: 400;
+    color: #9f5b09;
+    border: 1px solid #9f5b09;
+    border-radius: .25rem;
+    background: #f6eee3
+}
+
+[data-omni-key=PersonalInformation] c-cf-info-box-orange .info-box .info-icon.slds-size_1-of-12,
+[data-omni-key=PersonalInformationNameAmendment] c-cf-info-box-orange .info-box .info-icon.slds-size_1-of-12 {
+    width: auto !important;
+    padding-right: 1rem
+}
+
+[data-omni-key=PersonalInformation] c-cf-info-box-orange .info-box .info-icon.slds-size_1-of-12 .slds-icon,
+[data-omni-key=PersonalInformationNameAmendment] c-cf-info-box-orange .info-box .info-icon.slds-size_1-of-12 .slds-icon {
+    fill: #9f5b09
+}
+
+[data-omni-key=PersonalInformation] omnistudio-omniscript-text-block[data-omni-key=PersonalInfoResidenceAddressReadOnly],
+[data-omni-key=PersonalInformationNameAmendment] omnistudio-omniscript-text-block[data-omni-key=PersonalInfoResidenceAddressReadOnly] {
+  margin-bottom: 0 !important;
+  margin-top: 1rem;
+}
+[data-omni-key=PersonalInformation] omnistudio-omniscript-text-block[data-omni-key=PersonalInfoResidenceAddressReadOnly] .slds-rich-text-editor__output p,
+[data-omni-key=PersonalInformationNameAmendment] omnistudio-omniscript-text-block[data-omni-key=PersonalInfoResidenceAddressReadOnly] .slds-rich-text-editor__output p {
+  font-size: 1rem;
+  color: #1F2937;
+}
+[data-omni-key=PersonalInformation] [data-omni-key=ReadBlockDetails],
+[data-omni-key=PersonalInformationNameAmendment] [data-omni-key=ReadBlockDetails] {
+  margin-top: 1rem;
+}
+/* Personal Information css END */
+
+
+/* Payment page css Start */
+
+[data-omni-key="Attestation"] .slds-box.vlc-slds-box__no-border ,
+[data-omni-key=AttestAndAffirm] .slds-box.vlc-slds-box__no-border,
+[data-omni-key=AttestationText] .slds-box.vlc-slds-box__no-border,
+[data-omni-key=ConsentForPrimaryContactAddress] .slds-box.vlc-slds-box__no-border {
+  border: 0;
+}
+[data-omni-key="Attestation"] .slds-box.vlc-slds-box__no-border .slds-box ,
+[data-omni-key=AttestAndAffirm] .slds-box.vlc-slds-box__no-border .slds-box,
+[data-omni-key=AttestationText] .slds-box.vlc-slds-box__no-border .slds-box,
+[data-omni-key=ConsentForPrimaryContactAddress] .slds-box.vlc-slds-box__no-border .slds-box  {
+  padding: 0;
+}
+[data-omni-key="Attestation"] .slds-box.vlc-slds-box__no-border .slds-box:nth-child(3) ,
+[data-omni-key=AttestAndAffirm] .slds-box.vlc-slds-box__no-border .slds-box:nth-child(3),
+[data-omni-key=AttestationText] .slds-box.vlc-slds-box__no-border .slds-box:nth-child(3),
+[data-omni-key=ConsentForPrimaryContactAddress] .slds-box.vlc-slds-box__no-border .slds-box:nth-child(3) {
+  padding: 1rem 0;
+}
+
+omnistudio-omniscript-disclosure .vlc-disclosure .vlc-slds-box__no-border {
+    border: 0
+}
+
+omnistudio-omniscript-disclosure .vlc-disclosure .vlc-slds-box__no-border .slds-box {
+    padding: 0
+}
+
+
+[data-omni-key=EFDRequestingInactivationLicense] {
+    position: relative;
+    left: 12px;
+}
+
+[data-omni-key=EFDRequestingInactivationLicense]::before {
+    position: absolute;
+    content: "*";
+    left: -11px;
+    top: 16px;
+    color: #ea011f;
+}
+[data-omni-key=REAAppraiserRequestingReactivationLicense] {
+    position: relative;
+    left: 12px;
+}
+
+[data-omni-key=REAAppraiserRequestingReactivationLicense]::before {
+    position: absolute;
+    content: "*";
+    left: -11px;
+    top: 16px;
+    color: #ea011f;
+}
+
+/* Css began to override consent checkbox UI for PI Step */
+
+[data-omni-key=PIStepConsentBlock] .slds-accordion__summary {
+    padding-top: 0;
+}
+[data-omni-key=PIStepConsentBlock] [data-omni-key=ConsentCheckboxForMainPIStep],
+[data-omni-key=PIStepConsentBlock] [data-omni-key=ConsentCheckboxForPIStep] {
+    width: auto;
+    padding: 0;
+}
+[data-omni-key=PIStepConsentBlock] [data-omni-key=ConsentCheckboxForMainPIStep] .vlc-disclosure,
+[data-omni-key=PIStepConsentBlock] [data-omni-key=ConsentCheckboxForPIStep] .vlc-disclosure {
+    padding: 0 !important;
+    border: none !important;
+    background: none !important;
+}
+[data-omni-key=PIStepConsentBlock] [data-omni-key=ConsentCheckboxForMainPIStep] .vlc-disclosure .slds-box,
+[data-omni-key=PIStepConsentBlock] [data-omni-key=ConsentCheckboxForPIStep] .vlc-disclosure .slds-box {
+    margin: 0 !important;
+}
+[data-omni-key=PIStepConsentBlock] [data-omni-key=ConsentCheckboxForMainPIStep] .slds-form-element__help,
+[data-omni-key=PIStepConsentBlock] [data-omni-key=ConsentCheckboxForPIStep] .slds-form-element__help {
+    position: absolute;
+    top: 1.75rem;
+    color: #fff;
+    background-color: rgb(234, 0, 30);
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    width: 16rem;
+    text-align: center;
+    z-index: 1;
+}
+[data-omni-key=PIStepConsentBlock] [data-omni-key=ConsentCheckboxForMainPIStep] .slds-form-element__help::after,
+[data-omni-key=PIStepConsentBlock] [data-omni-key=ConsentCheckboxForPIStep] .slds-form-element__help::after {
+    position: absolute;
+    height: 0.5rem;
+    width: 0.5rem;
+    content: "";
+    left: 0.5rem;
+    top: -0.5rem;
+    border-bottom: 0.25rem solid rgb(234, 0, 30);
+    border-left: 0.25rem solid transparent;
+    border-right: 0.25rem solid transparent;
+}
+/* Css end to override consent checkbox UI for PI Step */
+
+[data-omni-key=BAAttestAndAffirm] .slds-checkbox__label {
+    position: relative;
+}
+
+[data-omni-key=BAAttestAndAffirm] .slds-checkbox__label::before {
+    content: "*";
+    color: #EB001E;
+    font-family: "Tahoma", sans-serif !important;
+}
+
+[data-omni-key=BAAttestAndAffirm] .slds-checkbox__label .slds-checkbox_faux {
+    margin-left: 0.1rem;
+}
+
+/* Required symbol for inputs with css */
+[data-omni-key=EFDRequestingInactivationLicense],
+[data-omni-key=NURRNFacultyAuthorizationCheckbox],
+[data-omni-key=AuthorizeToReleaseExamAppStatus],
+[data-omni-key=REAAppraiserRequestingReactivationLicense],
+[data-omni-key=SupervisorInfoCheckbox] {
+  position: relative;
+  left: 12px;
+}
+[data-omni-key=EFDRequestingInactivationLicense]::before,
+[data-omni-key=NURRNFacultyAuthorizationCheckbox]::before,
+[data-omni-key=AuthorizeToReleaseExamAppStatus]::before,
+[data-omni-key=REAAppraiserRequestingReactivationLicense]::before,
+[data-omni-key=SupervisorInfoCheckbox]::before {
+  position: absolute;
+  content: "*";
+  left: -11px;
+  top: 16px;
+  color: #ea011f;
+}
+
+/* Payment page css End */
+
+
+/* Persional informaation INFO-BOX Start */
+omnistudio-omniscript-step[data-omni-key=PersonalInformation] c-cf-info-box-orange[data-omni-key=CustomLWC1] .info-box {
+    padding: 1.5rem 0;
+    margin: 1rem 0;
+}
+
+omnistudio-omniscript-step[data-omni-key=PersonalInformation] c-cf-info-box-orange[data-omni-key=CustomLWC1] .info-box .slds-col.slds-size_1-of-1 .slds-grid.slds-wrap {
+    align-items: center;
+}
+
+omnistudio-omniscript-step[data-omni-key=PersonalInformation] c-cf-info-box-orange[data-omni-key=CustomLWC1] .info-box .slds-col.slds-size_1-of-1 {
+    padding: 1rem;
+    font-size: 1rem;
+    font-weight: 400;
+    color: #9f5b09;
+    border: 1px solid #9f5b09;
+    border-radius: 0.25rem;
+    background: #f6eee3;
+}
+
+omnistudio-omniscript-step[data-omni-key=PersonalInformation] c-cf-info-box-orange[data-omni-key=CustomLWC1] .info-box .info-icon.slds-size_1-of-12 {
+    width: auto !important;
+    padding-right: 1rem;
+}
+
+omnistudio-omniscript-step[data-omni-key=PersonalInformation] c-cf-info-box-orange[data-omni-key=CustomLWC1] .info-box .info-icon.slds-size_1-of-12 .slds-icon {
+    fill: #9f5b09;
+}
+
+omnistudio-omniscript-step[data-omni-key=PersonalInformation] c-cf-info-box-orange omnistudio-flex-card-state .slds-card .slds-col {
+    padding: 0;
+}
+
+[data-omni-key="NURIVTherapySubSection"] .slds-form-element__label {
+	font-weight: bold;
+}
+
+/* Persional informaation INFO-BOX End */
+
+/* ERROR Text message style START */
+.red-indicator {
+    background-color: #fbd8da;
+    text-align: left;
+    padding-right: 1.2rem;
+    padding-top: 1rem;
+}
+
+/* .red-indicator .slds-rich-text-editor__output {
+    color: #78545b;
+} */
+
+.yellow-indicator {
+    background-color: #fef4cd;
+    text-align: left;
+    padding-right: 1.2rem;
+    padding-top: 1rem;
+}
+
+/* .yellow-indicator .slds-rich-text-editor__output {
+    color: #726649;
+} */
+
+.green-indicator {
+    background-color: #d5f0dc;
+    text-align: left;
+    padding-right: 1.2rem;
+    padding-top: 1rem;
+}
+
+/* .green-indicator .slds-rich-text-editor__output {
+    color: #4a6a4f;
+} */
+
+/* .BlueBgWithWhiteText {
+    background-color: #047cf9;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    color: #fff !important;
+    text-align: center;
+}
+.BlueBgWithWhiteText .slds-rich-text-editor__output {
+    color: #fff !important;
+    text-align: center;
+} */
+
+/* .eNotify-message p:last-child {
+    color: #fff;
+    background-color: #047cf9;
+    padding: 1rem;
+    text-align: center;  
+}
+  
+.eNotify-message p:last-child a{
+    color:#000 !important
+} */
+
+  /* ERROR Text message style END */
+
+[data-omni-key=AttestAndAffirm]::before {
+    content: '' !important;
+    left: 0 !important;
+}
+
+[data-omni-key=AttestAndAffirm] {
+    left: 0 !important;
+}
+
+[data-omni-key=InsuranceConsultantLQ7TB] p::before {
+    content: "* ";
+    color: #EB001E;
+    font-family: "Tahoma", sans-serif !important;
+  }
+
+@media print {    
+    [data-omni-key=InsuranceConsultantLQ7TB] p::before {
+        content: " ";
+      }
+} 
+
+
+/* Modal CSS Start */
+[data-omni-key=LPCASApplicationInstructionFC] .slds-modal__header.slds-modal__header_empty,
+[data-omni-key=ProfessionalCounselorNewIns] .slds-modal__header.slds-modal__header_empty,
+[data-omni-key=ProfessionalCounselorRecIns] .slds-modal__header.slds-modal__header_empty {
+  display: none;
+}
+[data-omni-key=LPCASApplicationInstructionFC] .instruction-msg-modal-footer .slds-grid .slds-grid,
+[data-omni-key=ProfessionalCounselorNewIns] .instruction-msg-modal-footer .slds-grid .slds-grid,
+[data-omni-key=ProfessionalCounselorRecIns] .instruction-msg-modal-footer .slds-grid .slds-grid {
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.msg-block {
+    border: 1px solid #DAE1E6;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    margin-bottom: 0;
+}
+
+/* Modal CSS END */
+
+/* Licenses details view style START */
+.licenses-details {
+    font-family: "Tahoma", sans-serif;
+}
+
+.licenses-details h2 {
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: #1E3A62;
+}
+
+.licenses-details__left .slds-accordion__list-item {
+    border: 1px solid #DAE1E6;
+    border-radius: 0.25rem;
+    margin-bottom: 1rem;
+}
+
+.licenses-details__left .slds-accordion__list-item:first-child {
+    border-top: 1px solid #DAE1E6;
+}
+
+.licenses-details__left .slds-accordion__summary-action {
+    color: #3E5677;
+    font-weight: 600;
+    font-size: 1.125rem;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+}
+
+.licenses-details__left .slds-accordion__summary-action .slds-icon_container lightning-primitive-icon {
+    display: flex;
+}
+
+.licenses-details__left .slds-accordion__summary-heading .slds-button:focus {
+    text-decoration: none;
+}
+
+.licenses-details__left .slds-accordion__content {
+    padding-left: 0.4rem;
+}
+
+.licenses-details__left .label {
+    font-weight: 600;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    color: #6B7280;
+}
+
+.licenses-details__left .value {
+    font-size: 1rem;
+    color: #1E3A62;
+    overflow-wrap: break-word;
+}
+
+.licenses-details__right .button-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.licenses-details__right .button-group .slds-button {
+    width: 100%;
+    padding: 0.1874rem;
+    font-size: 0.875rem;
+}
+
+.licenses-details__right .button-group .slds-button_brand {
+    background: #3E5677;
+}
+
+/* Licenses details view style END */
+
+/* Radion Button style Start */
+.oneContent omnistudio-omniscript-radio .slds-form-element__control,
+.oneContent omnistudio-flex-radio-input.slds-form-element__control,
+.oneContent .bordered_radio .slds-form-element__control {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.oneContent omnistudio-omniscript-radio .slds-form-element__control .slds-radio,
+.oneContent omnistudio-flex-radio-input .slds-form-element__control .slds-radio,
+.oneContent .bordered_radio .slds-form-element__control .slds-radio{
+    border: 1px solid #e0e3ed;
+    padding: 0.25rem 0.625rem 0.375rem 0.625rem !important;
+    border-radius: 0.25rem;
+    margin: 0.5rem;
+    width: auto;
+}
+
+.oneContent omnistudio-omniscript-radio .slds-form-element__control .slds-radio :first-child ,
+.oneContent omnistudio-flex-radio-input .slds-form-element__control .slds-radio :first-child ,
+.oneContent .bordered_radio .slds-form-element__control .slds-radio :first-child {
+    margin-left: 0;
+}
+
+.oneContent omnistudio-omniscript-radio legend.slds-show,
+.oneContent omnistudio-flex-radio-input legend.slds-show,
+.oneContent .bordered_radio legend.slds-show {
+    padding-bottom: 0.5rem;
+}
+
+.oneContent omnistudio-omniscript-radio .slds-form-element__label,
+.oneContent omnistudio-flex-radio-input .slds-form-element__label,
+.oneContent .bordered_radio .slds-form-element__label{
+    
+    color: #1f2937;
+}
+
+.oneContent omnistudio-flex-radio-input .slds-form-element__control .slds-radio {
+    margin-left: 0;
+}
+
+/* Radion Button style END */
+
+.action-template .vlocity-btn .btnLabel{
+    width: 100%;
+    justify-content: center;
+}
+
+.field-value{
+    /* word-break: break-all; */
+    white-space: normal;
+}
+
+/* Complaint form style Start */
+
+.complaint-form__banner {
+    color: #fff;
+    background: linear-gradient(180deg, #3E5677 0%, #1E3A62 100%);
+}
+
+.complaint-form__banner h1 {
+    font-weight: 400;
+    font-size: 2rem;
+    color: #fff
+}
+
+.complaint-form__content {
+    background: #fff;
+    box-shadow: 0rem .125rem .25rem rgba(0, 0, 0, .1);
+    border-radius: .25rem;
+}
+
+.complaint-form__content .heading-2 {
+    font-size: 1.75rem;
+    color: #444;
+    font-weight: normal
+}
+
+.complaint-form__content .section-heading {
+    color: #1e3a62;
+    font-family: "Tahoma", sans-serif !important;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.complaint-form__content .validate .slds-form-element__control {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.complaint-form__content .validate .slds-form-element__control .slds-radio {
+    padding-right: 1rem;
+    border: 1px solid #E0E3ED;
+    padding: 0.25rem 0.625rem 0.375rem 0.625rem;
+    border-radius: 0.25rem;
+    margin-right: 1rem;
+    width: -webkit-max-content;
+    width: -moz-max-content;
+    width: max-content;
+    margin-bottom: 0.5rem;
+
+}
+
+.complaint-form__content .validate .slds-form-element__control .slds-radio .slds-form-element__label {
+    color: #1e3a62;
+    font-size: .875rem;
+    font-weight: normal;
+}
+
+.complaint-form__content .radio-button-label {
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.375rem;
+    color: #1e3a62;
+    font-family: "Tahoma", sans-serif !important
+}
+
+.complaint-form__content .slds-form-element__help {
+    font-weight: normal
+}
+
+.complaint-form__content .submit-button .slds-button {
+    padding: .2rem 4rem;
+    font-weight: 700;
+    font-size: .875rem
+}
+
+.complaint-form__content .submit-button .slds-button_brand {
+    background: #1E3A62
+}
+
+.complaint-form__content .submit-button .slds-button_neutral {
+    border: .0625rem solid #1E3A62;
+    color: #1E3A62
+}
+
+.complaint-form__content .slds-form-element {
+    margin-bottom: .5rem
+}
+
+.complaint-form__content label.slds-form-element__label {
+    color: #1e3a62;
+    font-size: .875rem;
+    font-weight: 600;
+    font-family: "Tahoma", sans-serif !important;
+}
+
+.complaint-form__content .tc-cb .slds-form-element__label {
+    color: #1e3a62
+}
+
+.complaint-form .success-msg {
+    padding-bottom: 7rem
+}
+
+.complaint-form .success-msg .success-icon {
+    flex-direction: column;
+    align-items: center;
+    display: flex;
+}
+
+.complaint-form .success-msg .success-icon img{
+    width: 3.5rem;
+}
+
+.complaint-form .success-msg .success-text {
+    color: #1e3a62;
+    text-align: center;
+    font-size: 1.5rem;
+    letter-spacing: .00498rem;
+    font-weight: 600;
+    margin-top: 0.875rem;
+}
+
+.complaint-form .success-msg .complain-container {
+    background: #f1f4f9;
+    border-radius: .625rem;
+    max-width: 22rem;
+    margin: 3rem auto;
+    padding: 1rem;
+    text-align: center
+}
+
+.complaint-form .success-msg .complain-container .complain-label {
+    color: #1e3a62;
+    font-size: 1rem;
+    font-weight: bold
+}
+
+.complaint-form .success-msg .complain-container .complain-number {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #3e5677;
+    word-break: break-word
+}
+
+.complaint-form .success-msg .slds-button.slds-button_brand {
+    background: #3e5677;
+    border: .0625rem solid #fff;
+    border-radius: 2.8125rem;
+    padding: .3rem 6rem;
+    font-weight: 400;
+    font-size: .875rem
+}
+
+.complaint-form .success-msg .backtohome-button {
+    display: flex;
+    align-items: center;
+    justify-content: center
+}
+
+.complaint-form .success-msg .backtohome-button .primary-button-bordered {
+    width: 22rem
+}
+
+.mandatory-mark {
+    color: #ed1f2d;
+    font-size: 0.9rem;
+    font-family: "Tahoma", sans-serif !important;
+}
+
+.complaint-form legend.slds-form-element__legend.slds-form-element__label {
+    color: #1e3a62;
+    font-size: .875rem;
+    /* font-weight: normal; */
+}
+
+.complaint-form__content .slds-combobox_container .slds-listbox{
+    max-height: 15rem;
+    overflow-y: auto;
+}
+
+.complaint-form .slds-table th,
+.complaint-form .slds-table td {
+    padding: 0.8rem;
+}
+
+.complaint-form .slds-table tr {
+    border: 0.0625rem solid #EAF0F7;
+}
+
+.complaint-form .slds-table thead th {
+    padding: 0.8rem;
+    background: #F1F4F9;
+    color: #1E3A62;
+    font-weight: 600;
+}
+
+.complaint-form .slds-table tbody td {
+    color: #6B7280;
+}
+
+.slds-textarea[name="complaintDesc"] {
+    min-height: 15rem !important;
+}
+
+lightning-dual-listbox .slds-form-element__label {
+    color: #1E3A62;
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+/* Complaint form style End */
+
+[data-omni-key=RespiratoryTemporaryPermitInstructions] [data-omni-key=EligibleCriteria] legend{
+    margin-bottom:.5rem
+}
+
+[data-omni-key="RespiratoryTemporaryPermitApplicationReviewFC"] c-checkbox-group legend {
+    margin-bottom: 0.5rem;
+}
+
+c-upload-document .other-document-btn button {
+    margin-top: 0.5rem;
+}
+
+c-cf-l-p-c-license-questions-for-renewal .slds-textarea,
+[data-omni-key=ApplicationReview] .slds-textarea {
+    border: none !important;
+    height: auto !important;
+    resize: none;
+    padding-left: 0;
+    font-size: 1rem;
+    overflow: hidden;
+    min-height: 3rem !important;
+}
+
+c-cf-l-p-c-license-questions-for-renewal .slds-textarea:focus,
+[data-omni-key=ApplicationReview] .slds-textarea:focus {
+    outline: none !important;
+    box-shadow: none
+}
+
+.MODPRPaymentWarningTextCls{
+    margin-bottom:1.5rem
+}
+.MODPRPaymentWarningTextCls .warning-icon{
+    width:auto;
+    padding-left:.5rem;
+    padding-right:1rem
+}
+
+.info-box .info-icon {
+    width: auto !important;
+    padding-right: 1rem !important;
+}
+.info-box .info-icon svg {
+    fill: #9f5b09 !important;
+}   
+
+c-cf-m-o-d-p-r-individual-tax-compliance .heading.font-tahoma {
+    color: #1f2937;
+    font-family: Tahoma !important;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+c-cf-marital-family-therapist-core-courses-info-read-only-f-c omnistudio-flex-card-state, 
+c-cf-m-o-d-p-r-licensure-history-read-only omnistudio-flex-card-state, 
+c-cf-m-o-d-p-r-education-history-review omnistudio-flex-card-state,
+c-cf-m-o-d-p-r-employment-history omnistudio-flex-card-state,
+c-cf-a-p-e-p-l-s-p-l-a-licensure-in-other-states-f-c omnistudio-flex-card-state,
+c-cf-m-o-d-p-r-postgraduate-training-history-review omnistudio-flex-card-state,
+c-cf-m-o-d-p-r-practice-information-reviewand-summary omnistudio-flex-card-state,
+c-cf-m-o-d-p-r-applicant-reference-f-c omnistudio-flex-card-state,
+.card-border omnistudio-flex-card-state {
+  margin-bottom: 1rem !important;
+  border: 1px solid #EAF0F7 !important;
+  border-radius: 5px;
+}
+
+c-cf-m-o-d-p-r-multi-supervisor-approval-f-c omnistudio-flex-card-state .slds-card{
+    margin-bottom: 1rem !important;
+    border: 1px solid #EAF0F7 !important;
+}
+
+
+.card-border {
+  margin-bottom: 1rem !important;
+  border: 1px solid #EAF0F7 !important;
+  border-radius: 5px;
+}
+
+[data-omni-key=REAAppraiserApplyingStatus] .slds-form-element__control,
+[data-omni-key=CollegeLevelEducationForCertifiedResidential] .slds-form-element__control {
+  flex-direction: column;
+}
+[data-omni-key=REAAppraiserApplyingStatus] .slds-form-element__control .slds-radio,
+[data-omni-key=CollegeLevelEducationForCertifiedResidential] .slds-form-element__control .slds-radio {
+  margin-bottom: 0.5rem;
+}
+
+/* Payment Page table css START */
+[data-omni-key=FeeitemsFC] .slds-data-table-head-cell {
+background: #F1F4F9 !important;
+padding: 0.313rem !important;
+font-size: 0.875rem;
+font-weight: 700 !important;
+}
+
+[data-omni-key=FeeitemsFC] .slds-data-table-row-cell {
+color: #50545B !important;
+font-size: 0.875rem;
+padding: 0.313rem !important;
+}
+[data-omni-key=FeeitemsFC] .slds-data-table-row-cell .dataTableCell {
+padding: 0.5rem !important;
+display: block;
+}
+
+[data-omni-key="feeItemsBlock"] .omni-block_content[omnistudio-omniscriptBlock_omniscriptBlock] {
+    padding-left: 0;
+}
+
+[data-omni-key=FeeitemsFC] .slds-text-heading_small {
+margin-bottom: 0.5rem;
+color: #1E3A62;
+font-weight: 700;
+}
+[data-omni-key=FeeitemsFC] .tableHeadCell[data-label="Fee Amount"] {
+width: 8rem;
+}
+[data-omni-key=FeeitemsFC] .dataTableCell[data-field-name=Fee_Amount] {
+text-align: right;
+padding-right: 1.7rem !important;
+}
+
+omnistudio-omniscript-text-block[data-omni-key=TB_TotalDueAmt] .slds-rich-text-editor__output p {
+text-align: right;
+padding-right: 2.5rem;
+}
+
+omnistudio-omniscript-date .slds-input{
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+/* Payment Page table css END */
+
+/* Payment Table Start */
+.payment-table .totalDueText, .payment-table .totalAmount {
+    width: auto;
+  }
+  .payment-table .fee-mob-section .totalDue .slds-grid {
+    justify-content: flex-end;
+  }
+  .payment-table .totalAmount {
+    padding-right: 0.75rem;
+  }
+  .payment-table .fcDataTable .slds-table [data-label="Amount "] .slds-th__action {
+    justify-content: flex-end;
+  }
+  .payment-table .fcDataTable .slds-table [data-field-name=Fee_Amount] {
+    justify-content: flex-end;
+    display: flex;
+  }
+  /* Payment Table END */
+
+
+.oneContent .cmp-body .omniscript-body omnistudio-omniscript-block .slds-accordion {
+    margin-bottom: 1rem !important;
+    border: 0.063rem solid #E0E3ED !important;
+    border-radius: 0.25rem !important;
+}
+
+[data-omni-key=AddMulitpleSupervisonSiteAndSupervisor] lightning-accordion.slds-accordion,
+[data-omni-key=FuneralEstablishmentRelations] lightning-accordion.slds-accordion {
+    border: 1px solid #e0e3ed !important;
+    border-radius: 5px !important;
+}
+
+[data-omni-key=AddMulitpleSupervisonSiteAndSupervisor] lightning-accordion.slds-accordion .slds-accordion__summary-content,
+[data-omni-key=FuneralEstablishmentRelations] lightning-accordion.slds-accordion .slds-accordion__summary-content {
+    font-size: 1rem
+}
+
+[data-omni-key=AddMulitpleSupervisonSiteAndSupervisor] lightning-accordion.innerAccordion,
+[data-omni-key=FuneralEstablishmentRelations] lightning-accordion.innerAccordion {
+    margin-bottom: 1rem
+}
+
+.section-control.slds-accordion__summary-action {
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.app-flow-subheading.slds-m-top_x-large {
+    margin-top: 0;
+}
+
+button.slds-button.slds-button_destructive {
+    padding: 0 1rem;
+    font-size: 0.8135rem;
+}
+
+.aliastable .slds-data-table-head-cell {
+    background-color: transparent !important;
+    padding: 0 !important;
+}
+
+.aliastable .slds-table_bordered,
+.aliastable .slds-table--bordered {
+    border-bottom: 0 !important;
+}
+
+.aliastable .slds-data-table-row-cell {
+    border-top: 0 !important;
+    padding: 0 !important;
+}
+
+.aliastable .slds-data-table-row-cell .dataTableCell {
+    padding: 0 !important;
+}
+
+.aliastable .slds-th__action {
+    padding: 0 !important;
+    color: #1f2937;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.aliastable .slds-th__action:hover {
+    background-color: transparent !important;
+}
+
+.aliastable .slds-data-table-row.tableRow:hover:hover {
+    background-color: transparent !important;
+}
+
+.aliastable span.field-value {
+    font-size: 13px;
+    color: #181818;
+}
+
+.aliastable h4 {
+    font-size: 1rem !important;
+    margin-bottom: 0 !important;
+}
+
+[data-omni-key=Modpr_AliasType] .dropdown-container{
+    max-height:10rem !important
+}
+
+.oneContent [data-omni-key="Modpr_AliasTable"] .slds-modal__content{
+    overflow: visible;
+}
+
+[data-omni-key=CosBarBICICBIInstructionRadioFC] .slds-modal__header.slds-modal__header_empty {
+        display: none;
+}
+
+th.tableData{
+    white-space: pre-wrap;
+    min-width: 20rem;
+    /* width: 100%; */
+}
+
+/* Bottom navigation Style Start */
+.omniscript-article.slds-card .omniscript-body .slds-grid.slds-wrap.slds-gutters.slds-p-horizontal_medium.slds-show_medium {
+    position: relative;
+  }
+  .omniscript-article.slds-card .omniscript-body .omniscript-btn-next .slds-button_brand {
+    top: 0.9rem;
+  }
+  .omniscript-article.slds-card .omniscript-body .omniscript-btn-previous {
+    position: absolute;
+    left: 0;
+    bottom: -1rem;
+    margin-left: 0.625rem;
+  }
+  
+  .omniscript-article.slds-card .omniscript-body .slds-grid.slds-wrap.slds-gutters.slds-p-horizontal_medium.slds-show_medium .omniscript-btn-save-for-later {
+    position: absolute;
+    bottom: -0.5rem;
+    right: 11rem;
+  }
+  .omniscript-article.slds-card .omniscript-body .slds-grid.slds-wrap.slds-gutters.slds-p-horizontal_medium.slds-show_medium .omniscript-btn-save-for-later .slds-button {
+    display: flex;
+    justify-content: center;
+    width: 7.5rem;
+    border: 1px solid #0075d3;
+    font-size: 13px;
+  }
+  .omniscript-article.slds-card .omniscript-body .slds-grid.slds-wrap.slds-gutters.slds-p-horizontal_medium.slds-show_medium {
+    position: relative;
+    margin-bottom: 1rem;
+  }
+  .omniscript-article.slds-card .omniscript-body .omniscript-btn-next {
+    width: 7.5rem;
+  }
+  .omniscript-article.slds-card .omniscript-body .omniscript-btn-next .slds-button_brand {
+    top: 1rem;
+  }
+  .omniscript-article.slds-card .omniscript-body .omniscript-btn-previous {
+    width: 7.5rem;
+    position: absolute;
+    left: 1.2rem;
+    bottom: -1rem;
+    margin-left: 0.625rem;
+  }
+  .omniscript-article.slds-card .omniscript-body .omniscript-btn-previous .slds-button_neutral {
+    border: 1px solid #0075d3;
+  }
+  /* Bottom navigation Style END */
+
+.payment-card-internal .slds-card{
+    box-shadow: none;
+    border: 0;
+}
+
+c-modpr-business-license-vist-related-list .slds-modal__content{
+    overflow: visible;
+}
+
+/* Upload document modal style START */
+
+c-upload-document .slds-modal .slds-modal__container .slds-modal__header h1 {
+    text-align: left;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1F2937;
+}
+
+c-upload-document .slds-modal .slds-modal__container .slds-modal__content {
+    padding: 1rem 1.5rem;
+}
+
+c-upload-document .slds-modal .slds-modal__container .slds-form-element {
+    margin-bottom: 1rem;
+}
+
+c-upload-document .slds-modal__container .slds-file-selector__dropzone {
+    border: 0.0625rem dashed #3E5677 !important;
+    padding: 5rem;
+    display: flex;
+    justify-content: center;
+    background-color: #f1f5fa;
+}
+
+c-upload-document .slds-modal__container .slds-file-selector__dropzone .slds-file-selector__button {
+    white-space: nowrap;
+}
+
+/* Upload document modal style END */
+
+.document-upload_table thead tr th:nth-child(1), 
+.document-upload_table thead tr th:nth-child(2) {
+    width: 40%;
+}
+.document-upload_table thead tr th:nth-child(3) {
+    width: 20%;
+}
+
+/* CRR style START */
+c-modpr-crr-license-actions .slds-modal__content{
+    padding: 0 !important;
+}
+
+/* CRR style END */
+
+[data-omni-key=HISHearingInstSpecRenewalLicenseQuestions6] .vlc-disclosure .vlc-slds-box__no-border {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+[data-omni-key=HISHearingInstSpecRenewalLicenseQuestions6] .vlc-disclosure .vlc-slds-box__no-border .slds-checkbox {
+    display: flex;
+}
+
+[data-omni-key=HISHearingInstSpecRenewalLicenseQuestions6] .vlc-disclosure .vlc-slds-box__no-border .slds-checkbox .slds-checkbox_faux {
+    margin-right: 0;
+}
+
+[data-omni-key=HISHearingInstSpecRenewalLicenseQuestions6] .slds-grid.slds-m-vertical_medium {
+    margin: 0;
+}
+
+[data-omni-key=HISHearingInstSpecRenewalLicenseQuestionsTextBlock] lightning-formatted-rich-text,
+.HISHearingInst-custom-checkbox_label lightning-formatted-rich-text {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #1F2937 !important;
+}
+
+.HISHearingInst-custom-checkbox {
+  width: 1.75rem;
+}
+.HISHearingInst-custom-checkbox .slds-checkbox .slds-checkbox__label .slds-form-element__label {
+  display: none;
+}
+
+.def-notice-modal .def-card-border .slds-card{
+    border: 1px solid #e2e2e2 !important;
+    border-radius: 5px;
+    box-shadow: 0px 0px 4px #e2e2e2;
+}
+
+.oneContent [data-omni-key=FormulaToDisplayCollaboratingAddress] input {
+    background: #fff !important;
+    border: 0 !important;
+    color: #1E3A62;
+    font-family: 'Tahoma', sans-serif !important;
+    font-size: 1.2rem !important;
+    font-weight: bold !important;
+    padding-left: 0 !important;
+}
+
+.oneContent .modal-internal.slds-fade-in-open {
+    background: rgb(42 47 53 / 46%);
+}
+
+.oneContent .temp-pharmacist-info-child-popup.slds-card {
+    padding: 0;
+}
+.oneContent .temp-pharmacist-info-child-popup .temp-pharmacist-info-child-popup-footer .slds-grid {
+    justify-content: end;
+}
+.oneContent .temp-pharmacist-info-child-popup .temp-pharmacist-info-child-popup-footer .slds-grid .cancel-btn {
+    width: 7rem;
+}
+.oneContent .temp-pharmacist-info-child-popup .temp-pharmacist-info-child-popup-footer .slds-grid .ok-btn {
+    width: 4rem;
+    margin-left: 0.5rem;
+}
+  
+[data-omni-key=PHClassQError1QR] .slds-media__body,
+[data-omni-key=PHClassQError2QR] .slds-media__body,
+[data-omni-key=PHClassQError3QR] .slds-media__body,
+[data-omni-key=PHClassRError1QR] .slds-media__body,
+[data-omni-key=PHClassRError2QR] .slds-media__body {
+  font-weight: bold;
+}
+
+.comm-page-custom-apply-license .slds-popover__body {
+    font-size: 1rem !important;
+}
+
+.oneContent [data-omni-key="PHPharmacyAmendInstruct"] .slds-text-block {
+    padding-left: 0.5rem;
+}
+
+.oneContent .CEPInstruction-radio{
+    min-width: -webkit-fit-content;
+    min-width: -moz-fit-content;
+    min-width: fit-content;
+    max-width: 5rem;
+}
+
+@media all and (max-width: 48rem) {
+    .oneContent  .slds-m-bottom_xx-small.CEPInstruction-radio {
+      margin-left: 0;
+    }
+}
+
+.oneContent [data-omni-key=VFInstructionNotifyBoardOffice] .slds-input {
+    border: 0;
+    padding-left: 0;
+    font-weight: bold;
+    color: #1f2937;
+    pointer-events: none;
+}
+
+.oneContent [data-omni-key=EmbalmersApplicationLicenseQuestionsContainer] .slds-accordion {
+    border: 0;
+    margin-bottom: 0;
+}
+
+.oneContent [data-omni-key=EmbalmersApplicationLicenseQuestionsContainer] .slds-accordion .slds-accordion__summary {
+    padding: 0 !important;
+}
+
+.oneContent [data-omni-key=EmbalmersApplicationLicenseQuestionsContainer] .slds-accordion section.slds-accordion__section.slds-p-horizontal_none {
+    padding: 0;
+}
+
+.oneContent [data-omni-key=EmbalmersApplicationLicenseQuestionsContainer] .omni-block_content {
+    padding-left: 0 !important;
+}
+
+.oneContent [data-omni-key="PharmacyTechnicianInstructions"] a {
+    font-size: 1rem;
+}
+
+.oneContent [data-omni-key=EFDFuneralCheckBox] {
+    position: relative;
+    padding-left: 1rem;
+}
+.oneContent [data-omni-key=EFDFuneralCheckBox]:before {
+    left: 0.25rem;
+    position: absolute;
+    content: "*";
+    top: 1rem;
+    color: #ed0202;
+    font-family: "Tahoma", sans-serif !important;
+}
+
+.oneContent [data-omni-key=Ownerstxt] button.slds-button_reset {
+    padding: 0.25rem;
+    border: 0.0625rem solid #737373;
+    height: 1.5rem;
+    width: 1.5rem;
+    display: flex;
+    justify-content: center;
+}
+
+.oneContent fieldset {
+    min-inline-size: auto;
+}

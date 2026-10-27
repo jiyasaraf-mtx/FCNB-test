@@ -1,0 +1,10 @@
+<!--
+  @description       : 
+  @author            : Mohit Karani
+  @group             : 
+  @last modified on  : 06-09-2023
+  @last modified by  : Mohit Karani
+-->
+<aura:component implements="flexipage:availableForAllPageTypes"  access="global">
+    <aura:handler name="init" value="{!this}" action="{!c.handleInit}"/>
+</aura:component>

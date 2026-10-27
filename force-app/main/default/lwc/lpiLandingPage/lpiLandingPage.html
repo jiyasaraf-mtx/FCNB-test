@@ -1,0 +1,292 @@
+<!--
+  @description       : Landing page component updated for FCNB licensing and regulatory portal.
+  @author            : Bharath Kumar M
+  @last modified on  : 08-27-2026
+  @last modified by  : Juhi Goel
+-->
+<template>
+    <div class="banner">
+        <div class="slds-container--center slds-container--x-large">
+            <div class="banner-content ">
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-col slds-large-size--6-of-12 slds-medium-size--12-of-12 slds-size--12-of-12">
+                        <div class="banner-text-block">
+                            <h1 class="semiBold-32 m-b-small">
+                                {labels.landingBannerTitle}
+                            </h1>
+                            <p class="m-b-medium">
+                                {labels.landingBannerText}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-large-size--6-of-12 slds-medium-size--12-of-12 slds-size--12-of-12">
+                        <div class="service-block">
+                            <h2 class="m-b-medium bold-24">{labels.landingPlatformServices}</h2>
+                            <div class="slds-grid slds-wrap p-b-medium blue-border-bottom">
+                                <div class="slds-col slds-large-size--6-of-12 slds-medium-size--6-of-12 slds-size--12-of-12">
+                                    <ul>
+                                        <li>
+                                            <a class="btn-search" title={labels.landingPlatformLink1} href="/s/global-search">{labels.landingPlatformLink1}</a>
+                                        </li>
+                                        <li>
+                                            <a class="btn-payment" title={labels.landingPlatformLink2} href="javascript:void(0);">{labels.landingPlatformLink2}</a>
+                                        </li>
+                                        <li>
+                                            <a class="btn-renew" title={labels.landingPlatformLink3} href="javascript:void(0);">{labels.landingPlatformLink3}</a>
+                                        </li>
+                                        <li>
+                                            <a class="btn-license" title={labels.landingPlatformLink4} href="/s/license-search">{labels.landingPlatformLink4}</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="slds-col slds-large-size--6-of-12 slds-medium-size--6-of-12 slds-size--12-of-12">
+                                    <ul>
+                                        <li>
+                                            <a class="btn-file" title={labels.landingPlatformLink5} href="/s/complaint-form">{labels.landingPlatformLink5}</a>
+                                        </li>
+                                        <li>
+                                            <a class="btn-file" title={labels.landingPlatformLink6} href="/s/ticket">{labels.landingPlatformLink6}</a>
+                                        </li>
+                                        <li>
+                                            <a class="btn-amend" title={labels.landingPlatformLink7} href="javascript:void(0);">{labels.landingPlatformLink7}</a>
+                                        </li>
+                                        <li>
+                                            <a class="btn-print" title={labels.landingPlatformLink8} href="javascript:void(0);">{labels.landingPlatformLink8}</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <p class="m-t-medium semiBold-18">{labels.landingNewToLicensing} <a
+                                    class="text-white semiBold-18 text-underline" title={labels.landingLearnHere} href="javascript:void(0);">{labels.landingLearnHere}</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="recent-section">
+        <div class="slds-container--center slds-container--x-large">
+            <div class=" slds-grid slds-grid_align-spread slds-grid_vertical-align-center m-b-medium">
+                <h3 class="bold-32">{labels.landingRecentAnnouncements}</h3>
+                <lightning-button variant="base" label={labels.landingReadAllAnnouncements} title={labels.landingReadAllAnnouncements}
+                    onclick={handleClick} class="base-link"></lightning-button>
+            </div>
+            <div class="slds-grid slds-wrap slds-gutters_direct-medium">
+                <div class="slds-col slds-large-size--4-of-12 slds-medium-size--4-of-12 slds-size--12-of-12">
+                    <div class="recent-content">
+                        <img src={licensing} alt={labels.landingAnn1Title}>
+                        <div class="slds-card">
+                            <span class="regular-text-14 slds-badge slds-theme_info m-b-xs">{labels.landingPosted3Days}</span>
+                            <h4 class="bold-20 m-b-xs">{labels.landingAnn1Title}</h4>
+                            <p class="m-b-small text-secondary">{labels.landingAnn1Text}</p>
+                            <lightning-button variant="base" label={labels.landingReadMore} title={labels.landingReadMore} onclick={handleClick} class="base-link"></lightning-button>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-col slds-large-size--4-of-12 slds-medium-size--4-of-12 slds-size--12-of-12">
+                    <div class="recent-content">
+                        <img src={feeStructure} alt={labels.landingAnn2Title}>
+                        <div class="slds-card">
+                            <span class="regular-text-14 slds-badge slds-theme_info m-b-xs">{labels.landingPosted1Week}</span>
+                            <h4 class="bold-20 m-b-xs">{labels.landingAnn2Title}</h4>
+                            <p class="m-b-small text-secondary">{labels.landingAnn2Text}</p>
+                            <lightning-button variant="base" label={labels.landingReadMore} title={labels.landingReadMore} onclick={handleClick} class="base-link"></lightning-button>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-col slds-large-size--4-of-12 slds-medium-size--4-of-12 slds-size--12-of-12">
+                    <div class="recent-content">
+                        <img src={renewals} alt={labels.landingAnn3Title}>
+                        <div class="slds-card">
+                            <span class="regular-text-14 slds-badge slds-theme_info m-b-xs">{labels.landingPosted1Month}</span>
+                            <h4 class="bold-20 m-b-xs">{labels.landingAnn3Title}</h4>
+                            <p class="m-b-small text-secondary">{labels.landingAnn3Text}</p>
+                            <lightning-button variant="base" label={labels.landingReadMore} title={labels.landingReadMore} onclick={handleClick} class="base-link"></lightning-button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="faq-section">
+            <div class="slds-container--center slds-container--x-large">
+                <div class="slds-grid slds-wrap slds-gutters_direct-medium">
+                    <div class="slds-col slds-large-size--4-of-12 slds-medium-size--12-of-12 slds-size--12-of-12">
+                        <div class="faq-content">
+                            <div>
+                                <h3 class="bold-32 m-b-medium">{labels.landingFaqHeading}</h3>
+                                <p class="m-b-medium">{labels.landingFaqIntro}</p>
+                            </div>
+                            <lightning-button variant="brand" label={labels.landingLearnMore} title={labels.landingLearnMore} onclick={handleClick} class="btn-right-arrow"></lightning-button>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-large-size--8-of-12 slds-medium-size--12-of-12 slds-size--12-of-12">
+                        <div class="slds-accordion">
+                            <div class="slds-accordion__list-item">
+                                <section class={sectionClass1}>
+                                    <div class="slds-accordion__summary">
+                                        <h3 class="slds-accordion__summary-heading">
+                                            <div class="slds-accordion__summary-action"
+                                                aria-controls="referenceId-44" aria-expanded="true"
+                                                data-name="apply"
+                                                title={labels.landingFaqQ1}>
+                                                <span class="slds-accordion__summary-content">{labels.landingFaqQ1}</span>
+                                                <div class="slds-accordion__summary-content-icon">
+                                                    <lightning-button variant="base" class="base-accordion-btn base-link-btn" 
+                                                        data-name="apply" label={btnLabel}
+                                                        title={labels.landingFaqQ1} aria-label={labels.landingLearnMore} onclick={handleAccordianClick}></lightning-button>
+                                                </div>
+                                            </div>
+                                        </h3>
+                                    </div>
+                                    <div class="slds-accordion__content cc-card-body" id="referenceId-42">
+                                        <p>{labels.landingFaqA1}</p>
+                                    </div>
+                                </section>
+                                <section class={sectionClass2}>
+                                    <div class="slds-accordion__summary">
+                                        <h3 class="slds-accordion__summary-heading">
+                                            <div class="slds-accordion__summary-action"
+                                                aria-controls="referenceId-43" aria-expanded="false"
+                                                data-name="Renew"
+                                                title={labels.landingFaqQ2}>
+                                                <span class="slds-accordion__summary-content">{labels.landingFaqQ2}</span>
+                                                <div class="slds-accordion__summary-content-icon">
+                                                    <lightning-button variant="base" class="base-accordion-btn base-link-btn" 
+                                                        data-name="Renew" label={btnLabel}
+                                                        title={labels.landingFaqQ2} aria-label={labels.landingLearnMore} onclick={handleAccordianClick}></lightning-button>
+                                                </div>
+                                            </div>
+                                        </h3>
+                                    </div>
+                                    <div class="slds-accordion__content cc-card-body" id="referenceId-43">
+                                        <p>{labels.landingFaqA1}</p>
+                                    </div>
+                                </section>
+                                <section class={sectionClass3}>
+                                    <div class="slds-accordion__summary">
+                                        <h3 class="slds-accordion__summary-heading">
+                                            <div class="slds-accordion__summary-action"
+                                                aria-controls="referenceId-43" aria-expanded="false"
+                                                data-name="payment"
+                                                title={labels.landingFaqQ3}>
+                                                <span class="slds-accordion__summary-content">{labels.landingFaqQ3}</span>
+                                                <div class="slds-accordion__summary-content-icon">
+                                                    <lightning-button variant="base" class="base-accordion-btn base-link-btn" 
+                                                        data-name="payment" label={btnLabel}
+                                                        title={labels.landingFaqQ3} aria-label={labels.landingLearnMore} onclick={handleAccordianClick}></lightning-button>
+                                                </div>
+                                            </div>
+                                        </h3>
+                                    </div>
+                                    <div class="slds-accordion__content cc-card-body" id="referenceId-44">
+                                        <p>{labels.landingFaqA1}</p>
+                                    </div>
+                                </section>
+                                <section class={sectionClass4}>
+                                    <div class="slds-accordion__summary">
+                                        <h3 class="slds-accordion__summary-heading">
+                                            <div class="slds-accordion__summary-action"
+                                                aria-controls="referenceId-45" aria-expanded="false"
+                                                data-name="Resume"
+                                                title={labels.landingFaqQ4}>
+                                                <span class="slds-accordion__summary-content">{labels.landingFaqQ4}</span>
+                                                <div class="slds-accordion__summary-content-icon">
+                                                    <lightning-button variant="base" class="base-accordion-btn base-link-btn" 
+                                                        data-name="Resume" 
+                                                        title={labels.landingFaqQ4} aria-label={labels.landingLearnMore} onclick={handleAccordianClick}></lightning-button>
+                                                </div>
+                                            </div>
+                                        </h3>
+                                    </div>
+                                    <div class="slds-accordion__content cc-card-body" id="referenceId-45">
+                                        <p>{labels.landingFaqA1}</p>
+                                    </div>
+                                </section>
+                                <section class={sectionClass5}>
+                                    <div class="slds-accordion__summary">
+                                        <h3 class="slds-accordion__summary-heading">
+                                            <div class="slds-accordion__summary-action"
+                                                aria-controls="referenceId-46" aria-expanded="false"
+                                                data-name="Offline"
+                                                title={labels.landingFaqQ5}>
+                                                <span class="slds-accordion__summary-content">{labels.landingFaqQ5}</span>
+                                                <div class="slds-accordion__summary-content-icon">
+                                                    <lightning-button variant="base" class="base-accordion-btn base-link-btn" 
+                                                        data-name="Offline" 
+                                                        title={labels.landingFaqQ5} aria-label={labels.landingLearnMore} onclick={handleAccordianClick}></lightning-button>
+                                                </div>
+                                            </div>
+                                        </h3>
+                                    </div>
+                                    <div class="slds-accordion__content cc-card-body" id="referenceId-46">
+                                        <p>{labels.landingFaqA1}</p>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+    <footer>
+        <div class="landing-footer">
+            <div class="slds-container--center slds-container--x-large">
+                <div class="slds-grid slds-wrap slds-gutters">
+                    <div class="slds-col slds-large-size--3-of-12 slds-medium-size--3-of-12 slds-size--12-of-12">
+                        <h4 class="m-b-small">{labels.landingContactUsFooter}</h4>
+                        <div class="text-white">
+                            <p>{labels.landingTollFree} <a class="text-white" href="tel:18669332222">1 866 933-2222</a></p>
+                            <p>{labels.landingLocal} <a class="text-white" href="tel:15066583000">(506) 658-3000</a></p>
+                        </div>
+                        <p class="text-white m-t-small">{labels.landingAddress}</p>
+                    </div>
+                    <div class="slds-col slds-large-size--3-of-12 slds-medium-size--3-of-12 slds-size--12-of-12">
+                        <h4 class="m-b-small">{labels.landingRegulatedSectors}</h4>
+                        <ul>
+                            <li><a href="javascript:void(0);">{labels.landingInsurancePensions}</a></li>
+                            <li><a href="javascript:void(0);">{labels.landingSecuritiesInvestments}</a></li>
+                            <li><a href="javascript:void(0);">{labels.landingConsumerCreditUnions}</a></li>
+                            <li><a href="javascript:void(0);">{labels.landingMortgageRealEstate}</a></li>
+                            <li><a href="javascript:void(0);">{labels.landingFinancialInstitutions}</a></li>
+                        </ul>
+                    </div>
+                    <div class="slds-col slds-large-size--3-of-12 slds-medium-size--3-of-12 slds-size--12-of-12">
+                        <h4 class="m-b-small">{labels.landingConsumerProtection}</h4>
+                        <ul>
+                            <li><a href="javascript:void(0);">{labels.landingFileAComplaint}</a></li>
+                            <li><a href="javascript:void(0);">{labels.landingCheckRegistration}</a></li>
+                            <li><a href="javascript:void(0);">{labels.landingEnforcementWarnings}</a></li>
+                            <li><a href="javascript:void(0);">{labels.landingUnclaimedProperty}</a></li>
+                            <li><a href="javascript:void(0);">{labels.landingConsumerGuides}</a></li>
+                        </ul>
+                    </div>
+                    <div class="slds-col slds-large-size--3-of-12 slds-medium-size--3-of-12 slds-size--12-of-12">
+                        <h4 class="m-b-small">{labels.landingCommissionGovernance}</h4>
+                        <ul>
+                            <li><a href="javascript:void(0);">{labels.landingAboutFcnb}</a></li>
+                            <li><a href="javascript:void(0);">{labels.landingLegislationRules}</a></li>
+                            <li><a href="javascript:void(0);">{labels.landingDecisionsOrders}</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="social-media m-t-medium">
+                    <ul>
+                        <li><a href="https://twitter.com/FCNB_" target="_blank" rel="noopener"><i class="material-icon material-icon-twitter"></i></a></li>
+                        <li><a href="https://www.youtube.com/user/FCNBca" target="_blank" rel="noopener"><i class="material-icon material-icon-youtube"></i></a></li>
+                        <li><a href="https://www.facebook.com/FCNB.ca" target="_blank" rel="noopener"><i class="material-icon material-icon-facebook"></i></a></li>
+                    </ul>
+                </div>
+                <div class="divider"></div>
+                <div class=" slds-grid slds-grid_align-spread slds-grid_vertical-align-center">
+                    <p class="text-white">{labels.landingCopyright}</p>
+                    <div class="gap-medium slds-grid slds-grid--vertical-align-center text-white">
+                        <p>{labels.landingPrivacyTerms}</p>
+                        <div class="vertical-divider"></div>
+                        <lightning-button variant="base" label={labels.landingBackToTop} title={labels.landingBackToTop} onclick={topFunction} class="base-link backtotop"></lightning-button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</template>

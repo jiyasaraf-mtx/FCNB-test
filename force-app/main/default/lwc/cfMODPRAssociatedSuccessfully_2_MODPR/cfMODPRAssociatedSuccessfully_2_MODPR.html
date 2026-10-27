@@ -1,0 +1,83 @@
+<template>
+            <div class="slds-grid slds-wrap slds-is-relative ">
+            <div style="position: fixed;z-index: 999999;top: 0;right: 0;">
+  <omnistudio-toast class="flexcard-toast-element" theme="slds" title="" message="" styletype=""> </omnistudio-toast>
+</div>
+            <div if:true={showLoader} class="slds-is-absolute vloc-loader_override" style="height: 100%; width: 100%; min-height:50px; background: transparent; z-index: 99;">
+  <div>
+   <omnistudio-spinner
+      variant="brand"
+      alternative-text="Loading content..."
+      size="medium"
+      theme="slds"
+      ></omnistudio-spinner>
+  </div>
+</div>
+            <template if:false={hasPermission}>
+              You don't have required permissions to view this card.
+            </template>
+            <template if:true={hasPermission}>
+              <template if:true={hasRecords}>
+                        <template for:each={_records} for:item="record" for:index="rindex">
+                            <omnistudio-flex-card-state if:true={record}  key={record._flex.uniqueKey} data-recordid={record.Id} record={record} data-statue="true"  data-index="0" data-rindex={rindex} class="cf-vlocity-state-0 cf-vlocity-state slds-size_12-of-12 "  tracking-obj={_childCardTrackingObj} >
+      <div if:true={cardLoaded} class="slds-grid slds-wrap slds-card slds-p-around_x-small business-associated-success-modal" style="      
+         ">
+          <div data-style-id="state0element0" class="slds-col    slds-size_12-of-12  " data-rindex={rindex} style="      
+         " >
+    <omnistudio-block data-style-id="state0element0_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element0" class="slds-col  modal-content slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element0block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%20class=%22slds-text-align_left%22%3EYou've%20been%20successfully%20linked%20to%20the%20business.%20Navigate%20to%20the%20'My%20Business'%20tab%20to%20view%20all%20your%20affiliated%20businesses.%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element0block_element1" class="slds-col   modal-footer slds-size_12-of-12  " data-rindex={rindex} style="      
+         " >
+    <omnistudio-block data-style-id="state0element0block_element1_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element1block_element0" class="slds-col  slds-text-align_right  slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-flex-action data-style-id="state0element0block_element1block_element0_child"  tracking-obj={_childCardTrackingObj}  class= "state0element0block_element1block_element0_child flexActionElement" 
+        data-action-element-class="state0element0block_element1block_element0_child" data-action-key="state0element0block_element1block_element0" onexecuteaction={performAction} data-show-spinner="false"
+        data-element-label="block0block1clone0action0"   state-obj={record}  card={card}  record={record}  label="OK"  icon-name="standard-default"  action-list='\[{"key":"1669312349198-ueo23llny","label":"Action","draggable":true,"isOpen":true,"card":"{card}","stateAction":{"id":"flex-action-1669313600105","type":"Event","displayName":"Action","vlocityIcon":"standard-default","openUrlIn":"Current Window","subType":"PubSub","eventName":"BusinessDetails","message":"filter","hasExtraParams":true,"extraParams":{"reload":"true","SearchInput":"","StreetAddress":"","City":"","State":"","Country":"","Zipcode":""}},"actionIndex":1},{"key":"1669313820144-qu1pebtet","label":"Action","draggable":true,"isOpen":true,"card":"{card}","stateAction":{"id":"flex-action-1669313938285","type":"Event","displayName":"Action","vlocityIcon":"standard-default","openUrlIn":"Current Window","eventName":"MODPRAssociateBuisnessSearch","subType":"PubSub","message":"associate","hasExtraParams":true,"extraParams":{"SelectedRecordId":"false"}},"actionIndex":1},{"stateAction":{"id":"flex-action-1669311850931","type":"Event","openUrlIn":"Current Window","subType":"Custom","eventName":"closemodal","message":"close_modal","composed":true,"bubbles":true},"key":"1669311632269-9zu8mt42q","label":"Action","draggable":true,"isOpen":true,"isTrackingDisabled":true,"actionIndex":0}]'  hide-action-icon="true"  display-as-button="true"  button-variant="success"  flyout-details='\{}'  icon-size="medium"  theme="slds"  ></omnistudio-flex-action>
+      </div>
+        </div></omnistudio-block>
+    </div>
+        </div></omnistudio-block>
+    </div>
+        </div>
+      </omnistudio-flex-card-state>
+                        </template>
+                      </template>
+                      <template if:false={hasRecords}>
+                            <omnistudio-flex-card-state  record={record} data-statue="false"  data-index="0" data-rindex={rindex} class="cf-vlocity-state-0 cf-vlocity-state slds-size_12-of-12 "  tracking-obj={_childCardTrackingObj} >
+      <div if:true={cardLoaded} class="slds-grid slds-wrap slds-card slds-p-around_x-small business-associated-success-modal" style="      
+         ">
+          <div data-style-id="state0element0" class="slds-col    slds-size_12-of-12  " data-rindex={rindex} style="      
+         " >
+    <omnistudio-block data-style-id="state0element0_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element0" class="slds-col  modal-content slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element0block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%20class=%22slds-text-align_left%22%3EYou've%20been%20successfully%20linked%20to%20the%20business.%20Navigate%20to%20the%20'My%20Business'%20tab%20to%20view%20all%20your%20affiliated%20businesses.%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element0block_element1" class="slds-col   modal-footer slds-size_12-of-12  " data-rindex={rindex} style="      
+         " >
+    <omnistudio-block data-style-id="state0element0block_element1_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element1block_element0" class="slds-col  slds-text-align_right  slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-flex-action data-style-id="state0element0block_element1block_element0_child"  tracking-obj={_childCardTrackingObj}  class= "state0element0block_element1block_element0_child flexActionElement" 
+        data-action-element-class="state0element0block_element1block_element0_child" data-action-key="state0element0block_element1block_element0" onexecuteaction={performAction} data-show-spinner="false"
+        data-element-label="block0block1clone0action0"   state-obj={record}  card={card}  record={record}  label="OK"  icon-name="standard-default"  action-list='\[{"key":"1669312349198-ueo23llny","label":"Action","draggable":true,"isOpen":true,"card":"{card}","stateAction":{"id":"flex-action-1669313600105","type":"Event","displayName":"Action","vlocityIcon":"standard-default","openUrlIn":"Current Window","subType":"PubSub","eventName":"BusinessDetails","message":"filter","hasExtraParams":true,"extraParams":{"reload":"true","SearchInput":"","StreetAddress":"","City":"","State":"","Country":"","Zipcode":""}},"actionIndex":1},{"key":"1669313820144-qu1pebtet","label":"Action","draggable":true,"isOpen":true,"card":"{card}","stateAction":{"id":"flex-action-1669313938285","type":"Event","displayName":"Action","vlocityIcon":"standard-default","openUrlIn":"Current Window","eventName":"MODPRAssociateBuisnessSearch","subType":"PubSub","message":"associate","hasExtraParams":true,"extraParams":{"SelectedRecordId":"false"}},"actionIndex":1},{"stateAction":{"id":"flex-action-1669311850931","type":"Event","openUrlIn":"Current Window","subType":"Custom","eventName":"closemodal","message":"close_modal","composed":true,"bubbles":true},"key":"1669311632269-9zu8mt42q","label":"Action","draggable":true,"isOpen":true,"isTrackingDisabled":true,"actionIndex":0}]'  hide-action-icon="true"  display-as-button="true"  button-variant="success"  flyout-details='\{}'  icon-size="medium"  theme="slds"  ></omnistudio-flex-action>
+      </div>
+        </div></omnistudio-block>
+    </div>
+        </div></omnistudio-block>
+    </div>
+        </div>
+      </omnistudio-flex-card-state>
+                      </template>
+            </template>
+            <template if:true={hasError}>
+            {error}
+            </template>
+            
+      <omnistudio-action action-wrapperclass="slds-hide" re-render-flyout class="action-trigger slds-col" onupdateos={updateOmniscript} onselectcards={updateSelectedCards} onsetvalue={updateAction} onfireactionevent={actionEvtHandler}>
+      
+      </omnistudio-action>
+  
+            <omnistudio-action class="execute-action" re-render-flyout action-wrapperclass="slds-hide" onupdateos={updateOmniscript} onselectcards={updateSelectedCards} onsetvalue={updateAction} onfireactionevent={actionEvtHandler}>
+            
+            </omnistudio-action>
+            </div>
+          </template>

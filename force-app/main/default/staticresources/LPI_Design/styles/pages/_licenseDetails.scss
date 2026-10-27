@@ -1,0 +1,197 @@
+.licenses-details{
+    // font-family: $font-family;
+    // h2{
+    //     font-weight: $font-weight-bold;
+    //     font-size:$font-size-20;
+    //     color: $text-dark-blue;
+    // }
+    &__left{
+        .slds-accordion{
+            &__section{
+                &.slds-is-open{
+                    .slds-accordion__content{
+                        padding:$x-m-small;
+                    }
+                    .slds-accordion__summary-action{
+                        border-bottom: 1px solid $primary-shades-12-p;
+                    }
+                }
+            }
+            &__list-item {
+                border: toRem(1) solid $primary-shades-12-p;
+                border-radius: $border-radius-medium;
+                margin-bottom: 1rem;
+                // &:first-child {
+                //     border-top: toRem(1) solid $accordion-border;
+                // }
+            }
+            &__summary-action {
+                color: $text-primary;
+                font-weight: $font-weight-bold;
+                font-size:$font-size-20 !important;
+                flex-direction: row-reverse;
+                justify-content: space-between;
+                background: $primary-shades-4-p;
+                padding: $small $medium;
+                border-bottom-right-radius: 0;
+                border-bottom-left-radius: 0;
+                .slds-icon_container{
+                    lightning-primitive-icon {
+                        display: flex;
+                        svg{
+                            fill: $primary-main;
+                        }
+                    }
+                }
+            }
+
+            &__summary-heading{
+                .slds-button:focus {
+                    text-decoration: none;
+                }
+            }
+            // &__content{
+            // }
+        }
+        .label {
+            font-weight: $font-weight-regular;
+            font-size: $font-size-14;
+            // text-transform: uppercase;
+            color: $text-primary;
+        }
+        .value {
+            font-size: $font-size-16;
+            color: $text-primary;
+            overflow-wrap: break-word;
+            font-weight: $font-weight-semi-bold;
+        }
+
+        @media only screen and (max-width: 48rem) {
+            .slds-medium-size_4-of-12 {
+                width: 100%;
+                &:last-child {
+                    margin-bottom: 0;
+                }
+            }
+        }
+    }
+    &__right{
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            .slds-button{
+                width: 100%;
+                padding: 0.1874rem;
+                font-size: 0.875rem;
+                &_brand{
+                    background: $primary-main;
+                }
+            }
+        }
+    }
+}
+
+.payments-details{
+    // font-family: $font-family;
+    // background-color: $white;
+    // padding: 1.5rem;
+    h1, h2{
+        font-weight: $font-weight-bold;
+        font-size:$font-size-24;
+        color: $text-primary;
+    }
+    .label {
+        font-weight: $font-weight-regular;
+        font-size: $font-size-14;
+        // text-transform: uppercase;
+        color: $text-primary;
+    }
+    .value {
+        font-size: $font-size-16;
+        color: $text-primary;
+        overflow-wrap: break-word;
+        font-weight: $font-weight-semi-bold;
+    }
+}
+
+.student-applications-table{
+    .slds-card__header {
+        padding-left: 0;
+    }
+    .view-btn{
+        .slds-button{
+            border:none;
+            &:hover {
+                background: none;
+            }
+        }
+    }
+}
+
+.licenses-details.licenses-search-details {
+    .slds-button{
+        font-size: 1rem;
+    }
+    .slds-accordion__content {
+        padding: 1rem;
+        border: toRem(1) solid $accordion-border;
+    }
+}
+[data-omni-key="Review and Summary"]{
+    .review-download-btn{
+    button{
+        background: transparent !important;
+        border: none !important;
+    }
+    }
+}
+
+.comm-page-custom-application-detail,.comm-page-custom-apply-for-license{
+    .example-accordion{
+        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1019607843);
+        border-radius: 0.25rem;
+        border: none;
+        padding: 1rem;
+        background: $white;
+    }
+    .cc-field-value-label {
+        color: #2A292F;
+        font-size: 1rem;
+        font-weight: 400;
+    }
+    .cc-field-value {
+        color: #2A292F;
+        font-weight: 600;
+        word-break: break-word;
+        font-size: 1rem;
+    }
+    c-summary-educator-license lightning-accordion-section .slds-accordion__list-item{
+        padding: 0 !important;
+    }
+}
+.comm-page-custom-successpageticket{
+    .success-container {
+        min-height: 100%;
+        margin: 3rem;
+    }
+    .success-back-btn{
+        margin-top: 10rem;
+    }
+}
+
+c-tickets-w-i-d-p-i-english{
+    .omniscript-article{
+        max-width: 85rem;
+        margin: 3rem auto;
+        .omniscript-body{
+            border-right: 0 !important;
+            h1{
+                font-size: 26px;
+                font-weight: 700;
+            }
+            .vlc-separator{
+                display: none;
+            }
+        }
+    }
+}

@@ -1,0 +1,388 @@
+<!--
+  @description       : 
+  @author            : MTX Group Product Team
+  @group             : 
+  @last modified on  : 02-17-2025
+  @last modified by  : MTX Group Product Team
+-->
+<template>
+	<template if:true={showSpinner}>
+		<lightning-spinner class="spins" size="medium" variant="brand" alternative-text="loading.."></lightning-spinner>
+	</template>
+
+
+
+	<section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-02"
+		class="slds-modal slds-fade-in-open slds-backdrop" if:true={selectTypeSubtype}>
+		<div class="slds-modal__container">
+			<div class="slds-modal__header">
+				<h1 class="slds-modal__title slds-hyphenate">Select Application Type and SubType</h1>
+			</div>
+			<div class="slds-modal__content slds-p-around_medium">
+				<div class="slds-m-around_medium">
+					<div class="slds-p-left_x-small"><b>License Type</b></div>
+					<!-- <div class="slds-p-left_x-small slds-p-top_x-small">{licenseName}</div> -->
+				</div>
+				<div if:true={showTypeSubtypeComp}>
+					<c-lpi-fee-type-subtype-selector show-spinner-parent={showSpinner}
+						default-selected-type={defaultType} default-selected-sub-type={defaultSubType}
+						license-type-id={licenseTypeId} ongetapplicationtype={handleApplicationType}
+						ongetapplicationsubtype={handleApplicationSubType} board-name={boardName}
+						authorisation-type={authorisationType}></c-lpi-fee-type-subtype-selector>
+				</div>
+			</div>
+
+
+			<div class="slds-modal__footer">
+				<button class="slds-button slds-button_outline-brand" onclick={handleAppTypeSubtypeSelectionCancel}>
+					Cancel
+				</button>
+				<button class="slds-button slds-button_brand" onclick={createParRecord}>Next</button>
+			</div>
+		</div>
+	</section>
+
+
+	<div class="slds-grid">
+		<div class="slds-col slds-size_2-of-3 slds-var-p-right_small">
+			<div class="auto-height bg-white payment-card-internal">
+				<lightning-card title="License Details" variant="Narrow"
+					if:true={showLicenseDetails}>
+					<div class="slds-card__body slds-var-p-horizontal_small">
+						<lightning-layout multiple-rows="true">
+							<lightning-layout-item padding="around-small" size="4">
+								<div><b>License Number</b></div>
+								<div>{licenseNumber}</div>
+							</lightning-layout-item>
+							<lightning-layout-item padding="around-small" size="8">
+								<div><b>Licensee Name</b></div>
+								<div>{licenseeName}</div>
+							</lightning-layout-item>
+						</lightning-layout>
+					</div>
+				</lightning-card>
+				<lightning-card title="Fee Summary" variant="Narrow" >
+					<div slot="actions">
+						<lightning-button variant="brand" label="Add Additional Fees"
+							onclick={openAddFeeModalWindow}></lightning-button>
+					</div>
+					<div class="slds-p-around_small">
+						<b>Note: Please refer to the transaction record in the backend for payment details.</b>
+					</div>
+					<div class="slds-card__body slds-p-horizontal_small">
+						<table
+							class="slds-table slds-table_cell-buffer slds-no-row-hover slds-table_bordered slds-table_fixed-layout"
+							role="grid" aria-label="Example table in a Card">
+							<thead>
+								<tr class="slds-line-height_reset">
+									<th class="" scope="col">
+										<div class="slds-truncate" title="Name">Fee Type</div>
+									</th>
+									<th class="" scope="col">
+										<div class="slds-truncate" title="Company">Amount</div>
+									</th>
+									<th class="action-height" scope="col">
+										<div class="slds-truncate" title="Title">Action</div>
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+								<template for:each={feeList} for:item="feeItem">
+									<tr class="slds-hint-parent" key={feeItem.Id}>
+										<th scope="row">
+											<div class="slds-truncate">{feeItem.Name}</div>
+										</th>
+										<td role="gridcell">
+											<div class="slds-truncate">
+												<lightning-formatted-number value={feeItem.Amount}
+													format-style="currency"></lightning-formatted-number>
+											</div>
+										</td>
+										<td role="gridcell">
+											<div class="slds-truncate">
+												<lightning-button variant="base"
+													class="buttonBorder slds-p-around_xxx-small slds-m-right_x-small"
+													title="Edit" icon-name="utility:edit" data-id={feeItem.Id}
+													onclick={editFeeDetails}></lightning-button>
+												<template if:true={feeItem.disableMenu}>
+													<lightning-button variant="base"
+														class="buttonBorder slds-p-around_xxx-small" title="Delete"
+														icon-name="utility:delete" data-id={feeItem.Id}
+														onclick={deleteFeeDetails}></lightning-button>
+												</template>
+											</div>
+										</td>
+									</tr>
+								</template>
+							</tbody>
+						</table>
+					</div>
+					<div class="slds-modal__footer slds-m-horizontal_small">
+						<h2><strong>Total Amount : ${getTotalFeeAmount} </strong></h2>
+						<h2><strong>Remaining Amount : ${remainingAmount} </strong></h2>
+					</div>
+				</lightning-card>
+			</div>
+		</div>
+		<div class="slds-col slds-size_1-of-3 bg-white">
+			<lightning-card title="Payment Information" variant="Narrow">
+				<div class="slds-card__body slds-p-horizontal_medium slds-p-vertical_medium">
+					<div class="slds-grid slds-wrap slds-gutters">
+						<!-- Exempt -->
+						<template if:true={isExempted}>
+							<div class="slds-col slds-size_1-of-1 slds-p-top_small">
+								<lightning-input type="checkbox" name="exempt" label="Exempt" checked={exemptValue}
+									onchange={handleExemptChange}>
+								</lightning-input>
+							</div>
+							<template if:true={exemptValue}>
+								<div class="slds-col slds-size_1-of-1 slds-p-top_small">
+									<lightning-combobox class="validate" name="exemptionReason" label="Exemption Reason"
+										options={exemptionReasonOptions} value={exemptionReasonValue}
+										onchange={handleChange}
+										message-when-value-missing="Error: Exemption Reason is required." required>
+									</lightning-combobox>
+								</div>
+							</template>
+						</template>
+						<template if:false={isExempted}>
+							<div class="slds-col slds-size_1-of-1 slds-p-top_small">
+								<div class="notification">
+									<div class="message">
+										<strong>NOTE:</strong><br>
+										The Applicant has been exempted from Applicable Fees until<span>
+											{exemptionExpiryDate}</span>.
+									</div>
+								</div>
+							</div>
+						</template>
+
+						<!-- Payment Type -->
+						<div class="slds-col slds-size_1-of-1 slds-p-top_small">
+							<lightning-combobox class="validate" name="paymentType" label="Payment Type"
+								options={paymentTypeOptions} value={paymentType} onchange={handleChange}
+								message-when-value-missing="Error: Payment Type is required." required={isrequired}>
+							</lightning-combobox>
+						</div>
+
+
+						<!-- Check Number/Transaction ID -->
+						<template if:true={checkNumberRequired}>
+							<div class="slds-col slds-size_1-of-1 slds-p-top_small">
+								<lightning-input type="text" class="validate" name="checkNumber" value={checkNumber}
+									onchange={handleChange} label="Check Number/Transaction ID" maxlength="18"
+									pattern="^[a-zA-Z0-9.]*$"
+									message-when-value-missing="Error: Check Number/Transaction ID is required."
+									message-when-pattern-mismatch="Invalid input. Special characters are not allowed."
+									required={isrequired}>
+								</lightning-input>
+							</div>
+						</template>
+						<template if:false={checkNumberRequired}>
+							<div class="slds-col slds-size_1-of-1 slds-p-top_small">
+								<lightning-input type="text" class="validate" name="checkNumber" value={checkNumber}
+									onchange={handleChange} label="Check Number/Transaction ID" maxlength="18">
+								</lightning-input>
+							</div>
+						</template>
+
+
+						<!-- Amount Tendered -->
+						<div class="slds-col slds-size_1-of-1 slds-p-top_small">
+							<lightning-input type="number" class="validate" name="amountTendered"
+								label="Amount Tendered" step=".01" formatter="currency" value={amountTendered}
+								onchange={handleChange} maxlength="16"
+								message-when-value-missing="Error: Amount Tendered is required." required={isrequired}
+								min="0">
+							</lightning-input>
+						</div>
+						<!-- Paid by someone other than the applicant? -->
+						<div class="slds-col slds-size_1-of-1 slds-p-top_small">
+							<lightning-input type="checkbox" name="paidBySomeoneOther"
+								label="Paid by someone other than the applicant?" value={paidBySomeoneOther}
+								onchange={handleChange}>
+							</lightning-input>
+						</div>
+
+						<template if:true={paidBySomeoneOtherCondition}>
+							<!-- Payer Full Name/Company Name -->
+							<div class="slds-col slds-size_1-of-1 slds-p-top_small">
+								<lightning-input type="text" class="validate" name="payerName"
+									label="Payer Full Name/Company Name" value={payerName} onchange={handleChange}
+									maxlength="160"
+									message-when-value-missing="Error: Payer Full Name/Company Name is required."
+									required={isrequired} pattern="^[a-zA-Z\s]+$"
+									message-when-pattern-mismatch="Invalid input. This field only accepts letters. Special characters are not allowed.">
+								</lightning-input>
+							</div>
+							<!-- Payer Phone Number -->
+							<div class="slds-col slds-size_1-of-1 slds-p-top_small">
+								<lightning-input class="validate" type="text" name="payerPhone"
+									label="Payer Phone Number" pattern="^\d{10}$" maxlength="10"
+									message-when-pattern-mismatch="Invalid input. This field only accepts 10 numbers. Special characters are not allowed."
+									value={payerPhone} onchange={handleChange}>
+								</lightning-input>
+							</div>
+						</template>
+
+						<!-- Process -->
+						<div class="slds-col slds-size_1-of-1 slds-p-top_small">
+							<lightning-combobox name="process" class="validate" label="Process"
+								options={processTypeOptions} value={process} onchange={handleChange}
+								message-when-value-missing="Error: Process is required." required={isrequired}>
+							</lightning-combobox>
+						</div>
+						<!-- Memo -->
+						<div class="slds-col slds-size_1-of-1 slds-p-top_small">
+							<lightning-input type="richtext" name="memoText" label="Comment" value={memoText}
+								onchange={handleChange} maxlength="80">
+							</lightning-input>
+						</div>
+					</div>
+				</div>
+				<div class="slds-align_absolute-center">
+					<button class="slds-button slds-button_brand" onclick={handleSubmit}>Submit</button>
+				</div>
+			</lightning-card>
+		</div>
+	</div>
+
+
+	<template if:true={isUnderPaymentModalOpen}>
+		<!-- Modal/Popup Box LWC starts here -->
+		<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+			aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+			<template if:true={showSpinner}>
+				<lightning-spinner class="spins" size="medium" variant="brand"
+					alternative-text="loading.."></lightning-spinner>
+			</template>
+			<div class="slds-modal__container">
+				<!-- Modal/Popup Box LWC header here -->
+				<header class="slds-modal__header">
+					<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+						title="Close" onclick={closeUnderPaymentModal}>
+						<lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
+							size="small"></lightning-icon>
+						<span class="slds-assistive-text">Close</span>
+					</button>
+					<h2 id="modal-heading-id-01" class="slds-text-heading_medium slds-hyphenate">Under Payment</h2>
+				</header>
+				<!-- Modal/Popup Box LWC body starts here -->
+				<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-01">
+					<div class="slds-p-around_x-small">
+						<b>Note: This transaction is underpaid. The monies received have been adjusted for applicable
+							fees in the order they were added. Please take a look at the table below. The application
+							will be marked "Payment Pending".</b>
+					</div>
+					<div class="slds-box slds-theme–default">
+						<table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+							<thead>
+								<tr class="slds-line-height_reset">
+									<th class="" scope="col">
+										Fee Type
+									</th>
+									<th class="" scope="col">
+										Applicable Fee
+									</th>
+									<th class="" scope="col">
+										Amount Received
+									</th>
+									<th class="" scope="col">
+										Amount Pending
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+								<template for:each={underPaymentFeeList} for:item="feeItem">
+									<tr class="slds-hint-parent" key={feeItem.Id}>
+										<td data-label="Fee Type">
+											<div class="slds-cell-wrap">{feeItem.Name}</div>
+										</td>
+										<td data-label="Applicable Fee">
+											<div class="slds-cell-wrap">
+												<lightning-formatted-number value={feeItem.actualAskedAmount}
+													format-style="currency"></lightning-formatted-number>
+											</div>
+										</td>
+										<td data-label="Amount Received">
+											<div class="slds-cell-wrap">
+												<lightning-formatted-number value={feeItem.Amount}
+													format-style="currency"></lightning-formatted-number>
+											</div>
+										</td>
+										<td data-label="Amount Pending">
+											<div class="slds-cell-wrap">
+												<lightning-formatted-number value={feeItem.pendingPaymentAmount}
+													format-style="currency"></lightning-formatted-number>
+											</div>
+										</td>
+									</tr>
+								</template>
+							</tbody>
+						</table>
+						<!--div class="slds-p-top_x-small"></div-->
+					</div>
+				</div>
+				<!-- Modal/Popup Box LWC footer starts here -->
+				<footer class="slds-modal__footer">
+					<button class="slds-button slds-button_neutral" onclick={closeUnderPaymentModal}
+						title="Cancel">Cancel</button>
+					<button class="slds-button slds-button_brand" onclick={handleUnderPaymentConform}
+						title="Confirm">Confirm</button>
+				</footer>
+			</div>
+		</section>
+		<div class="slds-backdrop slds-backdrop_open"></div>
+	</template>
+
+
+	<section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01"
+		class="slds-modal slds-fade-in-open slds-backdrop" if:true={openAddFeeModal}>
+		<div class="slds-modal__container">
+			<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+				onclick={closeAddFeeModalWindow}>
+				<svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+					<use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+				</svg>
+				<span class="slds-assistive-text slds-button_outline-brand">Cancel and close</span>
+			</button>
+			<div class="slds-modal__header">
+				<h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Add Additional Fees</h1>
+			</div>
+			<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+				<div class="slds-grid slds-wrap slds-gutters">
+					<template if:true={showReadonlyText}>
+						<div class="slds-col slds-size_1-of-1 slds-p-top_small">
+							<lightning-input type="text" name="feeType" label="Fee Type" value={readOnlyText}
+								disabled="true" required>
+							</lightning-input>
+						</div>
+					</template>
+					<template if:false={showReadonlyText}>
+						<div class="slds-col slds-size_1-of-1 slds-p-top_small">
+							<lightning-combobox class="targetFeeType" name="Fee Type" label="Fee Type"
+								placeholder="Choose Fee Type" value={value} onchange={handleAdditionalFeeTypeChange}
+								options={feeTypeOptions} required="true">
+							</lightning-combobox>
+						</div>
+					</template>
+					<div class="slds-col slds-size_1-of-1 slds-p-top_small">
+						<lightning-input class="targetFeeAmount" type="number" name="feeAmount" label="Amount"
+							step=".01" formatter="currency" value={feeAmount} disabled={isDisabled}
+							onchange={handleAmountChange} min={minAmountToBeEntered} max={maxAmountToBeEntered}
+							message-when-range-underflow="Please enter positive value"
+							message-when-range-overflow="Please enter negative value" required>
+						</lightning-input>
+					</div>
+				</div>
+			</div>
+			<div class="slds-modal__footer">
+				<button class="slds-button slds-button_outline-brand" aria-label="Cancel and close"
+					onclick={closeAddFeeModalWindow}>
+					Cancel
+				</button>
+				<button class="slds-button slds-button_brand" onclick={saveAddFeeDetails}>Save</button>
+			</div>
+		</div>
+	</section>
+</template>

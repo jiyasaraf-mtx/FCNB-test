@@ -1,0 +1,312 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 06-30-2023
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
+<template>
+    <template if:true={showSpinner}>
+        <lightning-spinner class="spins" size="medium" variant="brand" alternative-text="loading.."></lightning-spinner>
+    </template>
+    <template if:true={hasError}>
+        <div class="form-error" aria-live="assertive" aria-atomic="true">
+            <div class="errorMessage slds-notify slds-notify_toast slds-theme_error"
+                tabindex="-1">
+                <lightning-icon icon-name="utility:error" alternative-text="Error!"
+                    title="Error"></lightning-icon>
+                <lightning-formatted-rich-text value={errorMessage}>
+                </lightning-formatted-rich-text>
+                <span class="sr-only focus-helper" tabindex="0">
+                    {errorMessage}
+                </span>
+            </div>
+        </div>
+    </template>
+    <div class="add-temp-clerk">
+        <div class="slds-card slds-p-bottom--large">
+            <div class="slds-grid slds-wrap slds-gutters_direct ">
+                <div class="slds-col slds-large-size--1-of-1 slds-medium-size--1-of-1 slds-size--1-of-1 slds-m-bottom_small">
+                    <h3>Add Authorized Employee / Authorized Contact details</h3>
+                </div>
+        
+                <!-- first Name -->
+                <div class="slds-col slds-large-size--1-of-3 slds-medium-size--1-of-3 slds-size--1-of-1">
+                    <lightning-input class="validate" type="text" label="First Name"
+                        placeholder="Enter First Name" name="firstName" maxlength="40"
+                        value="" onchange={handleInputs} required
+                        message-when-value-missing="Error: First Name is required."
+                        pattern={patternObj.name}
+                        message-when-pattern-mismatch="Special characters are not allowed">
+                    </lightning-input>
+                </div>
+        
+                <!-- Middle Name -->
+                <div class="slds-col slds-large-size--1-of-3 slds-medium-size--1-of-3 slds-size--1-of-1">
+                    <lightning-input class="validate" type="text" label="Middle Name"
+                        placeholder="Enter Middle Name" name="middleName" maxlength="40"
+                        value="" onchange={handleInputs} 
+                        message-when-value-missing="Error: middle Name is required."
+                        pattern={patternObj.name}
+                        message-when-pattern-mismatch="Special characters are not allowed">
+                    </lightning-input>
+                </div>
+        
+                <!-- Last Name -->
+                <div class="slds-col slds-large-size--1-of-3 slds-medium-size--1-of-3 slds-size--1-of-1">
+                    <lightning-input class="validate" type="text" label="Last Name"
+                        placeholder="Enter Last Name" name="lastName" maxlength="80"
+                        value="" onchange={handleInputs} required
+                        message-when-value-missing="Error: Last Name is required."
+                        pattern={patternObj.name}
+                        message-when-pattern-mismatch="Special characters are not allowed">
+                    </lightning-input>
+                </div>
+        
+                <!-- Email Address ^([A-Za-z0-9_\-\.\+]+)@([A-Za-z0-9_\-\.]+)\.([A-Za-z]{2,10})$-->
+                <div class="slds-col slds-large-size--1-of-3 slds-medium-size--1-of-3 slds-size--1-of-1">
+                    <lightning-input class="validate" type="email" label="Email"
+                        placeholder="Enter Email Address" name="email" maxlength="40"
+                        value=""
+                        pattern={patternObj.email}
+                        message-when-pattern-mismatch="Invalid email format." required
+                        onchange={handleInputs}
+                        message-when-value-missing="Error: Email Address is required.">
+                    </lightning-input>
+                </div>
+        
+                <!-- Role -->
+                <div class="slds-col slds-large-size--1-of-3 slds-medium-size--1-of-3 slds-size--1-of-1">
+                    <lightning-combobox class="validate" name="role"
+                        placeholder="Select Role" label="Role" 
+                        required message-when-value-missing="Error: Role is required."
+                        options={roleOptions} onchange={handleInputs}>
+                    </lightning-combobox>
+                </div>
+        
+                <!--Phone-->
+                <div class="slds-col slds-large-size--1-of-3 slds-medium-size--1-of-3 slds-size--1-of-1">
+                    <lightning-input class="validate" type="tel" label="Phone Number"
+                        placeholder="Enter Phone Number" name="phone" 
+                        maxlength="10" min-length="10" pattern="[0-9]*"
+                        message-when-pattern-mismatch="Please enter phone number only!"
+                        onchange={handleInputs} value="">
+                    </lightning-input>
+                </div>
+        
+                <lightning-button variant="brand" class="slds-m-top_large slds-align_absolute-center" label="Save &amp; Add New" title="Save"
+                     onclick={handleSave} >
+                </lightning-button>
+            </div>
+        </div>
+        
+        <div class="slds-card">
+            <div if:true={showSpinner}>
+                <lightning-spinner size="medium" alternative-text="Loading..."></lightning-spinner>
+            </div>
+            <h3 class="section-heading slds-m-bottom_x-small">
+                Authorized Employee/ Authorized Contact/ Contracted License Service Provider List
+            </h3>
+
+            <div style="overflow:auto;">
+                <table class="slds-table slds-no-row-hover slds-m-top_small alpha-table-layout slds-table_bordered dashboard-table slds-m-top_small">
+                    <thead>
+                        <tr class="slds-line-height_reset">
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Name">Name</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Role">Role</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Email">Email</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Phone">Phone</div>
+                            </th>
+                            <th class="" scope="col" style="width:6rem">
+                                <div class="slds-truncate" title="Edit Action">Edit</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Remove Action">Remove</div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template for:each={clerkList} for:item="clerk" for:index="index">
+                            <tr key={clerk.id} class="slds-hint-parent">
+                                <td data-label="coorporate Officer Name">
+                                    <div style="white-space:normal; word-break: break-all;"
+                                        title={clerk.firstName}>
+                                        {clerk.firstName} {clerk.middleName} {clerk.lastName}
+                                    </div>
+                                </td>
+                                <td data-label="Role">
+                                    <div style="white-space:normal; word-break: break-all;"
+                                        title={clerk.role}>
+                                        {clerk.roleForTable}
+                                    </div>
+                                </td>
+                                <td data-label="coorporate Email">
+                                    <div style="white-space:normal; word-break: break-all;"
+                                        title={clerk.email}>
+                                        {clerk.email}
+                                    </div>
+                                </td>
+                                <td data-label="coorporate Officer Name">
+                                    <div style="white-space:normal; word-break: break-all;"
+                                        title={clerk.phone}>
+                                        {clerk.phone} 
+                                    </div>
+                                </td>
+                                <td data-label="Action">
+                                    <lightning-button-icon data-index={index}
+                                        onclick={handleEdit}
+                                        data-sfid={clerk.sfId}
+                                        icon-name="utility:edit" alternative-text="Edit" 
+                                        class="slds-m-left_xx-small" title="Edit"
+                                        aria-label="Edit" variant="brand">
+                                    </lightning-button-icon>
+                                </td>
+                                <td data-label="Action">
+                                    <lightning-button-icon data-sfid={clerk.sfId}
+                                        onclick={handleDelete}
+                                        icon-name="utility:remove_link" alternative-text="Remove" 
+                                        class="slds-m-left_xx-small" title="Remove"
+                                        aria-label="Remove" variant="brand">
+                                    </lightning-button-icon>
+                                </td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>   
+            </div>
+            <template if:true={openConfirmationModal}>
+                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                    aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                    <div class="slds-modal__container">
+                        <header class="slds-modal__header">
+                            <button
+                                class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                                title="Close" onclick={handleCancelConfirmation}>
+                                <lightning-icon icon-name="utility:close" alternative-text="close"
+                                    variant="inverse" size="small"></lightning-icon>
+                                <span class="slds-assistive-text">Close</span>
+                            </button>
+                            <h2 id="modal-heading-03" class="slds-text-heading_medium slds-hyphenate">
+                                Remove
+                            </h2>
+                        </header>
+                        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-03">
+                            <p>{modalHeading}</p>
+                        </div>
+                        <footer class="slds-modal__footer">
+                            <button class="slds-button slds-button_neutral" onclick={handleCancelConfirmation}
+                                title="Cancel">Cancel</button>
+                            <button class="slds-button slds-button_destructive"
+                                onclick={handleDeleteConfirmation} title="Remove">Remove</button>
+                        </footer>
+                    </div>
+                </section>
+                <div class="slds-backdrop slds-backdrop_open"></div>
+            </template>
+
+            <template if:true={isEditPopup}>
+                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-02"
+                    aria-modal="true" aria-describedby="modal-content-id-2"
+                    class="slds-modal slds-fade-in-open add-coorporate-modal">
+                    <div class="slds-modal__container">
+                        <header class="slds-modal__header">
+                            <button
+                                class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                                title="Close" onclick={closeEditModal}>
+                                <lightning-icon icon-name="utility:close" alternative-text="close"
+                                    variant="inverse" size="small"></lightning-icon>
+                                <span class="slds-assistive-text">Close</span>
+                            </button>
+                            <h3 id="modal-heading-02" class="section-heading slds-m-bottom_x-small">
+                                Edit Authorized Employee/Authorized Contact
+                            </h3>
+                        </header>
+                        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+                            <div class="slds-grid slds-wrap slds-gutters slds-p-bottom--large">
+                                <!-- first Name -->
+                                <div
+                                    class="slds-col slds-large-size--1-of-3 slds-medium-size--1-of-3 slds-size--1-of-1">
+                                    <lightning-input class="editClerkValidate" type="text" label="First Name"
+                                        placeholder="Enter First Name" name="firstName" maxlength="40"
+                                        value={selectedData.firstName} onchange={handleEditInputs} required
+                                        message-when-value-missing="Error: First Name is required."
+                                        pattern={patternObj.name}
+                                        message-when-pattern-mismatch="Special characters are not allowed">
+                                    </lightning-input>
+                                </div>
+                                <!-- Middle Name -->
+                                <div
+                                    class="slds-col slds-large-size--1-of-3 slds-medium-size--1-of-3 slds-size--1-of-1">
+                                    <lightning-input class="editClerkValidate" type="text" label="Middle Name"
+                                        placeholder="Enter Middle Name" name="middleName" maxlength="40"
+                                        value={selectedData.middleName} onchange={handleEditInputs} 
+                                        message-when-value-missing="Error: Middle Name is required."
+                                        pattern={patternObj.name}
+                                        message-when-pattern-mismatch="Special characters are not allowed">
+                                    </lightning-input>
+                                </div>
+                                <!-- Last Name -->
+                                <div
+                                    class="slds-col slds-large-size--1-of-3 slds-medium-size--1-of-3 slds-size--1-of-1">
+                                    <lightning-input class="editClerkValidate" type="text" label="Last Name"
+                                        placeholder="Enter Last Name" name="lastName" maxlength="80"
+                                        value={selectedData.lastName} onchange={handleEditInputs} required
+                                        message-when-value-missing="Error: Last Name is required."
+                                        pattern={patternObj.name}
+                                        message-when-pattern-mismatch="Special characters are not allowed">
+                                    </lightning-input>
+                                </div>
+                                
+                                <!-- Role -->
+                                <div class="slds-col slds-large-size--1-of-3 slds-medium-size--1-of-3 slds-size--1-of-1">
+                                    <lightning-combobox class="editClerkValidate" name="role"
+                                        placeholder="Role" label="Role" value={selectedData.role}
+                                        required message-when-value-missing="Error: Role is required."
+                                        options={roleOptions} onchange={handleEditInputs}>
+                                    </lightning-combobox>
+                                </div>
+                                
+                                <!-- Email -->
+                                <div 
+                                    class="slds-col slds-large-size--1-of-3 slds-medium-size--1-of-3 slds-size--1-of-1">
+                                    <lightning-input class="editClerkValidate" type="text" label="Email"
+                                        maxlength="40" name="email"
+                                        value={selectedData.email} onchange={handleEditInputs}
+                                        pattern={patternObj.email}
+                                        message-when-pattern-mismatch="Invalid email format." required
+                                        message-when-value-missing="Error: Email is required.">
+                                    </lightning-input>
+                                </div>
+                                
+                                <!-- Phone -->
+                                <div
+                                    class="slds-col slds-large-size--1-of-3 slds-medium-size--1-of-3 slds-size--1-of-1">
+                                    <lightning-input class="editClerkValidate" type="tel" label="Phone Number"
+                                        name="phone" maxlength="10" min-length="10" pattern="[0-9]*"
+                                        value={selectedData.phone} onchange={handleEditInputs}
+                                        message-when-value-missing="Error: Phone is required."
+                                        message-when-pattern-mismatch="Please enter Phone number only!">  
+                                    </lightning-input>
+                                </div>
+                            </div>
+                        </div>
+                        <footer class="slds-modal__footer">
+                            <button class="slds-button slds-button_neutral" onclick={closeEditModal}
+                                title="Cancel">Cancel</button>
+                            <button class="slds-button slds-button_brand" onclick={handleUpdate}
+                                title="Save">Save</button>
+                        </footer>
+                    </div>
+                </section>
+                <div class="slds-backdrop slds-backdrop_open"></div>
+            </template>
+        </div>    
+    </div>
+</template>

@@ -1,0 +1,238 @@
+<template>
+
+    <div tabindex="-1" class="modal-glass slds-backdrop fadein slds-backdrop--open" style="opacity: 0.8;"></div>
+    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+        aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+        <div class="slds-modal__container">
+            <!-- Modal/Popup Box LWC header here -->
+            <header class="slds-modal__header">
+                <template if:true={showAddressModal}>
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                        title="Close" onclick={handleCancel}>
+                        <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
+                            size="small">
+                        </lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                </template>
+                <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">{modalHeading}
+                </h2>
+            </header>
+            <!-- Modal/Popup Box LWC body starts here -->
+            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                <div if:true={showSpinner}>
+                    <lightning-spinner size="medium" alternative-text="Loading"></lightning-spinner>
+                </div>
+
+                <!--Confirmation Modal-->
+                <template if:true={showConfirmationBox}>
+                    <div if:true={showSpinner}>
+                        <lightning-spinner size="medium" alternative-text="Loading"></lightning-spinner>
+                    </div>
+                    <h1>{message}</h1>
+                </template>
+
+                <template if:true={showAddressModal}>
+                    <template if:true={showDateAndStatusOnEdit}>
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-2 slds-var-p-around_x-small">
+                                <span>
+                                    <lightning-input type="date" label="Open Date" name="openDate" date-style='short'
+                                        value={addressDataObj.openDate} class="validate"
+                                        onchange={handleAddressInputChanges} disabled={isRecordReadOnly} required>
+                                    </lightning-input>
+                                </span>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2 slds-var-p-around_x-small">
+                                <span>
+                                    <lightning-input type="date" label="Close Date" name="closeDate" date-style='short'
+                                        value={addressDataObj.closeDate} class="validate"
+                                        onchange={handleAddressInputChanges} disabled={readyOnlyOnCloseStatus} required>
+                                    </lightning-input>
+                                </span>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-var-p-around_x-small">
+                                <span>
+                                    <lightning-combobox label="Status" name="status" value={addressDataObj.status}
+                                        message-when-value-missing="Error: Status is required." options={statusOptions}
+                                        onchange={handleAddressInputChanges} class="validate"
+                                        read-only={readyOnlyOnCloseStatus} required>
+                                    </lightning-combobox>
+                                </span>
+                            </div>
+                        </div>
+                    </template>
+                    <div class="slds-col slds-size_1-of-1 slds-var-p-around_x-small">
+                        <span>
+                            <lightning-combobox label={addressTypeLabel} name="addressType"
+                                message-when-value-missing="Error: Type of Address is required."
+                                options={locationTypeOptions} value={addressDataObj.addressType}
+                                onchange={handleAddressInputChanges} class="validate" disabled={isRecordReadOnly}
+                                required>
+                            </lightning-combobox>
+                        </span>
+                    </div>
+                    <template if:true={showBusinessName}>
+                        <div class="slds-col slds-size_1-of-1 slds-var-p-around_x-small">
+                            <span>
+                                <lightning-input type="text" label="Business Name" name="businessName"
+                                    value={addressDataObj.businessName}
+                                    message-when-value-missing="Error: Business Name is required." class="validate"
+                                    onchange={handleAddressInputChanges} maxlength="255" pattern={patternObj.text}
+                                    message-when-pattern-mismatch="Invalid input. Special characters are not allowed."
+                                    disabled= "true" required>
+                                </lightning-input>
+                            </span>
+                        </div>
+                    </template>
+                    <div class="slds-col slds-size_1-of-1 slds-var-p-around_x-small">
+                        <span>
+                            <lightning-input type="text" label="Street Address" name="streetAddress"
+                                value={addressDataObj.streetAddress}
+                                message-when-value-missing="Error: Street Address is required." class="validate"
+                                onchange={handleAddressInputChanges} maxlength="255" pattern={patternObj.text}
+                                message-when-pattern-mismatch="Invalid input. Special characters are not allowed."
+                                disabled={isRecordReadOnly} required>
+                            </lightning-input>
+                        </span>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-var-p-around_x-small">
+                        <span>
+                            <lightning-combobox label="Country" name="country"
+                                message-when-value-missing="Error: Country is required." options={countryOptions}
+                                value={addressDataObj.country} onchange={handleAddressInputChanges} class="validate"
+                                read-only={isRecordReadOnly} required>
+                            </lightning-combobox>
+                        </span>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-var-p-around_x-small">
+                        <span>
+                            <lightning-input type="text" label="City" name="city"
+                                message-when-value-missing="Error: City is required." class="validate"
+                                onchange={handleAddressInputChanges} pattern={patternObj.text} maxlength="40"
+                                message-when-pattern-mismatch="Invalid input. Special characters are not allowed."
+                                disabled={isRecordReadOnly} value={addressDataObj.city} required>
+                            </lightning-input>
+                        </span>
+                    </div>
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-2 slds-var-p-around_x-small">
+                            <span>
+                                <template if:false={isAddressCountryUS}>
+                                    <lightning-input type="text" label="State" name="stateText"
+                                        value={addressDataObj.stateText}
+                                        message-when-value-missing="Error: State is required." class="validate"
+                                        onchange={handleAddressInputChanges} pattern={patternObj.text} maxlength="40"
+                                        message-when-pattern-mismatch="Invalid input. Special characters are not allowed."
+                                        disabled={isRecordReadOnly} required={isFieldRequired}></lightning-input>
+                                </template>
+                                <template if:true={isAddressCountryUS}>
+                                    <lightning-combobox label="State" name="state" value={addressDataObj.state}
+                                        message-when-value-missing="Error: State is required." options={stateOptions}
+                                        onchange={handleAddressInputChanges} class="validate"
+                                        read-only={isRecordReadOnly} required>
+                                    </lightning-combobox>
+                                </template>
+                            </span>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2 slds-var-p-around_x-small" style="position:relative;">
+                            <span>
+                                <template if:false={isStateMO}>
+                                    <lightning-input type="text" label="County" name="county"
+                                        onchange={handleAddressInputChanges} pattern={patternObj.text}
+                                        message-when-pattern-mismatch="Invalid input. Special characters are not allowed."
+                                        maxlength="40" value={addressDataObj.county} disabled={isRecordReadOnly}>
+                                    </lightning-input>
+                                </template>
+                                <template if:true={isRecordReadOnly}>
+                                    <template if:true={isStateMO}>
+                                        <lightning-input type="text" label="County" name="county"
+                                            onchange={handleAddressInputChanges} pattern={patternObj.text}
+                                            message-when-pattern-mismatch="Invalid input. Special characters are not allowed."
+                                            maxlength="40" value={addressDataObj.countyLookup} disabled={isRecordReadOnly}>
+                                        </lightning-input>
+                                    </template>
+                                </template>
+                                <template if:false={isRecordReadOnly}>
+                                    <template if:true={isStateMO}>
+                                        <lightning-input label="County" type="search" class="validate"
+                                            message-when-value-missing="Error: County is required." name="countyLookup"
+                                            onchange={search} value={selectedValue} disabled={isRecordReadOnly}
+                                            required>
+                                        </lightning-input>
+                                        <div if:true={searchResults} style="margin-top:-0.75rem;" id="listbox-id-5"
+                                            class="slds-dropdown slds-dropdown_length-with-icon-7 slds-dropdown_fluid"
+                                            role="listbox">
+                                            <ul class="slds-listbox slds-listbox_vertical" role="presentation">
+                                                <template for:each={searchResults} for:item="searchResult">
+                                                    <li key={searchResult.value} data-name={searchResult.label}
+                                                        role="presentation" onclick={selectSearchResult}
+                                                        class="slds-listbox__item">
+                                                        <div class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small "
+                                                            role="option">
+                                                            <span class="slds-media__body">
+                                                                <span class="slds-truncate" title={searchResult.label}>
+                                                                    {searchResult.label}
+                                                                </span>
+                                                            </span>
+                                                        </div>
+                                                    </li>
+                                                </template>
+                                            </ul>
+                                        </div>
+                                    </template>
+                                </template>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-2 slds-var-p-around_x-small">
+                            <span>
+                                <lightning-input type="text" label="Zip Code" name="zipCode"
+                                    message-when-value-missing="Error: Zip Code is required." max-length="5"
+                                    class="validate" onchange={handleAddressInputChanges} pattern={patternObj.zipCode}
+                                    required={isFieldRequired} message-when-pattern-mismatch="Please enter correct Zip/Postal Code"
+                                    value={addressDataObj.zipCode} disabled={isRecordReadOnly}>
+                                </lightning-input>
+                            </span>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2 slds-var-p-around_x-small">
+                            <span>
+                                <lightning-input type="tel" label="Telephone Number" name="telephoneNum" min-length="14"
+                                    max-length="14" onchange={handleAddressInputChanges} pattern={patternObj.phone}
+                                    message-when-pattern-mismatch="Please enter phone number only!"
+                                    value={addressDataObj.telephoneNum} disabled={isRecordReadOnly}></lightning-input>
+                            </span>
+                        </div>
+                        <template if:false={isRecordReadOnly}>
+                            <div class="slds-col slds-size_1-of-1 slds-var-p-around_x-small slds-m-top_small">
+                                <span>
+                                    <lightning-input type="checkbox" label="Please check this box to update the Account level address too."
+                                        name="isAddressUpdateOnAccount" onchange={handleAddressInputChanges}
+                                        checked={addressDataObj.isAddressUpdateOnAccount}></lightning-input>
+                                </span>
+                            </div>
+                        </template>
+                    </div>
+                </template>
+            </div>
+
+            <!-- Modal/Popup Box LWC footer starts here -->
+
+            <footer class="slds-modal__footer">
+                <template if:true={showAddressModal}>
+                    <button class="slds-button slds-button_neutral" name="Cancel" onclick={handleCancel}>Cancel</button>
+                    <template if:false={readyOnlyOnCloseStatus}>
+                        <button class="slds-button slds-button_brand" name="Continue"
+                            onclick={handleAddressContinueButton}>Continue</button>
+                    </template>
+                </template>
+                <template if:true={showConfirmationBox}>
+                    <button class="slds-button slds-button_neutral" name="Cancel"
+                        onclick={closeConfirmationModal}>Cancel</button>
+                    <button class="slds-button slds-button_brand" name="Confirm" onclick={handleSave}>Confirm</button>
+                </template>
+            </footer>
+        </div>
+    </section>
+</template>

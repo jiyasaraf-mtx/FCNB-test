@@ -1,0 +1,1003 @@
+//-- Viewports
+$screen-xs: 480px;
+$screen-xs-min: $screen-xs + 1px;
+$screen-sm: 767px;
+$screen-sm-min: $screen-sm - 1px;
+$screen-sm-ls: 1024px;
+$screen-sm-ls-min: $screen-sm-ls - 1px;
+$screen-md: 991px;
+$screen-lg: 1280px;
+$screen-xl: 1400px;
+
+/*------------------------------------------
+	Responsive Grid Media Queries - 1280, 1024, 768, 480
+	 1280-1024   - desktop (default grid)
+	 1024-768    - tablet landscape
+	 768-480     - tablet 
+	 480-less    - phone landscape & smaller
+--------------------------------------------*/
+
+@media all and (min-width: $screen-md) and (max-width: $screen-xl) {
+    c-r-s-brokerage-application-intake-form-english {
+        .vlc-disclosure {
+            .slds-box {
+                margin: 0;     
+            }
+        }
+    }
+}
+
+@media all and (min-width: $screen-sm-ls) and (max-width: $screen-xl) {
+    .right-side-card {
+        c-cf-my-licenses-card-child {
+            omnistudio-flex-card-state {
+                min-width: 15rem;
+            }
+        }
+    }
+}
+@media all and (min-width: $screen-sm) and (max-width: $screen-md) {
+    c-forgot-password-forgot-password-english {
+        .slds-medium-size_6-of-12 {
+            width: 100%;
+        }
+        .slds-button_brand {
+            min-width: 31.5rem !important;
+        }
+    }
+    c-cf-e-c-c-application-operator-details-f-c,
+    c-cf-n-u-r-course-provider-review {
+        .slds-col {		    
+            width: 100%;
+        }
+    }
+    .save-m-btn {
+        position: relative !important;
+        bottom: -1.5rem !important;
+        width: 8rem !important;
+        float: right;
+    }
+    .for-intake-forms {
+        .omniscript-article {
+            button.slds-button.slds-button_destructive {
+                padding: 0 0.5rem !important;
+                font-size: initial !important;
+            }
+        }
+    }
+    .ownershipInfo {
+        .slds-accordion__content {
+            .slds-col {
+                width: 100%;
+            }
+        }
+
+    } 
+    c-cf-my-licenses-card-child, c-cf-my-applications-card-child {
+        omnistudio-flex-card-state {
+            min-width: 40% !important;
+            max-width: 40% !important;
+        }
+    }
+}
+@media all and (min-width: $screen-md) and (max-width: $screen-lg) {
+    c-cf-my-licenses-card-child, c-cf-my-applications-card-child {
+        omnistudio-flex-card-state {
+            min-width: 33.33% !important;
+            max-width: 33.33% !important;
+        }
+    }
+}
+@media all and (max-width: $screen-sm-ls-min) {
+    c-cf-m-o-d-p-r-personal-information-review,
+    c-cf-r-s-sales-personfetch-residence-address,
+    omnistudio-omniscript-step[data-omni-key="Review and Summary"],
+    omnistudio-omniscript-step {
+        .slds-col {		    
+            width: 100%; 
+        }
+    }
+    lightning-accordion-section.slds-accordion__list-item .slds-col {		    
+        width: 100%;
+        margin: 0.5rem 0;
+    }
+    
+    .field-value {
+        word-break: inherit !important;
+    }
+    
+    .modal-container {
+        c-amendments-amendment-type-english {
+            .bordered_radio {
+                .slds-form-element__control {
+                    flex-direction: column;
+                    text-align: left;
+                }
+            }
+            .slds-wrap {
+                padding: 0 !important;
+            }
+            .slds-card {
+                padding: 0 !important;
+                .slds-card__body {
+                    padding: 0;
+                }
+            }
+            .slds-radio {
+                width: 100% !important;
+            }
+        }
+    }
+    
+    .slds-accordion__summary {
+        flex-direction: column;
+        button {
+            margin: 0.5rem 0;
+            width: 100%;
+        }
+        lightning-button.del-btn.house {
+            margin: 0;
+        }
+    }
+    .slds-form-element__label {
+        hyphens: none !important;
+        -webkit-hyphens: none !important;
+    }
+    .slds-rich-text-editor__output {
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+    }
+    .modpr-licenselist-container {
+        flex-direction: column-reverse;
+        lightning-icon {
+            &.slds-icon_container {
+                margin-right: 0.25rem;
+            }
+        }
+    }
+}
+
+@media all and (max-width: $screen-md) {
+    omnistudio-omniscript-edit-block{	    
+        overflow: scroll;
+        .slds-is-absolute {
+            position: fixed;
+            width: auto !important;
+            height: auto !important;
+        }
+    }
+    c-upload-document table .slds-col {
+        width: 33.33% !important;
+    }
+    omnistudio-omniscript-navigate-action[data-omni-key="NavigateAction1"] {
+        height: auto !important;
+    }
+
+    .document-upload_table.table-row {
+        min-width: auto;
+    }
+    
+    .newHeader {
+        .lpi-header {
+            padding: 0 0.6rem !important;
+        }
+    }
+
+    [data-omni-key=ModprOwnershipInformation]{
+        .searchBoxWrapper{
+            .slds-input[type=search] {
+                padding-right: 3rem;
+            }
+            .slds-input-has-icon .slds-input__icon[data-key="search"] {
+                left: 88%;
+            }
+        }
+    }
+    c-r-s-brokerage-application-intake-form-english {
+        .vlc-disclosure {
+            .slds-box {
+                margin: 0;     
+            }
+        }
+    }
+    .label {
+        margin-top: 1rem;
+    }
+
+    button{
+        .label {
+            margin-top: 0rem;
+        }
+    }
+    omnistudio-omniscript-custom-lwc[data-omni-key="FeeitemsFC"],
+    omnistudio-omniscript-block[data-omni-key="JetPayInformation"] {
+       width: 100%;
+   }
+
+}
+
+@media all and (min-width: $screen-sm-ls) and (max-width: $screen-lg) {
+    .my-profile-page {
+        .slds-large-size--9-of-12 {
+            width: 100%;
+        }
+    }
+    
+}
+
+@media all and (min-width: $screen-sm) and (max-width: $screen-sm-ls) {
+    .lpiContent {
+        .my-profile-page {
+            .slds-large-size--3-of-12 {
+                width: 100%;
+                margin-bottom: toRem(20);
+            }
+        }
+        &.for-intake-forms {
+            .omniscript-article {
+                .omniscript-side-content {
+                    width: 15rem;
+                    //height: calc(100vh - 6.5rem);
+                }
+                .omniscript-body {
+                    width: calc(100% - 17rem);
+                }
+                .omniscript-button-position {
+                    flex-direction: row;
+                }
+            }
+            omnistudio-omniscript-text,
+            omnistudio-omniscript-email,
+            omnistudio-omniscript-date,
+            omnistudio-omniscript-select,
+            omnistudio-omniscript-formula,
+            omnistudio-omniscript-number,
+            omnistudio-omniscript-telephone,
+            omnistudio-omniscript-url {
+                width: 100%; 
+            }
+        }
+    }
+
+
+    /* Complaint form Start */
+    c-mo-dpr-file-complaint .complaint-form {
+        margin-left: 2rem;
+        margin-top: 0rem;
+        margin-bottom: 2rem;
+        margin-right: -3rem;
+    }
+    /* Complaint form End */
+    c-cf-p-h-specialsiteand-non-pharmacist-review {
+        .table-container {
+            .review-custom-table {
+                min-width: 40rem;
+            }
+            .table-row {
+                min-width: 40rem;
+            }
+            .slds-size_1-of-1 {
+                width: 100% !important;
+            }
+            .slds-size_6-of-12 {
+                width: 50% !important;
+            }
+        }
+
+    }
+}
+
+@media all and (max-width: $screen-xs){
+    .comm-page-custom-apply-license {
+        [data-omni-key=ModprOwnershipInformation]{
+            .searchBoxWrapper{
+                .slds-input-has-icon .slds-input__icon[data-key="search"] {
+                    left: 85%;
+                }
+            }
+        }
+    }
+}
+
+@media all and (max-width: $screen-sm) {
+    c-cf-m-o-d-p-r-business-info-mailing-add-review-f-c {
+        .slds-form-element__control {
+            flex-direction: column;
+            .slds-radio {
+                margin: 0.5rem;
+            }
+        }
+    }
+    .dropdown-container {
+        .slds-listbox__option-text_entity {
+            text-overflow: unset !important;
+            white-space: break-spaces !important;
+        }
+    }
+    c-upload-document {
+        .other-document-btn {
+            button {
+                margin: 1rem 0 0;
+            }
+        }
+    }
+    button,
+    a,
+    input,
+    select,
+    textarea, 
+    .slds-input,
+    .slds-action_item,
+    .slds-checkbox,
+    lightning-file-upload, 
+    .profileStyle{
+        &:focus {
+            outline-offset: 0 !important;
+            outline: toRem(3) dotted $outline-border !important;
+        }
+    }
+    // .slds-modal {
+    //     .slds-modal__container {
+    //         .slds-form-element {
+    //             margin-bottom: 0 !important;
+    //         }
+    //     }
+
+    // } 
+     
+    omnistudio-omniscript-block .slds-accordion .slds-accordion__summary {		    
+        flex-direction: column;
+        button {
+            c-icon {
+                svg {
+                    margin: 0;
+                }
+            }
+            
+            h3.slds-truncate {
+                white-space: normal;
+            }
+        }
+    }
+
+    .modpr-license-list {
+        runtime_omnistudio_flexcards-block {
+            width: 100%;
+            .view-button {
+                button {
+                    width: 100%;
+                }
+            }
+        }
+    }
+    .card-details {
+        padding: 1rem !important;
+    }
+   
+    omnistudio-omniscript-telephone {
+        padding-right: 0 !important;
+    }
+
+    /* My Profile Start */
+    c-mo-dpr-profile-cmp {
+        .my-profile-page {
+            .slds-grid {
+                padding-bottom: 1.25rem;
+            }
+        }
+    }
+    /* My Profile End */
+
+    /* My Licenses Page Start */
+    .right-side-card.slds-medium-size_10-of-12:has(c-cf-my-licenses-card-child) {
+        width: 100%;
+    }
+    /* My Licenses Page End */
+
+    /* Application Details Page Start */
+    c-modpr-pending-checklist-item {
+        .application-review-header {
+            width: 100%;
+        }
+        .pending-checklist {
+            width: 100%;
+        }
+    }
+    .cmp-body {
+        .omniscript-body {
+            padding: 0;
+            border: none !important;
+        }
+    }
+    /* Application Details Page End */
+
+    /* License Details Page Start */
+    c-modpr-application-view-container {
+        .licenses-details {
+            flex-direction: column-reverse;
+            .licenses-details__right {
+                width: 100%;
+                margin-bottom: 1.5rem;
+                .slds-m-bottom_large {
+                    margin: 0;
+                }
+                .slds-card {
+                    padding: 0.5rem 1rem;
+                }
+            }
+            .licenses-details__left {
+                width: 100%;
+                margin-bottom: 1.5rem;
+                .slds-card {
+                    padding: 0.5rem 1rem;
+                }
+                .slds-accordion__summary {
+                    padding: 0.5rem;
+                }
+                .slds-accordion__content {
+                    margin: 0;
+                    padding: 0;
+                }
+            }
+        }
+    }
+    /* License Details Page End */
+
+    /* Intake form Start Tablet */
+    .lpiContent {
+        .main-content {
+            margin-left: 0;
+            margin-right: 0;
+            // padding: 1rem;
+            width: 100vw;
+            transition: all 0.3s ease;
+            &.open-sidebar {
+                opacity: 0;
+            }
+        }
+        &.for-intake-forms {
+            .omniscript-article {
+                .omniscript-side-content {
+                    width: 15rem;
+                    height: calc(100vh - 6.5rem);
+                }
+                .omniscript-body {
+                    width: calc(100% - 16rem);
+                }
+                .omniscript-button-position {
+                    flex-direction: row;
+                }
+            }
+            omnistudio-omniscript-edit-block {
+                .slds-col_bump-left {
+                    margin-left: 1rem;
+                }
+            }
+        }
+    }
+    .comm-page-custom-apply-for-license {
+        .lpiContent {
+            .omniscript-article .omniscript-body {
+                width: 100%;
+            }
+        }
+    }
+    .comm-page-custom-apply-license {
+        .save-m-btn {
+            width: 100%;
+            position: unset;
+            padding: 0 0.8rem;
+            button {
+                width: 100%;
+            }
+        }
+        [data-omni-key=ModprOwnershipInformation]{
+            .ownershipInfo {
+                min-height: calc(100vh - 27rem);
+            }
+            .searchBoxWrapper{
+                .slds-input[type=search] {
+                    padding-right: 3rem;
+                }
+                .slds-input-has-icon .slds-input__icon[data-key="search"] {
+                    left: 88%;
+                }
+            }
+
+            c-cf-r-s-brokerage-ownership-review-child-f-c{
+                .slds-card {
+                    padding: 0;
+                }
+            }
+        }
+    }
+    omnistudio-omniscript-custom-lwc.slds-p-right_small {
+        padding: 0;
+    }
+    
+    /* Intake form End */
+    c-cf-my-licenses-card-child, c-cf-my-applications-card-child {
+        omnistudio-flex-card-state {
+            min-width: 45% !important;
+            max-width: 45% !important;
+        }
+    }
+
+    c-cf-p-h-specialsiteand-non-pharmacist-review {
+        .table-container {
+            .review-custom-table {
+                min-width: 40rem;
+            }
+            .table-row {
+                min-width: 40rem;
+            }
+            .slds-size_1-of-1 {
+                width: 100% !important;
+            }
+            .slds-size_6-of-12 {
+                width: 50% !important;
+            }
+        }
+
+    }
+
+}
+
+//@media all and (max-width: $screen-xs) 
+@media all and (max-width: $screen-sm) {
+    body {
+        overflow-x: hidden;
+    }
+    .for-intake-forms .omniscript-article .omniscript-body {
+        padding: 0.8rem;
+    }
+
+    /* Application Details Page Start Mobile */
+    .cmp-body {
+        .omniscript-article {
+            padding: 0;
+            border: none !important;
+        }
+    }
+    omnistudio-omniscript-step {
+        &[data-omni-key=ApplicationReview] {
+            omnistudio-flex-card-state {
+                .slds-grid {
+                    .slds-size_6-of-12,
+                    .slds-size_4-of-12,
+                    .slds-size_3-of-12,
+                    .slds-size_1-of-12 {
+                        width: 100%;
+                    }
+                }
+            }
+            .accordion-subsection {
+                .slds-card {
+                    padding: 0rem;
+                }
+            }
+            .accordion-block {
+                .slds-card {
+                    padding: 0rem;
+                }
+            }
+        }
+    }
+    /* Application Details Page End */
+
+    /* Intake form Start Mobile */
+    .comm-page-custom-apply-license {
+        .cLpi_theme_forms,
+        .cModpr_theme {
+            .for-intake-forms {
+                .main-content {
+                    padding: 1rem;
+                    c-cf-m-o-d-p-r-personal-information-review,
+                    c-cf-r-s-sales-personfetch-residence-address {
+                        .slds-wrap {
+                            omnistudio-flex-card-state {
+                                .slds-card {
+                                    padding: 0;
+                                    .slds-col {
+                                        width: 100%;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                [data-omni-key=PersonalInformation] c-cf-info-box-orange .info-box {
+                    padding-top: toRem(10) !important;
+                }
+                .omniscript-article {
+                    .omniscript-side-content {
+                        top: calc(5rem - 0.75rem);
+                        width: 100%;
+                        height: 9rem;
+                        z-index: 99;
+                        background-color: $white;
+                        overflow: auto;
+                        .slds-omniscript_stepform {
+                            margin: 2.5rem 0 1rem;
+                        }
+                        .slds-is-absolute[omnistudio-omniscriptstepchartitems_omniscriptstepchartitems_horizontal] {
+                            margin: 0 auto;
+                            left: 0;
+                            right: 0;
+                            z-index: -1;
+                            //top: 5.5rem;
+                        }
+                    }
+                    .omniscript-body {
+                        width: 100%;
+                        margin: 1rem auto;
+                        .omniscript-btn-previous,
+                        .omniscript-btn-next {
+                            position: relative !important;
+                            bottom: 0 !important;
+                            right: 0 !important;
+                            margin-bottom: 0.5rem !important;
+                            button{
+                                width: 100% !important;
+                                margin-bottom: 0.5rem !important;
+                            }
+                        }
+                        .omniscript-sfl-actions{
+                            width: 100%;
+                            >div{
+                                width: 100%;
+                                text-align: center;
+                                padding: 0;
+                            }
+                            .omniscript-btn-save-for-later{
+                                button{
+                                    color: $primary-main;
+                                    padding: $xx-small;
+                                    border: 0.0625rem solid $primary-main;
+                                    width: 100%;
+                                    border-radius: 3px;
+                                    justify-content: center;
+                                }
+                            }
+                        }
+                        .slds-grid.slds-wrap.slds-gutters.slds-p-horizontal_medium.slds-hide_medium{
+                            padding: 0 !important;
+                        }
+                    }
+                }
+                omnistudio-button {
+                    width: 100% !important;
+                    position: unset;
+                    button {
+                        top: 0rem !important;
+                    }
+                }
+                omnistudio-omniscript-step-chart {
+                    omnistudio-omniscriptstepchartitems_omniscriptstepchartitems_horizontal:has(omnistudio-omniscriptstepchartitems_omniscriptstepchartitems_horizontal) {
+                        margin: 0 auto;
+                        left: 0;
+                        right: 0;
+                    }
+                }
+    
+                /* Save & Exit Success Page */
+                .primary-button-bordered.success-back-btn {
+                    width: 100%;
+                }
+                c-cf-save-exit-sucess-page .success-container {
+                    padding: .5rem;
+                }
+                
+                omnistudio-omniscript-text,
+                omnistudio-omniscript-email,
+                omnistudio-omniscript-date,
+                omnistudio-omniscript-select,
+                omnistudio-omniscript-formula,
+                omnistudio-omniscript-number,
+                omnistudio-omniscript-disclosure {
+                    width: 100%;
+                    padding-left: 0;
+                    padding-right: 0;
+                }
+                omnistudio-flex-icon {
+                    visibility: visible;
+                }
+    
+                .success-container{
+                    omnistudio-flex-icon {
+                        visibility: visible;
+                    }
+                    .success-icon img {
+                        width: 5rem;
+                        height: 5rem;
+                    }
+                    .success-text {
+                        font-size: 1.5rem;
+                    }
+                    .download-app-container, 
+                    .download-pdf-btn {
+                        margin-top: 2rem;
+                        padding-left: 0;
+                    }
+                    .primary-button-bordered.success-back-btn {
+                        width: 17rem;
+                        margin-top: 1rem;
+                        margin-bottom: 1rem;
+                    }
+                    .success-list-container{
+                        .paragraph {
+                            margin:  auto;
+                            //width: auto;
+                            padding: 0 0.5rem;
+                            ul{
+                                text-align: left;
+                            }
+                        }
+                    }
+                }
+                .omni-block_content[omnistudio-omniscriptBlock_omniscriptBlock] {
+                    padding-left: 0.5rem;
+                }
+                omnistudio-omniscript-step {
+                    .slds-p-right_small, .slds-p-right--small {
+                        padding-right: 0;
+                    }
+                }
+    
+            }
+            .slds-progress {
+                max-width: 100%;
+    
+                &__item {
+                    &.slds-is-active {
+                        .slds-progress__marker {
+                            border-color: $primary-main !important;
+                        }
+                    }
+                }
+            }
+            .omni-hz-stepchart-label[omnistudio-omniscriptStepChartItems_omniscriptStepChartItems_horizontal] {
+                margin-top: 1.25rem;
+                left: inherit;
+                text-align: center;
+                max-width: none;
+                font-weight: 700;
+                white-space: unset;
+                overflow: visible;
+                text-overflow: unset;
+           }
+           .notification-card {
+                flex-direction: column;
+           }
+           c-omniscript-step-chart-items .slds-is-absolute {
+               //position: fixed;
+           }
+        }
+    }
+    .comm-page-custom-apply-for-license {
+        .lpiContent {
+            [data-omni-key=PersonalInformation] c-cf-info-box-orange .info-box {
+                padding-top: 10px !important;
+            }
+            .omniscript-article {
+                .omniscript-side-content {
+                    top: calc(5rem - 0.75rem);
+                    width: 100%;
+                    height: toRem(120);
+                    z-index: 99;
+                    background-color: $white;
+
+                    .slds-omniscript_stepform {
+                        margin: .5rem 0 1rem;
+                    }
+                    .slds-is-absolute[omnistudio-omniscriptstepchartitems_omniscriptstepchartitems_horizontal] {
+                        margin: 0 auto;
+                        left: 0;
+                        right: 0;
+                    }
+                }
+                .omniscript-body {
+                    width: 100%;
+                    position: relative;
+                }
+            }
+            omnistudio-button {
+                width: 100% !important;
+                button {
+                    top: 0rem !important;
+                }
+            }
+            omnistudio-omniscript-step-chart {
+                omnistudio-omniscriptstepchartitems_omniscriptstepchartitems_horizontal:has(omnistudio-omniscriptstepchartitems_omniscriptstepchartitems_horizontal) {
+                    margin: 0 auto;
+                    left: 0;
+                    right: 0;
+                }
+            }
+
+            /* Save & Exit Success Page */
+            .primary-button-bordered.success-back-btn {
+                width: 100%;
+            }
+            c-cf-save-exit-sucess-page .success-container {
+                padding: .5rem;
+            }
+            
+            omnistudio-omniscript-text,
+            omnistudio-omniscript-email,
+            omnistudio-omniscript-date,
+            omnistudio-omniscript-select,
+            omnistudio-omniscript-formula,
+            omnistudio-omniscript-disclosure {
+                width: 100%;
+                padding-left: 0;
+                padding-right: 0;
+            }
+            omnistudio-flex-icon {
+                visibility: hidden;
+            }
+        }
+        .for-intake-forms {
+            .omniscript-article.slds-card {
+                .omniscript-body {
+                    .omniscript-btn-previous,
+                    .omniscript-btn-next {
+                        position: relative !important;
+                        bottom: 0 !important;
+                        right: 0;
+                        margin-bottom: 0.5rem;
+                    }
+                    .slds-order_2{
+                        margin-top: 1rem;
+                        .omniscript-sfl-actions{
+                            div{
+                                width: 100%;
+                                padding: 0;
+                                .omniscript-btn-save-for-later{
+                                    .slds-button.slds-button_base {
+                                        border: toRem(1) solid $primary-main;
+                                        padding: 0.1875rem;
+                                        font-weight: 500;
+                                        color: $primary-main;
+                                        padding: 0.25rem !important;
+                                        .btnLabel{
+                                            font-size: $font-size-16;
+                                            font-weight: $font-weight-semi-bold;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    omnistudio-omniscript-text-block[data-omni-key=TB_NonRef] {
+        width: 50%;
+    }
+    
+    omnistudio-omniscript-text-block[data-omni-key=TB_TotalDueAmt] {
+        width: 50%;
+        padding-right: 0;
+    }
+    // c-radio-group {
+    //     .slds-form-element__control.slds-grid {
+    //         flex-direction: column;
+    //         .slds-radio {
+    //             margin: 0.2rem 0;
+    //         }
+    //     }
+    // }
+    .slds-p-around_x-small {
+        padding: 0.25rem !important;
+    }
+
+    c-cf-m-o-d-p-r-business-information-review-f-c{
+        .slds-p-around_x-small {
+            padding: 0.1rem 0.25rem;
+        }
+    }
+
+    /* Intake form End */
+
+    c-cf-alias-table {
+        .slds-table.table.slds-data-table {
+                min-width: 42rem;
+         }
+    }
+}
+
+@media all and (max-width: $screen-lg) {
+    omnistudio-omniscript-edit-block-wrapper {
+        overflow-x: scroll;
+        overflow-y: hidden;
+        padding: 2rem 0;
+    }
+    omnistudio-omniscript-edit-block {
+        max-width: 100%;
+        overflow: inherit;
+        min-width: 62.5rem;
+        padding: 0.3rem;
+        .slds-is-absolute {
+            position: fixed;
+            width: auto !important;
+            height: auto !important;
+        }
+        .slds-col_bump-left {
+            margin-left: 0rem;
+        }
+    }
+    .create-account-block{
+        .account-button {
+            line-height: inherit;
+        }
+    }
+    .uiPanel--default.uiPanel.forceMobileOverlay.open.active {
+        button {
+            padding: 0.5rem 1.5rem;
+        }
+        .label {
+            margin: 0;
+        }
+    }
+    .slds-modal__container {
+        width: 96%;
+        margin: 0 auto;
+        padding: 1rem !important;
+    }
+    // c-cf-m-o-d-p-r_-fee-data .block-container .slds-wrap .slds-col {
+    //     display: contents;
+    //     .slds-text-align_right {
+    //         margin-left: 3rem;
+    //     }
+        
+    // }
+
+    [data-omni-key="E-mailAddressRO"]{
+        .tooltipSection[omnistudio-tooltip_tooltip] {
+            width: 12rem;
+        }
+    }
+}
+
+
+/* Portrait */
+@media screen and (orientation: portrait) {
+	/* Portrait styles here */
+}
+
+/* Landscape */
+@media screen and (orientation: landscape) {
+	/* Landscape styles here */
+}
+
+/* CSS for iPhone, iPad, and Retina Displays */
+
+/* Non-Retina */
+@media screen and (-webkit-max-device-pixel-ratio: 1) {
+}
+
+/* Retina */
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5),
+	only screen and (-o-min-device-pixel-ratio: 3/2),
+	only screen and (min--moz-device-pixel-ratio: 1.5),
+	only screen and (min-device-pixel-ratio: 1.5) {
+}
+
+/* iPhone Portrait */
+@media screen and (max-device-width: $screen-xs) and (orientation: portrait) {
+}
+
+/* iPhone Landscape */
+@media screen and (max-device-width: $screen-xs) and (orientation: landscape) {
+}
+
+/* iPad Portrait */
+@media screen and (min-device-width: $screen-xs-min) and (orientation: portrait) {
+}
+
+/* iPad Landscape */
+@media screen and (min-device-width: $screen-xs-min) and (orientation: landscape) {
+}

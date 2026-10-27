@@ -1,0 +1,122 @@
+// .licenses-details{
+//     font-family: $font-family;
+//     h2{
+//         font-weight: $font-weight-bold;
+//         font-size:$font-size-20;
+//         color: $text-dark-blue;
+//     }
+//     &__left{
+//         .slds-accordion{
+//             &__list-item {
+//                 border: toRem(1) solid $accordion-border;
+//                 border-radius: $border-radius-medium;
+//                 margin-bottom: 1rem;
+//                 &:first-child {
+//                     border-top: toRem(1) solid $accordion-border;
+//                 }
+//             }
+//             &__summary-action {
+//                 color: $primary-main;
+//                 font-weight: $font-weight-semi-bold;
+//                 font-size:$font-size-18;
+//                 flex-direction: row-reverse;
+//                 justify-content: space-between;
+//                 .slds-icon_container{
+//                     lightning-primitive-icon {
+//                         display: flex;
+//                     }
+//                 }
+//             }
+
+//             &__summary-heading{
+//                 .slds-button:focus {
+//                     text-decoration: none;
+//                 }
+//             }
+
+//             &__content{
+//                 padding-left: 0.4rem;
+//             }
+//         }
+//         .label {
+//             font-weight: $font-weight-semi-bold;
+//             font-size: $font-size-14;
+//             text-transform: uppercase;
+//             color: $text-dark-gray;
+//         }
+//         .value {
+//             font-size: $font-size-16;
+//             color: $text-dark-blue;
+//             overflow-wrap: break-word;
+//         }
+
+//         @media only screen and (max-width: 48rem) {
+//             .slds-medium-size_4-of-12 {
+//                 width: 100%;
+//                 &:last-child {
+//                     margin-bottom: 0;
+//                 }
+//             }
+//         }
+//     }
+//     &__right{
+//         .button-group {
+//             display: flex;
+//             flex-direction: column;
+//             .slds-button{
+//                 width: 100%;
+//                 padding: 0.1874rem;
+//                 font-size: 0.875rem;
+//                 &_brand{
+//                     background: $primary-main;
+//                 }
+//             }
+//         }
+//     }
+// }
+
+// .payments-details{
+//     font-family: $font-family;
+//     background-color: $white;
+//     padding: 1.5rem;
+//     h1, h2{
+//         font-weight: $font-weight-bold;
+//         font-size:$font-size-20;
+//         color: $text-dark-blue;
+//     }
+//     .label {
+//         font-weight: $font-weight-semi-bold;
+//         font-size: $font-size-14;
+//         text-transform: uppercase;
+//         color: $text-dark-gray;
+//     }
+//     .value {
+//         font-size: $font-size-16;
+//         color: $text-dark-blue;
+//         overflow-wrap: break-word;
+//     }
+// }
+
+// .student-applications-table{
+//     .slds-card__header {
+//         padding-left: 0;
+//     }
+//     .view-btn{
+//         .slds-button{
+//             border:none;
+//             &:hover {
+//                 background: none;
+//             }
+//         }
+//     }
+// }
+
+// .licenses-details.licenses-search-details {
+//     .slds-button{
+//         font-size: 1rem;
+//     }
+//     .slds-accordion__content {
+//         padding: 1rem;
+//         border: toRem(1) solid $accordion-border;
+//     }
+// }

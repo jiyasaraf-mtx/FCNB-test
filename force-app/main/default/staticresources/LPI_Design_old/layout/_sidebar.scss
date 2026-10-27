@@ -1,0 +1,267 @@
+// .sidebar-navigation {
+//     display: flex;
+//     height: $percentage-100;
+
+//     .sidebar-left {
+//         text-align: center;
+//         padding: $x-ms-small 0.5rem;
+//         font-size: $font-size-14;
+//         box-shadow: $sidebar-box-shadow;
+//         background-color: $white;
+//         z-index: 1;
+
+//         li{
+//             cursor: pointer;
+//             a{
+//                 display: block;
+//                 color: rgb(43, 43, 43) !important;
+//                 font-weight: 600;
+//             }
+//             svg{
+//                 margin-bottom: 0.438rem;
+//                 background: $background-light;
+//                 height: 2.5rem;
+//                 width: 2.5rem;
+//                 padding: $x-ms-small;
+//                 border-radius: 0.313rem;
+//             }
+//             p{
+//                 font-size: $font-size-13;
+//             }
+//             &.help-link {
+//                 position: fixed;
+//                 bottom: 10.25rem;
+//                 // width: 5.625rem;
+//             }
+//             &.user-link {
+//                 position: fixed;
+//                 bottom: 0;
+//                 // width: 5.625rem;
+//                 margin-bottom: 4rem;
+//             }
+//         }
+//     }
+
+//     [data-active="active-child"]{
+//         p{
+//             color: $primary-main !important; 
+//             font-weight: 600;
+//         }
+//         svg{
+//             background: $primary-main !important;
+//             height: 2.5rem;
+//             width: 2.5rem;
+//             padding: $x-ms-small;
+//             border-radius: 0.313rem;
+    
+//             path {
+//                 fill: $white !important;
+//             }
+//         }
+//     }
+
+//     .sub-sidebar {
+//         font-size: $font-size-13;
+//         line-height: 2.5;
+//         box-shadow: $sidebar-box-shadow;
+//         background-color: $white;
+//         width: $percentage-100;
+//         position: relative;
+//         left: -100%;
+//         overflow: auto;
+//         height: calc(100vh - 4.625rem);
+//         padding-bottom: 1rem;
+//         @media all and (max-width: 767px) {
+//             overflow: unset;
+//             height: auto;
+//         }
+//         .sub-menu {
+//             li a{ 
+//                 cursor: pointer;
+//                 font-size: $font-size-14;
+//                 font-weight:  $font-weight-regular;
+//                 color: $text-secondary !important;
+//                 position: relative;
+//                 padding: 0.25rem 1.5rem;
+//                 display: flex;
+//                 .blue-img{
+//                     display: none;
+//                 }
+//                 &.active {
+//                     background: $background-light;
+//                     border-right: 0.1875rem solid $primary-main;
+//                     color: $primary-main !important;
+//                     font-weight: $font-weight-semi-bold;
+//                     .grey-img{
+//                         display: none;
+//                     }
+//                     .blue-img{
+//                         display: inline-block;
+//                     }
+//                 }
+//                 &:focus{
+//                     outline-offset: toRem(-3) !important;
+//                 }
+//             }
+//             .section {
+//                 margin-top: 2rem;
+//             }
+//             .apply-btn{
+//                 border: 0.125rem solid $primary-main;
+//                 padding: 0.063rem;
+//                 border-radius: 0.25rem;
+
+//                 button{
+//                     padding: 0.313rem $x-ms-small;
+//                     background: $primary-main;
+//                     color: $white;
+//                     border: 0.063rem solid $white;
+//                     position: relative;
+//                     border-radius: 0.25rem;
+//                     width: $percentage-100;
+//                 }
+//             }
+//             .label{
+//                 text-transform: uppercase;
+//                 font-weight: $font-weight-semi-bold;
+//                 color: $primary-main;
+//                 font-size: $font-size-10;
+//             }
+//             .padding-shift-left{
+//                 padding-left: $x-ms-small;
+//             }
+//             .unread-notification {
+//                 background: $notification-background;
+//                 padding: 0.25rem 0.375rem;
+//                 border-radius: calc($percentage-100 / 2);
+//                 line-height: 1;
+//                 color: $white;
+//                 margin-left: 0.313rem;
+//                 position: absolute;
+//                 top: 0.75rem;
+//                 right: 1.875rem;
+//                 font-size: $font-size-10;
+//             }
+//             .slds-button_neutral {
+//                 padding: 0.3rem 0.6rem;
+//                 font-size: 0.81rem;
+//                 color: $primary-main;
+//                 border: 0.125rem solid $primary-main;
+//                 width: 100%;
+//                 line-height: 1.2rem;
+//             }
+//             .primary-button-bordered {
+//                 padding: 0;
+//                 border: 0;
+//             }
+//         }
+//     }
+// }
+
+// .profile-name.sidebar-select-account-dropdown {
+//     margin: 1rem;
+//     border: toRem(1) solid $table-border_grey;
+//     border-radius: toRem(4);
+//     padding: 0.5rem;
+//     display: none;
+//     @media all and (max-width: $screen-sm) {
+//         display: block;
+//         .slds-dropdown-trigger_click.slds-is-open .slds-dropdown{
+//             max-width: 17rem;
+//         }
+//     }
+//     p.user-role {
+//         font-size: toRem(12);
+//         color: $text-dark-gray;
+//     }
+//     .header-menu{
+//         .slds-dropdown-trigger{
+//             width: 100%;
+//             .slds-button{
+//                 font-weight: 700;
+//                 font-size: toRem(14);
+//                 line-height: toRem(14);
+//                 color: $text-dark-blue;
+//                 display: flex;
+//                 justify-content: space-between;
+//                 width: 100%;
+//                 text-align: left;
+//             }
+//         }
+//     }
+// }
+
+// .assocBusiAcc {
+//     .slds-button_neutral {
+//         padding: 0.3rem 0.8rem !important;
+
+//         &:focus {
+//             outline-offset: toRem(8) !important;
+//         }
+//     }
+// }
+
+// .preLincPeti{
+//     .slds-button_neutral {
+//         padding: 0.3rem 1.4rem !important;
+
+//         &:focus {
+//             outline-offset: toRem(8) !important;
+//         }
+//     }
+// }
+
+// .slds-col.nav-sidebar.close .sub-menu {
+//     display: none;
+// }
+
+// .dashboard-menu-link{
+//     a {
+//         display: flex !important;
+//         justify-content: space-between;
+//         .notification-icon{
+//             position: relative;
+//             &::after {
+//                 content: attr(data-count);
+//                 position: absolute;
+//                 height: 1rem;
+//                 width: 1rem;
+//                 color: white;
+//                 background-color: red;
+//                 font-size: 0.5rem;
+//                 right: -0.25rem;
+//                 top: 0.25rem;
+//                 border-radius: 50%;
+//                 display: flex;
+//                 align-items: center;
+//                 justify-content: center;
+//             }
+//         }
+//     }
+// }
+
+// .sidebar_helptextContainer{
+//     display: flex;
+//     align-items: center;
+//     color: $link-blue;
+//     font-size: $font-size-14;
+//     lightning-helptext{
+//         position: relative;
+//         top: 0.25rem;
+//         z-index: 0;
+//         .slds-button__icon{
+//             fill: $link-blue;
+//             width: 1.2rem;
+//             height: 1.2rem;
+//         }
+//     }
+//     span{
+//         line-height: 1.2rem;
+//     }
+// }
+
+// .menu-help{
+//     .slds-form-element__icon{
+//         vertical-align: text-bottom;
+//     }
+// }

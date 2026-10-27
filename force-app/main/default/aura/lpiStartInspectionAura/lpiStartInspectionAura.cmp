@@ -1,0 +1,10 @@
+<!--
+  @description       : 
+  @author            : Vamsi Mudaliar
+  @group             : 
+  @last modified on  : 07-21-2023
+  @last modified by  : Vamsi Mudaliar
+-->
+<aura:component implements="flexipage:availableForRecordHome,force:lightningQuickActionWithoutHeader,force:hasRecordId">
+    <c:lpiStartInspection recordId ="{!v.recordId}" onclose="{!c.closeQuickAction}"/>
+</aura:component>

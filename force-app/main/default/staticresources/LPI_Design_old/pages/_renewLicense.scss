@@ -1,0 +1,56 @@
+// c-cf-renew-license, comm-page-custom-renew-license-details {
+//     .slds-grid.slds-wrap.slds-card {
+//         box-shadow: none; 
+//         background: $background-light;
+//         padding: 0;
+//         omnistudio-block[data-style-id="state0element0_child"] {
+//             div[data-style-id="state0element0block_element0"].slds-col.page-heading.slds-size_2-of-12 {
+//                 width: max-content;
+//             }
+//             div[data-style-id="state0element0block_element2"].slds-col {
+//                 margin-top: 1rem;
+//             }
+//         }
+//         omnistudio-block[data-style-id="state0element0block_element1_child"] {
+//             .slds-col.slds-size_6-of-12,.slds-col.slds-size_3-of-12 {
+//                 width: max-content;
+//             }
+//         }
+//         .domain{
+//             margin-top: 0.25rem;
+//             width: max-content;
+//             img {
+//                 width: 1.125rem;
+//                 padding-bottom: 0.25rem;
+//             }
+//         }
+//         c-cf-licensing-table-row  { 
+//             div[data-style-id="state0element0block_element5"] {
+//                 .block-container {
+//                     .slds-col.slds-size_12-of-12 {
+//                         background: $warning-lyt;
+//                         width: max-content;
+//                         padding: 0.125rem 0.25rem;
+//                         border-radius: $border-radius-medium;
+//                         .slds-rich-text-editor__output {
+//                             color: $warning;
+//                         }
+//                     }
+//                 }
+//             }
+//         }
+//     }
+// }
+// c-cf-renew-license-payment, c-cf-application-payment-details {
+//     .secondary-button, .primary-button {
+//         .slds-button_outline-brand, .slds-button_brand  {
+//             width: 100%;
+//         }
+//         .slds-button_brand {
+//             background: $primary-main;
+//             padding: 0.1874rem;
+//             font-size: $font-size-14;
+//             border: toRem(1) solid $primary-main;
+//         }
+//     }
+// }

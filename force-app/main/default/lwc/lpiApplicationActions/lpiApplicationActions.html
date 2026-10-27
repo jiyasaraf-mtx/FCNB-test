@@ -1,0 +1,118 @@
+<!--
+  @description       : 
+  @author            : Vamsi Mudaliar
+  @group             : 
+  @last modified on  : 06-12-2024
+  @last modified by  : Bharath Kumar M
+-->
+<template>
+    <div if:true={showSpinner}>
+		<lightning-spinner size="medium" alternative-text="Loading"></lightning-spinner>
+	</div>
+    <div class="slds-grid slds-wrap">
+        <div class="slds-col slds-size_1-of-1 licenses-details licenses-details__right">
+            <div class="slds-card custom-card">
+                <lightning-spinner variant="brand" size="medium" if:true={isProcessing} alternative-text="Loading"></lightning-spinner>
+                <h2>Application Actions</h2>
+                <div>
+                    <div class="slds-grid slds-wrap" if:false={hideDetails}>
+
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12 m-b-medium">
+                            <div class="cc-col-field-values">
+                                <label class="cc-field-value-label">Application Number</label>
+                                <p class="cc-field-value" >{applicationData.applicationName}</p>
+                            </div>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12 m-b-medium">
+                            <div class="cc-col-field-values">
+                                <label class="cc-field-value-label">License Type</label>
+                                <p class="cc-field-value" >{applicationData.licenceType}</p>
+                            </div>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12 m-b-medium">
+                            <div class="cc-col-field-values">
+                                <label class="cc-field-value-label">Application Type</label>
+                                <p class="cc-field-value" >{applicationData.applicationType}</p>
+                            </div>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12 m-b-medium">
+                            <div class="cc-col-field-values">
+                                <label class="cc-field-value-label">Application Sub Type</label>
+                                <p class="cc-field-value" >{applicationData.applicationSubType}</p>
+                            </div>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12 m-b-medium">
+                            <div class="cc-col-field-values">
+                                <label class="cc-field-value-label">Submitted</label>
+                                <p class="cc-field-value" >{applicationData.submmittedDate}</p>
+                            </div>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12 m-b-medium">
+                            <div class="cc-col-field-values">
+                                <label class="cc-field-value-label">Status</label>
+                                <p class="cc-field-value" >{applicationData.externalStatus}</p>
+                            </div>
+                        </div>
+                        <!-- Added by Vamsi Mudaliar S-57045 -->
+                        <template if:true={applicationData.isExamEligible}>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12 m-b-medium">
+                                <div class="cc-col-field-values">
+                                    <label class="cc-field-value-label">Written Exam Eligibility</label>
+                                    <p class="cc-field-value" >{applicationData.writtenEligibleToTest}</p>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12 m-b-medium">
+                                <div class="cc-col-field-values">
+                                    <label class="cc-field-value-label">Practical Exam Eligibility</label>
+                                    <p class="cc-field-value" >{applicationData.practicalEligibleToTest}</p>
+                                </div>
+                            </div>
+                            <!-- <div class="slds-col slds-size_1-of-2">Written Exam Eligibility</div>
+                            <div class="slds-col slds-size_1-of-2">{applicationData.writtenEligibleToTest}</div>    
+                            
+                            <div class="slds-col slds-size_1-of-2">Practical Exam Eligibility</div>
+                            <div class="slds-col slds-size_1-of-2">{applicationData.practicalEligibleToTest}</div>     -->
+                        </template>
+
+
+                        <!-- <div class="slds-col slds-size_1-of-2">Application Number</div>
+                        <div class="slds-col slds-size_1-of-2">{applicationData.applicationName}</div>
+                        <div class="slds-col slds-size_1-of-2">License Type</div>
+                        <div class="slds-col slds-size_1-of-2">{applicationData.licenceType}</div>
+                        <div class="slds-col slds-size_1-of-2">Application Type</div>
+                        <div class="slds-col slds-size_1-of-2">{applicationData.applicationType}</div>
+                        <div class="slds-col slds-size_1-of-2">Application Sub Type</div>
+                        <div class="slds-col slds-size_1-of-2">{applicationData.applicationSubType}</div>
+                        <div class="slds-col slds-size_1-of-2">Submitted</div>
+                        <div class="slds-col slds-size_1-of-2">{applicationData.submmittedDate}</div>
+                        <div class="slds-col slds-size_1-of-2">Status</div>
+                        <div class="slds-col slds-size_1-of-2">{applicationData.externalStatus}</div>
+                         -->
+                    </div>
+                    <div class="application-action-buttons m-t-large slds-grid slds-grid--align-end slds-wrap">
+                            <template for:each={buttonList} for:item="item" for:index="ind">
+                                <lightning-button class=" slds-m-right_medium" key={item} variant="brand-outline" label={item.label}
+                                        name={item.name} data-button-data={item.buttonData} data-id={ind}
+                                        onclick={handleAction}>
+                                </lightning-button>
+                            </template>
+                    </div>
+                </div>
+            </div>
+            <template if:true={isPortal}>
+                <p class="slds-m-top_small">
+                    <span class="c-red">*</span>
+                    <span> Please note credit/debit card transactions will 
+                        incur a processing fee.</span>
+                </p>
+            </template>
+            
+        </div>
+    </div>
+    <!-- Start - Added by Ayush S-56590 -->
+    <template if:true={showLicenseVerificationForm}>
+        <c-lpi-verification-of-licensure-document-verification application-id={recordId} licensure-verification-button-j-s-o-n={licensureVerificationButtonJSON} onclosemodal={closeVerificationModal}></c-lpi-verification-of-licensure-document-verification>
+    </template>
+    <!-- End - Added by Ayush S-56590 -->
+    <c-lpi-bad-check-warning record-id={recordId} if:false={isPortal}></c-lpi-bad-check-warning>
+</template>

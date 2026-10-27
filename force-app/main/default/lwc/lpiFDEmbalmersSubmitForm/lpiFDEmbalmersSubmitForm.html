@@ -1,0 +1,22 @@
+<template>
+    <div class="complaint-form">
+        <div class="complaint-form__banner slds-p-around_x-large">
+            <h1>Submit Registration Form(s)</h1>
+        </div>
+        <template if:true={showSpinner}>
+            <lightning-spinner size="medium" alternative-text="Loading..." class="slds-is-fixed"></lightning-spinner>
+        </template>
+        <div>
+            <div class="slds-m-vertical_medium">
+                <c-lpi-view-uploaded-documents object-id={iaId} show-fd-record={showFDRecords} ia-id={iaId}>
+                </c-lpi-view-uploaded-documents>
+            </div>
+            <div class="slds-clearfix">
+                <div class="slds-float_left">
+                    <lightning-button label="Submit" variant="brand" title="Submit" onclick={handleSubmit}>
+                    </lightning-button>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

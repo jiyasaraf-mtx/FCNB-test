@@ -1,0 +1,18 @@
+<template>
+    <div class="homepage">
+        <template if:true={isApplicationMode}>
+            <div id="agent-review-salesperson">
+                <c-emp-agent-review-salesperson
+                    page-mode={applicationPageMode}
+                    show-header
+                ></c-emp-agent-review-salesperson>
+            </div>
+        </template>
+        <template if:true={isOrgAdminMode}>
+            <c-arp-organization-admin
+                page-mode={pageMode}
+                onarpnavigate={handleOrgNavigate}
+            ></c-arp-organization-admin>
+        </template>
+    </div>
+</template>

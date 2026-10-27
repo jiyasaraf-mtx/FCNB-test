@@ -1,0 +1,320 @@
+<!--
+  @description       : Contact Us and Support component updated for FCNB licensing and regulatory portal.
+  @author            : Mounika Dasari
+  @group             : 
+  @last modified on  : 08-27-2026
+  @last modified by  : Juhi Goel
+-->
+<template>
+    <div class="unauth-bg_image">
+        <div class="slds-container--center slds-container--x-large">
+            <div class="slds-grid slds-wrap p-t-large contact-block">
+                <div class="slds-col slds-large-size--6-of-12 slds-size_12-of-12 slds-p-right--xx-large unauth-contact_desc">
+                    <div>
+                        <h1 class="text-white bold-40 p-b-medium">Contact Us<br/>
+                            We are here to help you.</h1>
+                        <p class="text-white">Thank you for contacting the Financial and Consumer Services Commission of New Brunswick (FCNB). We are here to assist you with licensing inquiries, regulatory compliance, filing assistance, or general consumer inquiries across all regulated sectors.</p>
+                    </div>
+                    <div class="contact-icons d-flex direction-column">
+                        <div class="contact-icons_pill d-flex items-center">
+                            <div class="contact-icons_pill-bg">
+                                <i class="material-icon material-icon-mail_outline"></i>
+                            </div>
+                            <div>
+                                <p class="regular-text-14 text-white">Email us</p>
+                                <p class="bold-24 text-white">info@fcnb.ca</p>
+                            </div>
+                        </div>
+                        <div class="contact-icons_pill d-flex items-center">
+                            <div class="contact-icons_pill-bg">
+                                <i class="material-icon material-icon-local_phone"></i>
+                            </div>
+                            <div>
+                                <p class="regular-text-14 text-white">Phone numbers</p>
+                                <p class="bold-24 text-white">1 866 933-2222 (Toll-Free)</p>
+                                <p class="regular-text-14 text-white">Local: (506) 658-3000</p>
+                            </div>
+                        </div>
+                        <div class="contact-icons_pill d-flex items-center">
+                            <div class="contact-icons_pill-bg">
+                                <i class="material-icon material-icon-access_time"></i>
+                            </div>
+                            <div>
+                                <p class="regular-text-14 text-white">Office hours</p>
+                                <p class="bold-24 text-white">Monday - Friday: 8:30 AM - 4:30 PM AST</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-col unauth-contact_form slds-card slds-large-size--6-of-12 slds-size_12-of-12">
+                    <h2 class="m-b-small">Support Request & Inquiry Form</h2>
+                    <p class="m-b-small">If you have questions regarding licensing, regulatory filings, or portal support, please submit a inquiry ticket by completing the form below.</p>
+                        <div class="slds-grid slds-gutters slds-wrap">
+                            <div class="slds-col slds-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12 p-b-small">
+                                <lightning-input type="text" label="First Name" name="firstName"
+                                    onchange={handleChange} placeholder="Enter First Name" required></lightning-input>
+                            </div>
+                            <div class="slds-col slds-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12 p-b-small">
+                                <lightning-input type="text" label="Last Name" name="lastName"
+                                     onchange={handleChange} placeholder="Enter Last Name" required></lightning-input>
+                            </div>
+                            <div class="slds-col slds-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_12-of-12 p-b-small">
+                                <lightning-input type="email" label="Email Address" name="customerEmail"
+                                    onchange={handleChange} placeholder="Enter Email Address" required></lightning-input>
+                            </div>
+                            <div class="slds-col slds-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_12-of-12 p-b-small">
+                                <lightning-combobox name="ticketType" label="Inquiry / Ticket Category" required
+                                    placeholder="Select category from the list" options={ticketTypeOptions}
+                                    onchange={handleChange}></lightning-combobox>
+                            </div>
+                            <template if:true={ifQuestion}>
+                                <div class="slds-col slds-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_12-of-12 p-b-small">
+                                    <lightning-input type="text" label="Specific Question / Assistance Required" name="externalComment" placeholder="Enter details of your question"
+                                        onchange={handleChange} required></lightning-input>
+                                </div>
+                            </template>
+                            <div class="slds-col slds-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_12-of-12 p-b-small">
+                                <lightning-input type="text" label="Subject" name="subject" placeholder="Enter subject here"
+                                    onchange={handleChange} required></lightning-input>
+                            </div>
+                            <div class="slds-col slds-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_12-of-12 p-b-small">
+                                <lightning-input type="text" label="License / Application Number (Optional)" name="appNumber" placeholder="e.g. LIC-123456" onchange={handleChange}></lightning-input>
+                            </div>
+                            <div class="slds-col slds-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_12-of-12 p-b-small">
+                                <lightning-textarea label="Description" name="description" placeholder="Provide full details of your inquiry or issue..."
+                                   onchange={handleChange} required></lightning-textarea>
+                            </div>
+                    </div>
+                    <div class="slds-text-align--right p-t-small">
+                        <lightning-button variant="brand" label="Submit Ticket" title="Submit Ticket" onclick={handleSubmit}
+                        ></lightning-button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="recent-section">
+        <div class="slds-container--center slds-container--x-large">
+            <div class=" slds-grid slds-grid_align-spread slds-grid_vertical-align-center m-b-medium">
+                <h3 class="bold-32">Recent Announcements</h3>
+                <lightning-button variant="base" label="Read all recent announcements" title="Read all recent announcements"
+                    onclick={handleClick} class="base-link"></lightning-button>
+            </div>
+            <div class="slds-grid slds-wrap slds-gutters_direct-medium">
+                <div class="slds-col slds-large-size--4-of-12 slds-medium-size--4-of-12 slds-size--12-of-12">
+                    <div class="recent-content">
+                        <img src={licensing} alt="Online Portal Launch">
+                        <div class="slds-card">
+                            <span class="regular-text-14 slds-badge slds-theme_info m-b-xs">Posted 3 days ago</span>
+                            <h4 class="bold-20 m-b-xs">Online Portal for Regulated Sectors</h4>
+                            <p class="m-b-small text-secondary">Submit applications, manage filings, and track licensing statuses through FCNB's streamlined online licensing and permitting portal.</p>
+                            <lightning-button variant="base" label="Read more" title="Read more" onclick={handleClick} class="base-link"></lightning-button>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-col slds-large-size--4-of-12 slds-medium-size--4-of-12 slds-size--12-of-12">
+                    <div class="recent-content">
+                        <img src={feeStructure} alt="Fee Schedule Updates">
+                        <div class="slds-card">
+                            <span class="regular-text-14 slds-badge slds-theme_info m-b-xs">Posted 1 week ago</span>
+                            <h4 class="bold-20 m-b-xs">Regulatory Fee Structure & Payment Guidelines</h4>
+                            <p class="m-b-small text-secondary">Review the current fee schedule and electronic payment requirements for license applications and annual renewals across all divisions.</p>
+                            <lightning-button variant="base" label="Read more" title="Read more" onclick={handleClick} class="base-link"></lightning-button>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-col slds-large-size--4-of-12 slds-medium-size--4-of-12 slds-size--12-of-12">
+                    <div class="recent-content">
+                        <img src={renewals} alt="Renewal Requirements">
+                        <div class="slds-card">
+                            <span class="regular-text-14 slds-badge slds-theme_info m-b-xs">Posted 1 month ago</span>
+                            <h4 class="bold-20 m-b-xs">Annual License Renewal Updates</h4>
+                            <p class="m-b-small text-secondary">Ensure timely submission of your annual renewal and compliance filings. Log in to your portal account to review upcoming deadlines.</p>
+                            <lightning-button variant="base" label="Read more" title="Read more" onclick={handleClick} class="base-link"></lightning-button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="faq-section">
+            <div class="slds-container--center slds-container--x-large">
+                <div class="slds-grid slds-wrap slds-gutters_direct-medium">
+                    <div class="slds-col slds-large-size--4-of-12 slds-medium-size--12-of-12 slds-size--12-of-12">
+                        <div class="faq-content">
+                            <h3 class="bold-32 m-b-medium">Frequently Asked Questions</h3>
+                            <p class="m-b-medium">Find answers to common questions about licensing, renewals, consumer complaints, and regulatory requirements across all financial and consumer services sectors in New Brunswick.</p>
+                            <lightning-button variant="brand" label="Learn more" title="Learn more about FAQs" onclick={handleClick} class="btn-right-arrow"></lightning-button>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-large-size--8-of-12 slds-medium-size--12-of-12 slds-size--12-of-12">
+                        <div class="slds-accordion">
+                            <div class="slds-accordion__list-item">
+                                <section class={sectionClass1}>
+                                    <div class="slds-accordion__summary">
+                                        <h3 class="slds-accordion__summary-heading">
+                                            <div class="slds-accordion__summary-action"
+                                                aria-controls="referenceId-44" aria-expanded="true"
+                                                data-name="apply"
+                                                title="How to Apply for a License">
+                                                <span class="slds-accordion__summary-content">How do I apply for a license or registration?</span>
+                                                <div class="slds-accordion__summary-content-icon">
+                                                    <lightning-button variant="base" class="base-accordion-btn base-link-btn" 
+                                                        data-name="apply" label={btnLabel}
+                                                        title="How to Apply for a License" aria-label="Show Information" onclick={handleAccordianClick}></lightning-button>
+                                                </div>
+                                            </div>
+                                        </h3>
+                                    </div>
+                                    <div class="slds-accordion__content cc-card-body" id="referenceId-42">
+                                        <p>Select your regulated sector, gather the required compliance documents and background checks, and submit your application through the portal. Ensure all required fields and fee payments are complete prior to submission.</p>
+                                    </div>
+                                </section>
+                                <section class={sectionClass2}>
+                                    <div class="slds-accordion__summary">
+                                        <h3 class="slds-accordion__summary-heading">
+                                            <div class="slds-accordion__summary-action"
+                                                aria-controls="referenceId-43" aria-expanded="false"
+                                                data-name="Renew"
+                                                title="How to Renew a License">
+                                                <span class="slds-accordion__summary-content">How do I submit an annual renewal?</span>
+                                                <div class="slds-accordion__summary-content-icon">
+                                                    <lightning-button variant="base" class="base-accordion-btn base-link-btn" 
+                                                        data-name="Renew" label={btnLabel}
+                                                        title="How to Renew a License" aria-label="Show Information" onclick={handleAccordianClick}></lightning-button>
+                                                </div>
+                                            </div>
+                                        </h3>
+                                    </div>
+                                    <div class="slds-accordion__content cc-card-body" id="referenceId-43">
+                                        <p>Log in to your portal account before your license expiration date. Select your active license, review and update your information, attach required annual filings, and submit the renewal fee.</p>
+                                    </div>
+                                </section>
+                                <section class={sectionClass3}>
+                                    <div class="slds-accordion__summary">
+                                        <h3 class="slds-accordion__summary-heading">
+                                            <div class="slds-accordion__summary-action"
+                                                aria-controls="referenceId-43" aria-expanded="false"
+                                                data-name="payment"
+                                                title="How to make payment for a License">
+                                                <span class="slds-accordion__summary-content">What payment methods are accepted for regulatory fees?</span>
+                                                <div class="slds-accordion__summary-content-icon">
+                                                    <lightning-button variant="base" class="base-accordion-btn base-link-btn" 
+                                                        data-name="payment" label={btnLabel}
+                                                        title="How to make payment for a License" aria-label="Show Information" onclick={handleAccordianClick}></lightning-button>
+                                                </div>
+                                            </div>
+                                        </h3>
+                                    </div>
+                                    <div class="slds-accordion__content cc-card-body" id="referenceId-44">
+                                        <p>FCNB accepts electronic payments including credit cards and electronic funds transfers through the secure online portal payment gateway during application or renewal submission.</p>
+                                    </div>
+                                </section>
+                                <section class={sectionClass4}>
+                                    <div class="slds-accordion__summary">
+                                        <h3 class="slds-accordion__summary-heading">
+                                            <div class="slds-accordion__summary-action"
+                                                aria-controls="referenceId-45" aria-expanded="false"
+                                                data-name="Resume"
+                                                title="How to Resume an application">
+                                                <span class="slds-accordion__summary-content">How do I resume a saved application draft?</span>
+                                                <div class="slds-accordion__summary-content-icon">
+                                                    <lightning-button variant="base" class="base-accordion-btn base-link-btn" 
+                                                        data-name="Resume" 
+                                                        title="How to Resume an application" aria-label="Show Information" onclick={handleAccordianClick}></lightning-button>
+                                                </div>
+                                            </div>
+                                        </h3>
+                                    </div>
+                                    <div class="slds-accordion__content cc-card-body" id="referenceId-45">
+                                        <p>Log into your portal dashboard, navigate to "Draft Applications," and click "Resume" next to your pending draft to continue entering information or uploading documents.</p>
+                                    </div>
+                                </section>
+                                <section class={sectionClass5}>
+                                    <div class="slds-accordion__summary">
+                                        <h3 class="slds-accordion__summary-heading">
+                                            <div class="slds-accordion__summary-action"
+                                                aria-controls="referenceId-46" aria-expanded="false"
+                                                data-name="Offline"
+                                                title="Offline filing options">
+                                                <span class="slds-accordion__summary-content">Can I submit filings or forms offline?</span>
+                                                <div class="slds-accordion__summary-content-icon">
+                                                    <lightning-button variant="base" class="base-accordion-btn base-link-btn" 
+                                                        data-name="Offline" 
+                                                        title="Offline filing options" aria-label="Show Information" onclick={handleAccordianClick}></lightning-button>
+                                                </div>
+                                            </div>
+                                        </h3>
+                                    </div>
+                                    <div class="slds-accordion__content cc-card-body" id="referenceId-46">
+                                        <p>While online submissions provide the fastest processing times, printable forms and mailing instructions are available on the FCNB official website or by contacting our office.</p>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+    <footer>
+        <div class="landing-footer">
+            <div class="slds-container--center slds-container--x-large">
+                <div class="slds-grid slds-wrap slds-gutters">
+                    <div class="slds-col slds-large-size--3-of-12 slds-medium-size--3-of-12 slds-size--12-of-12">
+                        <h4 class="m-b-small">Contact Us</h4>
+                        <div class="text-white">
+                            <p>Toll-Free: <a class="text-white" href="tel:18669332222">1 866 933-2222</a></p>
+                            <p>Local: <a class="text-white" href="tel:15066583000">(506) 658-3000</a></p>
+                        </div>
+                        <p class="text-white m-t-small">300-85 Charlotte Street, Saint John, NB E2L 2J2</p>
+                    </div>
+                    <div class="slds-col slds-large-size--3-of-12 slds-medium-size--3-of-12 slds-size--12-of-12">
+                        <h4 class="m-b-small">Regulated Sectors</h4>
+                        <ul>
+                            <li><a href="javascript:void(0);">Insurance & Pensions</a></li>
+                            <li><a href="javascript:void(0);">Securities & Investments</a></li>
+                            <li><a href="javascript:void(0);">Consumer Affairs & Credit Unions</a></li>
+                            <li><a href="javascript:void(0);">Mortgage Brokers & Real Estate</a></li>
+                            <li><a href="javascript:void(0);">Financial Institutions</a></li>
+                        </ul>
+                    </div>
+                    <div class="slds-col slds-large-size--3-of-12 slds-medium-size--3-of-12 slds-size--12-of-12">
+                        <h4 class="m-b-small">Consumer Protection</h4>
+                        <ul>
+                            <li><a href="javascript:void(0);">File a Complaint</a></li>
+                            <li><a href="javascript:void(0);">Check License Status</a></li>
+                            <li><a href="javascript:void(0);">Enforcement & Warnings</a></li>
+                            <li><a href="javascript:void(0);">Unclaimed Property</a></li>
+                            <li><a href="javascript:void(0);">Consumer Education & Guides</a></li>
+                        </ul>
+                    </div>
+                    <div class="slds-col slds-large-size--3-of-12 slds-medium-size--3-of-12 slds-size--12-of-12">
+                        <h4 class="m-b-small">Commission & Governance</h4>
+                        <ul>
+                            <li><a href="javascript:void(0);">About FCNB</a></li>
+                            <li><a href="javascript:void(0);">Legislation & Rules</a></li>
+                            <li><a href="javascript:void(0);">Decisions & Orders</a></li>
+                            <li><a href="javascript:void(0);">Careers at FCNB</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="social-media m-t-medium">
+                    <ul>
+                        <li><a href="https://twitter.com/FCNB_" target="_blank" rel="noopener"><i class="material-icon material-icon-twitter"></i></a></li>
+                        <li><a href="https://www.youtube.com/user/FCNBca" target="_blank" rel="noopener"><i class="material-icon material-icon-youtube"></i></a></li>
+                        <li><a href="https://www.facebook.com/FCNB.ca" target="_blank" rel="noopener"><i class="material-icon material-icon-facebook"></i></a></li>
+                    </ul>
+                </div>
+                <div class="divider"></div>
+                <div class=" slds-grid slds-grid_align-spread slds-grid_vertical-align-center">
+                    <p class="text-white">Copyright © Financial and Consumer Services Commission (FCNB)</p>
+                    <div class="gap-medium slds-grid slds-grid--vertical-align-center text-white">
+                        <p>Privacy Policy | Terms of Use</p>
+                        <div class="vertical-divider"></div>
+                        <lightning-button variant="base" label="Back to Top" title="Back to Top" onclick={handleClick} class="base-link backtotop"></lightning-button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</template>

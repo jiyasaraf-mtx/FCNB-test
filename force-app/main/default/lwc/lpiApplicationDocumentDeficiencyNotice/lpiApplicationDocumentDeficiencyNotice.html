@@ -1,0 +1,475 @@
+<!--
+  @description       : 
+  @author            : Mohit Karani
+  @group             : 
+  @last modified on  : 07-15-2024
+  @last modified by  : Ayush Dev
+-->
+<template>
+    <template if:true={isLoading}>
+        <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+    </template>
+    <section if:false={hideParentModal} role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01"
+        class="slds-modal slds-fade-in-open lpi-modal slds-modal_small def-notice-modal">
+        <div class="slds-modal__container" if:false={channel}>
+            <div class="slds-modal__header">
+                <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate" tabindex="-1">Create Deficiency
+                    Notice</h1>
+                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                    onclick={closeAction}>
+                    <span class="slds-button__icon slds-button__icon_large slds-text-heading_medium"
+                        aria-hidden="true">X</span>
+                    <span class="slds-assistive-text">Cancel and close</span>
+                </button>
+            </div>
+            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                <div class="slds-p-around_medium lgc-bg">
+                    <div class="slds-grid slds-warp slds-gutters">
+                        <div class="slds-col slds-size--1-of-1 m-b-medium">
+                            <div class="slds-grid warning-message-box_cool" role="status">
+                                <lightning-icon icon-name="utility:info_alt" alternative-text="Info" variant="info"
+                                    class="slds-m-right_small" title="info icon" size="small"></lightning-icon>
+                                <div class="slds-media__body">
+                                    <div>Important Information</div>
+                                    <lightning-formatted-text
+                                        value="Creating a deficiency notice will stop processing of this application until the applicant responds.">
+                                    </lightning-formatted-text>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-grid slds-warp slds-gutters">
+                        <div
+                            class="slds-col slds-large-size--1-of-2 slds-medium-size--1-of-2 slds-size--1-of-1 m-b-medium">
+                            <lightning-input type="date" date-style="short" label="Due Date" min={today}
+                                data-apiname="dueDate" value={deficiencyData.dueDate} onchange={deficiencyDataHandler}
+                                field-level-help="Provide the Due Date by which the applicant needs to respond to the notice">
+                            </lightning-input>
+                        </div>
+                    </div>
+                    <div class="slds-grid slds-warp slds-gutters">
+                        <div
+                            class="slds-col slds-large-size--12-of-12 slds-medium-size--12-of-12 slds-size--1-of-1 m-b-medium">
+                            <lightning-input-rich-text data-index="-1" label="Deficiency Review Comment"
+                                label-visible="true" message-when-bad-input={errorMsgForRichText}
+                                data-apiname="deficiencyComments" value={deficiencyData.deficiencyComments}
+                                valid={isRichTextisValid} onchange={deficiencyDataHandler}
+                                field-level-help="Provide any additional comments which needs to be added in the Deficiency Notice notification">
+                            </lightning-input-rich-text>
+                        </div>
+                    </div>
+                    <!-- <lightning-layout multiple-rows>
+                        <lightning-layout-item size="12" padding="around-small" small-device-size="3"
+                            medium-device-size="6" large-device-size="6">
+                            <lightning-input type="date" date-style="short" label="Due Date" min={today} 
+                                data-apiname="dueDate" value={deficiencyData.dueDate} onchange={deficiencyDataHandler}
+                                field-level-help="Provide the Due Date by which the applicant needs to respond to the notice">
+                            </lightning-input>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" padding="around-small" small-device-size="3"
+                            medium-device-size="6" large-device-size="6">
+                            <lightning-input-rich-text data-index="-1" label="Deficiency Review Comment"
+                                label-visible="true" message-when-bad-input={errorMsgForRichText}
+                                data-apiname="deficiencyComments" value={deficiencyData.deficiencyComments}
+                                valid={isRichTextisValid} onchange={deficiencyDataHandler}
+                                field-level-help="Provide any additional comments which needs to be added in the Deficiency Notice notification">
+                            </lightning-input-rich-text>
+                        </lightning-layout-item>
+                    </lightning-layout> -->
+                    <!-- <lightning-textarea data-index="-1" class="reqVal" label="Deficiency Review Comment"
+                        data-apiname="deficiencyComments" value={deficiencyData.deficiencyComments}
+                        onchange={deficiencyDataHandler} max-length="25000" required
+                        field-level-help="Provide any additional comments which needs to be added in the Deficiency Notice notification">
+                    </lightning-textarea> -->
+
+                    <!-- <template if:true={hasDocument}> -->
+                    <div
+                        class="slds-grid slds-grid--align-spread slds-grid--vertical-align-center slds-m-top--large slds-m-bottom--large">
+                        <div>
+                            <h3 class="bold-16">Additional Document Details</h3>
+                            <p>Provide the details of the additional documents which are not preconfigured and you
+                                require applicant to upload</p>
+                        </div>
+                    </div>
+                    <!-- </template> -->
+                    <div class="additional-doc-section">
+                        <!-- <p><b>{header}</b></p> -->
+                        <template for:each={documentItems} for:item="item" for:index="index">
+                            <div key={item.key} class="additional-doc-section-card">
+                                <div
+                                    class="slds-grid slds-grid--align-spread slds-grid--vertical-align-center slds-m-bottom_large">
+                                    <h4><b>Document Detail</b></h4>
+                                    <lightning-button label="Remove" variant="destructive-text" slot="actions" title="Remove this line item"
+                                        onclick={handleRemoveItem} data-appdocid={item.appDocId} data-key={item.key}>
+                                    </lightning-button>
+                                </div>
+                                <div class="slds-grid slds-warp slds-gutters">
+                                    <div
+                                        class="slds-col slds-large-size--1-of-2 slds-medium-size--1-of-2 slds-size--1-of-1 m-b-medium">
+                                        <lightning-combobox name="documentName" label="Document Name"
+                                            value={item.documentName} required class="slds-scrollable"
+                                            placeholder="Select Progress" options={docNameOptions}
+                                            onchange={inputHandler} data-key={item.key} data-id="newDocName"
+                                            data-apiname="documentName">
+                                        </lightning-combobox>
+                                    </div>
+                                    <template if:true={item.showOtherDocNameInput}>
+                                        <div
+                                            class="slds-col slds-large-size--1-of-2 slds-medium-size--1-of-2 slds-size--1-of-1 m-b-medium">
+                                            <lightning-input type="text" variant="standard" name="specifyName"
+                                                value={item.specifyName} max-length="255" data-key={item.key}
+                                                label="Specify Document Name" data-id="newSpecifyName"
+                                                data-apiname="specifyName" required onchange={inputHandler}>
+                                            </lightning-input>
+                                        </div>
+                                    </template>
+                                </div>
+                                <div class="slds-grid slds-warp slds-gutters">
+                                    <div
+                                        class="slds-col slds-large-size--12-of-12 slds-medium-size--12-of-12 slds-size--12-of-12 m-b-medium">
+                                        <lightning-textarea data-apiname="documentDescription" data-key={item.key}
+                                            onchange={inputHandler} label="Document Description" class="reqVal"
+                                            value={item.documentDescription} max-length="255"></lightning-textarea>
+                                    </div>
+                                </div>
+                                <div class="slds-grid slds-warp slds-gutters">
+                                    <div
+                                        class="slds-col slds-large-size--12-of-12 slds-medium-size--12-of-12 slds-size--12-of-12 m-b-medium">
+                                        <lightning-input type="checkbox" checked={item.isSubmissionRequired}
+                                            label="Is Applicant Submission Required" data-apiname="isSubmissionRequired"
+                                            data-key={item.key}
+                                            field-level-help="Check this box if you require applicant to Submit this document"
+                                            onchange={inputHandler}>
+                                        </lightning-input>
+                                    </div>
+                                </div>
+                                <div class="slds-grid slds-warp slds-gutters">
+                                    <div
+                                        class="slds-col slds-large-size--12-of-12 slds-medium-size--12-of-12 slds-size--12-of-12 m-b-medium">
+                                        <lightning-combobox label="Status" value="Unsubmitted" readonly
+                                            options={statusOptions} data-index="-1">
+                                        </lightning-combobox>
+                                    </div>
+                                </div>
+                                <div class="slds-grid slds-warp slds-gutters">
+                                    <div
+                                        class="slds-col slds-large-size--12-of-12 slds-medium-size--12-of-12 slds-size--12-of-12 m-b-medium">
+                                        <label class="slds-form-element__label">
+                                            <span class="slds-m-right_x-small">Upload New Document</span>
+                                            <lightning-helptext
+                                                content='The uploaded document will be sent in the deficiency notice email as an attachment'>
+                                            </lightning-helptext>
+                                        </label>
+                                        <lightning-file-upload  variant="label-hidden" class="def-doc-upload" aria-label="Upload New Document"
+                                            field-level-help="The uploaded document will be sent in the deficiency notice email as an attachment"
+                                            record-id={documentIdForUpload} accept={acceptedFormats}
+                                            onuploadfinished={createAppDoc} data-key={item.key}>
+                                        </lightning-file-upload>
+                                        <!-- <lightning-button label="Add file" title="Add file" variant="outline"
+                                            onclick={createAppDoc} data-key={item.key}></lightning-button> -->
+                                        <div class="slds-p-left_xxx-small slds-p-top_medium">
+                                            <template for:each={item.fileData} for:item="fileItem">
+                                                <div key={fileItem.parentRecId}
+                                                    class="slds-grid slds-gutters slds-wrap">
+                                                    <div class="slds-col slds-size_8-of-12">
+                                                        <span>{fileItem.fileName}</span>
+                                                    </div>
+                                                    <div class="slds-col slds-size_2-of-12">
+                                                        <span>
+                                                            <lightning-button-icon class="slds-m-around_small"
+                                                                size="small" icon-name="utility:download"
+                                                                alternative-text="Download" title="Download"
+                                                                data-filename={fileItem.fileName}
+                                                                data-fileid={fileItem.fileId}
+                                                                data-parentid={fileItem.parentRecId}
+                                                                onclick={handleViewDocument}>
+                                                            </lightning-button-icon>
+                                                        </span>
+                                                    </div>
+                                                    <div class="slds-col slds-size_2-of-12">
+                                                        <span>
+                                                            <lightning-button-icon size="small"
+                                                                icon-name="utility:delete" alternative-text="Delete"
+                                                                title="Delete" ata-filename={fileItem.fileName}
+                                                                data-fileid={fileItem.fileId}
+                                                                data-parentid={fileItem.parentRecId}
+                                                                onclick={handleDeleteConfirmation} data-key={item.key}>
+                                                            </lightning-button-icon>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </template>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-grid slds-warp slds-gutters">
+                                    <div
+                                        class="slds-col slds-large-size--12-of-12 slds-medium-size--12-of-12 slds-size--12-of-12 m-b-medium">
+                                        <lightning-radio-group label="Mode" variant="label-stacked" class="internal-radio" options={modeOptions}
+                                            value={item.isRequired} required type="radio" data-apiname="isRequired"
+                                            data-key={item.key} onchange={inputHandler}></lightning-radio-group>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+
+                    <!-- <lightning-layout multiple-rows>
+                        Iterate through line items
+                        <template for:each={documentItems} for:item="item" for:index="index">
+                            <lightning-layout-item size="12" small-device-size="12"
+                             key={item.key} medium-device-size="12" large-device-size="12">
+                                <lightning-card>
+                                    <lightning-button label="Remove" slot="actions" title="Remove this line item"
+                                        onclick={handleRemoveItem} data-appdocid={item.appDocId} data-key={item.key}>
+                                    </lightning-button>
+                                    <lightning-layout multiple-rows>
+                                        <lightning-layout-item size="12" padding="around-small" small-device-size="3"
+                                            medium-device-size="12" large-device-size="12">
+                                            <p style="text-align: center;">
+                                                <b>{header}</b>
+                                            </p>
+                                        </lightning-layout-item>
+                                        <lightning-layout-item size="12" padding="around-small" small-device-size="3"
+                                            medium-device-size="6" large-device-size="6">
+                                            <lightning-combobox
+                                                name="documentName"
+                                                label="Document Name"
+                                                value={item.documentName}
+                                                required
+                                                class="slds-scrollable"
+                                                style="height:150px"
+                                                placeholder="Select Progress"
+                                                options={docNameOptions}
+                                                onchange={inputHandler} 
+                                                data-key={item.key}
+                                                data-id="newDocName"
+                                                data-apiname="documentName">
+                                            </lightning-combobox>
+                                            <lightning-input type="text" variant="standard" name="specifyName" if:true={item.showOtherDocNameInput}
+                                                value={item.specifyName} max-length="255" data-key={item.key}
+                                                label="Specify Document Name" data-id="newSpecifyName" data-apiname="specifyName"
+                                                required onchange={inputHandler}>
+                                                </lightning-input>
+                                        </lightning-layout-item>
+                                        <lightning-layout-item size="12" padding="around-small" small-device-size="3"
+                                            medium-device-size="6" large-device-size="6">
+                                            <lightning-textarea data-apiname="documentDescription" data-key={item.key}
+                                                onchange={inputHandler} label="Document Description" class="reqVal"
+                                                value={item.documentDescription} max-length="255"></lightning-textarea>
+                                        </lightning-layout-item>
+                                        <lightning-layout-item size="12" padding="around-small" small-device-size="3"
+                                            medium-device-size="6" large-device-size="6">
+                                            <lightning-input type="checkbox" checked={item.isSubmissionRequired}
+                                                label="Is Applicant Submission Required"
+                                                data-apiname="isSubmissionRequired" data-key={item.key}
+                                                field-level-help="Check this box if you require applicant to Submit this document"
+                                                onchange={inputHandler}>
+                                            </lightning-input>
+                                        </lightning-layout-item>
+                                        <lightning-layout-item size="12" padding="around-small" small-device-size="3"
+                                            medium-device-size="6" large-device-size="6">
+                                            <lightning-combobox label="Status" value="Unsubmitted" readonly
+                                                options={statusOptions} data-index="-1">
+                                            </lightning-combobox>
+                                        </lightning-layout-item>
+                                        <lightning-layout-item size="12" padding="around-small" small-device-size="3"
+                                            medium-device-size="6" large-device-size="6">
+                                            <label class="slds-form-element__label">
+                                                <span class="slds-m-right_x-small">Upload New Document</span>
+                                                <lightning-helptext
+                                                    content='The uploaded document will be sent in the deficiency notice email as an attachment'>
+                                                </lightning-helptext>
+                                            </label>
+                                            <lightning-button label="Add file" title="Add file" variant="outline"
+                                                onclick={createAppDoc} data-key={item.key}></lightning-button>
+                                            <div class="slds-p-left_xxx-small slds-p-top_medium">
+                                                <template for:each={item.fileData} for:item="fileItem">
+                                                    <div key={fileItem.parentRecId}
+                                                        class="slds-grid slds-gutters slds-wrap">
+                                                        <div class="slds-col slds-size_8-of-12">
+                                                            <span>{fileItem.fileName}</span>
+                                                        </div>
+                                                        <div class="slds-col slds-size_2-of-12">
+                                                            <span>
+                                                                <lightning-button-icon class="slds-m-around_small"
+                                                                    size="small" icon-name="utility:download"
+                                                                    alternative-text="Download" title="Download"
+                                                                    data-filename={fileItem.fileName}
+                                                                    data-fileid={fileItem.fileId}
+                                                                    data-parentid={fileItem.parentRecId}
+                                                                    onclick={handleViewDocument}>
+                                                                </lightning-button-icon>
+                                                            </span>
+                                                        </div>
+                                                        <div class="slds-col slds-size_2-of-12">
+                                                            <span>
+                                                                <lightning-button-icon size="small"
+                                                                    icon-name="utility:delete" alternative-text="Delete"
+                                                                    title="Delete" ata-filename={fileItem.fileName}
+                                                                    data-fileid={fileItem.fileId}
+                                                                    data-parentid={fileItem.parentRecId}
+                                                                    onclick={handleDeleteConfirmation}
+                                                                    data-key={item.key}>
+                                                                </lightning-button-icon>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </template>
+                                            </div>
+                                        </lightning-layout-item>
+                                        <lightning-layout-item size="12" padding="around-small" small-device-size="3"
+                                            medium-device-size="6" large-device-size="6">
+                                            <lightning-radio-group label="Mode" options={modeOptions}
+                                                value={item.isRequired} required type="button" data-apiname="isRequired"
+                                                data-key={item.key} onchange={inputHandler}></lightning-radio-group>
+                                        </lightning-layout-item>
+                                    </lightning-layout>
+                                </lightning-card>
+                            </lightning-layout-item>
+                        </template>
+                    </lightning-layout> -->
+                    <!-- <br> -->
+                    <!-- show aAdditional fee section start -->
+                    <!-- <template if:true={hasFeeItems}> -->
+                    <div
+                        class="slds-grid slds-grid--align-spread slds-grid--vertical-align-center slds-m-top--large slds-m-bottom--large">
+                        <div>
+                            <h3 class="bold-16">Additional Fee Details</h3>
+                            <p>Provide the details of the additional Fee which are not preconfigured and you
+                                require applicant to pay</p>
+                        </div>
+                    </div>
+
+                    <!-- </template> -->
+                    <div class="additional-doc-section">
+                        <template for:each={feeItems} for:item="item" for:index="index">
+                            <div key={item.key} class="additional-doc-section-card">
+                                <div class="slds-grid slds-grid--align-spread slds-grid--vertical-align-center slds-m-bottom_large">
+                                    <h4><b>Fee Detail</b></h4>
+                                    <lightning-button label="Remove" variant="destructive-text" slot="actions" title="Remove this line item"
+                                    onclick={handleRemoveFeeItem} data-key={item.key}></lightning-button>
+                                </div>
+                                <div class="slds-grid slds-warp slds-gutters">
+                                    <div
+                                        class="slds-col slds-large-size--6-of-12 slds-medium-size--6-of-12 slds-size--12-of-12 m-b-medium">
+                                        <lightning-combobox class="reqVal" required label="Fee Name"
+                                            options={feePicklistData} onchange={feeDetailHandler} value={item.feeName}
+                                            name="feeName" data-key={item.key}>
+                                        </lightning-combobox>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-large-size--6-of-12 slds-medium-size--6-of-12 slds-size--12-of-12 m-b-medium">
+                                        <lightning-input type="text" variant="standard" name="feeDescription"
+                                            data-key={item.key} value={item.feeDescription} max-length="255"
+                                            label="Fee Description" class="reqVal" required onchange={feeDetailHandler}>
+                                        </lightning-input>
+                                    </div>
+                                </div>
+                                <div class="slds-grid slds-warp slds-gutters">
+                                    <div
+                                        class="slds-col slds-large-size--6-of-12 slds-medium-size--6-of-12 slds-size--12-of-12 m-b-medium">
+                                        <lightning-input type="number" variant="standard" name="feeAmount"
+                                            data-key={item.key} step=".01" min=".01" formatter="currency"
+                                            value={item.feeAmount} label="Fee Amount" class="reqVal" required
+                                            onchange={feeDetailHandler}>
+                                        </lightning-input>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-large-size--6-of-12 slds-medium-size--6-of-12 slds-size--12-of-12 m-b-medium">
+                                        <lightning-input type="text" variant="standard" name="feeDescription"
+                                            data-key={item.key} value={item.feeDescription} max-length="255"
+                                            label="Fee Description" class="reqVal" required onchange={feeDetailHandler}>
+                                        </lightning-input>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                    <!-- Iterate through Fee line items -->
+                    <!-- <lightning-layout multiple-rows>
+    <template for:each={feeItems} for:item="item" for:index="index">
+        <lightning-layout-item size="12" small-device-size="12" key={item.key} medium-device-size="12"
+            large-device-size="12">
+            <lightning-card>
+                <lightning-button label="Remove" slot="actions" title="Remove this line item"
+                    onclick={handleRemoveFeeItem} data-key={item.key}>
+                </lightning-button>
+                <lightning-layout multiple-rows>
+                    <lightning-layout-item size="12" padding="around-small" small-device-size="3" medium-device-size="6"
+                        large-device-size="6">
+                        <lightning-combobox class="reqVal" required label="Fee Name" options={feePicklistData}
+                            onchange={feeDetailHandler} value={item.feeName} name="feeName" data-key={item.key}>
+                        </lightning-combobox>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" padding="around-small" small-device-size="3" medium-device-size="6"
+                        large-device-size="6">
+                        <lightning-input type="text" variant="standard" name="feeDescription" data-key={item.key}
+                            value={item.feeDescription} max-length="255" label="Fee Description" class="reqVal" required
+                            onchange={feeDetailHandler}>
+                        </lightning-input>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" padding="around-small" small-device-size="3" medium-device-size="6"
+                        large-device-size="6">
+                        <lightning-input type="number" variant="standard" name="feeAmount" data-key={item.key}
+                            step=".01" min=".01" formatter="currency" value={item.feeAmount} label="Fee Amount"
+                            class="reqVal" required onchange={feeDetailHandler}>
+                        </lightning-input>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </lightning-card>
+        </lightning-layout-item>
+    </template>
+</lightning-layout> -->
+                    <!-- show aAdditional fee section End -->
+                </div>
+            </div>
+            <template if:false={channel}>
+                <div class="slds-modal__footer">
+                    <lightning-button label="Add Document" onclick={addLineItem} class="slds-m-right_xx-small">
+                    </lightning-button>
+                    <lightning-button label="Request Additional Fees" onclick={addFeeLineItem}
+                        class="slds-m-right_xx-small">
+                    </lightning-button>
+                    <lightning-button variant="neutral" label="Cancel" onclick={closeAction}
+                        class="slds-m-right_xx-small">
+                    </lightning-button>
+                    <lightning-button variant="Brand" label="Send Deficiency Notice" onclick={handleSave}>
+                    </lightning-button>
+                </div>
+            </template>
+        </div>
+    </section>
+    <template if:true={showUploadModal}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-02" aria-modal="true"
+            aria-describedby="modal-content-id-02" class="slds-modal slds-fade-in-open" onkeydown={handleClose}>
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                        aria-label="Cancel" onclick={handleClose}>
+                        <lightning-icon icon-name="utility:close" variant="inverse" size="small">
+                        </lightning-icon>
+                    </button>
+                    <h1 id="modal-heading-02" class="section-heading slds-m-bottom_x-small">
+                        {modalHeading}</h1>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+                    <!-- <lightning-file-upload if:false={isDeleteModal} label="Attach file" record-id={documentIdForUpload}
+                    accept={acceptedFormats} onuploadfinished={handleUploadFinished}>
+                </lightning-file-upload> -->
+                    <p class="slds-align_absolute-center" if:true={isDeleteModal}>
+                        Are you sure you want to this file ?
+                    </p>
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning-button variant="outline" label="Cancel" title="Cancel" onclick={handleClose}>
+                    </lightning-button>
+                    <lightning-button if:true={isDeleteModal} variant="brand" label="Yes" title="Yes"
+                        onclick={handleDelete}>
+                    </lightning-button>
+                </footer>
+            </div>
+        </section>
+        <!-- <div class="slds-backdrop slds-backdrop_open"></div> -->
+    </template>
+</template>

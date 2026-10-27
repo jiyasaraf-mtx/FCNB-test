@@ -1,0 +1,103 @@
+// .lpi-accordion {
+//     .slds-accordion__summary-action {
+//         display: flex;
+//         justify-content: space-between;
+//         flex-direction: row-reverse;
+//     }
+//     .slds-accordion__section.slds-is-open {
+//         .slds-icon-utility-chevronright {
+//             .slds-icon {
+//                 transform: rotate(90deg);
+//             }
+//         }
+//     }
+// }
+// .accordion {
+//     .label-color-onexpand {
+//         color: $primary-main !important;
+//     }
+//     a {
+//         font-size: $font-size-14;
+//         color: $link-blue !important;
+//     }
+// }
+// .accordion-block {
+//     padding: 0;
+//     button {
+//         width: 100%;
+//         margin: 0;
+//         padding-left: 0;
+//         padding-right: 0;
+//         &.slds-button:focus,
+//         &.slds-button:active,
+//         &.slds-button {
+//             box-shadow: unset;
+//             border: none;
+//         }
+//         span {
+//             &:first-child {
+//                 display: flex;
+//                 flex-direction: row-reverse;
+//                 align-items: center;
+//                 justify-content: space-between;
+//                 width: 100%;
+//                 @media all and (max-width:30rem) {
+//                     flex: 10%;
+//                 }
+//             }
+//         }
+//     }
+//     .accordion {
+//         margin-bottom: 1rem;
+//         border: 0.063rem solid $input-border;
+//         border-radius: 0.25rem;
+//         &-heading {
+//             color: $primary-main;
+//             margin: 0.6rem 0;
+//             font-weight: $font-weight-semi-bold;
+//         }
+//         &-subsection {
+//             border-top: 0 !important;
+//             margin-top: 1.25rem;
+//         }
+//         .label {
+//             font-size: $font-size-14;
+//             font-weight: $font-weight-semi-bold;
+//             color: $text-secondary;
+//             .field-value {
+//                 font-weight: normal;
+//             }
+//         }
+//         .text-input {
+//             font-size: $font-size-16;
+//             font-weight: $font-weight-regular;
+//             color: $text-primary;
+//         }
+//         .accordion-row {
+//             margin-bottom: 1rem;
+//             &:last-child {
+//                 margin-bottom: 0;
+//             }
+//         }
+//         .block-header {
+//             padding: 1rem;
+//         }
+//         .blockSlot {
+//             padding-left: 0;
+//             padding-top: 0.6rem;
+//         }
+//         a {
+//             color: $text-primary;
+//         }
+
+//         input[readonly][role=combobox] {
+//             background-color: $input-bg-disabled;
+//             border-color: $input-border-disabled;
+//             color: $input-color-disabled;
+//         }
+//     }
+// }
+
+// .justify-content-center button span.btnLabel {
+//     justify-content: center !important;
+// }

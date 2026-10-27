@@ -1,0 +1,248 @@
+.lpi-modal, .lpiContent .slds-modal,.custom-modal {
+    .slds-modal__container {
+        .slds-modal__header {
+            border-bottom: none !important;
+            padding: $medium $large $small;
+            svg.slds-icon {
+                width: 1.2rem;
+                height: 1.2rem;
+            }
+            h1 {
+                text-align: left;
+                font-size: $font-size-24;
+                font-weight: $font-weight-semi-bold;
+                color: $text-primary;
+            }
+            [slot="header"],h1,h2,h3,.slds-text-heading_small,.slds-modal__title {
+                flex: 1;
+            }
+        }
+        .slds-modal__content  {
+            padding: $x-small $large;
+            // height: auto !important;
+        }
+        .slds-modal__footer{
+            border: none;
+            // border-top: 1px solid $other-divider;
+            padding: $medium $large $small;
+            @media all and (max-width:30rem) {
+                text-align: center;
+            }
+        }
+        .slds-form-element__label{
+            font-size: $font-size-14;
+            font-weight: 400 !important;
+            line-height: $xx-medium;
+            color:$text-primary;
+        }
+
+        .branchaddress-cb{
+            .slds-form-element__label{
+                font-weight: 600 !important;
+            }
+        }
+        .slds-input{
+            border-radius: $xx-small;
+            // padding: 0.313rem;
+            border: 0.063rem solid $input-border;
+        }
+        .slds-button_neutral {
+            background: $white;
+            padding: 0.1874rem $large;
+            font-size: $font-size-14;
+            border:toRem(1) solid $primary-main;
+            color: $primary-main;
+        }
+        .slds-button_destructive{
+            padding: 0.1874rem $large !important;
+            font-size: $font-size-14;
+        }
+       
+        // .slds-button_brand {
+        //     background: $primary-main;
+        //     padding: 0.1874rem $large;
+        //     font-size: $font-size-14;
+        //     border: toRem(1) solid $primary-main;
+        //     color: $white !important;
+        // }
+        // .slds-button_outline-brand{
+        //     padding: 0.1874rem $large;
+        // }
+        .slds-page-header__title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            line-height: 1.25rem;
+            color: $text-primary;
+            margin-bottom: 0.5rem;
+        }
+        .slds-has-error .slds-form-element__help {
+            text-align: left;
+        }
+
+        .label-bold{
+            .slds-form-element__label{
+                font-weight: $font-weight-semi-bold !important;
+            }
+            .slds-radio__label{
+                .slds-form-element__label{
+                    font-weight: normal !important;
+                }
+            }
+        }
+
+    }
+}
+.actionFlyout {
+    // .slds-modal__header_empty {
+    //     --sds-c-modal-header-spacing-block-start: unset !important;
+    //     --sds-c-modal-header-spacing-block-end: unset !important;
+    //     --sds-c-modal-header-spacing-inline-start: unset !important;
+    //     --sds-c-modal-header-spacing-inline-end: unset !important;
+    //     --slds-c-modal-sizing-border: unset !important;
+    // }
+    .slds-modal {
+        top: 2rem;
+        .slds-modal__header {
+            padding: 0.5rem;
+            .slds-modal__close {
+                // top: 0.7rem;
+                z-index: 99999;
+                // right: 1rem;
+                svg.slds-icon {
+                    width: 1.2rem;
+                    height: 1.2rem;
+                    fill: $white;
+                }
+                svg.slds-icon.slds-icon-text-inverse {
+                    width: 1.2rem;
+                    height: 1.2rem;
+                    fill: $black;
+                }
+            }
+        }
+    }
+}
+.instruction-msg-modal-footer {
+    .slds-grid > .slds-col {
+        min-width: 7rem;
+    }
+}
+.custom-popup-button {
+    display: block;
+    text-align: right;
+    margin: 0.625rem;
+    padding: 0 1.875rem;
+
+	button {
+		min-width: 7.25rem;
+		max-width: 7.25rem;
+	}
+}
+
+.modal-dialog[aria-label="Apply Online"]{
+    .slds-modal__content {
+        min-height: 7rem;
+    }
+}
+
+[data-omni-key*="OperatingHours"] {
+    .slds-modal__content {
+        overflow: visible !important;
+    }
+}
+
+[data-omni-key="Modpr_AliasType"]{
+    .slds-form-element{
+        margin-bottom: 0 !important;
+    }
+}
+
+.slds-modal{
+    .slds-modal__header{
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        flex-direction: row-reverse;
+        .slds-button{
+            position: unset;
+            .slds-icon{
+                fill: $primary-main;
+            }
+        }
+        .section-heading{
+            text-align: left;
+            width: 90%;
+        }
+        .slds-modal__title{
+            flex:1;
+        }
+    }
+}
+
+.modal-container.slds-modal__container{
+    .slds-modal__header {
+        flex-direction: row;
+    }    
+}
+
+c-cf-m-o-d-p-r-associate-business-account{
+    .flexActionElement{
+        .actionFlyout{
+            .slds-modal__content{
+                border-top-left-radius: 0;
+                border-top-right-radius: 0;
+                c-cf-m-o-d-p-r-associated-successfully{
+                    .slds-card{
+                        padding: 0;
+                        .slds-grid.slds-wrap.slds-p-around_x-small.slds-m-bottom_x-small{
+                            padding: 0;
+                            margin-bottom: 0;
+                            margin-top: 2rem;
+                        }
+                        .slds-button_success {
+                            background: $primary-main;
+                            padding: 0 2rem;
+                            font-size: 0.875rem;
+                            border: 0.125rem solid $primary-main;
+                            border-radius: 0.25rem;
+                            color: $white;
+                            font-weight: bold;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media all and (min-width:48rem) {
+    .slds-modal__container.additional-document-modal-container {
+        width: 90%;
+    }
+}
+.slds-modal_custom{
+    .slds-modal__container{
+        width: 60%;
+        .slds-modal__footer{
+          .slds-button+.slds-button{
+            @extend .m-l-small;
+          }
+            button:nth-child(2){
+                background: $primary-main;
+                color: $white !important;
+                &:hover{
+                    background: $primary-dark;
+                }
+            }
+        }
+    }
+}
+
+.slds-button-group-row .slds-button-group-item+.slds-button-group-item{
+    @extend .m-l-small;
+}
+.slds-modal_prompt{
+    .slds-modal__content{
+        text-align:left;
+    }
+}

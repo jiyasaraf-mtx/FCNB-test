@@ -1,0 +1,112 @@
+<template>
+	<div class="paper-apply-modal">
+		<header class="paper-apply-modal-header">
+			<h1 class="paper-apply-modal-title">Apply for License</h1>
+			<p class="paper-apply-modal-subtitle">Search by license type or board, then select Apply.</p>
+		</header>
+
+		<section class="paper-apply-search" aria-label="Search licenses">
+			<div class="paper-apply-search-field">
+				<lightning-input
+					type="search"
+					variant="label-hidden"
+					label="Search license"
+					placeholder="Search license here..."
+					onchange={licenseKeyChange}
+					onkeyup={handleKeyUp}
+					name="licenseSearch"
+				></lightning-input>
+				<lightning-button-icon
+					icon-name="utility:search"
+					alternative-text="Search license"
+					title="Search license"
+					variant="brand"
+					class="paper-apply-search-btn"
+					onclick={handleLicenseSearch}
+				></lightning-button-icon>
+			</div>
+			<div class="paper-apply-search-field">
+				<lightning-input
+					type="search"
+					variant="label-hidden"
+					label="Search board"
+					placeholder="Search board here..."
+					onchange={boardKeyChange}
+					onkeyup={handleKeyUp}
+					name="boardSearch"
+				></lightning-input>
+				<lightning-button-icon
+					icon-name="utility:search"
+					alternative-text="Search board"
+					title="Search board"
+					variant="brand"
+					class="paper-apply-search-btn"
+					onclick={handleBoardSearch}
+				></lightning-button-icon>
+			</div>
+		</section>
+
+		<template if:true={spinner}>
+			<div class="paper-apply-loading">
+				<lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
+			</div>
+		</template>
+
+		<template if:false={spinner}>
+			<template if:true={error}>
+				<div class="paper-apply-empty" role="alert">
+					<lightning-icon icon-name="utility:error" alternative-text="Error" size="small"></lightning-icon>
+					<p>Unable to load licenses. Please contact your administrator.</p>
+				</div>
+			</template>
+
+			<template if:false={error}>
+				<div class="paper-apply-list" role="list">
+					<template if:true={licensesListSize}>
+						<template for:each={licensesList} for:item="license">
+							<article key={license.Id} class="paper-apply-item" role="listitem">
+								<div class="paper-apply-item-main">
+									<div class="paper-apply-item-icon" aria-hidden="true">
+										<lightning-icon
+											icon-name="standard:account"
+											alternative-text=""
+											size="small"
+										></lightning-icon>
+									</div>
+									<div class="paper-apply-item-content">
+										<h2 class="paper-apply-item-title">{license.searchName}</h2>
+										<p class="paper-apply-item-board" if:true={license.issuingDepartmentName}>
+											{license.issuingDepartmentName}
+										</p>
+										<p class="paper-apply-item-desc" if:true={license.showAccordion}>
+											{license.description}
+										</p>
+									</div>
+									<div class="paper-apply-item-action">
+										<lightning-button
+											variant="brand"
+											label="Apply"
+											data-type={license.appFlowType}
+											data-subtype={license.appFlowSubtype}
+											data-language={license.appFlowLanguage}
+											data-licenseid={license.Id}
+											data-licensename={license.Name}
+											onclick={navigateToPaymentPage}
+										></lightning-button>
+									</div>
+								</div>
+							</article>
+						</template>
+					</template>
+
+					<template if:false={licensesListSize}>
+						<div class="paper-apply-empty">
+							<lightning-icon icon-name="utility:search" alternative-text="" size="small"></lightning-icon>
+							<p>No licenses found. Try a different search.</p>
+						</div>
+					</template>
+				</div>
+			</template>
+		</template>
+	</div>
+</template>

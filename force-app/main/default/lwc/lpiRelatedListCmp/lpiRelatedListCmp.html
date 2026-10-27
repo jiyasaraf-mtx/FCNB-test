@@ -1,0 +1,179 @@
+<template>
+    <div class="lead-internal-container">
+        <!-- Header of the Related List Start -->
+        <div class="slds-page-header slds-is-relative internal-transaction-header">
+            <div class="slds-grid slds-grid_vertical-align-center slds-grid_align-spread">
+                <div class="slds-grid slds-grid_vertical-align-center">
+                    <lightning-icon icon-name={iconName} alternative-text="Event" title="Event" size="small">
+                    </lightning-icon>
+                    <a href="#" class="slds-m-left_small">
+                        <span>{title} </span>
+                        <span>({dataSize})</span>
+                    </a>
+                </div>
+                <div class="slds-button-group">
+                    <lightning-button-icon icon-name="utility:refresh" variant="border-filled"
+                        alternative-text="Refresh" title="Refresh" size="medium" onclick={fetchAllData}>
+                    </lightning-button-icon>
+                </div>
+            </div>
+            <div class="slds-grid slds-text-body_small slds-m-top_small">
+                <span>{dataSize} items •</span>
+                <span>Updated a minute ago</span>
+            </div>
+        </div>
+        <!-- Header of the Related List End -->
+
+
+        <!-- Display Related Records Start -->
+        <div class="transaction-table slds-scrollable">
+            <table aria-multiselectable="true"
+                class="slds-table slds-table_bordered slds-table_col-bordered slds-table_fixed-layout slds-table_resizable-cols"
+                role="grid" aria-label="Example advanced table of Opportunities with header menu button">
+                <thead>
+                    <tr class="slds-line-height_reset">
+                        <!--th class="slds-text-align_right" scope="col" style="width:3.25rem">
+                            <span id="column-group-header" class="slds-assistive-text">Choose a row</span>
+                            <div class="slds-th__action slds-th__action_form">
+                                <div class="slds-checkbox">
+                                    <input type="checkbox" name="options" id="checkbox-unique-id-309"
+                                        value="checkbox-unique-id-309" tabindex="-1"
+                                        aria-labelledby="check-select-all-label column-group-header" />
+                                    <label class="slds-checkbox__label" for="checkbox-unique-id-309"
+                                        id="check-select-all-label">
+                                        <span class="slds-checkbox_faux"></span>
+                                        <span class="slds-form-element__label slds-assistive-text">Select All</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </th-->
+                        <template for:each={allColumnsList} for:item="columnName" for:index="index">
+                            <th aria-label="Name" aria-sort="none" key={columnName.label}
+                                class="slds-has-button-menu slds-is-resizable slds-is-sortable" scope="col">
+                                <a class="slds-th__action slds-text-link_reset" href="#" role="button" tabindex="-1">
+                                    <span class="slds-assistive-text">Sort by: {columnName.label}</span>
+                                    <div class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate">
+                                        <span class="slds-truncate" title={columnName.label}>{columnName.label}</span>
+                                        <template if:true={columnName.hasSorting}>
+                                            <span if:true={columnName.hasSorting}
+                                                class="slds-icon_container slds-icon-utility-arrowdown">
+                                                <lightning-icon if:true={columnName.isDesc} data-index={index}
+                                                    icon-name="utility:arrowdown" alternative-text="Approved"
+                                                    title="Approved" size="xx-small" data-name={columnName.apiName}
+                                                    data-id="isDesc" onclick={handleSorting}></lightning-icon>
+                                            </span>
+                                            <span if:true={columnName.hasSorting}
+                                                class="slds-icon_container slds-icon-utility-arrowup">
+                                                <lightning-icon if:true={columnName.isAsc} data-index={index}
+                                                    icon-name="utility:arrowup" alternative-text="Approved"
+                                                    title="Approved" size="xx-small" data-name={columnName.apiName}
+                                                    data-id="isAsc" onclick={handleSorting}></lightning-icon>
+                                            </span>
+                                            <span if:true={columnName.hasSorting}
+                                                class="slds-icon_container slds-icon-utility-sort">
+                                                <lightning-icon if:true={columnName.sortIcon} data-index={index}
+                                                    icon-name="utility:sort" alternative-text="Approved"
+                                                    title="Approved" size="xx-small" data-name={columnName.apiName}
+                                                    data-id="sortIcon" onclick={handleSorting}></lightning-icon>
+                                            </span>
+                                        </template>
+                                    </div>
+                                </a>
+                            </th>
+                        </template>
+
+
+                        <th class="" scope="col" style="width:3.25rem">
+                            <div class="slds-truncate slds-assistive-text" title="Actions">Actions</div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template for:each={relatedData} for:item="rowVar">
+                        <tr aria-selected="false" class="slds-hint-parent" key={rowVar.id}>
+                            <!--td class="slds-text-align_right" role="gridcell">
+                                <div class="slds-checkbox">
+                                    <input type="checkbox" name="options" value="checkbox-01" tabindex="-1"
+                                        aria-labelledby="check-button-label-01 column-group-header" />
+                                    <label class="slds-checkbox__label" for="checkbox-01">
+                                        <span class="slds-checkbox_faux"></span>
+                                        <span class="slds-form-element__label slds-assistive-text">Select item 1</span>
+                                    </label>
+                                </div>
+                            </td-->
+                            <template for:each={rowVar.row} for:item="dataVar">
+                                <td role="gridcell" key={dataVar}>
+
+
+                                    <div if:false={dataVar.isHyperLink} class="slds-truncate" title={dataVar.id}
+                                        key={dataVar.id}>{dataVar.data}</div>
+                                    <div if:true={dataVar.isHyperLink} class="slds-truncate" title={dataVar.data}>
+                                        <a href={dataVar.link} target="_blank" tabindex="-1">{dataVar.data}</a>
+                                    </div>
+                                </td>
+                            </template>
+                            <td role="gridcell" key={rowVar.id}>
+                                <div class="slds-cell-wrap">
+                                    <lightning-button-menu alternative-text="Show menu" variant="border-filled"
+                                        icon-size="x-small" menu-alignment="right">
+                                        <lightning-menu-item value="edit" label="Edit" data-id={rowVar.id}
+                                            onclick={onEditClick}></lightning-menu-item>
+                                        <lightning-menu-item value="delete" label="Delete" data-id={rowVar.id}
+                                            onclick={onDeleteClick}></lightning-menu-item>
+                                    </lightning-button-menu>
+                                </div>
+                            </td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+
+
+        </div>
+        <!-- Display Related Records End -->
+        <a href="#" onclick={showAllData}>
+            <div class="slds-card__footer" if:true={showViewAll}> View All</div>
+        </a>
+
+
+
+
+        <!--delete Modal starts-->
+        <template if:true={showModal}>
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <h2 class="title slds-text-heading--medium">Delete Licensing Transaction</h2>
+                        <lightning-button-icon icon-name=utility:close alternative-text="close" variant="bare-inverse"
+                            onclick={onCancel} class="slds-modal__close">
+                        </lightning-button-icon>
+                    </header>
+                    <div class="spinner">
+                        <template if:true={modalSpinner}>
+                            <lightning-spinner alternative-text="Loading" variant="brand" size="large">
+                            </lightning-spinner>
+                        </template>
+                    </div>
+                    <!--Modal/Popup Box Body Starts here-->
+                    <div class="slds-modal__content slds-p-around_medium slds-text-align--center"
+                        id="modal-content-id-1">
+                        <p class="title">Are you sure you want to delete this Licensing Transaction?</p>
+                    </div>
+                    <!--Modal/Popup Box Footer Starts here-->
+                    <footer class="slds-modal__footer">
+                        <lightning-button variant="neutral" label="Cancel" title="Cancel" onclick={onCancel}
+                            class="slds-m-right--small"></lightning-button>
+                        <lightning-button variant="brand" label="Delete" title="Delete" onclick={onDelete}>
+                        </lightning-button>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
+
+
+    </div>
+
+
+</template>

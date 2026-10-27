@@ -1,0 +1,169 @@
+<!--
+  @description       : 
+  @author            : Bharath Kumar M
+  @group             : 
+  @last modified on  : 06-19-2024
+  @last modified by  : Bharath Kumar M
+-->
+<apex:page renderAs="pdf" applyBodyTag="false" applyHtmlTag="false" showHeader="false" standardstylesheets="false" contentType="text/html;charset=UTF-8" controller="LPI_DeficiencyNoticePDFController" title="DeficiencyNoticeDocument.pdf">
+    <head>
+        <title>Deficiency Notice Document</title>
+        <style>
+            @page 
+            {
+                size: letter;
+                margin: 12mm 10mm;
+            }
+
+            body {
+                font-family: Arial Unicode MS;
+                height:100%;
+                margin: auto auto;
+            }
+
+            font { font-family: Arial Unicode MS !important; }
+
+            .pdfheader {
+                font-size: 24px;
+                font-weight: 500;
+            }
+            
+
+            .custom-grid-2 td {
+                width: 50%;
+                padding-bottom: 30px;
+                padding-right: 10px;
+            }
+
+            .custom-payment-grid-2 td {
+                width: 50%;
+                padding-bottom: 5px;
+                padding-right: 10px;
+                padding-left: 10px;
+
+            }
+
+            .custom-payment-grid-2 th {
+                width: 50%;
+                padding-bottom: 5px;
+                padding-right: 10px;
+                padding-left: 10px;
+            }
+
+            .section{
+                margin-top: 20px;
+            }
+
+            .section .sectionHeading{
+                font-weight: 700;
+                font-size: 16px;
+            }
+
+            .sectionBody{
+                padding-top: 20px;
+            }
+
+            .view-info-label{
+                font-size: 12px;
+                line-height: 14px;
+                color: #6B6B6B;
+                font-weight: 400;
+            }
+            .read-only-info{
+                
+                color: #121212;
+                font-weight: 400;
+                margin-bottom:16px;
+            }
+
+            .pdfBody{
+                position: relative;
+            }
+
+            .watermark{
+                position: absolute;
+                top: 30%;
+                left: 15%;
+                width: 70%;
+                text-align: center;
+                opacity: 0.35;
+            }
+
+        </style>
+    </head>
+
+    <body>
+        <div class="pdf">
+            <div class="pdfheader">
+                <apex:image url="{!URLFOR($Resource.LPI_Design,'/media/images/logo.png')}" width="163px" height="52px" alt=""/>
+                <hr/>
+            </div>
+            <div class="pdfBody">
+                <div class="watermark">
+                    <apex:image value="{!URLFOR($Resource.LPI_IBM_Logo_Watermark)}" width="500" height="500" alt=""/>
+                </div>
+                <div class="section">
+                    <div>
+                        <div class="sectionHeading" style="text-align:center"> 
+                            Missouri Division of Professional Registration <br/>
+                            3605 Missouri Boulevard <br/>
+                            Jefferson City, MO 65109
+                        </div>
+                        <br/>
+                        <br/>
+                        <div class="read-only-info">Date :&nbsp;
+                            <apex:outputText value="{0,date,MM/dd/yyyy}"> 
+                                <apex:param value="{!Today()}" />
+                            </apex:outputText> 
+                        </div>
+                        <div>
+                                <div class='custom-grid-2'>    
+                                    {!documentData.street}
+                                </div>
+                                <div class='custom-grid-2'>    
+                                    {!documentData.city}, {!documentData.state}, {!documentData.postalCode}
+                                </div>
+                                <div class='custom-grid-2'>    
+                                    {!documentData.country}
+                                </div>
+                        </div>
+                    </div>
+                    
+                    <div class="sectionBody">
+                        Dear Licensee: <br/><br/>
+                        Your Renewal application 
+                        <b style="font-family: sans-serif; font-weight:bold;">{!documentData.applicationNumber}</b> 
+                        for the 
+                        <b style="font-family: sans-serif; font-weight:bold;">{!documentData.licenseType}</b> 
+                        Missouri License 
+                        <b style="font-family: sans-serif; font-weight:bold;">{!documentData.licenseNumber}</b> 
+                        has undergone review by the 
+                        <b style="font-family: sans-serif; font-weight:bold;">{!documentData.boardName}</b>. 
+                        However, below mentioned items are required in order to further process your application:
+    
+                    </div>
+                    <br/>
+                    <div class='custom-grid-2 list-1' style="margin-left:32px;">
+                        <apex:variable var="counter" value="{!1}"/>
+                        <apex:variable var="subCounter" value="{!1}"/>
+                        <apex:repeat value="{!documentData.dueDiligenceList}" var="listItem">
+                                {!counter} . {!listItem.checkListItemName} 
+                                <div class='custom-grid-2' style="margin-left:32px;">    
+                                    <apex:outputPanel rendered="{!listItem.isCommentAdded}">
+                                            {!counter}.{!subCounter} . {!listItem.commentText}
+                                    </apex:outputPanel>
+                                </div>
+                            <apex:variable var="counter" value="{!counter+1}"/>
+                        </apex:repeat>
+                    </div>
+                    <br/>
+                    <div class='custom-grid-2'>
+                        Please return all of the enclosed material with the necessary corrections in the envelope provided with this letter. Your license is not considered to be renewed until all corrections have been received.
+                    </div>
+                   
+                </div>  
+
+            </div>
+        </div>
+    </body>
+</apex:page>

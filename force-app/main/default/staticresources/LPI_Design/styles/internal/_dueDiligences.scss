@@ -1,0 +1,307 @@
+.custom-card{
+    box-shadow: 0 2px 4px 0 #0000001a;
+    border-radius: 0.25rem;
+    border: none;
+    padding: 1rem;
+}
+.bg-white{
+    background: $white;
+}
+.bold-16{
+    font-size: $small !important;
+    font-weight: $font-weight-bold !important;
+}
+
+omnistudio-omniscript-step[data-omni-key=ApplicationReview] .accordion-block .accordion-subsection{
+    border: none !important;
+    margin: 0 !important;
+} 
+
+.slds-badge {
+    min-width: $x-large;
+    border-radius: $border-radius-medium;
+    justify-content: center;
+    user-select: none;
+    font-weight: $font-weight-semi-bold;  
+    text-wrap: wrap;
+    // width: max-content;
+    &.slds-theme_success {
+        background: $success-shades-190-p;
+        color: $success-main;
+        // border: 1px solid $success-shades-50-p;
+    }
+
+    &.slds-theme_error {
+        background: $error-shades-190-p;
+        color: $error-main;
+        // border: 1px solid $error-shades-50-p;
+    }
+
+    &.slds-theme_warning {
+        background: $warning-shades-190-p;
+        color: $warning-main;
+        border-radius: 4px;
+        // border: 1px solid $warning-shades-50-p;
+
+    }
+
+    &.slds-theme_info {
+        background: $info-shades-190-p;
+        color: $info-main;
+        // border: 1px solid $info-shades-50-p;
+    }
+
+    &.slds-theme_disabled {
+        // background-color: $disabled;
+        color: $text-secondary;
+    }
+
+    &.slds-theme_filter-value {
+        background: $primary-shades-12-p;
+        color: $primary-main;
+        margin: $x-small $xx-small 0 0;
+        border-radius: 4px;
+        // border: 1px solid $primary-shades-50-p;
+    }
+
+    /* Added pill structure for lightning-pill component */
+    .slds-pill {
+        background: none;
+        border: none;
+        padding: 0;
+        min-height: unset;
+        .slds-pill__label{
+            color: $primary-main !important;
+            font-size: $font-size-12 !important;
+        }
+        .slds-pill__remove {
+            border: 1.5px solid $primary-main;
+            border-radius: 50%;
+            width: $small;
+            height: $small;   
+            margin-left: $x-small;
+            svg {
+                width: $x-small;
+                fill: $primary-main;
+            }
+
+        }
+    }
+}
+.base-link-btn .slds-button:before {
+    content: "\ea11";
+    font-family: "material-icon";
+    margin-right: 0.25rem;
+}
+.onbase-table{
+    min-height: auto !important;
+    thead th:first-child{
+        width: auto !important;
+    }
+}
+.onbase-cmp{
+    h1{
+        font-weight: 700;
+    }
+}
+
+omnistudio-omniscript-step[data-omni-key="Review and Summary"],
+omnistudio-omniscript-step[data-omni-key = "ApplicationReview"],
+omnistudio-omniscript-step[data-omni-key = "ReviewAndSummary"],
+omnistudio-omniscript-step[data-omni-key = "Application Review"]{
+    .os-step-label{
+        display: none;
+    }
+    .vlc-separator{
+        display: none;
+    }
+}
+
+.internal-screen{
+    .internal-accordion{
+        .section-control{
+            background: $background-default;
+        }
+        .slds-accordion__content{
+            padding: 0.75rem 0;
+        }
+        .slds-accordion__list-item {
+            border: none;
+            margin-bottom: 1rem;
+        }
+    }
+
+    .internal-details {
+        border-bottom: 1px solid #33333354;
+        margin-bottom: 1rem;
+        .internal-details-label,.slds-form-element__label {
+            font-size: 13px;
+            color: #6C6C6C;
+        }
+        .internal-details-value,.slds-form-element__control {
+            margin-bottom: 0.25rem;
+        }
+    }
+}
+.assessment-task-table{
+    tbody{
+        tr{
+            td{
+                word-break: auto-phrase;
+                white-space: break-spaces;
+            }
+        }
+    }
+    thead th:first-child{
+        width: auto !important;
+        word-break: auto-phrase;
+        white-space: break-spaces;
+    }
+    thead th:nth-child(3){
+        width: auto !important;
+        word-break: break-word;
+        white-space: break-spaces;
+    }
+}
+.assessment-task-cmp{
+    h1{
+        font-weight: $font-weight-bold;
+    }
+}
+.slds-modal_custom .slds-modal__container {
+    width: 60%;
+}
+
+.def-notice-modal{
+        .slds-modal__container{
+            min-width: 55rem !important;
+        }
+}
+.additional-doc-section{
+
+    .additional-doc-section-card{
+        border: 1px solid $other-divider;
+        background: $card-background;
+        padding: $small;
+    }
+    .additional-doc-section-card + .additional-doc-section-card{
+        margin-top: $medium;
+    }
+}
+.internal-radio{
+    .slds-form-element__control{
+        display: flex;
+    }
+}
+.def-doc-upload{
+.slds-form-element__label{
+    display: none;
+}
+}
+.audit-main{
+    .slds-card__body{
+        margin: 0 !important;
+    }
+    .audit-content{
+        margin: 0 !important;
+        width: 70%;
+        &.audit-step-3{
+            width: 100%;
+        }
+    }
+}
+.paper-apply-card{
+    padding: $small;
+    .slds-card {
+        border: 1px solid $input-color-2 !important;
+    }
+    .paper-apply-card-header{
+        background: $internal-table-header-bg;
+        padding: $small;
+        box-shadow: 0px 2px 2px 0px #0000001A;
+    }
+    .license-description{
+        padding: $small;
+    }
+}
+.paper-apply-modal-header{
+    border-bottom: 1px solid #E0E3EB !important;
+    box-shadow: 0px 1px 0px 0px $internal-table-border !important;
+    h1{
+        font-size: 1.25rem;
+        text-align: center;
+    }
+}
+.lafSinglePaneWindowManager{
+    .omnistudioVlocityLWCOmniWrapper{
+        *{
+            font-size: 13px !important;
+        }
+        c-radio-group{
+            .slds-form-element__label{
+                font-size: 13px !important;
+            }
+        }
+        .instruction-text{
+            p,a{
+                font-size: 13px !important;
+            }
+        }
+        [data-omni-key=PersonalInformation] c-cf-info-box-orange-helptext .info-box .slds-col.slds-size_1-of-1, [data-omni-key=PersonalInformationNameAmendment] c-cf-info-box-orange-helptext .info-box .slds-col.slds-size_1-of-1{
+            font-size: 13px !important;
+        }
+        .slds-page-header__title{
+            font-size: 1rem !important;
+        }
+        .PI-NewCountyZipPrePopulation .slds-form-element .slds-input, .PI-NewCountyZipPrePopulation .slds-form-element .slds-combobox__input{
+            font-size: 13px !important;
+        }
+    }
+}
+
+c-summary-educator-license{
+    lightning-accordion-section{
+        border: none !important;
+        margin-bottom: 1rem;
+        .slds-accordion__list-item{
+            padding: 0 1rem;
+        }
+    }
+    .slds-accordion__summary {
+        box-shadow: unset;
+        border: none;
+        padding: 1rem;
+        background: rgba(14, 102, 231, 0.04);
+        // border-bottom: 1px solid rgba(14, 102, 231, 0.12);
+        // border: 0.063rem solid rgba(14, 102, 231, 0.12);
+        border-radius: 0.25rem;
+    }
+    .slds-accordion__summary-heading .slds-button:focus {
+        box-shadow: none;
+    }
+    .slds-accordion__section.slds-is-open{
+        border: 0.063rem solid rgba(14, 102, 231, 0.12);
+    }
+    .slds-accordion__summary-action{
+        display: flex;
+        justify-content: space-between;
+        flex-direction: row-reverse;
+    }
+    .slds-accordion__summary-content{
+        font-size: 1.25rem;
+    }
+    .slds-accordion__content{
+        padding: 1.5rem 0.25rem;
+    }
+    .cc-field-value-label {
+        color: #2A292F;
+        font-size: 1rem;
+        font-weight: 400;
+    }
+    .cc-field-value {
+        color: #2A292F;
+        font-weight: 600;
+        word-break: break-word;
+        font-size: 1rem;
+    }
+} 

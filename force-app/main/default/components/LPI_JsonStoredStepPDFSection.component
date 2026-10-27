@@ -1,0 +1,74 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 04-22-2024
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
+<apex:component >
+    <apex:attribute name="section" description="This variable will contain data for a section" type="LPI_PDFSectionWrapper" required="true"/>
+    <apex:attribute name="isSubSection" description="This section is a subsection or not" type="Boolean" required="true"/>
+    <div class="{!IF(isSubSection, 'subSection','section')}">
+        <div class="sectionHeading">
+            {!section.sectionName}
+            <apex:outputPanel rendered="{!NOT(isSubSection)}">
+                <hr class="headingLine"/>
+            </apex:outputPanel>
+        </div>
+        <div class="sectionBody">
+            <apex:repeat value="{!section.licenseQuestionsList}" var="question" id="licenseQuestionsData">
+                <div class="view-only-info main-question">
+                    <apex:outputPanel rendered="{!NOT(ISBLANK(question.mainQuestion))}">
+                        <apex:outputPanel rendered="{!question.mainQuestion.classForField != 'checkbox'}">
+                            <div class="{!question.mainQuestion.classForField} labelClass">
+                                <apex:outputText value="{!question.mainQuestion.fieldLabel}" escape="false" />
+                            </div>
+                            <div class="read-only-info">
+                                <apex:outputText value="{!question.mainQuestion.fieldValue}" escape="false" />
+                            </div>
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!question.mainQuestion.classForField == 'checkbox'}">
+                            <div class="{!question.mainQuestion.classForField} labelClass">
+                                <apex:outputText value="{!question.mainQuestion.fieldLabel}" escape="false" />
+                            </div>
+                            <div class="read-only-info">
+                                <apex:image value="{!$Resource.checkbox}" width="12" height="12" rendered="{!question.mainQuestion.fieldValue == 'false'}"/>
+                                <apex:image value="{!$Resource.checkboxTrue}" width="12" height="12" rendered="{!question.mainQuestion.fieldValue == 'true'}"/>
+                            </div>
+                        </apex:outputPanel>
+                    </apex:outputPanel>
+                </div>
+                <table>
+                    <apex:repeat value="{!question.dependentQRowList}" var="depQueestion" id="depQuestionSection">
+                        <tr class='custom-grid-{!question.numberOfColumns}'>
+                            <apex:repeat value="{!depQueestion.rowDataList}" var="dataToShow" id="depQuestionRow">
+                                <td>
+                                    <div class="view-only-info">
+                                        <apex:outputPanel rendered="{!dataToShow.classForField != 'checkbox'}">
+                                            <div class="view-info-label labelClass">
+                                                <apex:outputText value="{!dataToShow.fieldLabel}" escape="false" />
+                                            </div>
+                                            <!--<div class="read-only-info">{!dataToShow.fieldValue}</div>-->
+                                            <div class="read-only-info">
+                                                <apex:outputText value="{!dataToShow.fieldValue}" escape="false" />
+                                            </div>
+                                        </apex:outputPanel>
+                                        <apex:outputPanel rendered="{!dataToShow.classForField == 'checkbox'}">
+                                            <div class="view-info-label labelClass">
+                                                <apex:outputText value="{!dataToShow.fieldLabel}" escape="false" />
+                                            </div>
+                                            <div class="read-only-info">
+                                                <apex:image value="{!$Resource.checkbox}" width="12" height="12" rendered="{!dataToShow.fieldValue == 'false'}"/>
+                                                <apex:image value="{!$Resource.checkboxTrue}" width="12" height="12" rendered="{!dataToShow.fieldValue == 'true'}"/>
+                                            </div>
+                                        </apex:outputPanel>
+                                    </div>
+                                </td>
+                            </apex:repeat>   
+                        </tr> 
+                    </apex:repeat>
+                </table>
+            </apex:repeat>
+        </div>
+    </div>
+</apex:component>

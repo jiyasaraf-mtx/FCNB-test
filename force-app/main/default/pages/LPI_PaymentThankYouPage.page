@@ -1,0 +1,2 @@
+<apex:page controller="LPI_JetPayThankYouController" title="Success Page" action="{!validateAndRedirect}">
+</apex:page>

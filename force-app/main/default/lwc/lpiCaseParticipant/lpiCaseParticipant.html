@@ -1,0 +1,49 @@
+<!--
+  @description       : 
+  @author            : Mohit Karani
+  @group             : 
+  @last modified on  : 05-26-2023
+  @last modified by  : Mohit Karani
+-->
+<template>
+    <div if:true={showSpinner}>
+        <lightning-spinner size="medium" alternative-text="Loading..."></lightning-spinner>
+    </div>
+    <header class="slds-modal__header" if:false={fromQuickAction}>
+        <h2 class="slds-text-heading_medium slds-hyphenate">Add Case Participant</h2>
+    </header>
+    <div class="disclaimer-text">
+        Select the role of the participant before selecting the participant.
+    </div>
+    <div class="slds-grid slds-gutters slds-wrap slds-p-around_large">
+        <div class="slds-col slds-size_6-of-12" if:true={rolesList}>
+            <span>
+                <lightning-combobox required label="Select Role" name="role" value={dataObj.role}
+                    onchange={handleChange} disabled={isRecordUpdate} options={rolesList}></lightning-combobox>
+
+            </span>
+        </div>
+        <div class="slds-col slds-size_6-of-12">
+            <span>
+                <lightning-combobox required dis label="Select Participant" name="participantId"
+                    value={dataObj.participantId} onchange={handleChange} disabled={isParticipantSelectionDisabled}
+                    options={participantsList}></lightning-combobox>
+
+            </span>
+        </div>
+        <div class="slds-col slds-size_6-of-12" if:true={isRecordUpdate}>
+            <span>
+                <lightning-combobox required dis label="Select Status" name="status" value={dataObj.status}
+                    onchange={handleChange} options={statusOptionsList}></lightning-combobox>
+
+            </span>
+        </div>
+    </div>
+
+    <div class="slds-p-around_large slds-m-bottom_medium">
+        <lightning-button variant="outline" label="Cancel" title="Cancel" onclick={handleCancel}
+            class="slds-float_left"></lightning-button>
+        <lightning-button variant="brand" label="Save" title="Save" onclick={handleSave} class="slds-float_right">
+        </lightning-button>
+    </div>
+</template>

@@ -1,0 +1,68 @@
+<!--
+  @description       : 
+  @author            : Mohit Karani
+  @group             : 
+  @last modified on  : 09-16-2026
+  @last modified by  : Juhi Goel
+-->
+<template>
+    <div class="landing-Header">
+        <div class="slds-container--center slds-container--x-large slds-grid slds-grid--vertical-align-center slds-grid_align-spread">
+            <div class="gap-medium slds-grid slds-grid--vertical-align-center logo-landing-main">
+                <a href="javascript:void(0)" title="LPI Home page link" onclick={handleHome}><img src={alpha_logo} alt="LPI logo"/></a>
+                <div class="mobile-only mobile-nav">
+                    <div class="hamburger" onclick={showMenu} onkeypress={showMenu} tabindex="0">
+                        <div class="bar1"></div>
+                        <div class="bar2"></div>
+                        <div class="bar3"></div>
+                    </div>
+    
+                    <nav if:true={showMenuItems} class="slds-context-bar__secondary slds-float_right" role="navigation" data-id="menu-items">
+                        <div class="slds-grid grid__right menu-items">
+                            <div class="menu-item"><a href="/license/s/pharmacy-technician-discipline-form" onclick={handleToggle} onkeypress={handleToggle}>Technician Discipline/Action Form</a></div>
+                            <div class="menu-item"><a href="/license/s/pharmacist-disciplinary-action-report" onclick={handleToggle} onkeypress={handleToggle}>Pharmacist Disciplinary Action Report (For Employers)</a></div>
+                            <div class="menu-item"><a href="/license/s/pharmacy-reporting-form" onclick={handleToggle} onkeypress={handleToggle}>Discipline/State or Federal Action Reporting Form</a></div>
+                            <div class="menu-item"><a href="/license/s/complaint-form" onclick={handleToggle} onkeypress={handleToggle}>{labels.landingFileAComplaint}</a></div>
+                            <div class="menu-item"><a href="/license/s/license-downloads" onclick={handleToggle} onkeypress={handleToggle}>Downloadable Listings</a></div>
+                            <div class="menu-item"><a href="/license/s/license-search" onclick={handleToggle} onkeypress={handleToggle}>Search</a></div>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+            <div class="slds-grid slds-grid--vertical-align-center slds-p-horizontal_small landing-menu-main">
+                <ul class="landing-menu">
+                    <li><a href="/s/" class={homeActive}>{labels.landingHome}</a></li>
+                    <li><a href="/s/complaint-form" class={complaintActive}>{labels.landingFileAComplaint}</a></li>
+                    <lightning-button-menu label={labels.landingServices} class={servicesActive} variant="bare" alternative-text={labels.landingServices}>
+                        <lightning-menu-item value="MenuItemOne" class={licensesSearch} onclick={HandleLicensesSearch} label={labels.landingKnowLicenseDetails}></lightning-menu-item>
+                        <lightning-menu-item value="MenuItemTwo" class="btn-payment" label={labels.landingMakePayment}></lightning-menu-item>
+                        <lightning-menu-item value="MenuItemThree" class="btn-renew" label={labels.landingRenewApplication}></lightning-menu-item>
+                        <lightning-menu-item value="MenuItemFour" class="btn-amend" label={labels.landingAmendLicense}></lightning-menu-item>
+                        <lightning-menu-item value="MenuItemFour" class="btn-print" label={labels.landingPrintLicensePermit}></lightning-menu-item>
+                        <lightning-menu-item value="MenuItemFour" class={KnowLicensesSearch} onclick={HandleKnowLicensesSearch} label={labels.landingSearchForLicenses}></lightning-menu-item>
+                    </lightning-button-menu>
+                    <li><a href="/s/contactus" class={contactActive}>{labels.landingContactUs}</a></li>
+                    <li><a href="javascript:void(0);" class="faq-btn">{labels.landingFaq}</a></li>
+                </ul>
+            </div>
+            <div class="login-button slds-grid slds-grid_vertical-align-center">
+                <div class="lp-language-selector" style="min-width: 8rem;">
+                    <lightning-combobox
+                        name="portalLanguage"
+                        label={labels.language}
+                        value={selectedLanguage}
+                        placeholder={labels.language}
+                        options={languageOptions}
+                        onchange={handleLanguageChange}
+                        variant="label-hidden"
+                        disabled={languageUpdating}
+                    ></lightning-combobox>
+                </div>
+                <lightning-button variant="base" class="landing-register-btn" label={labels.landingRegister} title={labels.landingRegister} onclick={handleRegister}></lightning-button>
+                <div class="primary-button-bordered ">
+                    <lightning-button variant="brand" label={labels.landingLogin} title={labels.landingLogin} onclick={handleLogin}></lightning-button>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

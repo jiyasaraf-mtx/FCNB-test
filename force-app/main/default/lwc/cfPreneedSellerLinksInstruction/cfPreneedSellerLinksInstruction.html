@@ -1,0 +1,59 @@
+<template>
+            <div class="slds-grid slds-wrap slds-is-relative ">
+            <div style="position: fixed;z-index: 999999;top: 0;right: 0;">
+  <omnistudio-toast class="flexcard-toast-element" theme="slds" title="" message="" styletype=""> </omnistudio-toast>
+</div>
+            <div if:true={showLoader} class="slds-is-absolute vloc-loader_override" style="height: 100%; width: 100%; min-height:50px; background: transparent; z-index: 99;">
+  <div>
+   <omnistudio-spinner
+      variant="brand"
+      alternative-text="Loading content..."
+      size="medium"
+      theme="slds"
+      ></omnistudio-spinner>
+  </div>
+</div>
+            <template if:false={hasPermission}>
+              You don't have required permissions to view this card.
+            </template>
+            <template if:true={hasPermission}>
+              <template if:true={hasRecords}>
+                        <template for:each={_records} for:item="record" for:index="rindex">
+                            <omnistudio-flex-card-state if:true={record}  key={record._flex.uniqueKey} data-recordid={record.Id} record={record} data-statue="true"  data-index="0" data-rindex={rindex} class="cf-vlocity-state-0 cf-vlocity-state slds-size_12-of-12"  tracking-obj={_childCardTrackingObj} >
+      <div if:true={cardLoaded} class="slds-grid slds-wrap slds-card slds-p-around_x-small slds-m-bottom_x-small" style="">
+          <div data-style-id="state0element0" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3E&lt;a%20href=%22https://pr.mo.gov/embalmers-preneed-annual.asp#:~:text=2022%2520Preneed%2520Seller%2520Renewal%2520Annual%2520Report%2520Page%25204A%22&gt;2022%20Preneed%20Seller%20Renewal%20Annual%20Report%20Page%204A%3Cbr%20/%3E&lt;/a&gt;%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element1" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element1_child"   card={card}  record={record}  merge-field="%3Cdiv%3E&lt;a%20href=%22https://pr.mo.gov/embalmers-preneed-annual.asp#:~:text=2022%2520Preneed%2520Seller%2520Renewal%2520Annual%2520Report%2520Page%25205A%22&gt;2022%20Preneed%20Seller%20Renewal%20Annual%20Report%20Page%20%3Cu%3E%3C/u%3E5A&lt;/a&gt;%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element2" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element2_child"   card={card}  record={record}  merge-field="%3Cdiv%3E&lt;a%20href=%22https://pr.mo.gov/embalmers-preneed-annual.asp#:~:text=2022%2520Preneed%2520Seller%2520Renewal%2520Annual%2520Report%2520Page%25206A%22&gt;2022%20Preneed%20Seller%20Renewal%20Annual%20Report%20Page%206A%20&lt;/a&gt;%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element3" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element3_child"   card={card}  record={record}  merge-field="%3Cdiv%3E&lt;a%20href=%22https://pr.mo.gov/embalmers-preneed-annual.asp#:~:text=2022%2520Preneed%2520Seller%2520Renewal%2520Annual%2520Report%2520Page%25207A%22&gt;2022%20Preneed%20Seller%20Renewal%20Annual%20Report%20Page%207A%20&lt;/a&gt;%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element4" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element4_child"   card={card}  record={record}  merge-field="%3Cdiv%3E&lt;a%20href=%22https://pr.mo.gov/boards/embalmers/2022PreneedSellerRenewalAnnualReportPage8A.pdf%22&gt;2022%20Preneed%20Seller%20Renewal%20Annual%20Report%20Page%208A%20&lt;/a&gt;%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div>
+      </omnistudio-flex-card-state>
+                        </template>
+                      </template>
+                      <template if:false={hasRecords}>
+                            <omnistudio-flex-card-state  record={record} data-statue="false"  data-index="0" data-rindex={rindex} class="cf-vlocity-state-0 cf-vlocity-state slds-size_12-of-12"  tracking-obj={_childCardTrackingObj} >
+      <div if:true={cardLoaded} class="slds-grid slds-wrap slds-card slds-p-around_x-small slds-m-bottom_x-small" style="">
+          <div data-style-id="state0element0" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3E&lt;a%20href=%22https://pr.mo.gov/embalmers-preneed-annual.asp#:~:text=2022%2520Preneed%2520Seller%2520Renewal%2520Annual%2520Report%2520Page%25204A%22&gt;2022%20Preneed%20Seller%20Renewal%20Annual%20Report%20Page%204A%3Cbr%20/%3E&lt;/a&gt;%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element1" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element1_child"   card={card}  record={record}  merge-field="%3Cdiv%3E&lt;a%20href=%22https://pr.mo.gov/embalmers-preneed-annual.asp#:~:text=2022%2520Preneed%2520Seller%2520Renewal%2520Annual%2520Report%2520Page%25205A%22&gt;2022%20Preneed%20Seller%20Renewal%20Annual%20Report%20Page%20%3Cu%3E%3C/u%3E5A&lt;/a&gt;%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element2" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element2_child"   card={card}  record={record}  merge-field="%3Cdiv%3E&lt;a%20href=%22https://pr.mo.gov/embalmers-preneed-annual.asp#:~:text=2022%2520Preneed%2520Seller%2520Renewal%2520Annual%2520Report%2520Page%25206A%22&gt;2022%20Preneed%20Seller%20Renewal%20Annual%20Report%20Page%206A%20&lt;/a&gt;%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element3" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element3_child"   card={card}  record={record}  merge-field="%3Cdiv%3E&lt;a%20href=%22https://pr.mo.gov/embalmers-preneed-annual.asp#:~:text=2022%2520Preneed%2520Seller%2520Renewal%2520Annual%2520Report%2520Page%25207A%22&gt;2022%20Preneed%20Seller%20Renewal%20Annual%20Report%20Page%207A%20&lt;/a&gt;%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element4" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element4_child"   card={card}  record={record}  merge-field="%3Cdiv%3E&lt;a%20href=%22https://pr.mo.gov/boards/embalmers/2022PreneedSellerRenewalAnnualReportPage8A.pdf%22&gt;2022%20Preneed%20Seller%20Renewal%20Annual%20Report%20Page%208A%20&lt;/a&gt;%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div>
+      </omnistudio-flex-card-state>
+                      </template>
+            </template>
+            <template if:true={hasError}>
+            {error}
+            </template>
+            
+      <omnistudio-action action-wrapperclass="slds-hide" re-render-flyout class="action-trigger slds-col" onupdateos={updateOmniscript} onselectcards={updateSelectedCards} onsetvalue={updateAction} onfireactionevent={actionEvtHandler}>
+      
+      </omnistudio-action>
+  
+            <omnistudio-action class="execute-action" re-render-flyout action-wrapperclass="slds-hide" onupdateos={updateOmniscript} onselectcards={updateSelectedCards} onsetvalue={updateAction} onfireactionevent={actionEvtHandler}>
+            
+            </omnistudio-action>
+            </div>
+          </template>

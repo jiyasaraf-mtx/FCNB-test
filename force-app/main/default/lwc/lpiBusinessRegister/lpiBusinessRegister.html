@@ -1,0 +1,781 @@
+<!--
+  @author            : MTX Group Product Team
+  @description       : Business Entity Registration Page for FCNB Licensing Portal
+  @last modified on  : 08-27-2026
+  @last modified by  : Juhi Goel
+-->
+<template>
+    <template if:true={showSpinner}>
+        <lightning-spinner class="spins" size="medium" variant="brand" alternative-text="loading.."></lightning-spinner>
+    </template>
+    <div class="custom-layout-register-container">
+        <div class="slds-grid slds-wrap">
+            <div class="slds-col slds-large-size--4-of-12 slds-medium-size--1-of-1 slds-size--1-of-1 bg-blue">
+                <div class="background-img slds-grid justify-content-between direction-column">
+                    <div class="custom-layout-right-sec">
+                        <div class="slds-grid">
+                            <div class="slds-col slds-size_1-of-1 slds-large-size_10-of-12 slds-m-vertical_xx-large">
+                                <div class="brand-name" onclick={handleHome}>
+                                    <a href={navigateToLoginPage} title="FCNB Home page">
+                                        <img src={logo} alt="FCNB Logo - Financial and Consumer Services Commission">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="register-carousel-main">
+                            <div class="slds-box slds-box_x-small slds-text-align_center slds-p-around--none register-carousel">
+                                <lightning-carousel>
+                                    <lightning-carousel-image header=""
+                                        description={labels.regSidebarIntro}>
+                                    </lightning-carousel-image>
+                                </lightning-carousel>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="copyright-text">
+                        <p>{labels.regCopyright}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-col slds-large-size--8-of-12 slds-medium-size--1-of-1 slds-size--1-of-1 bg-white">
+                <template if:true={cmpLoaded}>
+                    <div class="custom-layout__registerSec slds-p-around--xx-large">
+                        <article class="slds-card">
+                            <div class="register-heading">
+                                <lightning-button variant="base" label={labels.regGoBackSelection} title={labels.regGoBackSelection}
+                                    onclick={goBackToSelection} class="base-link-left"></lightning-button>
+                                <div>
+                                    <h1 aria-live="assertive" aria-label={labels.regBusiness} class="bold-40 m-b-xms m-t-small"
+                                        tabindex="-1">{labels.regBusiness}</h1>
+                                    <p class="c-grey">{labels.regAlready}
+                                        <a href="/s/login" aria-label={labels.regLogin} title={labels.regLogin}
+                                            class="login-link bold-16 m-l-xs">{labels.regLogin}
+                                        </a>
+                                    </p>
+                                </div>
+                                <div class="divider"></div>
+                            </div>
+                            <template if:true={hasError}>
+                                <div class="form-error" aria-live="assertive" role="alert" aria-atomic="true">
+                                    <div class="errorMessage slds-notify slds-notify_toast slds-theme_error">
+                                        <lightning-icon icon-name="utility:error" alternative-text="Error!"
+                                            title="Error"></lightning-icon>
+                                        <lightning-formatted-rich-text value={errorMessage}>
+                                        </lightning-formatted-rich-text>
+                                    </div>
+                                </div>
+                            </template>
+                            <template if:true={hasSuccess}>
+                                <div class="slds-scoped-notification slds-media slds-media_center slds-theme_success m-b-medium"
+                                    role="status">
+                                    <div class="slds-media__figure">
+                                        <span class="slds-icon_container slds-icon-utility-success" title="success">
+                                            <i class="material-icon material-icon-check_circle_outline"></i>
+                                        </span>
+                                    </div>
+                                    <div class="slds-media__body">
+                                        <p><strong>Business Registration Successful</strong></p>
+                                        <lightning-formatted-rich-text class="text-primary" value={successMessage}></lightning-formatted-rich-text>
+                                    </div>
+                                    <div aria-live="assertive" aria-atomic="true" role="alert">
+                                        <span class="sr-only" if:true={isSpanVisible}>Thank you for registering your business. An email has been sent to the business email address provided. The email contains your User ID and activation instructions.</span>
+                                    </div>
+                                </div>
+                                <lightning-button variant="brand" label="Back to login page" title="Back to login page"
+                                    onclick={navigateToLoginPage} class="">
+                                </lightning-button>
+                            </template>
+                            <template if:true={showOtp}>
+                                <div class="slds-m-top_medium success-msg font-14">
+                                    <p class="asterisk-caption">Asterisk (<span class="c-red">*</span>) indicates required field</p>
+                                    <div if:true={otpResent} class="m-b-medium m-t-large text-primary semiBold-16">
+                                        A One-Time Password has been resent to the business email address provided for your account. Enter the One-Time Password to complete registration.
+                                    </div>
+                                    <div if:false={otpResent} class="m-b-medium m-t-large text-primary semiBold-16">
+                                        A One-Time Password has been sent to the business email address provided for your account. Enter the One-Time Password to complete registration.
+                                    </div>
+                                    <lightning-input class="verify" name="otp" type="text" value={otp}
+                                        label="One-Time Password" placeholder="Enter One-Time Password" required
+                                        message-when-value-missing="Error: OTP is required." onchange={handleOtp}>
+                                    </lightning-input>
+                                    <!-- Recaptcha -->
+                                    <div class="recaptchaCheckbox2" style={recaptchaDivStyle}
+                                        tabindex={recaptchaDivTabIndex}>
+                                    </div>
+                                    <lightning-button variant="base" label="Resend OTP" title="Resend OTP"
+                                        onclick={resendOTPHandler} class="resent-opt-btn"></lightning-button>
+                                    <div class="m-t-xl">
+                                        <lightning-button variant="brand" label="Verify OTP" title="Verify OTP"
+                                            onclick={verifyOTPHandler}></lightning-button>
+                                    </div>
+                                </div>
+                            </template>
+                            <template if:true={isShowRegistrationForm}>
+                                <div class="card-style">
+                                    <p class="asterisk-caption">Asterisk (<span class="c-red">*</span>) indicates required field</p>
+
+                                    <div class="slds-grid slds-gutters_direct slds-wrap">
+                                        <div class="slds-col slds-large-size--1-of-1 slds-medium-size--1-of-1 slds-size--1-of-1">
+                                            <h2 class="bold-20 m-b-medium m-t-medium">Business Details</h2>
+                                        </div>
+                                        <div class="slds-col slds-large-size--1-of-2 slds-medium-size--1-of-2 slds-size--1-of-1">
+                                            <lightning-combobox class="validate" name="Contact"
+                                                label="Contact Type" value={selectedValue} required
+                                                message-when-value-missing="Error: Contact Type is required."
+                                                options={contactTypeOptions} onchange={handleChange}>
+                                            </lightning-combobox>
+                                        </div>
+                                        <div class="slds-col slds-large-size--1-of-2 slds-medium-size--1-of-2 slds-size--1-of-1">
+                                        </div>
+
+                                        <!-- Legal Business Name -->
+                                        <div class="slds-col slds-large-size--1-of-2 slds-medium-size--1-of-2 slds-size--1-of-1">
+                                            <div class="d-flex align-baseline">
+                                                <span class="c-red">* </span> <b class="slds-form-element__label">Legal Business Name</b>
+                                            </div>
+                                            <lightning-input class="validateFirst" type="text" label="Legal Business Name"
+                                                placeholder="Enter Legal Business Name" name="businessName" maxlength="255"
+                                                value={dataObj.businessName} variant="label-hidden"
+                                                pattern={patternObj.text}
+                                                message-when-pattern-mismatch="Invalid characters entered."
+                                                onchange={handleInputs}
+                                                message-when-value-missing="Error: Business Name is required." required>
+                                            </lightning-input>
+                                        </div>
+
+                                        <!-- Business Email -->
+                                        <div class="slds-col slds-large-size--1-of-2 slds-medium-size--1-of-2 slds-size--1-of-1">
+                                            <lightning-input class="validate" type="email" label="Business Email Address"
+                                                placeholder="Enter Business Email" name="businessEmail" maxlength="80"
+                                                value={dataObj.businessEmail}
+                                                pattern='^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,10}$'
+                                                message-when-pattern-mismatch="Invalid email format." required
+                                                onchange={handleInputs}
+                                                message-when-value-missing="Error: Business Email is required.">
+                                            </lightning-input>
+                                        </div>
+
+                                        <!-- NB Corporate Registry / Joint Stock Registry Number -->
+                                        <div class="slds-col slds-large-size--1-of-2 slds-medium-size--1-of-2 slds-size--1-of-1">
+                                            <lightning-input class="validate m-b-0" type="text" 
+                                                label="New Brunswick Corporate Registry Number"
+                                                placeholder="Enter Corporate / Registry Number"
+                                                name="moStateRegistrationNumber" maxlength="40" required
+                                                value={dataObj.moStateRegistrationNumber}
+                                                onchange={handleInputs} pattern={patternObj.name}
+                                                message-when-pattern-mismatch="Only letters and numbers are allowed."
+                                                message-when-value-missing="Error: Corporate Registry Number is required.">
+                                            </lightning-input>
+                                            <div class="m-b-small">
+                                                <span class="help-underline-text semiBold-12 text-secondary">New Brunswick Registry of Joint Stock Companies number required to authenticate business entity. Enter "00000000" if Not Applicable.</span>
+                                            </div>
+                                        </div>
+
+                                        <!-- CRA Business Number (BN) -->
+                                        <div class="slds-col slds-large-size--1-of-2 slds-medium-size--1-of-2 slds-size--1-of-1">    
+                                            <lightning-input class="validate m-b-0" type="text"
+                                                label="CRA Business Number (9 Digits)" placeholder="123456789"
+                                                name="employerIdentificationNum" maxlength="9"
+                                                min-length="9" pattern="\d{9}$" required
+                                                value={dataObj.employerIdentificationNum} onchange={handleInputs}
+                                                message-when-value-missing="Error: CRA Business Number is required."
+                                                onblur={maskingEIN} onclick={recorveringOrginalEIN}
+                                                message-when-pattern-mismatch="Please enter a valid 9-digit CRA Business Number.">
+                                            </lightning-input>
+                                            <div class="m-b-small">
+                                                <span class="help-underline-text semiBold-12 text-secondary">Canada Revenue Agency (CRA) Business Number is required. Enter "000000000" if Not Applicable.</span>
+                                            </div>
+                                        </div>
+
+                                        <!-- Business Phone -->
+                                        <div class="slds-col slds-large-size--1-of-2 slds-medium-size--1-of-2 slds-size--1-of-1">
+                                            <lightning-input class="validate" type="tel" label="Business Telephone Number"
+                                                placeholder="Enter Business Telephone" name="businessPhone" required
+                                                maxlength="10" minlength="10" pattern="[0-9\(\)\-\s]*"
+                                                onclick={recoverOrignalPhone} onblur={formatPhoneNumber}
+                                                message-when-pattern-mismatch="Please enter a valid 10-digit telephone number."
+                                                onchange={handleInputs} value={dataObj.businessPhone}
+                                                message-when-value-missing="Error: Business Telephone is required.">
+                                            </lightning-input>
+                                        </div>
+
+                                        <!-- Operating Name / D.B.A -->
+                                        <div class="slds-col slds-large-size--1-of-2 slds-medium-size--1-of-2 slds-size--1-of-1">
+                                            <lightning-input class="validate" type="text" label="Operating Name / Trade Name / D.B.A."
+                                                maxlength="80" placeholder="Enter Operating Name (if different)"
+                                                name="businessFictitiousName" pattern={patternObj.text}
+                                                message-when-pattern-mismatch="Invalid input characters."
+                                                onchange={handleInputs} value={dataObj.businessFictitiousName}>
+                                            </lightning-input>
+                                        </div>
+
+                                        <!-- Business Location Outside Canada? -->
+                                        <div class="slds-col slds-large-size--1-of-2 slds-medium-size--1-of-2 slds-size--1-of-1">
+                                            <lightning-combobox class="validate" name="businessOutsideUS"
+                                                label="Business Located Outside Canada?"
+                                                value={dataObj.businessOutsideUS} required
+                                                message-when-value-missing="Error: Please specify if the business is located outside Canada."
+                                                options={businessOutsideUSOptions} onchange={handleInputs}>
+                                            </lightning-combobox>
+                                        </div>
+
+                                        <!-- International Business ID -->
+                                        <div if:true={showBusinessIdentificationNum}
+                                            class="slds-col slds-large-size--1-of-2 slds-medium-size--1-of-2 slds-size--1-of-1">
+                                            <lightning-input class="validate" type="text"
+                                                label="International Business Identification Number"
+                                                maxlength="40" placeholder="Enter Country Business ID"
+                                                name="businessIdentificationNumber" required pattern={patternObj.name}
+                                                message-when-pattern-mismatch="Only letters and numbers allowed."
+                                                onchange={handleInputs}
+                                                message-when-value-missing="Error: International Business Identification Number is required.">
+                                            </lightning-input>
+                                        </div>
+                                    </div>
+
+                                    <div class="divider"></div>
+                                    <!-- Business Address -->
+                                    <div class="slds-col slds-grid slds-wrap slds-gutters_direct">
+                                        <div class="slds-col slds-large-size--1-of-1 slds-medium-size--1-of-1 slds-size--1-of-1">
+                                            <h2 class="bold-20 m-b-medium">Business Address</h2>
+                                        </div>
+                                        <!-- Country -->
+                                        <div class="slds-col slds-large-size--1-of-2 slds-medium-size--1-of-2 slds-size--1-of-1">
+                                            <lightning-combobox class="validate" name="businessAddress.country"
+                                                label="Country" value={dataObj.businessAddress.country} required
+                                                message-when-value-missing="Error: Country is required."
+                                                options={countryOptions} onchange={handleInputs}>
+                                            </lightning-combobox>
+                                        </div>
+                                        <!-- Street Address -->
+                                        <div class="slds-col slds-large-size--1-of-2 slds-medium-size--1-of-2 slds-size--1-of-1">
+                                            <lightning-input class="validate" type="text" label="Street Address"
+                                                placeholder="Enter Street Address" name="businessAddress.street1"
+                                                maxlength="255" value={dataObj.businessAddress.street1}
+                                                onchange={handleInputs} required
+                                                message-when-value-missing="Error: Street Address is required."
+                                                pattern={patternObj.text}
+                                                message-when-pattern-mismatch="Invalid characters entered.">
+                                            </lightning-input>
+                                        </div>
+                                        <!-- Province Picklist -->
+                                        <template if:true={isBusinessAddressUS}>
+                                            <div class="slds-col slds-large-size--1-of-2 slds-medium-size--1-of-2 slds-size--1-of-1">
+                                                <lightning-combobox class="validate" name="businessAddress.state"
+                                                    placeholder="Select Province" label="Province / Territory"
+                                                    value={dataObj.businessAddress.state} required
+                                                    message-when-value-missing="Error: Province is required."
+                                                    options={stateOptions} onchange={handleInputs}>
+                                                </lightning-combobox>
+                                            </div>
+                                        </template>
+                                        <!-- Province Text -->
+                                        <template if:false={isBusinessAddressUS}>
+                                            <div class="slds-col slds-large-size--1-of-2 slds-medium-size--1-of-2 slds-size--1-of-1">
+                                                <lightning-input class="validate" type="text" label="Province / State / Region"
+                                                    placeholder="Enter Province or State" name="businessAddress.stateText"
+                                                    maxlength="40" value={dataObj.businessAddress.stateText}
+                                                    onchange={handleInputs} required
+                                                    message-when-value-missing="Error: Province/State is required."
+                                                    pattern={patternObj.text}
+                                                    message-when-pattern-mismatch="Invalid characters entered.">
+                                                </lightning-input>
+                                            </div>
+                                        </template>
+                                        <!-- Postal Code -->
+                                        <template if:true={isBusinessAddressUS}>
+                                            <div class="slds-col slds-large-size--1-of-2 slds-medium-size--1-of-2 slds-size--1-of-1">
+                                                <lightning-input class="validate" type="text" label="Postal Code"
+                                                    placeholder="A1A 1A1" name="businessAddress.zipcode"
+                                                    minlength="5" maxlength="7"
+                                                    value={dataObj.businessAddress.zipcode} onchange={handleInputs}
+                                                    required
+                                                    message-when-value-missing="Error: Postal Code is required."
+                                                    pattern={patternObj.zipCodeUS}
+                                                    message-when-pattern-mismatch="Please enter a valid Postal Code (e.g., E3B 5H1).">
+                                                </lightning-input>
+                                            </div>
+                                        </template>
+                                        <template if:false={isBusinessAddressUS}>
+                                            <div class="slds-col slds-large-size--1-of-2 slds-medium-size--1-of-2 slds-size--1-of-1">
+                                                <lightning-input class="validate" type="text" label="Postal Code / Zip Code"
+                                                    placeholder="Enter Postal Code" name="businessAddress.zipcode"
+                                                    minlength="5" maxlength="10"
+                                                    value={dataObj.businessAddress.zipcode} onchange={handleInputs}
+                                                    required
+                                                    message-when-value-missing="Error: Postal Code is required."
+                                                    pattern={patternObj.zipCodeNonUS}
+                                                    message-when-pattern-mismatch="Please enter a valid Postal Code.">
+                                                </lightning-input>
+                                            </div>
+                                        </template>
+                                        <!-- City / Town -->
+                                        <div class="slds-col slds-large-size--1-of-2 slds-medium-size--1-of-2 slds-size--1-of-1">
+                                            <lightning-input class="validate" type="text" label="City / Town"
+                                                placeholder="Enter City or Town" name="businessAddress.city" maxlength="40"
+                                                value={dataObj.businessAddress.city} onchange={handleInputs}
+                                                required message-when-value-missing="Error: City is required."
+                                                pattern={patternObj.text}
+                                                message-when-pattern-mismatch="Invalid characters entered.">
+                                            </lightning-input>
+                                        </div>
+                                        <!-- County / District -->
+                                        <div class="slds-col slds-large-size--1-of-2 slds-medium-size--1-of-2 slds-size--1-of-1">
+                                            <lightning-input class="validate" type="text" label="County / District (Optional)"
+                                                placeholder="Enter County or District" name="businessAddress.county"
+                                                maxlength="40" value={dataObj.businessAddress.county}
+                                                onchange={handleInputs} pattern={patternObj.text}
+                                                message-when-pattern-mismatch="Invalid characters entered.">
+                                            </lightning-input>
+                                        </div>
+                                    </div>
+                                    <div class="divider"></div>
+
+                                    <!-- Authorized Contact List -->
+                                    <div class="slds-col slds-large-size--1-of-1 slds-medium-size--1-of-1 slds-size--1-of-1">
+                                        <div class="slds-grid slds-grid--align-spread slds-grid--vertical-align-center m-b-medium">
+                                            <h2 class="section-heading semiBold-18"><span class="asterisk-text">*</span>
+                                                Authorized Contact List
+                                            </h2>
+                                            <lightning-button class="authContactFocusButton button-small brand-outlinebtn-add" variant="brand-outline"
+                                                label="Add Authorized Contact" title="Add Authorized Contact"
+                                                data-id="isAuthContactPopupOpen" onclick={addAuthContact}
+                                                aria-label="Authorized Contact Information, Add Authorized Contact">
+                                            </lightning-button>
+                                        </div>
+                                        <template if:true={maxErrorMessage}>
+                                            <div class="slds-text-color_error">{maxErrorMessage}</div>
+                                        </template>
+                                        <div>
+                                            <table class="slds-table slds-no-row-hover alpha-table-layout slds-table_bordered"
+                                                if:true={displayAuthContactList}>
+                                                <caption class="sr-only">Authorized Contact List Table</caption>
+                                                <thead>
+                                                    <tr class="slds-line-height_reset">
+                                                        <th scope="col"><div class="slds-truncate" title="Name">Name</div></th>
+                                                        <th scope="col"><div class="slds-truncate" title="Email">Email</div></th>
+                                                        <th scope="col"><div class="slds-truncate" title="Phone">Phone</div></th>
+                                                        <th scope="col"><div class="slds-truncate" title="Actions">Actions</div></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <template for:each={authContactList} for:item="authContact" for:index="index">
+                                                        <tr key={authContact.index} class="slds-hint-parent">
+                                                            <td data-label="Name">
+                                                                <div style="white-space:normal; word-break: break-all;" title={authContact.firstName}>
+                                                                    {authContact.firstName} {authContact.middleName} {authContact.lastName}
+                                                                </div>
+                                                            </td>
+                                                            <td data-label="Email">
+                                                                <div class="slds-truncate" title={authContact.email}>{authContact.email}</div>
+                                                            </td>
+                                                            <td data-label="Phone">
+                                                                <div class="slds-truncate" title={authContact.phone}>{authContact.phone}</div>
+                                                            </td>
+                                                            <td data-label="Action" class="table-action">
+                                                                <lightning-button-menu alternative-text="Show menu">
+                                                                    <lightning-menu-item value="MenuItemOne" data-index={index} onclick={handleAuthContactEdit} aria-label={authContact.editButtonAriaLabel} class="base-link-btn base-edit-btn" label="Edit"></lightning-menu-item>
+                                                                    <lightning-menu-item value="MenuItemTwo" label="Delete" aria-label={authContact.deleteButtonAriaLabel} class="base-delete-btn file-delete-btn" onclick={handleAuthDelete}></lightning-menu-item>
+                                                                </lightning-button-menu>
+                                                            </td>
+                                                        </tr>
+                                                    </template>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <template if:true={isAuthContactPopupOpen}>
+                                            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-03"
+                                                aria-modal="true" aria-describedby="modal-content-id-3"
+                                                class="slds-modal slds-fade-in-open slds-modal_small custom-modal"
+                                                onkeydown={handleEscKeyDown}>
+                                                <div class="slds-modal__container">
+                                                    <header class="slds-modal__header">
+                                                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                                                            title="Close" onclick={closeModelAuthContact}>
+                                                            <lightning-icon icon-name="utility:close" variant="inverse" size="small"></lightning-icon>
+                                                            <span class="slds-assistive-text">Close Modal</span>
+                                                        </button>
+                                                        <h1 id="modal-heading-003" class="bold-24">Add / Edit Authorized Contact</h1>
+                                                    </header>
+                                                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-3">
+                                                        <p class="asterisk-caption m-b-small authContactValidate">Asterisk (<span class="c-red">*</span>) indicates required field</p>
+                                                        <div class="m-b-small">Specify the details of the contact person responsible for managing regulatory filings and licenses for this business entity.</div>
+                                                        <div class="slds-grid slds-wrap slds-gutters">
+                                                            <div class="slds-col slds-large-size--1-of-3 slds-medium-size--1-of-2 slds-size--1-of-1">
+                                                                <lightning-input class="authContactValidate"
+                                                                    type="text" label="First Name" placeholder="Enter First Name" name="firstName"
+                                                                    maxlength="40" value={selectedAuthContactData.firstName}
+                                                                    onchange={handleAuthInputs} required
+                                                                    message-when-value-missing="Error: First Name is required."
+                                                                    pattern={patternObj.name}
+                                                                    message-when-pattern-mismatch="Special characters are not allowed.">
+                                                                </lightning-input>
+                                                            </div>
+                                                            <div class="slds-col slds-large-size--1-of-3 slds-medium-size--1-of-2 slds-size--1-of-1">
+                                                                <lightning-input class="authContactValidate"
+                                                                    type="text" label="Middle Name" placeholder="Enter Middle Name"
+                                                                    name="middleName" maxlength="40" value={selectedAuthContactData.middleName}
+                                                                    onchange={handleAuthInputs} pattern={patternObj.name}
+                                                                    message-when-pattern-mismatch="Special characters are not allowed.">
+                                                                </lightning-input>
+                                                            </div>
+                                                            <div class="slds-col slds-large-size--1-of-3 slds-medium-size--1-of-2 slds-size--1-of-1">
+                                                                <lightning-input class="authContactValidate"
+                                                                    type="text" label="Last Name" placeholder="Enter Last Name" name="lastName"
+                                                                    maxlength="80" value={selectedAuthContactData.lastName}
+                                                                    onchange={handleAuthInputs} required
+                                                                    message-when-value-missing="Error: Last Name is required."
+                                                                    pattern={patternObj.name}
+                                                                    message-when-pattern-mismatch="Special characters are not allowed.">
+                                                                </lightning-input>
+                                                            </div>
+                                                            <div if:true={showAuthContactEmailField}
+                                                                class="slds-col slds-large-size--1-of-3 slds-medium-size--1-of-2 slds-size--1-of-1">
+                                                                <lightning-input class="authContactValidate authContactValidateEmail"
+                                                                    type="email" label="Email" placeholder="Enter Email" name="email"
+                                                                    maxlength="40" required
+                                                                    message-when-value-missing="Error: Email is required."
+                                                                    onchange={handleAuthInputs} value={selectedAuthContactData.email}
+                                                                    pattern='^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,10}$'
+                                                                    message-when-pattern-mismatch="Invalid email format.">
+                                                                </lightning-input>
+                                                            </div>
+                                                            <div class="slds-col slds-large-size--1-of-3 slds-medium-size--1-of-2 slds-size--1-of-1">
+                                                                <lightning-input class="authContactValidate"
+                                                                    type="tel" label="Phone" placeholder="Enter Telephone Number" name="phone"
+                                                                    maxlength="10" min-length="10" pattern={patternObj.phone}
+                                                                    message-when-pattern-mismatch="Please enter a valid 10-digit phone number."
+                                                                    onchange={handleAuthInputs} onblur={formatPhoneNumber}
+                                                                    onclick={recoverOrignalPhone} value={selectedAuthContactData.phone}>
+                                                                </lightning-input>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <footer class="slds-modal__footer">
+                                                        <button class="slds-button slds-button_neutral" onclick={closeModelAuthContact} title="Cancel">Cancel</button>
+                                                        <button class="slds-button slds-button_brand" onclick={saveAuthContact} title="Save">Save</button>
+                                                    </footer>
+                                                </div>
+                                            </section>
+                                            <div class="slds-backdrop slds-backdrop_open"></div>
+                                        </template>
+                                    </div>
+                                    <div class="divider"></div>
+
+                                    <!-- Corporate Officer List -->
+                                    <div class="slds-col slds-large-size--1-of-1 slds-medium-size--1-of-1 slds-size--1-of-1">
+                                        <div class="slds-grid slds-grid--align-spread slds-grid--vertical-align-center m-b-medium">
+                                            <h2 class="section-heading semiBold-18"><span class="asterisk-text">*</span>
+                                                Corporate Officer / Director List
+                                            </h2>
+                                            <lightning-button class="corpOfficerFocusButton button-small brand-outlinebtn-add"
+                                                label="Add Corporate Officer" variant="brand-outline" title="Add Corporate Officer"
+                                                onclick={addCoorprateOfficer}
+                                                aria-label="Corporate Officer Information, Add Corporate Officer">
+                                            </lightning-button>
+                                        </div>
+                                        <div>
+                                            <table class="slds-table slds-no-row-hover alpha-table-layout slds-table_bordered"
+                                                if:true={displayCoorporateOfficerList}>
+                                                <caption class="sr-only">Corporate Officer List Table</caption>
+                                                <thead>
+                                                    <tr class="slds-line-height_reset">
+                                                        <th scope="col"><div class="slds-truncate" title="Name">Name</div></th>
+                                                        <th scope="col"><div class="slds-truncate" title="Role">Role / Title</div></th>
+                                                        <th class="table-col-15" scope="col"><div class="slds-truncate" title="Address">Address</div></th>
+                                                        <th scope="col"><div class="slds-truncate" title="Date of Birth">Date of Birth</div></th>
+                                                        <th scope="col"><div class="slds-truncate" title="Actions">Actions</div></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <template for:each={coorporateOfficerList} for:item="coorporateOfficer" for:index="index">
+                                                        <tr key={coorporateOfficer.sNoValue} class="slds-hint-parent">
+                                                            <td data-label="Corporate Officer Name">
+                                                                <div style="white-space:normal; word-break: break-all;" title={coorporateOfficer.firstName}>
+                                                                    {coorporateOfficer.firstName} {coorporateOfficer.middleName} {coorporateOfficer.lastName}
+                                                                </div>
+                                                            </td>
+                                                            <td data-label="Role">
+                                                                <div class="slds-truncate" title={coorporateOfficer.role}>{coorporateOfficer.role}</div>
+                                                            </td>
+                                                            <td data-label="Address">
+                                                                <div class="table-col-15" title={coorporateOfficer.addressData.street1}>
+                                                                    {coorporateOfficer.addressData.street1} {coorporateOfficer.addressData.city} {coorporateOfficer.addressData.state} {coorporateOfficer.addressData.country} {coorporateOfficer.addressData.zipcode}
+                                                                </div>
+                                                            </td>
+                                                            <td data-label="Date of Birth">
+                                                                <lightning-formatted-date-time
+                                                                    value={coorporateOfficer.birthdate}
+                                                                    year="numeric" month="numeric" day="numeric" title={coorporateOfficer.birthdate}>
+                                                                </lightning-formatted-date-time>
+                                                            </td>
+                                                            <td data-label="Action" class="table-action">
+                                                                <lightning-button-menu alternative-text="Show menu" data-coorpindex={index}>
+                                                                    <lightning-menu-item value="MenuItemOne" onclick={handleCoorporateEdit} aria-label="Edit Corporate Officer" class="base-link-btn base-edit-btn" label="Edit" data-index={index}></lightning-menu-item>
+                                                                    <lightning-menu-item value="MenuItemTwo" label="Delete" aria-label="Delete Corporate Officer" class="base-delete-btn file-delete-btn" onclick={handleCoorporateDelete} data-index={index}></lightning-menu-item>
+                                                                </lightning-button-menu>
+                                                            </td>
+                                                        </tr>
+                                                    </template>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <template if:true={isCoorporatePopupOpen}>
+                                            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-02"
+                                                aria-modal="true" aria-describedby="modal-content-id-2"
+                                                class="slds-modal slds-fade-in-open slds-modal_small custom-modal"
+                                                onkeydown={handleEscKeyDown}>
+                                                <div class="slds-modal__container">
+                                                    <header class="slds-modal__header">
+                                                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                                                            title="Close" onclick={closeModalcoorporate}>
+                                                            <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse" size="small"></lightning-icon>
+                                                            <span class="slds-assistive-text">Close Modal</span>
+                                                        </button>
+                                                        <h1 id="modal-heading-02" class="bold-24">Add / Edit Corporate Officer</h1>
+                                                    </header>
+                                                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+                                                        <p class="asterisk-caption m-b-small coorporateValidate">Asterisk (<span class="c-red">*</span>) indicates required field</p>
+                                                        <div class="slds-grid slds-wrap slds-gutters slds-p-bottom--large">
+                                                            <div class="slds-col slds-large-size--1-of-3 slds-medium-size--1-of-2 slds-size--1-of-1">
+                                                                <lightning-input class="coorporateValidate"
+                                                                    type="text" label="First Name" placeholder="Enter First Name" name="firstName"
+                                                                    maxlength="40" value={selectedCoorporateOfficerData.firstName}
+                                                                    required onchange={handleCoorporateInputs}
+                                                                    message-when-value-missing="Error: First Name is required."
+                                                                    pattern={patternObj.name}
+                                                                    message-when-pattern-mismatch="Special characters are not allowed.">
+                                                                </lightning-input>
+                                                            </div>
+                                                            <div class="slds-col slds-large-size--1-of-3 slds-medium-size--1-of-2 slds-size--1-of-1">
+                                                                <lightning-input class="coorporateValidate"
+                                                                    type="text" label="Middle Name" placeholder="Enter Middle Name"
+                                                                    name="middleName" maxlength="40"
+                                                                    value={selectedCoorporateOfficerData.middleName}
+                                                                    onchange={handleCoorporateInputs} pattern={patternObj.name}
+                                                                    message-when-pattern-mismatch="Special characters are not allowed.">
+                                                                </lightning-input>
+                                                            </div>
+                                                            <div class="slds-col slds-large-size--1-of-3 slds-medium-size--1-of-2 slds-size--1-of-1">
+                                                                <lightning-input class="coorporateValidate"
+                                                                    type="text" label="Last Name" placeholder="Enter Last Name" name="lastName"
+                                                                    maxlength="80" value={selectedCoorporateOfficerData.lastName}
+                                                                    onchange={handleCoorporateInputs} required
+                                                                    message-when-value-missing="Error: Last Name is required."
+                                                                    pattern={patternObj.name}
+                                                                    message-when-pattern-mismatch="Special characters are not allowed.">
+                                                                </lightning-input>
+                                                            </div>
+                                                            <div class="slds-col slds-large-size--1-of-3 slds-medium-size--1-of-2 slds-size--1-of-1">
+                                                                <lightning-combobox class="coorporateValidate corporateValidateEmail"
+                                                                    name="role" placeholder="Select Role / Title" label="Role / Title"
+                                                                    value={selectedCoorporateOfficerData.role} required
+                                                                    message-when-value-missing="Error: Role is required."
+                                                                    options={roleOptions} onchange={handleCoorporateInputs}>
+                                                                </lightning-combobox>
+                                                            </div>
+                                                            <div class="slds-col slds-large-size--1-of-3 slds-medium-size--1-of-2 slds-size--1-of-1">
+                                                                <lightning-input class="coorporateValidate"
+                                                                    type="date" label="Date of Birth" placeholder="YYYY-MM-DD" name="birthdate"
+                                                                    maxlength="40" required
+                                                                    message-when-value-missing="Error: Date of Birth is required."
+                                                                    value={selectedCoorporateOfficerData.birthdate}
+                                                                    onchange={handleCoorporateInputs} pattern={patternObj.dob}
+                                                                    message-when-pattern-mismatch="Special characters are not allowed"
+                                                                    max={todayDate} date-style="short">
+                                                                </lightning-input>
+                                                            </div>
+                                                        </div>
+                                                        <div class="slds-grid slds-wrap slds-gutters">
+                                                            <div class="slds-col slds-large-size--1-of-1 slds-medium-size--1-of-1 slds-size--1-of-1">
+                                                                <h2 class="bold-20 m-b-medium">Mailing Address</h2>
+                                                            </div>
+                                                            <div class="slds-col slds-large-size--1-of-3 slds-medium-size--1-of-2 slds-size--1-of-1">
+                                                                <lightning-input class="coorporateValidate"
+                                                                    type="text" label="Street Address" placeholder="Enter Street Address"
+                                                                    name="addressData.street1" maxlength="255"
+                                                                    value={selectedCoorporateOfficerData.addressData.street1}
+                                                                    onchange={handleCoorporateInputs} required
+                                                                    message-when-value-missing="Error: Street Address is required."
+                                                                    pattern={patternObj.text}
+                                                                    message-when-pattern-mismatch="Invalid characters entered.">
+                                                                </lightning-input>
+                                                            </div>
+                                                            <div class="slds-col slds-large-size--1-of-3 slds-medium-size--1-of-2 slds-size--1-of-1">
+                                                                <lightning-combobox class="coorporateValidate"
+                                                                    name="addressData.country" label="Country"
+                                                                    value={selectedCoorporateOfficerData.addressData.country}
+                                                                    required message-when-value-missing="Error: Country is required."
+                                                                    options={countryOptions} onchange={handleCoorporateInputs}>
+                                                                </lightning-combobox>
+                                                            </div>
+                                                            <template if:true={isCoorporateAddressUS}>
+                                                                <div class="slds-col slds-large-size--1-of-3 slds-medium-size--1-of-2 slds-size--1-of-1">
+                                                                    <lightning-combobox class="coorporateValidate"
+                                                                        name="addressData.state" placeholder="Select Province" label="Province / Territory"
+                                                                        value={selectedCoorporateOfficerData.addressData.state}
+                                                                        required message-when-value-missing="Error: Province is required."
+                                                                        options={stateOptions} onchange={handleCoorporateInputs}>
+                                                                    </lightning-combobox>
+                                                                </div>
+                                                            </template>
+                                                            <template if:false={isCoorporateAddressUS}>
+                                                                <div class="slds-col slds-large-size--1-of-3 slds-medium-size--1-of-2 slds-size--1-of-1">
+                                                                    <lightning-input class="coorporateValidate"
+                                                                        type="text" label="Province / State / Region" placeholder="Enter Province"
+                                                                        name="addressData.stateText" maxlength="40"
+                                                                        value={selectedCoorporateOfficerData.addressData.stateText}
+                                                                        onchange={handleCoorporateInputs} pattern={patternObj.text}
+                                                                        message-when-pattern-mismatch="Invalid characters entered.">
+                                                                    </lightning-input>
+                                                                </div>
+                                                            </template>
+                                                            <template if:true={isCoorporateAddressUS}>
+                                                                <div class="slds-col slds-large-size--1-of-3 slds-medium-size--1-of-2 slds-size--1-of-1">
+                                                                    <lightning-input class="coorporateValidate"
+                                                                        type="text" label="Postal Code" placeholder="A1A 1A1"
+                                                                        name="addressData.zipcode" minlength="5" maxlength="7"
+                                                                        value={selectedCoorporateOfficerData.addressData.zipcode}
+                                                                        onchange={handleCoorporateInputs} required
+                                                                        message-when-value-missing="Error: Postal Code is required."
+                                                                        pattern={patternObj.zipCodeUS}
+                                                                        message-when-pattern-mismatch="Please enter a valid Postal Code.">
+                                                                    </lightning-input>
+                                                                </div>
+                                                            </template>
+                                                            <template if:false={isCoorporateAddressUS}>
+                                                                <div class="slds-col slds-large-size--1-of-3 slds-medium-size--1-of-2 slds-size--1-of-1">
+                                                                    <lightning-input class="coorporateValidate"
+                                                                        type="text" label="Postal Code" placeholder="Enter Postal Code"
+                                                                        name="addressData.zipcode" minlength="5" maxlength="10"
+                                                                        value={selectedCoorporateOfficerData.addressData.zipcode}
+                                                                        onchange={handleCoorporateInputs} pattern={patternObj.zipCodeNonUS}
+                                                                        message-when-pattern-mismatch="Please enter a valid Postal Code.">
+                                                                    </lightning-input>
+                                                                </div>
+                                                            </template>
+                                                            <div class="slds-col slds-large-size--1-of-3 slds-medium-size--1-of-2 slds-size--1-of-1">
+                                                                <lightning-input class="coorporateValidate"
+                                                                    type="text" label="City / Town" placeholder="Enter City" name="addressData.city"
+                                                                    maxlength="40" value={selectedCoorporateOfficerData.addressData.city}
+                                                                    onchange={handleCoorporateInputs} required
+                                                                    message-when-value-missing="Error: City is required."
+                                                                    pattern={patternObj.text}
+                                                                    message-when-pattern-mismatch="Invalid characters entered.">
+                                                                </lightning-input>
+                                                            </div>
+                                                            <div class="slds-col slds-large-size--1-of-3 slds-medium-size--1-of-2 slds-size--1-of-1">
+                                                                <lightning-input class="coorporateValidate"
+                                                                    type="text" label="County / District (Optional)" placeholder="Enter County"
+                                                                    name="addressData.county" maxlength="40"
+                                                                    value={selectedCoorporateOfficerData.addressData.county}
+                                                                    onchange={handleCoorporateInputs} pattern={patternObj.text}
+                                                                    message-when-pattern-mismatch="Invalid characters entered.">
+                                                                </lightning-input>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <footer class="slds-modal__footer">
+                                                        <button class="slds-button slds-button_neutral" onclick={closeModalcoorporate} title="Cancel">Cancel</button>
+                                                        <button class="slds-button slds-button_brand" onclick={saveCoorporateOfficer} title="Save">Save</button>
+                                                    </footer>
+                                                </div>
+                                            </section>
+                                            <div class="slds-backdrop slds-backdrop_open"></div>
+                                        </template>
+                                    </div>
+
+                                    <!-- Security Questions -->
+                                    <div class="divider"></div>
+                                    <div class="slds-col slds-large-size--1-of-1 slds-medium-size--1-of-1 slds-size--1-of-1">
+                                        <h2 class="bold-20 m-b-medium">Account Security Questions</h2>
+                                        <div>
+                                            <lightning-combobox name="Question1" label="Security Question 1"
+                                                message-when-value-missing="Required"
+                                                options={getSecurityQues1Options} onchange={handleQuestions}
+                                                class="validate sq-combobox" value={secQue1SelectedValue} required>
+                                            </lightning-combobox>
+                                            <template if:true={selectedSecurityQuestions.Question1}>
+                                                <lightning-input class="validate" type="text" label="Answer"
+                                                    placeholder="Enter Question 1 answer" name="que1Answer"
+                                                    maxlength="40" onchange={handleQuestions} required
+                                                    message-when-value-missing="Error: Answer for 1st question is required."
+                                                    pattern="^((?!(<)|(>)).)*$"
+                                                    message-when-pattern-mismatch="Invalid characters entered.">
+                                                </lightning-input>
+                                            </template>
+                                        </div>
+                                        <div>
+                                            <lightning-combobox name="Question2" label="Security Question 2"
+                                                message-when-value-missing="Required"
+                                                options={getSecurityQues2Options} onchange={handleQuestions}
+                                                class="validate sq-combobox" value={secQue1SelectedValue} required>
+                                            </lightning-combobox>
+                                            <template if:true={selectedSecurityQuestions.Question2}>
+                                                <lightning-input class="validate" type="text" label="Answer"
+                                                    placeholder="Enter Question 2 answer" name="que2Answer"
+                                                    maxlength="40" onchange={handleQuestions} required
+                                                    message-when-value-missing="Error: Answer for 2nd question is required."
+                                                    pattern="^((?!(<)|(>)).)*$"
+                                                    message-when-pattern-mismatch="Invalid characters entered.">
+                                                </lightning-input>
+                                            </template>
+                                        </div>
+                                        <div>
+                                            <lightning-combobox name="Question3" label="Security Question 3"
+                                                message-when-value-missing="Required"
+                                                options={getSecurityQues3Options} onchange={handleQuestions}
+                                                class="validate sq-combobox" value={secQue1SelectedValue} required>
+                                            </lightning-combobox>
+                                            <template if:true={selectedSecurityQuestions.Question3}>
+                                                <lightning-input class="validate" type="text" label="Answer"
+                                                    placeholder="Enter Question 3 answer" name="que3Answer"
+                                                    maxlength="40" onchange={handleQuestions} required
+                                                    message-when-value-missing="Error: Answer for 3rd question is required."
+                                                    pattern="^((?!(<)|(>)).)*$"
+                                                    message-when-pattern-mismatch="Invalid characters entered.">
+                                                </lightning-input>
+                                            </template>
+                                        </div>
+                                    </div>
+
+                                    <!-- Register Button -->
+                                    <div class="slds-col slds-large-size--1-of-1 slds-medium-size--1-of-1 slds-p-top--large slds-size--1-of-1">
+                                        <lightning-button variant="brand" label="Complete Business Registration"
+                                            class="slds-align--absolute-center register-btn" title="Complete Business Registration"
+                                            onclick={checkAutomationAndNext}>
+                                        </lightning-button>
+                                    </div>
+                                    <template if:true={openConfirmationModal}>
+                                        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01"
+                                            aria-modal="true" aria-describedby="modal-content-id-1"
+                                            class="slds-modal slds-fade-in-open" onkeydown={handleEscKeyDown}>
+                                            <div class="slds-modal__container">
+                                                <header class="slds-modal__header">
+                                                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                                                        title="Close" onclick={handleCancelConfirmation} onkeydown={handleEscKeyDown}>
+                                                        <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse" size="small"></lightning-icon>
+                                                        <span class="slds-assistive-text">Close</span>
+                                                    </button>
+                                                    <h1 id="modal-heading-03" class="slds-text-heading_medium slds-hyphenate">Delete</h1>
+                                                </header>
+                                                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-03">
+                                                    <p>{modalHeading}</p>
+                                                </div>
+                                                <footer class="slds-modal__footer">
+                                                    <button class="slds-button slds-button_neutral" onclick={handleCancelConfirmation} title="Cancel">Cancel</button>
+                                                    <button class="slds-button slds-button_destructive" onclick={handleDeleteConfirmation} title="Delete">Delete</button>
+                                                </footer>
+                                            </div>
+                                        </section>
+                                        <div class="slds-backdrop slds-backdrop_open"></div>
+                                    </template>                                     
+                                </div>
+                            </template>
+                        </article>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+</template>

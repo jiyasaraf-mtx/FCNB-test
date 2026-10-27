@@ -1,0 +1,428 @@
+// * {
+// 	box-sizing: border-box;
+// 	margin: 0;
+// 	padding: 0;
+// }
+
+// html {
+// 	font-size: 1rem;
+// }
+
+// body {
+// 	font-family: $font-family !important;
+// 	font-size: 1rem;
+// 	background-color: $background-light;
+
+// 	&.lpiContent {
+// 		min-height: 100vh;
+// 	}
+// }
+
+// h1,
+// h2,
+// h3,
+// h4,
+// h5,
+// h6 {
+// 	font-family: $font-family !important;
+// }
+
+// .main-content {
+// 	padding: toRem(24);
+// }
+
+// .siteforceContentArea .comm-layout-column:not(:empty) {
+// 	padding: 0 !important;
+// }
+
+// .comm-page-custom-apply-for-license .for-intake-forms,
+// c-complaint-flow_-v2-complaint-flow_-v2-english,
+// c-complaint-flow-v2-complaint-flow-v2-english {
+// 	.omniscript-article {
+// 		padding: 0;
+// 		border-radius: 0;
+// 		background: transparent;
+
+// 		// height: calc(100vh - 6.5rem);
+// 		.omniscript-side-content {
+// 			width: 18.75rem;
+// 			padding: 1.25rem 1.5rem;
+// 			border-radius: 0.25rem;
+// 			height: 100%;
+// 			background: $white;
+// 			margin-top: 0;
+// 			//position: fixed;
+// 			height: calc(100vh - 6.5rem);
+// 		}
+
+// 		.omniscript-body {
+// 			width: calc(100% - 20.25rem);
+// 			padding: 1.25rem 1.5rem;
+// 			border-radius: 0.25rem;
+// 			margin-top: 0;
+// 			//margin-left: 20rem;
+// 			height: 100%;
+// 			overflow: visible;
+// 			background: $white;
+
+// 			.omniscript-body {
+// 				margin: 0;
+// 				width: 100%;
+// 				border-radius: 0;
+// 				height: auto;
+// 			}
+// 		}
+// 	}
+
+// 	c-r-s-salesperson-view-application-english,
+// 	c-r-s-broker-amendment-application-view-application-english,
+// 	c-r-s-brokerage-application-view-application-english {
+// 		.omniscript-body.slds-card__body.slds-card__body_inner {
+// 			margin: 0 auto;
+// 		}
+// 	}
+// }
+
+// .full-content {
+// 	max-width: 100%;
+// 	margin: 0 auto;
+// 	width: 100%;
+// }
+
+// .body-content {
+// 	justify-content: space-between;
+// 	min-height: calc($vh-100 - 4.625rem);
+// }
+
+// .for-intake-forms {
+// 	.body-content {
+// 		justify-content: space-between;
+// 		min-height: calc($vh-100 - 4.625rem);
+// 	}
+// }
+
+// /* input field Progress Bar */
+// [data-progress-bar][omnistudio-typeahead_typeahead_slds] {
+// 	top: 3.8rem !important;
+// }
+
+// /* Edit Block Changes */
+// .omni-editblock-table-row {
+// 	background: $white;
+// 	padding: 0 0.625rem;
+// }
+
+// omnistudio-omniscript-edit-block>div>div:nth-child(2) {
+// 	background: $bg-grey;
+// 	padding: 0.625rem;
+// 	font-weight: 600;
+// }
+
+// // omnistudio-spinner {
+// //     z-index: 1 !important;
+// //     min-height: 100vh !important;
+// //     width: calc(100% - 20.25rem);
+// //     padding: 1.25rem 1.5rem;
+// //     border-radius: 0.25rem;
+// //     margin-top: 0;
+// //     margin-left: 20rem;
+// //     height: 100%;
+// //     overflow: auto;
+// // }
+
+
+// .main-content {
+// 	margin-left: 4.625rem;
+// 	margin-right: 0;
+// 	width: calc(100vw - 4.625rem);
+// 	transition: all 0.3s ease;
+// 	//margin: 0 auto;
+// }
+
+// // .for-intake-forms{
+// // 	.menu{
+// // 		display: none;
+// // 	}
+// // 	.main-content {
+// // 		max-width: 90rem;
+// // 		margin: 0 auto !important;
+// // 		width: 100% !important;
+// // 	}
+// // }
+
+
+
+// /* Transfer page */
+// .transfer-license {
+// 	.filter-section {
+// 		.slds-col {
+// 			width: 22%;
+
+// 			&.primary-button {
+// 				width: 12%;
+// 			}
+// 		}
+// 	}
+// }
+
+// /* Warning message box */
+// .warning-message-box {
+// 	padding: 0.5rem !important;
+// 	font-size: 1rem;
+// 	font-weight: $font-weight-regular;
+// 	color: $warning-2 !important;
+// 	border: toRem(1) solid $warning-2 !important;
+// 	border-radius: 0.25rem !important;
+// 	background: $warning-lyt;
+
+// 	.slds-icon {
+// 		fill: $warning-2;
+// 	}
+
+// 	.slds-col.slds-size_1-of-1 .slds-grid.slds-wrap {
+// 		align-items: center;
+// 	}
+
+// 	.slds-size_1-of-12 {
+// 		width: auto;
+// 	}
+
+// 	&_cool {
+// 		color: $primary-main;
+// 		border: toRem(1) solid $primary-main !important;
+// 		border-radius: 0.25rem !important;
+// 		background: $cool-warning-box-bg;
+// 		padding: 0.5rem;
+
+// 		.slds-icon {
+// 			fill: $primary-main;
+// 		}
+// 	}
+// }
+
+// .warning-msg-box-business-search{
+// 	.info-icon {
+// 		width: auto;
+// 	}
+// }
+
+// .c-red {
+// 	color: $asterisk-color !important;
+// }
+
+// .font-tahoma {
+// 	font-family: $font-family !important;
+// }
+
+// .accordion-block {
+// 	.accordion {
+// 		.label {
+// 			color: $text-primary !important;
+// 		}
+// 	}
+// }
+
+// lightning-datepicker {
+// 	.slds-input__icon {
+// 		.slds-button_icon {
+// 			position: relative;
+// 			top: toRem(-3);
+// 		}
+// 	}
+// }
+
+// .date-cmp {
+// 	@media all and (max-width:48rem) {
+// 		.slds-input {
+// 			line-height: 1.875rem;
+// 		}
+// 	}
+// }
+
+// omnistudio-omniscript-text[data-omni-key="MODPRBusinessTaxComplianceMissouriStateTaxNumber"] {
+// 	.slds-input {
+// 		width: 32% !important;
+// 	}
+// }
+
+// .backdrop {
+// 	position: fixed;
+// 	left: 0;
+// 	top: 0;
+// 	width: 100%;
+// 	height: 100%;
+// 	background: rgba(8, 7, 7, 0.6);
+// 	z-index: 10000;
+// }
+
+// .spinner {
+// 	position: fixed;
+// 	top: 49%;
+// 	left: 49%;
+// }
+
+// .search-wrap {
+// 	padding-left: 0.5rem;
+
+// 	.search-input {
+// 		width: calc(100% - toRem(134));
+// 	}
+
+// 	.sort-button {
+// 		width: 2rem;
+// 		padding: 0;
+// 		align-items: center;
+// 		display: flex;
+// 	}
+
+// 	.clear-filter-button {
+// 		width: toRem(100);
+// 	}
+
+// 	&::after {
+// 		left: calc(100% - 9.5rem);
+// 	}
+// }
+
+// omnistudio-omniscript-edit-block {
+// 	.slds-text-title_caps.slds-text-heading--label {
+// 		font-weight: bold;
+// 		text-transform: capitalize;
+// 		color: $text-color-2;
+// 		letter-spacing: 0;
+// 	}
+// }
+
+// [data-omni-key="Modpr_AliasTable"] {
+// 	.omni-editblock-table-row {
+// 		outline: none !important;
+// 	}
+// }
+
+// .comm-page-custom-license-search,
+// .comm-page-custom-complaint-form,
+// .comm-page-custom-license-downloads,
+// .comm-page-home,
+// .comm-page-custom-pharmacy-reporting-form,
+// .comm-page-custom-pharmacist-disciplinary-action-report,
+// .comm-page-custom-pharmacy-technician-discipline-form {
+// 	.public-page {
+// 		max-width: 82.813rem;
+// 		margin: 0 auto;
+// 		width: 100%;
+
+// 		.complaint-form {
+// 			margin: 1rem auto;
+// 		}
+// 	}
+// }
+
+// .for-intake-forms {
+// 	.body-content {
+// 		flex-direction: column;
+// 		justify-content: normal;
+// 	}
+
+// 	.instructions-link {
+// 		width: 100%;
+// 		padding: 1.5rem;
+// 		padding-bottom: 0;
+// 		color: $link-blue;
+
+// 		@media all and (max-width:48rem) {
+// 			padding-bottom: 1.5rem;
+// 		}
+
+// 		.link-text {
+// 			cursor: pointer;
+// 			color: $blue !important;
+// 			span {
+// 				font-size: 1rem;
+// 			}
+
+// 			.slds-icon_container {
+// 				position: relative;
+// 				top: toRem(-2);
+
+// 				.slds-icon {
+// 					fill: $blue;
+// 				}
+// 			}
+// 		}
+// 	}
+// }
+
+// .comm-page-custom-success-page {
+// 	.instructions-link {
+// 		display: none;
+// 	}
+// }
+
+// .spins {
+// 	position: fixed;
+// }
+
+// .p-horizontal-5 {
+// 	padding: toRem(5);
+// }
+
+// .overflow-auto {
+// 	overflow: auto;
+// }
+
+// .color-red {
+// 	color: $red;
+// }
+
+// .color-green {
+// 	color: $green;
+// }
+
+// .text-align_initial {
+// 	text-align: initial;
+// }
+
+// /* Aplha Design*/
+
+// .header-nav {
+// 	.slds-dropdown__list {
+// 		.slds-p-horizontal--large {
+// 			&:hover {
+// 				display: inline-flex;
+// 				background: $header-nav-secondary;
+// 				width: 100%;
+// 			}
+
+// 		}
+// 	}
+// }
+
+// .slds-dropdown__item>a:hover,
+// .slds-dropdown__item>a:focus {
+// 	background: none;
+// }
+
+// .documentUploadData {
+// 	margin-top: 3rem;
+
+// 	.download {
+// 		margin-right: toRem(15);
+// 		cursor: pointer;
+// 		--sds-c-icon-color-foreground-default: $green;
+// 	}
+
+// 	.delete {
+// 		--sds-c-icon-color-foreground-default: $error-dark;
+// 		cursor: pointer;
+// 	}
+// }
+
+// .slds-spinner_container{
+//     position:fixed;
+// }
+
+// .no-truncate{
+// 	.slds-button{
+// 		white-space: nowrap;
+// 	}
+// }

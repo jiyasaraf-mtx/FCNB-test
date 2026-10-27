@@ -1,0 +1,846 @@
+.card-container{
+    position: relative;
+    padding: 0 0.313rem;
+
+    &:first-child {
+        padding-left: 0;
+    }
+    
+    &:last-child {
+        padding-right: 0;
+    }
+
+    .card-action {
+        position: absolute;
+        width: 100% !important;
+        height: 100%;
+        flex: unset !important;
+        text-align: center;
+        left: 0;
+        top: 0;
+        // opacity: 0;
+        z-index: 9;
+    
+        a {
+            height: 100%;
+            display: block;
+            width: 100%;
+            .slds-action_text{
+                border: 0;
+                clip: rect(0, 0, 0, 0);
+                height: toRem(1);
+                margin: toRem(-1);
+                overflow: hidden;
+                padding: 0;
+                position: absolute;
+                width: toRem(1);
+            }
+        }
+        
+        omnistudio-flex-action.state0element0block_element0_child.flexActionElement {
+            height: 100%;
+            display: block;
+        }
+        
+        .action-template {
+            display: block;
+            height: 100%;
+        }
+    }
+    .card-details{
+        box-shadow: $box-shadow;
+        border-radius: 0.313rem;
+        padding: 1rem;
+
+        &.active-card{
+            position: relative;
+            overflow: hidden;
+
+            &:after{
+                position: absolute;
+                content: "";
+                bottom: 0;
+                border: 0.125rem solid $primary-main;
+                width: 100%;
+                left: 0;
+                background: $primary-main;
+            }
+        }
+
+        .slds-wrap {
+            align-items: center;
+
+            .slds-col.slds-p-around_x-small.slds-size_4-of-12 {
+                text-align: right;
+            }
+        }
+
+        .date-block .card-title {
+            width: auto;
+            margin-right: 0.313rem;
+        }
+
+        .status-label {
+            color: $primary-main;
+            font-size: $font-size-12;
+            background: $label-background;
+            border-radius: 0.25rem;
+            width: auto;
+            padding: 0.125rem 0.5rem;
+            margin-bottom: 0.625rem;
+        }
+
+        .card-statics{
+            div{
+                margin-bottom: 0.313rem;
+                font-size: $font-size-24;
+                font-weight: $font-weight-regular;
+            }
+            h2 {
+                font-size: $font-size-16;
+                font-weight:    $font-weight-regular;
+            }
+        }
+        img{
+            width: 4.375rem;
+            height: 4.375rem;
+        }
+    }
+}
+#main-content-1{
+    c-cf-my-licenses-card-child,c-cf-my-applications-card-child{
+        .card-action{
+            a:focus{
+                outline-offset: toRem(-3) !important;
+            }
+        }
+    }
+}
+
+/* Stepper(Instruction Screen) */
+.instruction-card {
+    padding: 0 !important;
+
+    .accordion-block {
+        border: 0.125rem solid $input-border;
+        margin-top: 1.25rem;
+        padding-right: 0;
+    
+        button {
+            width: 100%;
+            margin: 0;
+            border: 0.125rem solid $input-border !important;
+            border-radius: unset !important;
+            padding: 0.313rem 0.938rem 0.438rem !important;
+            display: flex !important;
+            justify-content: space-between;
+            color: $text-primary !important;
+    
+            // .slds-m-right_small{
+            //     display: none;
+            // }        
+    
+            // &:after {
+            //     content: '\2139';
+            //     border: 0.125rem solid $primary-main;
+            //     border-radius: 50%;
+            //     line-height: 1;
+            //     padding: 0.188rem 0.313rem 0.313rem;
+            //     display: flex;
+            //     font-size: $font-size-16;
+            //     width: 1.5rem;
+            //     height: 1.5rem;
+            //     align-items: center;
+            // }
+            .label-color-onexpand{
+                color: $text-primary !important;
+            }
+
+            &+ .blockSlot {
+                padding: 1rem;
+                background: $accordion-bg;
+            }
+        }
+        .slds-col.slds-size_12-of-12{
+            &:first-child button {
+                border-top: unset !important;
+                border-left: unset !important;
+                border-right: unset !important;
+                display: flex !important;
+                justify-content: space-between;
+            }
+            &:last-child button{
+                border-left: unset !important;
+                border-right: unset !important;
+                border-bottom: unset !important;
+            }
+            &:last-child button[aria-expanded="true"]{
+                border-bottom: 0.125rem solid $input-border !important;
+            }
+        }
+        .slds-action_text {
+            color: $primary-main !important;
+            text-decoration: underline;
+            font-size: $font-size-14 !important;
+        }
+        .slds-rich-text-editor__output {
+            font-size: $font-size-14 !important;
+            color: $text-primary;
+        }
+    }
+}
+
+
+/* Dashboard Need attenion */
+
+
+c-dashboard-table-card-english .slds-page-header__title {
+    display: none;
+}
+
+.reject-icon-vel {
+    background: none;
+    border: 0.063rem solid $error-main;
+}
+
+/* My License Page Card Fix */
+.right-side-card{
+    margin-top: 0.75rem;;
+    omnistudio-flex-card-state {
+        // width: 20%;
+        padding-right: 0.625rem;
+
+        &:nth-of-type(6) {
+            padding-right: 0 !important;
+        }
+    }
+}
+
+/* Complaint Screens */
+.complaint-instruction-card{
+    .blue-heading h1 {
+        font-size:$font-size-18;
+        color: $primary-main;
+        font-weight: $font-weight-semi-bold;
+    }
+    .slds-rich-text-editor__output{
+        div {
+            color: $text-secondary;
+            font-size: $font-size-14;
+            margin: 0.625rem 0 1.25rem;
+        }
+        ul{
+            color: $text-secondary;
+            font-size: $font-size-14;
+            margin: 0.625rem 1.25rem 2.5rem;
+        }
+        h2{
+            font-size: $font-size-14;
+            font-weight: $font-weight-semi-bold;
+            color: $text-primary;
+        }
+    }
+}
+
+/* Application Screen */
+c-cf-my-licenses-card-child,
+c-cf-my-applications-card-child{
+    &> .slds-grid.slds-wrap {
+        flex-wrap: unset;
+        overflow-x: auto;
+    }
+}
+
+/* intake form modal */
+omnistudio-omniscript-modal{
+    .slds-modal__header {
+        background: $white;
+        border-bottom: 0.063rem solid $grey!important;
+    }
+    
+    .slds-modal__content {
+        text-align: center;
+    }
+    
+    .slds-modal__footer {
+        text-align: right !important;
+        @media all and (max-width:48rem) {
+            text-align: center !important;
+        }
+
+        .slds-button-group-item{
+            button {
+                padding: 0 2.5rem;
+            }
+            &:last-child button {
+                background: $primary-main;
+                color: $white;
+            }
+        }
+    }
+}
+
+.uploaded-document-details{
+    &> div {
+        //border-bottom: 0.063rem solid $input-border;
+
+        .document-type {
+            font-size: $font-size-14;
+            font-weight: 600;
+            color: $text-secondary;
+        }
+        .uploaded-file-name {
+            font-size: $font-size-14;
+            color: $text-secondary;
+        }
+        .download-btn {
+            padding: 0 0.5rem;
+        }
+    }
+}
+
+/* Amendment Screen Popup Changes */
+c-cf-amendment-table-header c-amendments-amendment-type-english{
+    article.omniscript-article {
+        padding: 0 !important;
+        box-shadow: unset !important;
+
+        lightning-button {
+            margin-top: 0.625rem;
+            margin-left: 0;
+            display: block;
+            text-align: left;
+
+            button {
+                min-width: 6.25rem;
+            }
+        }
+    }
+}
+
+
+.actionFlyout .slds-modal{
+    .slds-modal__header{
+        .slds-modal__close {
+            // transform: translateY(40%) !important;
+
+            svg {
+                display: block;
+            }
+        }
+    }
+}
+
+.branch-information-step{
+    .add-branch-btn{
+        button {
+            border-color: $primary-main;
+            color: $primary-main;
+            font-size: x-l-small;
+
+            svg {
+                fill: $primary-main !important;
+                width: 0.875rem;
+                height: 0.875rem;
+            }
+        }
+    }
+    c-branch-information-informaton-english{
+        article {
+            padding: 0 !important;
+    
+            .omniscript-body {
+                padding: 0;
+                border-right: 0 !important;
+    
+                slot {
+                    padding: 0;
+                }
+    
+                .slds-accordion__summary {
+                    display: none;
+                }
+    
+                .slds-accordion__content.omni-block_content {
+                    padding: 0;
+                }
+                
+                .slds-page-header__title {
+                    margin: 0;
+                }
+            }
+        }   
+    }
+    .delete-icon {
+        border: 0.063rem solid $error-dark;
+        text-align: center;
+        width: 10%;
+        line-height: 1.5;
+        border-radius: 0.25rem;
+
+        svg {
+            fill: $error-dark;
+        }
+    }
+}
+
+c-cf-my-licenses-card-child{
+    .my-licenses-flexcard{
+        .card-details{
+            .card-statics {
+                margin-top: 2rem;
+            }
+        }
+    }
+}
+
+c-cf-my-applications-card-child,c-cf-my-payments-card-child{
+    .card-details{
+        img {
+            width: 3rem;
+        }
+        .card-statics {
+            margin-top: 2rem;
+        }
+    }
+}
+
+// .for-intake-forms{
+//     .omniscript-article{
+//         .omniscript-side-content{
+//             position: sticky;
+//             overflow: auto;
+//             top: 6.2rem;
+//             height: 100vh;
+//         }
+//         .omniscript-body{
+//             margin: 0 auto;
+//         }
+//     }
+// }
+
+.for-intake-forms .omnistudioVlocityLWCWrapper {
+    .accordion-block {
+        .accordion{
+            .slds-form-element__label {
+                font-size: $font-size-14;
+                font-weight: $font-weight-regular;
+                color: $text-primary;
+            }
+            .review-page-sub-accordion{
+                .block-header{
+                    padding: 0.5rem 0;
+                }
+            }
+
+            .slds-radio{
+                .slds-form-element__label {
+                    font-weight: normal;
+                    font-size: 1rem;
+                    color: $text-primary;
+                }
+            }
+
+            .slds-checkbox .slds-checkbox__label .slds-form-element__label {
+                font-weight: normal !important;
+                color: $text-primary;
+                font-size: 1rem;
+            }
+
+            .label{
+                .slds-checkbox .slds-checkbox__label .slds-form-element__label {
+                    font-size: 0.875rem;
+                    color: $text-primary;
+                    font-weight: 600 !important;
+                }
+            }
+        }
+    }
+}
+
+c-cf-m-o-d-p-r-employment-history{
+    .field-value {
+        font-weight: normal !important;
+    }
+}
+
+/* Required symbol for inputs with css */
+//[data-omni-key="AttestAndAffirm"],
+[data-omni-key="EFDRequestingInactivationLicense"],
+[data-omni-key="NURRNFacultyAuthorizationCheckbox"],
+[data-omni-key=AuthorizeToReleaseExamAppStatus],
+[data-omni-key="REAAppraiserRequestingReactivationLicense"],
+[data-omni-key="SupervisorInfoCheckbox"]{
+    position: relative;
+    left: 0.75rem;
+    &::before{
+        position: absolute;
+        content: '*';
+        left: toRem(-11);
+        top: 1rem;
+        color: $error-main;
+    }
+}
+
+
+[data-omni-key=AttestAndAffirm],
+[data-omni-key=AttestAndAffirmSupervisee],
+[data-omni-key=AttestationText],
+[data-omni-key=HISMethodOfLicensureReciprocity],
+[data-omni-key=HISHearingInstSpecRenewalLicenseQuestions5],
+[data-omni-key=REAAppraiserAttestationCheckbox],
+[data-omni-key=OTReactivationInstructionDisclosure],
+[data-omni-key=SWSupervisionSupervisorInformationDisclosure],
+[data-omni-key=PCMFTDisclosure1],
+[data-omni-key=PCMFTDisclosure2],
+[data-omni-key=AttestAndAffirmRealEstate]{
+    .slds-box.vlc-slds-box__no-border {
+        border: 0;
+        .slds-box {
+            padding: 0;
+            &:nth-child(3) {
+                padding: 1rem 0;
+                .slds-form-element__label {
+                    font-size: $font-size-14;
+                    color: $text-primary;
+                }
+            }
+        }
+    }
+}
+
+[data-omni-key=HISHearingInstSpecRenewalLicenseQuestions5]{
+    .slds-form-element__label {
+        font-weight: bold;
+    }
+}
+
+c-cf-p-h-pharmacy-intern-hours{
+    .slds-card {
+        padding: 1rem 0;
+        h3 {
+            font-weight: bold;
+        }
+    }
+}
+
+omnistudio-omniscript-checkbox[data-omni-key="EFDPreneedCheckBox"],
+omnistudio-omniscript-checkbox[data-omni-key="PlaceRetiredStatus"]{
+    .slds-checkbox__label{
+        position: relative;
+        left: toRem(12);
+        &::before{
+            content: '*';
+            position: absolute;
+            left: toRem(-12);
+            top: 0;
+            color: $error-main;
+        }
+    }
+}
+
+/* Editblock start */
+
+omnistudio-omniscript-edit-block .slds-truncate {
+    white-space: normal;
+    text-overflow: unset;
+    flex: 1;
+    word-break: break-word;
+}
+
+// omnistudio-omniscript-edit-block[data-omni-key="EducationHistoryEditBlock"] .slds-truncate, 
+// omnistudio-omniscript-edit-block[data-omni-key="LicensureInOtherStatesEditBlock"] .slds-truncate{
+//     flex: 1;
+// } 
+
+omnistudio-omniscript-edit-block[data-omni-key=EducationHistoryEditBlock] .slds-truncate:nth-child(4),
+omnistudio-omniscript-edit-block[data-omni-key=EducationHistoryEditBlock] .slds-truncate:nth-child(5),
+omnistudio-omniscript-edit-block[data-omni-key=EducationHistoryEditBlock] .slds-truncate:last-child{
+    min-width: toRem(110);
+}
+
+omnistudio-omniscript-edit-block[data-omni-key="CourseInformationEditBlock"]{
+    .slds-truncate.slds-text-align_right {
+        text-align: center;
+    }
+}
+
+[data-omni-key=LicensureInOtherStatesEditBlock] omnistudio-omniscript-edit-block.slds-truncate:nth-child(7) {
+    min-width: toRem(150);
+}
+
+
+/* Editblock End */
+
+[data-omni-key=HAMethodofLicensure] {
+    margin-top: 1.5rem;
+}
+
+[data-omni-key=secondarySupervisorBlock]{
+    .slds-accordion{
+        &__summary{
+            .slds-button-group{
+                margin-left: 1.5rem;
+            }
+        }
+    }
+}
+
+[data-omni-key=DENPatientInjuryOrDeathReportingAdverseOccurence],
+[data-id=DENPatientInjuryOrDeathReportingAdverseOccurence]{
+    background: $white;
+    .slds-form-element__label{
+        width: auto !important;
+    }
+}
+
+.checklist-label{
+    .slds-form-element__legend.slds-form-element__label {
+        font-size: 0.875rem; 
+        font-weight: 600;
+        color: $text-primary;
+    }
+    .slds-checkbox{
+        .slds-checkbox__label{
+            .slds-form-element__label {
+                color: $text-primary;
+            }
+        }
+    }
+}
+
+.my-licenses-flexcard {
+    margin-bottom: 1rem;
+}
+
+[data-omni-key="Age"]{
+    .slds-input {
+        min-width: 3rem;
+    }
+    .slds-input[readonly] {
+        background: $input-bg-disabled;
+    }
+}
+
+c-date-picker .slds-input[readonly] {
+    pointer-events: none;
+    &+.slds-button{
+        pointer-events: none;
+    }
+}
+
+/* ERROR Text message style START */
+
+.red-indicator{
+    background-color: $error-shades-4-p;
+    text-align: left;
+    padding-right: 1.2rem;
+    padding-top: 1rem;
+    // .slds-rich-text-editor__output{
+    //     color: $red-indicator-text-color;
+    // }
+}
+.yellow-indicator{
+    background-color: $yellow-indicator-bg;
+    text-align: left;
+    padding-right: 1.2rem;
+    padding-top: 1rem;
+    // .slds-rich-text-editor__output{
+    //     color: $yellow-indicator-text-color;
+    // }
+}
+.green-indicator{
+    background-color: $green-indicator-bg;
+    text-align: left;
+    padding-right: 1.2rem;
+    padding-top: 1rem;
+    // .slds-rich-text-editor__output{
+    //     color: $green-indicator-text-color;
+    // }
+}
+
+// .BlueBgWithWhiteText {
+//     background-color: $blue-bg;
+//     padding: 1rem;
+//     margin-bottom: 1rem;
+//     .slds-rich-text-editor__output{
+//         color: $white !important;
+//         text-align: center;
+//     }
+// }
+
+// .red-indicator,
+// .yellow-indicator{
+//     .eNotify-message{
+//         p:last-child {
+//             color: $white;
+//             background-color: $blue-bg;
+//             padding: 1rem;
+//             text-align: center;
+//             span{
+//                 color: $white !important;
+//             }
+//             a {
+//                 color: $black !important;
+//             }
+//         }
+//     }
+// }
+
+[data-omni-key="TextBlockforGreenMessage"],
+[data-omni-key="TextBlockforRedMessage"],
+[data-omni-key="TextBlockforYellowMessage"] {
+    text-align: left;
+    padding: 1rem;
+    padding-bottom: 0;
+    margin-bottom: 1rem;
+    // .slds-rich-text-editor__output p:last-child {
+    //     color: $white;
+    //     background-color: $blue-bg;
+    //     padding: 1rem;
+    //     text-align: center;
+    //     span{
+    //         color: $white !important;
+    //     }
+    //     a {
+    //         color: $black !important;
+    //     }
+    // }
+}
+
+[data-omni-key="TextBlockforGreenMessage"]{
+    background-color: $green-indicator-bg;
+    .slds-rich-text-editor__output{
+        color: $green-indicator-text-color !important;
+        a {
+            color: $indicator-text-color !important;
+        }
+    }
+}
+[data-omni-key="TextBlockforRedMessage"]{
+    background-color: $red-indicator-bg;
+    .slds-rich-text-editor__output{
+        color: $red-indicator-text-color !important;
+        a {
+            color: $indicator-text-color !important;
+        }
+    }
+}
+[data-omni-key="TextBlockforYellowMessage"]{
+    background-color: $yellow-indicator-bg;
+    .slds-rich-text-editor__output{
+        color: $yellow-indicator-text-color !important;
+        a {
+            color: $indicator-text-color !important;
+        }
+    }
+}
+
+/* ERROR Text message style END */
+
+[data-omni-key=PlaceRetiredStatus]{
+    .slds-form-container {
+        display: block !important;
+    }
+}
+
+[data-omni-key=NURRNLPNCurrentEmploymentInfoStep],
+[data-omni-key=ModprOwnershipInformationStep]{
+    .omniscript-step__body{
+        min-height: 25rem !important;
+    }
+}
+
+[data-omni-key=NURRNLPNApplicationInstructionsTextFC] ol {
+    padding-left: 5rem;
+}
+
+
+[data-omni-key=RenewalAppPrerequisite]{
+    .slds-card {
+        padding: 0;
+    }
+}
+
+.text-wrap{
+    white-space: pre-wrap;
+}
+
+[data-omni-key=EducationHistoryEditBlock]{
+    .slds-modal__content{
+        //overflow: visible;
+        [data-omni-key=StateUnitedStates]{
+            .dropdown-container[omnistudio-combobox_combobox_slds]{
+                max-height: 11rem;
+            }
+        }
+        [data-omni-key=EducationHistoryErrorBlockValidateDates]{
+            .slds-accordion__summary {
+                padding-top: 0 !important;
+            }
+        }
+    }
+}
+
+c-date-picker .slds-input {
+    text-align: left !important;
+}
+
+.slds-combobox .slds-listbox__option-text {
+    white-space: normal;
+}
+
+.slds-has-error .slds-form-element__help {
+    display: block;
+    width: 100%;
+}
+
+[data-omni-key*="Instruction"] {
+    .slds-card.slds-p-around_x-small {
+        padding: 0;
+    }
+}
+
+.lookupInputContainer.slds-combobox .slds-input {
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+.slds-card.omniscript-save-for-later {
+    margin-top: 1rem;
+}
+
+lightning-dual-listbox,
+lightning-input-rich-text{
+    .slds-form-element__label{
+        color: $secondary-main;
+        font-size: $font-size-14;
+        font-weight: $font-weight-semi-bold;
+    }
+}
+
+h1{
+    &:focus-visible{
+        outline: none !important;
+    }
+}
+
+.btnFocus,
+.technicianCancelFocus{
+    &:focus{
+        @include focus-outline;
+    }
+}
+
+.omni-read-only [data-omni-input] {
+    .slds-checkbox_faux,
+    .slds-radio_faux,
+    input:not([type=range]):not([type=checkbox]):not([type=radio]),
+    select,
+    textarea {
+        background-color: $inpur-read-only-bg !important;
+        border-color: $input-color-2 !important;
+        color: $text-secondary !important;
+        caret-color: transparent !important;
+    }
+}

@@ -1,0 +1,444 @@
+<!--
+  @description       : Unified portal sidebar — dynamic tabs by portal context.
+-->
+<template>
+    <!-- Shared Licensing / Employer chrome for all portals -->
+    <template if:true={showLpiChrome}>
+    <div class="lpi-sidebar">
+        <nav class="sidebar-navigation">
+            <div if:false={isMainBusinessAccount} class="profile-name sidebar-select-account-dropdown">
+                <p class="user-role">{labels.selectedAccount}</p>
+                <div class="header-menu slds-m-right_x-small">
+                    <lightning-button-menu alternative-text="Show menu" onselect={handleChange} variant="bare"
+                        label={selectedAccountName}>
+                        <template for:each={acrList} for:item="item">
+                            <lightning-menu-divider key={item} if:false={item.Id}></lightning-menu-divider>
+                            <lightning-menu-subheader key={item} if:false={item.Id} label={item.Name}>
+                            </lightning-menu-subheader>
+                            <lightning-menu-divider key={item} if:false={item.Id}></lightning-menu-divider>
+                            <template if:true={item.Id}>
+                                <lightning-menu-item icon-name="utility:check" name={item.Id} key={item}
+                                    if:true={item.showIcon} label={item.Name} value={item.Id}></lightning-menu-item>
+                                <lightning-menu-item name={item.Id} key={item} label={item.Name}
+                                    if:false={item.showIcon} value={item.Id}></lightning-menu-item>
+                            </template>
+
+                        </template>
+                    </lightning-button-menu>
+                </div>
+            </div>
+           
+            <ul class="sidebar-left" id="side-bar">
+                <li onclick={showLicenseFunction} class="slds-p-vertical--medium slds-p-horizontal--x-small" aria-live="assertive" aria-label={menuAriaLabel}
+                    data-active={step1CSS}>
+                    <a href="javascript:void(0);">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <g clip-path="url(#clip0_565_906)">
+                                <path
+                                    d="M17.5 3.33333H12.5V2.5C12.5 1.83696 12.2366 1.20107 11.7678 0.732233C11.2989 0.263392 10.663 0 10 0C9.33696 0 8.70107 0.263392 8.23223 0.732233C7.76339 1.20107 7.5 1.83696 7.5 2.5V3.33333H2.5C1.83696 3.33333 1.20107 3.59673 0.732233 4.06557C0.263392 4.53441 0 5.17029 0 5.83333L0 20H20V5.83333C20 5.17029 19.7366 4.53441 19.2678 4.06557C18.7989 3.59673 18.163 3.33333 17.5 3.33333ZM9.16667 2.5C9.16667 2.27899 9.25446 2.06702 9.41074 1.91074C9.56702 1.75446 9.77899 1.66667 10 1.66667C10.221 1.66667 10.433 1.75446 10.5893 1.91074C10.7455 2.06702 10.8333 2.27899 10.8333 2.5V5H9.16667V2.5ZM18.3333 18.3333H1.66667V5.83333C1.66667 5.61232 1.75446 5.40036 1.91074 5.24408C2.06702 5.0878 2.27899 5 2.5 5H7.5V6.66667H12.5V5H17.5C17.721 5 17.933 5.0878 18.0893 5.24408C18.2455 5.40036 18.3333 5.61232 18.3333 5.83333V18.3333ZM3.33333 16.6667H9.16667V8.33333H3.33333V16.6667ZM5 10H7.5V15H5V10ZM10.8333 11.6667H16.6667V13.3333H10.8333V11.6667ZM10.8333 8.33333H16.6667V10H10.8333V8.33333ZM10.8333 15H15V16.6667H10.8333V15Z"
+                                    fill="#50545B"></path>
+                            </g>
+                            <defs>
+                                <clipPath id="clip0_565_906" />
+                                <rect width="20" height="20" fill="#50545B" />
+                                </clipPath>
+                            </defs>
+                        </svg>
+                        <p>{labels.menu}</p>
+                    </a>
+                </li>
+                <li onclick={showHelpFunction} class="slds-p-vertical--medium slds-p-horizontal--x-small user-link"
+                    data-active={step6CSS}>
+                    <a href="javascript:void(0);">
+                        <svg width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M17.5005 9.35341V8.16675C17.5005 6.17762 16.7103 4.26997 15.3038 2.86345C13.8973 1.45692 11.9896 0.666748 10.0005 0.666748C8.01136 0.666748 6.10371 1.45692 4.69719 2.86345C3.29066 4.26997 2.50049 6.17762 2.50049 8.16675V9.35341C1.62645 9.73828 0.911155 10.4117 0.474339 11.261C0.0375233 12.1102 -0.0942947 13.0838 0.100952 14.0186C0.2962 14.9535 0.806661 15.7929 1.54688 16.3963C2.2871 16.9997 3.21214 17.3306 4.16715 17.3334H5.83382V9.00008H4.16715V8.16675C4.16715 6.61965 4.78174 5.13592 5.8757 4.04196C6.96966 2.948 8.45339 2.33341 10.0005 2.33341C11.5476 2.33341 13.0313 2.948 14.1253 4.04196C15.2192 5.13592 15.8338 6.61965 15.8338 8.16675V9.00008H14.1672V15.6667H10.8338V17.3334H15.8338C16.7888 17.3306 17.7139 16.9997 18.4541 16.3963C19.1943 15.7929 19.7048 14.9535 19.9 14.0186C20.0953 13.0838 19.9635 12.1102 19.5266 11.261C19.0898 10.4117 18.3745 9.73828 17.5005 9.35341ZM4.16715 15.6667C3.50411 15.6667 2.86823 15.4034 2.39939 14.9345C1.93055 14.4657 1.66715 13.8298 1.66715 13.1667C1.66715 12.5037 1.93055 11.8678 2.39939 11.399C2.86823 10.9301 3.50411 10.6667 4.16715 10.6667V15.6667ZM15.8338 15.6667V10.6667C16.4969 10.6667 17.1327 10.9301 17.6016 11.399C18.0704 11.8678 18.3338 12.5037 18.3338 13.1667C18.3338 13.8298 18.0704 14.4657 17.6016 14.9345C17.1327 15.4034 16.4969 15.6667 15.8338 15.6667Z"
+                                fill="#6B7280" />
+                        </svg>
+                        <p>{labels.help}</p>
+                    </a>
+                </li>
+            </ul>
+
+            <ul class="sub-sidebar" id="sub-sidebar">
+                <li class="sub-menu sub-active" if:true={showLicense}>
+                    <div class="slds-p-top_x-small">
+                        <!-- Employer Portal tabs -->
+                        <template if:true={isEmployerPortal}>
+                            <div class="slds-m-top_medium slds-m-bottom_medium">
+                                <ul>
+                                    <li>
+                                        <a onclick={handleHomePage} class={dashboardActive} href="javascript:void(0);">
+                                            <div>
+                                                <img class="slds-p-right_small" src={homeIcon} alt={labels.dashboard}>
+                                                <span>{labels.dashboard}</span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class={financialFilingsActive} onclick={handleFinancialFilings} href="javascript:void(0);">
+                                            <div>
+                                                <img class="slds-p-right_small" src={Documents_grey} alt={labels.financialFilings}>
+                                                <span>{labels.financialFilings}</span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class={premTaxFillingsActive} onclick={handlepremTaxFillings} href="javascript:void(0);">
+                                            <div>
+                                                <img class="slds-p-right_small" src={payment} alt={labels.premTaxFillings}>
+                                                <span>{labels.premTaxFillings}</span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </template>
+
+                        <!-- Agency Review Portal tabs -->
+                        <template if:true={isAgentReviewPortal}>
+                            <div class="slds-m-top_medium slds-m-bottom_medium">
+                                <ul>
+                                    <li>
+                                        <a class={arpDashboardActiveClass} data-page="dashboard" onclick={handleArpNav} href="javascript:void(0);">
+                                            <div>
+                                                <img class="slds-p-right_small" src={application} alt="Agent Review Application">
+                                                <span>{labels.agentReviewApplication}</span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class={arpOrgDashboardActiveClass} data-page="orgDashboard" onclick={handleArpNav} href="javascript:void(0);">
+                                            <div>
+                                                <img class="slds-p-right_small" src={homeIcon} alt="Dashboard">
+                                                <span>{labels.orgDashboard}</span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class={arpDelegateActiveClass} data-page="delegate" onclick={handleArpNav} href="javascript:void(0);">
+                                            <div>
+                                                <img class="slds-p-right_small" src={amendment} alt="Delegate Access">
+                                                <span>{labels.delegateAccess}</span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class={arpActivityActiveClass} data-page="activity" onclick={handleArpNav} href="javascript:void(0);">
+                                            <div>
+                                                <img class="slds-p-right_small" src={myTask} alt="Delegation Activity">
+                                                <span>{labels.delegationActivity}</span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class={arpOrganizationActiveClass} data-page="organization" onclick={handleArpNav} href="javascript:void(0);">
+                                            <div>
+                                                <img class="slds-p-right_small" src={business_grey} alt="Organization Access">
+                                                <span>{labels.organizationAccess}</span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class={arpBranchesActiveClass} data-page="branches" onclick={handleArpNav} href="javascript:void(0);">
+                                            <div>
+                                                <img class="slds-p-right_small" src={address_grey} alt="Branches and Locations">
+                                                <span>{labels.branchesLocations}</span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class={arpSponsoredActiveClass} data-page="sponsored" onclick={handleArpNav} href="javascript:void(0);">
+                                            <div>
+                                                <img class="slds-p-right_small" src={certificate} alt="Sponsored Agents">
+                                                <span>{labels.sponsoredAgents}</span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </template>
+
+                        <!-- AVR Pension Portal tabs -->
+                        <template if:true={isPensionPortal}>
+                            <div class="slds-m-top_medium slds-m-bottom_medium">
+                                <ul>
+                                    <li>
+                                        <a class={pensionListActiveClass} data-page="list" onclick={handlePensionNav} href="javascript:void(0);">
+                                            <div>
+                                                <img class="slds-p-right_small" src={apps} alt="Pension Filings">
+                                                <span>{labels.pensionFilings}</span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class={pensionFormActiveClass} data-page="form" onclick={handlePensionNav} href="javascript:void(0);">
+                                            <div>
+                                                <img class="slds-p-right_small" src={apps} alt="AVR Filing">
+                                                <span>{labels.avrFiling}</span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class={pensionRmiActiveClass} data-page="rmi" onclick={handlePensionNav} href="javascript:void(0);">
+                                            <div>
+                                                <img class="slds-p-right_small" src={apps} alt="RMI Additional Schedule">
+                                                <span>{labels.rmiAdditionalSchedule}</span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class={pensionEmailsActiveClass} data-page="emails" onclick={handlePensionNav} href="javascript:void(0);">
+                                            <div>
+                                                <img class="slds-p-right_small" src={apps} alt="Email Notifications">
+                                                <span>{labels.emailNotifications}</span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </template>
+
+                        <!-- Licensing Portal tabs -->
+                        <template if:true={isLicensingPortal}>
+                        <div class="m-b-medium m-l-small m-t-small menu-btn">
+                            <lightning-button variant="brand" onclick={handleAction} icon-name="utility:add" label={labels.new} class="" title={labels.new}>
+                            </lightning-button>
+                        </div>
+                        <div class="slds-m-top_medium slds-m-bottom_medium">
+                            <ul>
+                                <li>
+                                    <a onclick={handleHomePage} class={dashboardActive} href="javascript:void(0);">
+                                        <div>
+                                            <img class="slds-p-right_small" src={apps} alt="apps">
+                                            <span>{labels.dashboard} </span>
+                                        </div>
+                                    </a>
+                                </li>
+                                <!-- <li class="dashboard-menu-link">
+                                    <a class={dashboardActive} onclick={handleDashboard} href="javascript:void(0);">
+                                        <div>
+                                            <img class="slds-p-right_small" src={apps} alt="apps">
+                                            <span>Dashboard </span>
+                                        </div>
+                                        <div class="notification-icon" data-count={notificationCount}>
+                                            <img src={notificaitonIcon} alt="notifications">
+                                        </div>
+                                        
+                                    </a>
+                                </li> -->
+                                <!-- <li>
+                                    <div class="sidebar_helptextContainer slds-p-left_large">
+                                        <lightning-helptext alternative-text="Switch Accounts Info button, To access your Business license applications or Business Licenses."
+                                        content="To access your Business license applications or Business Licenses, you'll need to switch to the account associated with the Business Name you provided during your application. You can find the account-switching option at the top of the page."
+                                        icon-name="utility:info_alt"
+                                        ></lightning-helptext>
+                                        <span class="slds-m-left_x-small">Switch Accounts</span>
+                                    </div>
+                                </li> -->
+                                <li>
+                                    <a class={taskActive} onclick={handleMyTasks} href="javascript:void(0);">
+                                        <img class="slds-p-right_small" src={myTask} alt="">
+                                        {labels.myTasks}
+                                        <lightning-helptext class="slds-p-left_x-small menu-help" content={taskmsg}  icon-name="utility:info_alt" alternative-text={myTaskInfoBtnAriaLabel}>  </lightning-helptext>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </div>
+
+                        <div class="section">
+                            <div class="label slds-p-horizontal_large">{labels.certifications}</div>
+                            <ul>
+                                <li>
+                                    <a class={myLicensesActive} onclick={handleMyLicense} href="javascript:void(0);">
+                                        <img class="slds-p-right_small" src={mylicense} alt="">{labels.myCertifications}</a>
+                                </li>
+                                <li>
+                                    <a class={renewActive} onclick={handleRenewLicense} href="javascript:void(0);"><img
+                                        class="slds-p-right_small" src={renewlicense} alt="">{labels.renewCertificate}</a>
+                                </li>
+                                <!-- <li>
+                                    <a class={allLicensesActive} onclick={handleAllLicense} href="javascript:void(0);">
+                                        <img class="slds-p-right_small" src={mycomplaints} alt="">My Complaints</a>
+                                </li> -->
+                            </ul>
+                        </div>
+
+                        <div class="section">
+                            <div class="label slds-p-horizontal_large">{labels.others}</div>
+                            <ul>
+                                <!-- <li>
+                                    <a class={allApplicationActive} onclick={handleAllApplication}
+                                        href="javascript:void(0);"><img class="slds-p-right_small" src={application}
+                                            alt="">All Applications</a>
+                                </li> -->
+                                <!-- Added for issue I-244820 -->
+                                <!-- <li>
+                                    <a class={allApplicationActive} onclick={handleAll}
+                                        href="javascript:void(0);"><img class="slds-p-right_small" src={application}
+                                            alt="">All</a>
+                                </li> -->
+                                <li>
+                                    <a class={myApplicationActive} onclick={handleApplication}
+                                        href="javascript:void(0);"><img class="slds-p-right_small" src={application}
+                                            alt="">{labels.myApplications}</a>
+                                </li>
+                                <!-- <li>
+                                    <a class={allPayemntActive} onclick={handleAllPayment} href="javascript:void(0);">
+                                        <img class="slds-p-right_small" src={payment} alt="">All Payments
+                                    </a>
+                                </li> -->
+                                <li>
+                                    <a class={myPayemntActive} onclick={handlePayment} href="javascript:void(0);">
+                                        <img class="slds-p-right_small" src={payment} alt="">{labels.myPayments}
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class={myComplaintsActive} onclick={handleMyComplaints} href="javascript:void(0);">
+                                        <img src={mycomplaints} class="slds-p-right_small" alt={labels.myComplaints}>
+                                        {labels.myComplaints}
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div if:true={isBusinessAccount} class=" slds-m-around_large">
+                            <div class="slds-p-bottom_small p-left sidebar_helptextContainer">
+                                <lightning-helptext alternative-text="Info button"
+                                content={labels.authEmployeeInfo}
+                                icon-name="utility:info_alt"
+                                ></lightning-helptext>
+                                <span class="slds-m-left_x-small">{labels.authEmployeeContact}</span>
+                            </div>
+                            <lightning-button variant="outline-brand" label={labels.authEmployeeContact} class="assocBusiAcc"
+                                title={labels.authEmployeeContact} onclick={handleAddTemporaryClerk}>
+                            </lightning-button>
+                        </div>
+                        <div class="slds-m-around_large">
+                            <lightning-button variant="outline-brand" label={labels.preLicensurePetition} class="preLincPeti"
+                                title={labels.preLicensurePetition} onclick={handlePreLicensurePetition}>
+                            </lightning-button>
+                        </div>
+                        </template>
+
+                    </div>
+                </li>
+                <li class="sub-menu" if:true={showPermitAndLicensing}>
+                    <div>
+                        <div class="slds-m-bottom_medium apply-btn">
+                            <button onclick={handleApplyLicense}>Apply for New Permit</button>
+                        </div>
+
+                        <ul class="slds-m-top_medium slds-m-bottom_medium">
+                            <li><a onclick={handleDashboard} href="javascript:void(0);">Dashboard</a></li>
+                            <li><a onclick={handleMyLicense} class="active" href="javascript:void(0);">My Permit</a>
+                            </li>
+                            <li><a href="javascript:void(0);">Renew License <span
+                                        class="unread-notification">1</span></a></li>
+                            <li><a onclick={handleApplication} href="javascript:void(0);">My Applications</a></li>
+                            <li><a onclick={handlePayment} href="javascript:void(0);">My Payments</a></li>
+                        </ul>
+
+                        <div class="slds-m-top_medium slds-m-bottom_medium">
+                            <h5>Label</h5>
+                            <ul class="padding-shift-left">
+                                <li><a onclick={handleTransfer} href="javascript:void(0);">Transfer Permit</a></li>
+                                <li><a href="javascript:void(0);">Laws & Regulations</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="slds-m-top_medium slds-m-bottom_medium">
+                            <h5>Label</h5>
+                            <ul class="padding-shift-left">
+                                <li><a href="javascript:void(0);">Complaints</a></li>
+                                <li><a href="javascript:void(0);">Feedback</a></li>
+                                <li><a href="javascript:void(0);">FAQ</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+                <li class="sub-menu" if:true={showCertificateAndLicensing}>
+                    <div>
+                        <ul class="slds-p-top--large">
+                            <li><a class={dashboardActive} onclick={handleDashboard}
+                                    href="javascript:void(0);">Dashboard</a></li>
+                            <li><a onclick={handleCertificates} href="javascript:void(0);">My Licenses</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="sub-menu sub-active" if:true={showHelpAndLicensing}>
+                    <div>
+                        <ul class="slds-p-top--large">
+                            <li>
+                                <a onclick={handleComplaints} href="javascript:void(0);">
+                                    <img src={complaints} class="grey-img slds-p-right_small" alt="Complaints">
+                                    <img src={complaints_blue} class="blue-img slds-p-right_small" alt="Complaints">
+                                    Complaints
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <template if:true={showSelectionModal}>
+        <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01"
+            class="slds-modal slds-fade-in-open lpi-modal slds-modal_medium" onkeydown={escCloseModal}>
+            <div class="slds-modal__container">
+                <!-- Modal header  -->
+                <div class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                    title={labels.close} onclick={closeSelectionModal}>
+                    <lightning-icon icon-name="utility:close" alternative-text={labels.close} variant="inverse" size="small"></lightning-icon>
+                    <span class="slds-assistive-text">{labels.closeSelectAction}</span>
+                </button>
+                    <h1 id="modal-heading-02" class="slds-modal__title slds-hyphenate">{labels.selectAnAction}</h1>
+                </div>
+                <!-- Modal body  -->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+                    <p class="m-b-medium semiBold-16">{labels.selectActionPrompt}</p>
+                    <div class="slds-grid homepage slds-gutters slds-wrap">
+                        <div class="slds-col slds-size_12-of-12 slds-medium-size_4-of-12 slds-large-size_4-of-12 anchor-card m-b-large">
+                            <a href="Javascript:void(0);" class="selectPersonal" label={labels.newCertification} onclick={handleNewLicense}>
+                                <div class="anchor-card-body">
+                                    <i class="material-icon material-icon-badge"></i>
+                                    <h2 class="m-t-large bold-24">{labels.newCertification}</h2>
+                                    <p class="text-secondary m-t-xs">{labels.newCertificationDesc}</p>
+                                    <i class="material-icon material-icon-arrow_forward"></i>
+                                </div>            
+                            </a>
+                        </div>
+                        <div class="slds-col slds-size_12-of-12 slds-medium-size_4-of-12 slds-large-size_4-of-12 anchor-card m-b-large">
+                            <a href="Javascript:void(0);" class="selectPersonal" label={labels.preLicensurePetition} onclick={handlePreLicensePetition}>
+                                <div class="anchor-card-body">
+                                    <i class="material-icon material-icon-PreLicense"></i>
+                                    <h2 class="m-t-large bold-24">{labels.preLicensurePetition}</h2>
+                                    <p class="text-secondary m-t-xs">{labels.preLicensePetitionDesc}</p>
+                                    <i class="material-icon material-icon-arrow_forward"></i>
+                                </div>            
+                            </a>
+                        </div>
+                        <div class="slds-col slds-size_12-of-12 slds-medium-size_4-of-12 slds-large-size_4-of-12 anchor-card m-b-large">
+                            <a href="Javascript:void(0);" class="selectPersonal" label={labels.complaints} onclick={handleComplaints}>
+                                <div class="anchor-card-body">
+                                    <i class="material-icon material-icon-complaints"></i>
+                                    <h2 class="m-t-large bold-24">{labels.complaints}</h2>
+                                    <p class="text-secondary m-t-xs">{labels.complaintsDesc}</p>
+                                    <i class="material-icon material-icon-arrow_forward"></i>
+                                </div>            
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <footer class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" onclick={closeSelectionModal} title={labels.cancel}>{labels.cancel}</button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+    </template>
+    </template>
+
+</template>

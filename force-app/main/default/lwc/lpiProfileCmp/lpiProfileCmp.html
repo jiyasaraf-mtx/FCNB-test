@@ -1,0 +1,207 @@
+<!--
+  @description       : 
+  @author            : Mohit Karani
+  @group             : 
+  @last modified on  : 07-09-2024
+  @last modified by  : Uzma Md
+-->
+<template>
+    <template if:true={showSpinner}>
+        <lightning-spinner alternative-text="Loading"></lightning-spinner>
+    </template>
+    <div>
+        <h1 class="page-heading m-b-medium"> My Profile</h1>
+    <div if:false={showSpinner} class="slds-card">
+       
+        <div class="slds-wrap slds-grid my-profile-page slds-p-around--medium">
+            <div
+                class="slds-wrap slds-grid slds-col slds-large-size--3-of-12 slds-size--1-of-1 slds-medium-size--1-of-1">
+                <div class="slds-col slds-size_12-of-12 slds-align_absolute-center">
+                  <div class="profile-upload">
+                    <div class=" slds-text-align--center p-b-small">
+                        <img class="profile-img" src={dataObj.profileUrl} alt="profile picture">
+                    </div>
+                        <lightning-file-upload name="fileUploader" accept={acceptedFormats} label="Update Profile Photo" 
+                        onuploadfinished={handleFileUpload}></lightning-file-upload>
+                    
+                  </div>
+                   
+                </div>
+                <div if:false={isProfileExist} class="slds-col slds-large-size_12-of-12 slds-medium-size_4-of-12 slds-size_12-of-12 slds-align_absolute-center  slds-m-top_medium">
+                    <lightning-button label="Delete" variant="destructive" data-docid={dataObj.documentId} onclick={handleProfilePhotoDelete} class="deleteFocus"></lightning-button>
+                </div>
+            </div>
+            <template if:true={openConfirmationModal}>
+                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                    aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open" onkeydown={handleEscKeyDown}>
+                    <div class="slds-modal__container">
+                        <header class="slds-modal__header">
+                            <button
+                                class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                                title="Close" onclick={handleCancelConfirmation} aria-label="Close delete modal">
+                                <lightning-icon icon-name="utility:close" alternative-text="close"
+                                    variant="inverse" size="small"></lightning-icon>
+                                <span class="slds-assistive-text">Close Modal Delete</span>
+                            </button>
+                            <h1 id="modal-heading-03" class="slds-text-heading_medium slds-hyphenate">
+                                Delete
+                            </h1>
+                        </header>
+                        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-03">
+                            <p>{modalHeading}</p>
+                        </div>
+                        <footer class="slds-modal__footer">
+                            <button class="slds-button slds-button_neutral" onclick={handleCancelConfirmation}
+                                title="Cancel">Cancel</button>
+                            <button class="slds-button slds-button_destructive"
+                                onclick={deleteSelectedRecords} title="Save">Delete</button>
+                        </footer>
+                    </div>
+                </section>
+                <div class="slds-backdrop slds-backdrop_open"></div>
+            </template>
+            <div
+                class="slds-wrap slds-grid slds-col slds-large-size--9-of-12 slds-size--1-of-1 slds-medium-size--1-of-1">
+                <div class="slds-col slds-size_12-of-12 profile-details">
+                    <div class=" profile-details-heading">
+                        <h2 class="page-heading slds-m-bottom_small">Personal Information </h2>
+                        <p class="asterisk-caption p-b-xms">Asterisk   (<span class="c-red">*</span>) indicates required field
+                        </p>
+                        <div class="slds-m-top_xx-small page-sub-heading text-secondary">Contact the Board to update your date of birth or SSN</div>
+                    </div>
+                    
+                   
+                    <div class="slds-grid slds-gutters slds-wrap m-t-medium">
+                        <div
+                            class="slds-col slds-medium-size--1-of-2 slds-size--1-of-1 slds-large-size--4-of-12 slds-m-top_x-small">
+                            <span>
+                                <lightning-input disabled class="validate input-box" type="text" name="firstName" required
+                                    value={dataObj.firstName} label="First Name" placeholder="Enter First Name">
+                                </lightning-input>
+                            </span>
+                        </div>
+                        <div
+                            class="slds-col slds-medium-size--1-of-2 slds-size--1-of-1 slds-large-size--4-of-12 slds-m-top_x-small">
+                            <span>
+                                <lightning-input disabled class="validate input-box" type="text" name="middleName"
+                                    value={dataObj.middleName} label="Middle Name">
+                                </lightning-input>
+                            </span>
+                        </div>
+                        <div
+                            class="slds-col slds-medium-size--1-of-2 slds-size--1-of-1 slds-large-size--4-of-12 slds-m-top_x-small">
+                            <span>
+                                <lightning-input disabled class="validate input-box" type="text" name="lastName" required
+                                    value={dataObj.lastName} label="Last Name" placeholder="Enter Last Name">
+                                </lightning-input>
+                            </span>
+                        </div>
+                        <div
+                            class="slds-col slds-medium-size--1-of-2 slds-size--1-of-1 slds-large-size--4-of-12 slds-m-top_x-small">
+                            <span>
+                                <lightning-input disabled class="validate input-box" type="date" label="Date of Birth"
+                                    placeholder="MM/DD/YYYY" name="birthdate" value={dataObj.birthdate} required
+                                    date-style="short">
+                                </lightning-input>
+                            </span>
+                        </div>
+                        <div
+                            class="slds-col slds-medium-size--1-of-2 slds-size--1-of-1 slds-large-size--4-of-12 slds-m-top_x-small">
+                            <span>
+                                <lightning-input class="validate phoneNumberField input-box" type="tel"
+                                    label="Telephone Number" placeholder="Enter Telephone Number" name="phone"
+                                    max-length="14" value={dataObj.phone} onchange={handleChange}>
+                                </lightning-input>
+                            </span>
+                        </div>
+                        <div
+                            class="slds-col slds-medium-size--1-of-2 slds-size--1-of-1 slds-large-size--4-of-12 slds-m-top_x-small">
+                            <span>
+                                <lightning-input  class="validate input-box" type="email" label="Email Address" 
+                                    placeholder="Enter Email Address" name="email" maxlength="40" value={dataObj.email}
+                                    onchange={handleChange}
+                                    pattern="^([A-Za-z0-9_\-\.\+]+)@([A-Za-z0-9_\-\.]+)\.([A-Za-z]{2,10})$" message-when-pattern-mismatch="Invalid email format.Please enter valid email" required> 
+                                </lightning-input>
+                            </span>
+                            
+                        </div>
+                        
+                    </div>
+
+                    <div class="slds-grid slds-wrap slds-gutters_direct slds-p-top_x-large">
+                        <div class="slds-col slds-large-size--1-of-1 slds-medium-size--1-of-1 slds-size--1-of-1 m-b-medium">
+                            <h2 class="page-heading">Residence Address</h2>
+                        </div>
+                        <!-- Street Address 1 -->
+                        <div
+                            class="slds-col slds-medium-size--1-of-2 slds-size--1-of-1 slds-large-size--4-of-12 slds-m-top_x-small">
+                            <lightning-input disabled class="validate input-box" type="text" label="Street Address "
+                                placeholder="Enter Street Address " name="street1" maxlength="40" required
+                                value={dataObj.street1} message-when-value-missing="Error: Street Address  is required."
+                                pattern="^((?!(<\S)|(\S>)).)*$" message-when-pattern-mismatch="Invalid format">
+                            </lightning-input>
+                        </div>
+                        <!-- City -->
+                        <div
+                            class="slds-col slds-large-size--1-of-3 slds-medium-size--1-of-3 slds-size--1-of-1 slds-m-top_x-small">
+                            <lightning-input disabled class="validate input-box" type="text" label="City" required
+                                placeholder="Enter City" name="city" maxlength="40" value={dataObj.city}
+                                message-when-value-missing="Error: City is required." pattern="^((?!(<\S)|(\S>)).)*$"
+                                message-when-pattern-mismatch="Invalid format">
+                            </lightning-input>
+                        </div>
+
+                        <!-- State -->
+
+                        <div
+                            class="slds-col slds-large-size--1-of-3 slds-medium-size--1-of-3 slds-size--1-of-1 slds-m-top_x-small">
+                            <lightning-combobox disabled class="validate input-box" name="state" required
+                                placeholder="Enter State" label="State" value={dataObj.state}
+                                message-when-value-missing="Error: State is required." options={stateOptions}>
+                            </lightning-combobox>
+                        </div>
+
+                        <!-- Zipcode -->
+                        <div
+                            class="slds-col slds-large-size--1-of-3 slds-medium-size--1-of-3 slds-size--1-of-1 slds-m-top_x-small">
+                            <lightning-input disabled class="validate input-box" type="text" label="Zip Code" required
+                                placeholder="Enter Zip Code" name="zipcode" minlength="5" maxlength="10"
+                                value={dataObj.zipcode} message-when-value-missing="Error: Zip Code is required."
+                                pattern="^[0-9]{5}(?:-[0-9]{4})?$"
+                                message-when-pattern-mismatch="Zip Code should be five digits(XXXXX) or five digits + dash + 4 digits(XXXXX-XXXX).">
+                            </lightning-input>
+                        </div>
+
+                        <!-- Country -->
+                        <div
+                            class="slds-col slds-medium-size--1-of-2 slds-size--1-of-1 slds-large-size--4-of-12 slds-m-top_x-small">
+                            <lightning-combobox disabled class="validate input-box" name="country" required
+                                placeholder="Enter Country" label="Country" value={dataObj.country}
+                                message-when-value-missing="Error: Country is required." options={countryOptions}>
+                            </lightning-combobox>
+                        </div>
+                    </div>
+                    <div class="disclaimer-text">
+                        Updating your email address will result in a verification email being sent to your current email address.
+                        You will need to enter the verification code to successfully update the current email address to the new
+                        email address.
+                    </div>
+                    <div class="slds-text-align_right m-t-large">
+                        <lightning-button class="" variant="brand-outline" label="Save and Exit" aria-label="Save and Exit"
+                            onclick={handleSaveandExit}>
+                        </lightning-button>
+                        <lightning-button class="m-l-small  savefocus" variant="brand" label="Save" aria-label="Save"
+                            onclick={handleSave}>
+                        </lightning-button>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+
+       
+    </div>
+
+    </div>
+</template>

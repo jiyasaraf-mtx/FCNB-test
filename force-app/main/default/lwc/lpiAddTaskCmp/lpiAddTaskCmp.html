@@ -1,0 +1,79 @@
+<!--
+  @description       : 
+  @author            : Mohit Karani
+  @group             : 
+  @last modified on  : 03-22-2024
+  @last modified by  : Vamsi Mudaliar
+-->
+<template>
+    <div if:true={showSpinner}>
+        <lightning-spinner size="medium" alternative-text="Loading..."></lightning-spinner>
+    </div>
+    <header class="slds-modal__header" if:false={fromQuickAction}>
+        <h2 class="slds-text-heading_medium slds-hyphenate">Add Task</h2>
+    </header>
+    <div class="slds-grid slds-gutters slds-wrap slds-p-around_large">
+        <div class="slds-col slds-size_6-of-12">
+            <span>
+                <lightning-input required type="text" max-length="255" label="Task Description" name="subject"
+                    value={dataObj.subject} onchange={handleChange} options={actionOptions}></lightning-input>
+            </span>
+        </div>
+        <div class="slds-col slds-size_6-of-12">
+            <span>
+                <lightning-combobox label="Action/Activity" name="action" value={dataObj.action} onchange={handleChange}
+                    options={actionOptions}></lightning-combobox>
+            </span>
+        </div>
+        <div class="slds-col slds-size_6-of-12">
+            <span>
+                <lightning-combobox label="Respondent/Complainant" name="relatedTo" value={dataObj.relatedTo} onchange={handleChange}
+                    options={relatedToOptions}></lightning-combobox>
+            </span>
+        </div>
+        <div class="slds-col slds-size_6-of-12">
+            <span>
+                <lightning-input type="text" label="Respondent/Complainant Name" name="relatedToName" disabled = true
+                    value={relatedToName}></lightning-input>
+            </span>
+        </div>
+        <div class="slds-col slds-size_6-of-12">
+            <span>
+                <c-custom-look-up icon-name="standard:user" name="userSearch" s-object-api-name="User-Visit"
+                    label="Assigned To" onlookupupdate={lookupRecord} search-required="true" minimum-length-required="3"
+                    onlookupremove={handleRemoveUser} from-task="true">
+                </c-custom-look-up>
+            </span>
+        </div>
+        <div class="slds-col slds-size_6-of-12">
+            <span>
+                <lightning-combobox required label="Activity Status" name="activityStatus"
+                    value={dataObj.activityStatus} onchange={handleChange} options={activityStatusOptions}>
+                </lightning-combobox>
+            </span>
+        </div>
+
+        <div class="slds-col slds-size_6-of-12">
+            <span>
+                <lightning-textarea name="comments" label="Comments" max-length="32000" value={dataObj.comments}
+                    onchange={handleChange}></lightning-textarea>
+
+            </span>
+        </div>
+
+        <div class="slds-col slds-size_6-of-12">
+            <span>
+                <lightning-input label="Activity Due" name="dueDate" type="date" date-style="short"
+                    value={dataObj.dueDate} min={minDateValue} onchange={handleChange}
+                    message-when-range-underflow="Due Date cannot be lesser than today."></lightning-input>
+            </span>
+        </div>
+
+    </div>
+    <footer class="slds-modal__footer">
+        <lightning-button variant="outline" label="Cancel" title="Cancel" onclick={handleCancel}></lightning-button>
+        <lightning-button variant="brand" label="Save" title="Save" onclick={handleSave} class="slds-m-left_x-small">
+        </lightning-button>
+    </footer>
+
+</template>

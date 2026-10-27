@@ -1,0 +1,65 @@
+<template>
+
+    <!-- SPINNER -->
+    <div class="backdrop" if:true={showSpinner}>
+        <div class="spinner">
+            <lightning-spinner class="slds-is-fixed" alternative-text="Loading..." variant="brand"></lightning-spinner>
+        </div>
+    </div>
+
+    <div style="background:white;" class="slds-p-around_medium">
+        <!-- SCANNER -->
+        <div class="backdrop" if:true={showSpinner}>
+            <div class="spinner">
+                <lightning-spinner class="slds-is-fixed" alternative-text="Loading..." variant="brand"></lightning-spinner>
+            </div>
+        </div>
+
+        <!--show error when not having read access-->
+        <template if:false={hasAccess}>
+            <div class="alert-card alert-card__danger m-t-6 " role="alert" aria-live="assertive">
+                <div class="alert-card__body">
+                    <img src={vrErrorIcon} class="m-r-2" alt="" />
+                    <div class="text-black alert-content h2"><small>{errorMessage}</small></div>
+                </div>
+            </div>
+        </template>
+
+        <!-- CONTENT-->
+        <div class="container-lg" if:true={hasAccess}>
+
+            <!-- SHOW SCAN BUTTON -->
+            <template if:true={showScan}>
+                <div class="slds-text-align_center slds-text-color_weak slds-m-vertical_large">
+                    <strong>Please initiate scan using handheld scanner</strong>
+                </div>
+
+                <div class="slds-align_absolute-center slds-m-vertical_large">
+
+                    <lightning-input type="text" label="License Number" message-when-value-missing="Error: License Number is required."  
+                    required onchange={handleChange}></lightning-input>
+                </div>
+                <div class="row m-t-5">
+                    <div class="col-12 justify-content-center update-button-flex">
+                        <lightning-button variant="brand" label="Submit" class="slds-m-right_x-small base-button slds-align--absolute-center"
+                        onclick={handleButtonClick}></lightning-button>
+                    </div>
+                </div>
+            </template>
+
+            <!-- ERROR HANDLING -->
+            <template if:true={showError}>
+                <div class="alert-card alert-card__danger m-t-6 " role="alert" aria-live="assertive">
+                    <div class="alert-card__body">
+                        <!--<img src={vrErrorIcon} class="m-r-2" alt="" />-->
+                        <div class="text-black alert-content h2">
+                            <small>Unable to locate Record.</small>
+                        </div>
+                    </div>
+                </div>
+            </template>
+
+        </div>
+    </div>
+
+</template>

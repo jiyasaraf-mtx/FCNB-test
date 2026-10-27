@@ -1,0 +1,46 @@
+//Pagination
+.pagination {
+    .slds-button {
+        background: $white;
+        border-color: $primary-main;
+        color: $primary-main;
+        padding: $spacing-xx-small $spacing-xm-small !important;
+        line-height: inherit;
+        
+        &[disabled]{
+            background: $action-disabled-background-12-p;
+            border-color: $action-disabled-background-12-p;
+            color: $action-active-54-p;
+            border-radius: 0.25rem;
+        }
+
+        svg {
+            vertical-align: baseline;
+        }
+
+        &:hover {
+            background: $background-light;
+        }
+    }
+
+
+    .currentpage {
+        .slds-button {
+            background: $primary-main;
+            color: $white;
+        }
+    }
+
+    .pagination-buttons {
+        display: flex;
+        align-items: center;
+        gap: $spacing-xx-small;
+        lightning-button{
+            :last-child,:first-child{
+                lightning-primitive-icon{
+                    line-height: 0;
+                }
+            }
+        }
+    }
+}

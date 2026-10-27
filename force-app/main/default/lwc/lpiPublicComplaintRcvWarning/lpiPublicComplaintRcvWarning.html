@@ -1,0 +1,33 @@
+<!-- sldsValidatorIgnore -->
+<template>
+	<template if:true={showSpinner}>
+		<lightning-spinner size="medium" variant="brand" alternative-text="Loading"></lightning-spinner>
+	</template>
+	<div class="slds-notify slds-notify_alert slds-alert_warning" role="alert" if:true={showWarning}>
+		<span class="slds-assistive-text">warning</span>
+		<span class="slds-icon_container slds-icon-utility-warning slds-m-right_x-small" title="Warning">
+			<lightning-icon
+				icon-name="utility:warning"
+				variant="inverse"
+				size="x-small"
+				alternative-text="Warning"
+			></lightning-icon>
+		</span>
+		<h2>Regulatory Code Violation(s) exist on the related Case.</h2>
+		<div class="slds-notify__close">
+			<button
+				class="slds-button slds-button_icon slds-button_icon-inverse"
+				title="Close"
+				onclick={handleClose}
+			>
+				<lightning-icon
+					icon-name="utility:close"
+					variant="inverse"
+					size="x-small"
+					alternative-text="Close"
+				></lightning-icon>
+				<span class="slds-assistive-text">Close</span>
+			</button>
+		</div>
+	</div>
+</template>

@@ -1,0 +1,137 @@
+<template>
+    <div class="sir-root">
+        <div if:true={isLoading} class="spinner-overlay">
+            <lightning-spinner alternative-text="Loading insurer review queue"></lightning-spinner>
+        </div>
+
+        <template if:true={showPageIntro}>
+            <section class="page-intro">
+                <h1>{labels.sirTitle}</h1>
+            </section>
+        </template>
+        <br/>
+        <!-- Status Tiles Section -->
+        <section class="status-cards" aria-label="Status filters">
+            <template for:each={tiles} for:item="tile">
+                <div
+                    key={tile.key}
+                    class={tile.className}
+                    data-tab={tile.key}
+                    role="button"
+                    tabindex="0"
+                    onclick={handleTileClick}
+                    onkeydown={handleTileClick}
+                >
+                    <div class="status-icon" aria-hidden="true">{tile.icon}</div>
+                    <div class="status-content">
+                        <div class="status-label">{tile.label}</div>
+                        <div class="status-count">{tile.count}</div>
+                        <div class="status-caption">{tile.caption}</div>
+                    </div>
+                </div>
+            </template>
+        </section>
+
+        <section class="workspace workspace-full">
+            <div class="panel">
+                <div class="panel-head">
+                    <div>
+                        <div class="crumb">{insurerName}</div>
+                        <div class="panel-title">{labels.sirQueueTitle}</div>
+                    </div>
+                    <div class="head-actions">
+                        <button class="btn btn-muted" type="button" onclick={handleRefresh}>↻ {labels.sirRefresh}</button>
+                        <button class="btn" type="button" onclick={handleToggleFilters}>{labels.sirFilters}</button>
+                    </div>
+                </div>
+
+                <div class={filterToolsClass}>
+                    <lightning-input
+                        type="search"
+                        label="Search"
+                        variant="label-hidden"
+                        placeholder={labels.sirSearchPlaceholder}
+                        value={searchTerm}
+                        onchange={handleSearch}
+                    ></lightning-input>
+                    <lightning-combobox
+                        name="agencyFilter"
+                        label="Agency"
+                        variant="label-hidden"
+                        value={agencyFilter}
+                        options={agencyOptions}
+                        onchange={handleAgencyFilter}
+                    ></lightning-combobox>
+                </div>
+
+                <div class="table-wrap">
+                    <table>
+                        <caption class="sr-only">Insurer review applications</caption>
+                        <thead>
+                            <tr>
+                                <th scope="col">{labels.sirApplicationNumber}</th>
+                                <th scope="col">{labels.sirApplicant}</th>
+                                <th scope="col">{labels.licenceType}</th>
+                                <th scope="col">{labels.sirAgency}</th>
+                                <th scope="col">{labels.sirSubmitted}</th>
+                                <th scope="col">{labels.status}</th>
+                                <th scope="col">{labels.sirAction}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <template for:each={pagedApplications} for:item="app">
+                                <tr key={app.id}>
+                                    <td data-label="Application Number">
+                                        <div class="name">{app.applicationNumber}</div>
+                                    </td>
+                                    <td data-label="Applicant">
+                                        <div class="name">{app.applicantName}</div>
+                                        <div class="sub">{app.email}</div>
+                                    </td>
+                                    <td data-label="License Type">{app.licenceType}</td>
+                                    <td data-label="Agency">{app.agency}</td>
+                                    <td data-label="Submitted">{app.submittedOn}</td>
+                                    <td data-label="Status"><span class={app.statusClass}>{app.statusLabel}</span></td>
+                                    <td data-label="Action">
+                                        <button
+                                            class="row-btn"
+                                            type="button"
+                                            data-id={app.id}
+                                            onclick={handleRowAction}
+                                        >
+                                            {app.actionLabel}
+                                        </button>
+                                    </td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                    <div class={emptyStateClass}>{labels.sirEmpty}</div>
+                </div>
+
+                <div class="footer-bar">
+                    <span>{showingLabel}</span>
+                    <div class="pager">
+                        <button class="page" type="button" onclick={handlePrevPage} aria-label="Previous page">‹</button>
+                        <template for:each={pageNumbers} for:item="p">
+                            <button
+                                key={p.number}
+                                class={p.className}
+                                type="button"
+                                data-page={p.number}
+                                onclick={handlePageClick}
+                            >
+                                {p.number}
+                            </button>
+                        </template>
+                        <button class="page" type="button" onclick={handleNextPage} aria-label="Next page">›</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <template if:true={showAlert}>
+            <div class={alertClass} role="status">{alertMessage}</div>
+        </template>
+    </div>
+</template>

@@ -1,0 +1,145 @@
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: 700;
+    margin: 0;
+    font-family: $font-family;
+    line-height: 140% !important;
+}
+h1 {
+    font-size: toRem(32);
+}
+h2 {
+    font-size: toRem(24); 
+}
+h3 {
+    font-size: toRem(20);
+}
+h4 {
+    font-size: toRem(16);
+}
+h5 {
+    font-size: toRem(14);   
+}
+h6 {  
+    font-size: toRem(12);
+}
+.text-brand{
+    color: $primary-main !important;
+}
+.text-primary{
+    color: $text-primary !important;
+}
+.text-secondary{
+    color: $text-secondary !important;
+}
+.text-error{
+    color: $error-main !important;
+}
+.text-white{
+    color: $white !important;
+}
+.text-bold,
+.text-title{
+    font-weight: $font-weight-bold;
+}
+.list-text {
+    list-style: disc;
+    padding-left: toRem(32);
+}
+p {
+    font-size: $small;
+    font-weight: $font-weight-regular;
+    line-height: 150%;
+}
+.bold-40{
+    font-size: toRem(40);
+    font-weight: $font-weight-bold;
+}
+.bold-32{
+    font-size: toRem(32);
+    font-weight: $font-weight-bold;
+}
+.bold-24{
+    font-size: toRem(24) !important;
+    font-weight: $font-weight-bold !important;
+}
+.bold-20{
+    font-size: toRem(20) !important;
+    font-weight: $font-weight-bold;
+}
+.bold-18{
+    font-size: toRem(18) !important;
+    font-weight: $font-weight-bold !important;
+}
+.bold-16{
+    font-size: $small !important;
+    font-weight: $font-weight-bold !important;
+}
+.bold-14{
+    font-weight: $font-weight-bold;
+    font-size: toRem(14);
+}
+.semiBold-16{
+    font-weight: $font-weight-semi-bold;
+    font-size: $small;
+}
+.semiBold-18{
+    font-weight: $font-weight-semi-bold;
+    font-size: toRem(18);
+}
+.semiBold-14{
+    font-weight: $font-weight-semi-bold;
+    font-size: toRem(14);
+}
+.semiBold-40{
+    font-weight: $font-weight-semi-bold;
+    font-size: toRem(40);
+}
+.p-medium-16{
+    font-weight: $font-weight-medium;
+    font-size: $small;
+}
+.regular-text-16{
+    font-weight: $font-weight-regular;
+    font-size: toRem(16);
+}
+.regular-text-14{
+    font-weight: $font-weight-regular;
+    font-size: toRem(14);
+}
+.regular-text-12{
+    font-weight: $font-weight-regular;
+    font-size: toRem(12);
+}
+.regular-text-11{
+    font-weight: $font-weight-regular;
+    font-size: toRem(11);
+}
+.semiBold-12{
+    font-weight: $font-weight-semi-bold;
+    font-size: toRem(12);
+}
+.regular-text-8{
+    font-weight: $font-weight-regular;
+    font-size: $x-small;
+}
+.regular-text-20{
+    font-weight: $font-weight-regular;
+    font-size: toRem(20);
+}
+.regular-text-18{
+    font-weight: $font-weight-regular;
+    font-size: toRem(18);
+}
+
+.text-wrap-line-2{
+    width:100%;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}

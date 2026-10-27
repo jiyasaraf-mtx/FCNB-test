@@ -1,0 +1,295 @@
+<template>
+            <div class="slds-grid slds-wrap slds-is-relative ">
+            <div style="position: fixed;z-index: 999999;top: 0;right: 0;">
+  <omnistudio-toast class="flexcard-toast-element" theme="slds" title="" message="" styletype=""> </omnistudio-toast>
+</div>
+            <div if:true={showLoader} class="slds-is-absolute vloc-loader_override" style="height: 100%; width: 100%; min-height:50px; background: transparent; z-index: 99;">
+  <div>
+   <omnistudio-spinner
+      variant="brand"
+      alternative-text="Loading content..."
+      size="medium"
+      theme="slds"
+      ></omnistudio-spinner>
+  </div>
+</div>
+            <template if:false={hasPermission}>
+              You don't have required permissions to view this card.
+            </template>
+            <template if:true={hasPermission}>
+              <template if:true={hasRecords}>
+                        <template for:each={_records} for:item="record" for:index="rindex">
+                            <omnistudio-flex-card-state if:true={record}  key={record._flex.uniqueKey} data-recordid={record.Id} record={record} data-statue="true"  data-index="0" data-rindex={rindex} class="cf-vlocity-state-0 cf-vlocity-state slds-size_12-of-12 "  tracking-obj={_childCardTrackingObj} >
+      <div if:true={cardLoaded} class="slds-grid slds-wrap exam-question-review slds-m-around_none " style="      
+         ">
+          <div data-style-id="state0element0" class="slds-col   slds-p-around_x-small slds-size_12-of-12 " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element0_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element0block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3EHave%20you%20been%20denied%20a%20license,%20registration%20or%20certificate%20to%20practice%20as%20an%20Athletic%20Trainer%20or%20any%20other%20profession%20or%20been%20denied%20the%20privilege%20of%20taking%20an%20examination%20administered%20by%20a%20U.S.%20state,%20Canadian%20provincial%20or%20international%20licensing%20agency?%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element0block_element1" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element0block_element1_child"   card={card}  record={record}  placeholder="-"  field-name="HAAssistantPhysicianLicenseQuestions1"  label=""  type="text"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element1" class="slds-col   slds-p-around_x-small slds-size_12-of-12 " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element1_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element1block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element1block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3EHave%20you%20made%20application%20for%20licensure,%20registration%20or%20certification%20in%20another%20state,%20province%20or%20country%20and%20subsequently%20withdrawn%20said%20application?%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element1block_element1" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element1block_element1_child"   card={card}  record={record}  placeholder="-"  field-name="HAAssistantPhysicianLicenseQuestions2"  label=""  type="text"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element2" class="slds-col   slds-p-around_x-small slds-size_12-of-12 " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element2_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element2block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element2block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3EHas%20any%20license%20or%20right%20to%20practice%20held%20by%20you%20been%20disciplined,%20including%20but%20not%20limited%20to%20restriction,%20revocation,%20suspension,%20probation,%20censure,%20or%20reprimand,%20whether%20voluntarily%20agreed%20to%20or%20not,%20by%20any%20U.S.%20state,%20territory,%20federal%20agency,%20Canadian%20province%20or%20foreign%20country?%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element2block_element1" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element2block_element1_child"   card={card}  record={record}  placeholder="-"  field-name="HAAssistantPhysicianLicenseQuestions3"  label=""  type="text"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element3" class="slds-col   slds-p-around_x-small slds-size_12-of-12 " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element3_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element3block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element3block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3EHave%20you%20had%20any%20disciplinary%20or%20corrective%20action%20taken%20against%20you,%20or%20had%20your%20right%20to%20practice%20restricted,%20by%20any%20professional%20association%20or%20society,%20or%20by%20any%20licensed%20hospital%20or%20medical%20staff%20of%20a%20hospital?%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element3block_element1" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element3block_element1_child"   card={card}  record={record}  placeholder="-"  field-name="HAAssistantPhysicianLicenseQuestions4"  label=""  type="text"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element4" class="slds-col   slds-p-around_x-small slds-size_12-of-12 " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element4_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element4block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element4block_element0_child"   card={card}  record={record}  merge-field="%3Cp%3EHave%20you%20ever%20been%20restricted,%20suspended,%20terminated,%20requested%20to%20voluntarily%20resign,%20placed%20on%20probation,%20counseled,%20received%20a%20warning%20or%20been%20subject%20to%20any%20remedial%20or%20disciplinary%20action%20during%20college?%3C/p%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element4block_element1" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element4block_element1_child"   card={card}  record={record}  placeholder="-"  field-name="HAAssistantPhysicianLicenseQuestions5"  label=""  type="text"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element5" class="slds-col   slds-p-around_x-small slds-size_12-of-12 " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element5_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element5block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element5block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3EHave%20you%20surrendered%20a%20license%20issued%20to%20you%20by%20any%20U.S.%20state%20or%20any%20Canadian%20provincial%20licensing%20agency%20for%20any%20reason,%20other%20than%20failure%20to%20renew,%20retirement%20or%20relocating%20to%20another%20state?%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element5block_element1" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element5block_element1_child"   card={card}  record={record}  placeholder="-"  field-name="HAAssistantPhysicianLicenseQuestions6"  label=""  type="text"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element6" class="slds-col   slds-p-around_x-small slds-size_12-of-12 " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element6_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element6block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element6block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3EHave%20any%20charges%20or%20complaints%20been%20filed%20against%20you%20with%20the%20federal%20government,%20any%20federal%20agency%20or%20any%20U.S.%20state%20or%20Canadian%20provincial%20licensing%20or%20disciplinary%20agency?%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element6block_element1" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element6block_element1_child"   card={card}  record={record}  placeholder="-"  field-name="HAAssistantPhysicianLicenseQuestions7"  label=""  type="text"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element7" class="slds-col   slds-p-around_x-small slds-size_12-of-12 " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element7_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element7block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element7block_element0_child"   card={card}  record={record}  merge-field="%3Cp%3EHave%20you%20been%20denied%20a%20certificate%20or%20been%20denied%20the%20privilege%20of%20membership%20by%20a%20licensing%20or%20certification%20agency,%20or%20professional%20association?%3C/p%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element7block_element1" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element7block_element1_child"   card={card}  record={record}  placeholder="-"  field-name="HAAssistantPhysicianLicenseQuestions8"  label=""  type="text"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element8" class="slds-col   slds-p-around_x-small slds-size_12-of-12 " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element8_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element8block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element8block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3EHas%20any%20disciplinary%20action%20been%20taken%20against%20you,%20or%20has%20your%20authority%20to%20practice%20been%20restricted,%20by%20any%20federal%20or%20state%20agency%20including,%20but%20not%20limited%20to,%20Medicare%20or%20Medicaid?%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element8block_element1" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element8block_element1_child"   card={card}  record={record}  placeholder="-"  field-name="HAAssistantPhysicianLicenseQuestions9"  label=""  type="text"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element9" class="slds-col   slds-p-around_x-small slds-size_12-of-12 " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element9_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element9block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element9block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3EHave%20you%20forfeited%20collateral%20for%20breach%20or%20violation%20of%20any%20law,%20police%20regulation%20or%20ordinance%20whatsoever,%20been%20summoned%20into%20court%20as%20a%20defendant,%20or%20has%20any%20lawsuit%20(other%20than%20malpractice)%20been%20filed%20against%20you?%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element9block_element1" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element9block_element1_child"   card={card}  record={record}  placeholder="-"  field-name="HAAssistantPhysicianLicenseQuestions10"  label=""  type="text"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element10" class="slds-col   slds-p-around_x-small slds-size_12-of-12 " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element10_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element10block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element10block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3EHave%20you%20been%20arrested,%20charged,%20indicted,%20found%20guilty,%20or%20entered%20a%20plea%20of%20guilty,%20an%20alford,%20no%20contest%20plea%20or%20plea%20of%20nolo%20contendere,%20in%20a%20criminal%20prosecution%20in%20any%20state,%20federal,%20or%20municipal%20court%20whether%20or%20not%20sentence%20was%20imposed,%20including%20suspended%20imposition%20of%20sentence%20or%20suspended%20execution%20of%20sentence,%20except%20for%20minor%20traffic%20violations,%20alcohol%20related%20traffic%20violations%20must%20be%20reported?%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element10block_element1" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element10block_element1_child"   card={card}  record={record}  placeholder="-"  field-name="HAAssistantPhysicianLicenseQuestions11"  label=""  type="text"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element11" class="slds-col   slds-p-around_x-small slds-size_12-of-12 " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element11_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element11block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element11block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3EHave%20you%20been%20required%20by%20federal%20law%20or%20the%20law%20of%20any%20state%20to%20register%20as%20a%20sex%20offender?%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element11block_element1" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element11block_element1_child"   card={card}  record={record}  placeholder="-"  field-name="HAAssistantPhysicianLicenseQuestions12"  label=""  type="text"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element12" class="slds-col   slds-p-around_x-small slds-size_12-of-12 condition-element" data-rindex={rindex} style=""  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[]}' >
+    <omnistudio-block data-style-id="state0element12_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[]}'  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element12block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element12block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3EDo%20you%20currently%20have%20any%20condition%20or%20impairment%20which%20in%20any%20way%20affects%20your%20ability%20to%20practice%20in%20a%20professional,%20competent%20and%20safe%20manner,%20including%20but%20not%20limited%20to:%20(1)%20a%20mental,%20emotional,%20nervous%20or%20sexual%20disorder,%20(2)%20an%20alcohol%20or%20substance%20use%20disorder%20or%20(3)%20a%20physical%20disease%20or%20condition?%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element12block_element1" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element12block_element1_child"   card={card}  record={record}  placeholder="-"  field-name="HAAssistantPhysicianLicenseQuestions13"  label=""  type="text"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element13" class="slds-col   slds-p-around_x-small slds-size_12-of-12 condition-element" data-rindex={rindex} style=""  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[]}' >
+    <omnistudio-block data-style-id="state0element13_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[]}'  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element13block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element13block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3EHave%20you%20been%20a%20defendant%20in%20a%20legal%20action%20involving%20professional%20liability%20(malpractice)%20or%20had%20a%20professional%20liability%20claim%20paid%20in%20your%20behalf%20or%20paid%20such%20a%20claim%20yourself?%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element13block_element1" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element13block_element1_child"   card={card}  record={record}  placeholder="-"  field-name="HAAssistantPhysicianLicenseQuestions14"  label=""  type="text"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element13block_element2" class="slds-col  label slds-size_12-of-12  condition-element" data-rindex={rindex} style="      
+         "  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-0","field":"HAAssistantPhysicianLicenseQuestions14","operator":"==","value":"Yes","type":"custom","hasMergeField":false}]}' ><omnistudio-output-field data-style-id="state0element13block_element2_child"   card={card}  record={record}  merge-field="%3Cdiv%3EPlease%20indicate%20how%20many%20claims%20in%20which%20you%20have%20been%20named%3C/div%3E"  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-0","field":"HAAssistantPhysicianLicenseQuestions14","operator":"==","value":"Yes","type":"custom","hasMergeField":false}]}'  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element13block_element3" class="slds-col   slds-size_12-of-12 condition-element" data-rindex={rindex} style=""  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-9","field":"HAAssistantPhysicianLicenseQuestions14","operator":"==","value":"Yes","type":"custom","hasMergeField":false}]}' ><omnistudio-output-field data-style-id="state0element13block_element3_child"   card={card}  record={record}  placeholder="-"  field-name="HAAssistantPhysicianLicenseQuestions14Txt"  label=""  type="text"  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-9","field":"HAAssistantPhysicianLicenseQuestions14","operator":"==","value":"Yes","type":"custom","hasMergeField":false}]}'  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element14" class="slds-col   slds-p-around_x-small slds-size_12-of-12 condition-element" data-rindex={rindex} style=""  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-0","field":"Parent.regAuthTypeName","operator":"==","value":"Assistant Physician","type":"custom","hasMergeField":false},{"id":"state-new-condition-11","field":"Parent.parType","operator":"!=","value":"Reactivation","type":"custom","hasMergeField":false,"logicalOperator":"&&"}]}' >
+    <omnistudio-block data-style-id="state0element14_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-0","field":"Parent.regAuthTypeName","operator":"==","value":"Assistant Physician","type":"custom","hasMergeField":false},{"id":"state-new-condition-11","field":"Parent.parType","operator":"!=","value":"Reactivation","type":"custom","hasMergeField":false,"logicalOperator":"&&"}]}'  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element14block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element14block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3EDo%20you%20currently%20hold%20a%20license%20in%20any%20country%20other%20than%20U.S?%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element14block_element1" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element14block_element1_child"   card={card}  record={record}  placeholder="-"  field-name="HAAssistantPhysicianLicenseQuestions15"  label=""  type="text"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element15" class="slds-col   slds-p-around_x-small slds-size_12-of-12 condition-element" data-rindex={rindex} style=""  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-0","field":"Parent.regAuthTypeName","operator":"!=","value":"Assistant Physician","type":"custom","hasMergeField":false},{"id":"state-new-condition-63","field":"Parent.regAuthTypeName","operator":"!=","value":"Visiting Professor (D.O.)","type":"custom","hasMergeField":false,"logicalOperator":"&&"},{"id":"state-new-condition-75","field":"Parent.regAuthTypeName","operator":"!=","value":"Visiting Professor (M.D.)","type":"custom","hasMergeField":false,"logicalOperator":"&&"}]}' >
+    <omnistudio-block data-style-id="state0element15_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-0","field":"Parent.regAuthTypeName","operator":"!=","value":"Assistant Physician","type":"custom","hasMergeField":false},{"id":"state-new-condition-63","field":"Parent.regAuthTypeName","operator":"!=","value":"Visiting Professor (D.O.)","type":"custom","hasMergeField":false,"logicalOperator":"&&"},{"id":"state-new-condition-75","field":"Parent.regAuthTypeName","operator":"!=","value":"Visiting Professor (M.D.)","type":"custom","hasMergeField":false,"logicalOperator":"&&"}]}'  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element15block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element15block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3EDo%20you%20currently%20hold%20a%20license%20in%20any%20country%20other%20than%20U.S?%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element15block_element1" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element15block_element1_child"   card={card}  record={record}  placeholder="-"  field-name="HAAssistantPhysicianLicenseQuestions15Clone"  label=""  type="text"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element16" class="slds-col   slds-p-around_x-small slds-size_12-of-12 condition-element" data-rindex={rindex} style=""  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-0","field":"Parent.regAuthTypeName","operator":"==","value":"Assistant Physician","type":"custom","hasMergeField":false},{"id":"state-new-condition-11","field":"Parent.parType","operator":"==","value":"Reactivation","type":"custom","hasMergeField":false,"logicalOperator":"&&"}]}' >
+    <omnistudio-block data-style-id="state0element16_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-0","field":"Parent.regAuthTypeName","operator":"==","value":"Assistant Physician","type":"custom","hasMergeField":false},{"id":"state-new-condition-11","field":"Parent.parType","operator":"==","value":"Reactivation","type":"custom","hasMergeField":false,"logicalOperator":"&&"}]}'  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element16block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element16block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3ESince%20your%20license%20was%20placed%20in%20an%20inactive%20status,%20what%20have%20you%20done%20to%20keep%20current%20with%20the%20practice%20of%20medicine?%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element16block_element1" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element16block_element1_child"   card={card}  record={record}  placeholder="-"  field-name="HAAssistantPhysicianLicenseQuestions16Txt"  label=""  type="text"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div>
+        </div>
+      </omnistudio-flex-card-state>
+                        </template>
+                      </template>
+                      <template if:false={hasRecords}>
+                            <omnistudio-flex-card-state  record={record} data-statue="false"  data-index="0" data-rindex={rindex} class="cf-vlocity-state-0 cf-vlocity-state slds-size_12-of-12 "  tracking-obj={_childCardTrackingObj} >
+      <div if:true={cardLoaded} class="slds-grid slds-wrap exam-question-review slds-m-around_none " style="      
+         ">
+          <div data-style-id="state0element0" class="slds-col   slds-p-around_x-small slds-size_12-of-12 " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element0_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element0block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3EHave%20you%20been%20denied%20a%20license,%20registration%20or%20certificate%20to%20practice%20as%20an%20Athletic%20Trainer%20or%20any%20other%20profession%20or%20been%20denied%20the%20privilege%20of%20taking%20an%20examination%20administered%20by%20a%20U.S.%20state,%20Canadian%20provincial%20or%20international%20licensing%20agency?%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element0block_element1" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element0block_element1_child"   card={card}  record={record}  placeholder="-"  field-name="HAAssistantPhysicianLicenseQuestions1"  label=""  type="text"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element1" class="slds-col   slds-p-around_x-small slds-size_12-of-12 " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element1_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element1block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element1block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3EHave%20you%20made%20application%20for%20licensure,%20registration%20or%20certification%20in%20another%20state,%20province%20or%20country%20and%20subsequently%20withdrawn%20said%20application?%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element1block_element1" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element1block_element1_child"   card={card}  record={record}  placeholder="-"  field-name="HAAssistantPhysicianLicenseQuestions2"  label=""  type="text"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element2" class="slds-col   slds-p-around_x-small slds-size_12-of-12 " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element2_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element2block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element2block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3EHas%20any%20license%20or%20right%20to%20practice%20held%20by%20you%20been%20disciplined,%20including%20but%20not%20limited%20to%20restriction,%20revocation,%20suspension,%20probation,%20censure,%20or%20reprimand,%20whether%20voluntarily%20agreed%20to%20or%20not,%20by%20any%20U.S.%20state,%20territory,%20federal%20agency,%20Canadian%20province%20or%20foreign%20country?%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element2block_element1" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element2block_element1_child"   card={card}  record={record}  placeholder="-"  field-name="HAAssistantPhysicianLicenseQuestions3"  label=""  type="text"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element3" class="slds-col   slds-p-around_x-small slds-size_12-of-12 " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element3_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element3block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element3block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3EHave%20you%20had%20any%20disciplinary%20or%20corrective%20action%20taken%20against%20you,%20or%20had%20your%20right%20to%20practice%20restricted,%20by%20any%20professional%20association%20or%20society,%20or%20by%20any%20licensed%20hospital%20or%20medical%20staff%20of%20a%20hospital?%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element3block_element1" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element3block_element1_child"   card={card}  record={record}  placeholder="-"  field-name="HAAssistantPhysicianLicenseQuestions4"  label=""  type="text"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element4" class="slds-col   slds-p-around_x-small slds-size_12-of-12 " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element4_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element4block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element4block_element0_child"   card={card}  record={record}  merge-field="%3Cp%3EHave%20you%20ever%20been%20restricted,%20suspended,%20terminated,%20requested%20to%20voluntarily%20resign,%20placed%20on%20probation,%20counseled,%20received%20a%20warning%20or%20been%20subject%20to%20any%20remedial%20or%20disciplinary%20action%20during%20college?%3C/p%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element4block_element1" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element4block_element1_child"   card={card}  record={record}  placeholder="-"  field-name="HAAssistantPhysicianLicenseQuestions5"  label=""  type="text"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element5" class="slds-col   slds-p-around_x-small slds-size_12-of-12 " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element5_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element5block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element5block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3EHave%20you%20surrendered%20a%20license%20issued%20to%20you%20by%20any%20U.S.%20state%20or%20any%20Canadian%20provincial%20licensing%20agency%20for%20any%20reason,%20other%20than%20failure%20to%20renew,%20retirement%20or%20relocating%20to%20another%20state?%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element5block_element1" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element5block_element1_child"   card={card}  record={record}  placeholder="-"  field-name="HAAssistantPhysicianLicenseQuestions6"  label=""  type="text"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element6" class="slds-col   slds-p-around_x-small slds-size_12-of-12 " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element6_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element6block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element6block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3EHave%20any%20charges%20or%20complaints%20been%20filed%20against%20you%20with%20the%20federal%20government,%20any%20federal%20agency%20or%20any%20U.S.%20state%20or%20Canadian%20provincial%20licensing%20or%20disciplinary%20agency?%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element6block_element1" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element6block_element1_child"   card={card}  record={record}  placeholder="-"  field-name="HAAssistantPhysicianLicenseQuestions7"  label=""  type="text"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element7" class="slds-col   slds-p-around_x-small slds-size_12-of-12 " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element7_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element7block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element7block_element0_child"   card={card}  record={record}  merge-field="%3Cp%3EHave%20you%20been%20denied%20a%20certificate%20or%20been%20denied%20the%20privilege%20of%20membership%20by%20a%20licensing%20or%20certification%20agency,%20or%20professional%20association?%3C/p%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element7block_element1" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element7block_element1_child"   card={card}  record={record}  placeholder="-"  field-name="HAAssistantPhysicianLicenseQuestions8"  label=""  type="text"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element8" class="slds-col   slds-p-around_x-small slds-size_12-of-12 " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element8_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element8block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element8block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3EHas%20any%20disciplinary%20action%20been%20taken%20against%20you,%20or%20has%20your%20authority%20to%20practice%20been%20restricted,%20by%20any%20federal%20or%20state%20agency%20including,%20but%20not%20limited%20to,%20Medicare%20or%20Medicaid?%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element8block_element1" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element8block_element1_child"   card={card}  record={record}  placeholder="-"  field-name="HAAssistantPhysicianLicenseQuestions9"  label=""  type="text"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element9" class="slds-col   slds-p-around_x-small slds-size_12-of-12 " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element9_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element9block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element9block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3EHave%20you%20forfeited%20collateral%20for%20breach%20or%20violation%20of%20any%20law,%20police%20regulation%20or%20ordinance%20whatsoever,%20been%20summoned%20into%20court%20as%20a%20defendant,%20or%20has%20any%20lawsuit%20(other%20than%20malpractice)%20been%20filed%20against%20you?%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element9block_element1" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element9block_element1_child"   card={card}  record={record}  placeholder="-"  field-name="HAAssistantPhysicianLicenseQuestions10"  label=""  type="text"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element10" class="slds-col   slds-p-around_x-small slds-size_12-of-12 " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element10_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element10block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element10block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3EHave%20you%20been%20arrested,%20charged,%20indicted,%20found%20guilty,%20or%20entered%20a%20plea%20of%20guilty,%20an%20alford,%20no%20contest%20plea%20or%20plea%20of%20nolo%20contendere,%20in%20a%20criminal%20prosecution%20in%20any%20state,%20federal,%20or%20municipal%20court%20whether%20or%20not%20sentence%20was%20imposed,%20including%20suspended%20imposition%20of%20sentence%20or%20suspended%20execution%20of%20sentence,%20except%20for%20minor%20traffic%20violations,%20alcohol%20related%20traffic%20violations%20must%20be%20reported?%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element10block_element1" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element10block_element1_child"   card={card}  record={record}  placeholder="-"  field-name="HAAssistantPhysicianLicenseQuestions11"  label=""  type="text"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element11" class="slds-col   slds-p-around_x-small slds-size_12-of-12 " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element11_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element11block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element11block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3EHave%20you%20been%20required%20by%20federal%20law%20or%20the%20law%20of%20any%20state%20to%20register%20as%20a%20sex%20offender?%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element11block_element1" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element11block_element1_child"   card={card}  record={record}  placeholder="-"  field-name="HAAssistantPhysicianLicenseQuestions12"  label=""  type="text"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element12" class="slds-col   slds-p-around_x-small slds-size_12-of-12 condition-element" data-rindex={rindex} style=""  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[]}' >
+    <omnistudio-block data-style-id="state0element12_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[]}'  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element12block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element12block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3EDo%20you%20currently%20have%20any%20condition%20or%20impairment%20which%20in%20any%20way%20affects%20your%20ability%20to%20practice%20in%20a%20professional,%20competent%20and%20safe%20manner,%20including%20but%20not%20limited%20to:%20(1)%20a%20mental,%20emotional,%20nervous%20or%20sexual%20disorder,%20(2)%20an%20alcohol%20or%20substance%20use%20disorder%20or%20(3)%20a%20physical%20disease%20or%20condition?%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element12block_element1" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element12block_element1_child"   card={card}  record={record}  placeholder="-"  field-name="HAAssistantPhysicianLicenseQuestions13"  label=""  type="text"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element13" class="slds-col   slds-p-around_x-small slds-size_12-of-12 condition-element" data-rindex={rindex} style=""  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[]}' >
+    <omnistudio-block data-style-id="state0element13_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[]}'  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element13block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element13block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3EHave%20you%20been%20a%20defendant%20in%20a%20legal%20action%20involving%20professional%20liability%20(malpractice)%20or%20had%20a%20professional%20liability%20claim%20paid%20in%20your%20behalf%20or%20paid%20such%20a%20claim%20yourself?%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element13block_element1" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element13block_element1_child"   card={card}  record={record}  placeholder="-"  field-name="HAAssistantPhysicianLicenseQuestions14"  label=""  type="text"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element13block_element2" class="slds-col  label slds-size_12-of-12  condition-element" data-rindex={rindex} style="      
+         "  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-0","field":"HAAssistantPhysicianLicenseQuestions14","operator":"==","value":"Yes","type":"custom","hasMergeField":false}]}' ><omnistudio-output-field data-style-id="state0element13block_element2_child"   card={card}  record={record}  merge-field="%3Cdiv%3EPlease%20indicate%20how%20many%20claims%20in%20which%20you%20have%20been%20named%3C/div%3E"  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-0","field":"HAAssistantPhysicianLicenseQuestions14","operator":"==","value":"Yes","type":"custom","hasMergeField":false}]}'  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element13block_element3" class="slds-col   slds-size_12-of-12 condition-element" data-rindex={rindex} style=""  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-9","field":"HAAssistantPhysicianLicenseQuestions14","operator":"==","value":"Yes","type":"custom","hasMergeField":false}]}' ><omnistudio-output-field data-style-id="state0element13block_element3_child"   card={card}  record={record}  placeholder="-"  field-name="HAAssistantPhysicianLicenseQuestions14Txt"  label=""  type="text"  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-9","field":"HAAssistantPhysicianLicenseQuestions14","operator":"==","value":"Yes","type":"custom","hasMergeField":false}]}'  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element14" class="slds-col   slds-p-around_x-small slds-size_12-of-12 condition-element" data-rindex={rindex} style=""  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-0","field":"Parent.regAuthTypeName","operator":"==","value":"Assistant Physician","type":"custom","hasMergeField":false},{"id":"state-new-condition-11","field":"Parent.parType","operator":"!=","value":"Reactivation","type":"custom","hasMergeField":false,"logicalOperator":"&&"}]}' >
+    <omnistudio-block data-style-id="state0element14_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-0","field":"Parent.regAuthTypeName","operator":"==","value":"Assistant Physician","type":"custom","hasMergeField":false},{"id":"state-new-condition-11","field":"Parent.parType","operator":"!=","value":"Reactivation","type":"custom","hasMergeField":false,"logicalOperator":"&&"}]}'  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element14block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element14block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3EDo%20you%20currently%20hold%20a%20license%20in%20any%20country%20other%20than%20U.S?%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element14block_element1" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element14block_element1_child"   card={card}  record={record}  placeholder="-"  field-name="HAAssistantPhysicianLicenseQuestions15"  label=""  type="text"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element15" class="slds-col   slds-p-around_x-small slds-size_12-of-12 condition-element" data-rindex={rindex} style=""  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-0","field":"Parent.regAuthTypeName","operator":"!=","value":"Assistant Physician","type":"custom","hasMergeField":false},{"id":"state-new-condition-63","field":"Parent.regAuthTypeName","operator":"!=","value":"Visiting Professor (D.O.)","type":"custom","hasMergeField":false,"logicalOperator":"&&"},{"id":"state-new-condition-75","field":"Parent.regAuthTypeName","operator":"!=","value":"Visiting Professor (M.D.)","type":"custom","hasMergeField":false,"logicalOperator":"&&"}]}' >
+    <omnistudio-block data-style-id="state0element15_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-0","field":"Parent.regAuthTypeName","operator":"!=","value":"Assistant Physician","type":"custom","hasMergeField":false},{"id":"state-new-condition-63","field":"Parent.regAuthTypeName","operator":"!=","value":"Visiting Professor (D.O.)","type":"custom","hasMergeField":false,"logicalOperator":"&&"},{"id":"state-new-condition-75","field":"Parent.regAuthTypeName","operator":"!=","value":"Visiting Professor (M.D.)","type":"custom","hasMergeField":false,"logicalOperator":"&&"}]}'  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element15block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element15block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3EDo%20you%20currently%20hold%20a%20license%20in%20any%20country%20other%20than%20U.S?%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element15block_element1" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element15block_element1_child"   card={card}  record={record}  placeholder="-"  field-name="HAAssistantPhysicianLicenseQuestions15Clone"  label=""  type="text"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element16" class="slds-col   slds-p-around_x-small slds-size_12-of-12 condition-element" data-rindex={rindex} style=""  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-0","field":"Parent.regAuthTypeName","operator":"==","value":"Assistant Physician","type":"custom","hasMergeField":false},{"id":"state-new-condition-11","field":"Parent.parType","operator":"==","value":"Reactivation","type":"custom","hasMergeField":false,"logicalOperator":"&&"}]}' >
+    <omnistudio-block data-style-id="state0element16_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  data-conditions='\{"id":"state-condition-object","isParent":true,"group":[{"id":"state-new-condition-0","field":"Parent.regAuthTypeName","operator":"==","value":"Assistant Physician","type":"custom","hasMergeField":false},{"id":"state-new-condition-11","field":"Parent.parType","operator":"==","value":"Reactivation","type":"custom","hasMergeField":false,"logicalOperator":"&&"}]}'  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element16block_element0" class="slds-col  label slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-output-field data-style-id="state0element16block_element0_child"   card={card}  record={record}  merge-field="%3Cdiv%3ESince%20your%20license%20was%20placed%20in%20an%20inactive%20status,%20what%20have%20you%20done%20to%20keep%20current%20with%20the%20practice%20of%20medicine?%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element16block_element1" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><omnistudio-output-field data-style-id="state0element16block_element1_child"   card={card}  record={record}  placeholder="-"  field-name="HAAssistantPhysicianLicenseQuestions16Txt"  label=""  type="text"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div>
+        </div>
+      </omnistudio-flex-card-state>
+                      </template>
+            </template>
+            <template if:true={hasError}>
+            {error}
+            </template>
+            
+      <omnistudio-action action-wrapperclass="slds-hide" re-render-flyout class="action-trigger slds-col" onupdateos={updateOmniscript} onselectcards={updateSelectedCards} onsetvalue={updateAction} onfireactionevent={actionEvtHandler}>
+      
+      </omnistudio-action>
+  
+            <omnistudio-action class="execute-action" re-render-flyout action-wrapperclass="slds-hide" onupdateos={updateOmniscript} onselectcards={updateSelectedCards} onsetvalue={updateAction} onfireactionevent={actionEvtHandler}>
+            
+            </omnistudio-action>
+            </div>
+          </template>

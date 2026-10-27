@@ -1,0 +1,191 @@
+<aura:component
+    controller="LpiHeaderAuraCtrl"
+    implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes"
+    access="global"
+    description="Aura replica of lpiHeader for Experience Cloud theme layouts">
+    <!-- Static Resource Icons -->
+    <aura:attribute name="menuIcon" type="String" default="{!$Resource.LPI_Design + '/media/icons/menu.svg'}"/>
+    <aura:attribute name="logoIcon" type="String" default="{!$Resource.LPI_Design + '/media/images/ibm-logo-white.svg'}"/>
+    
+    <!-- State Attributes -->
+    <aura:attribute name="cmpHide" type="Boolean" default="false"/>
+    <aura:attribute name="accountData" type="Object" default="{}"/>
+    <aura:attribute name="acrList" type="List" default="[]"/>
+    <aura:attribute name="isBusinessAccount" type="Boolean" default="true"/>
+    <aura:attribute name="isMainBusinessAccount" type="Boolean" default="false"/>
+    <aura:attribute name="selectedLanguage" type="String" default="en_US"/>
+    <aura:attribute name="languageUpdating" type="Boolean" default="false"/>
+    <aura:attribute name="selectedAccountName" type="String" default="Please Select Account"/>
+    <aura:attribute name="selectedAccountId" type="String" default=""/>
+    <aura:attribute name="userName" type="String" default=""/>
+    <aura:attribute name="userProfileImage" type="String" default=""/>
+    
+    <aura:attribute name="labels" type="Map" default="{
+        selectedAccount: 'Selected Account',
+        pleaseSelectAccount: 'Please Select Account',
+        switchAccountHelp: 'Switch your account type by clicking Select Account here.',
+        notifications: 'Notifications',
+        noNotifications: 'No notifications available.',
+        notifStatusUpdate: 'Application Status Update',
+        notifMultipleUpdated: '{0} of your applications were updated.',
+        language: 'Language',
+        myProfile: 'My Profile',
+        logout: 'Logout',
+        manageAccount: 'Manage Account'
+    }"/>
+    
+    <aura:attribute name="languageOptions" type="List" default="[
+        {'label': 'English', 'value': 'en_US'},
+        {'label': 'French', 'value': 'fr'}
+    ]"/>
+
+    <!-- Notification Attributes -->
+    <aura:attribute name="notifications" type="List" default="[]"/>
+    <aura:attribute name="unreadCount" type="Integer" default="0"/>
+    <aura:attribute name="showNotificationDropdown" type="Boolean" default="false"/>
+    <aura:attribute name="notificationsInitialized" type="Boolean" default="false"/>
+    <aura:attribute name="notificationPollTimer" type="Object"/>
+
+    <!-- Event Handlers -->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler name="destroy" value="{!this}" action="{!c.handleDestroy}"/>
+
+    <aura:if isTrue="{!not(v.cmpHide)}">
+        <div class="lpi-header d-flex justify-content-between">
+            <div class="d-flex slds-grid--vertical-align-center brand-logo">
+                <div class="menu slds-p-right_large" id="menu" onclick="{!c.toggleSidebar}">
+                    <a href="javascript:void(0)">
+                        <img src="{!v.menuIcon}" alt="Vertical Menu" />
+                    </a>
+                </div>
+                <div class="brand-name slds-m-right_xx-large" onclick="{!c.handleHome}">
+                    <a href="javascript:void(0)" title="LPI Logo">
+                        <img src="{!v.logoIcon}" alt="LPI Logo" style="width: 20%;" />
+                    </a>
+                </div>
+            </div>
+
+            <div class="header-nav d-flex">
+                <div class="slds-grid slds-grid--vertical-align-center">
+                    
+                    <!-- Language Selector -->
+                    <div class="lp-language-selector slds-m-right_medium" style="min-width: 9rem;">
+                        <lightning:combobox
+                            name="portalLanguage"
+                            label="{!v.labels.language}"
+                            value="{!v.selectedLanguage}"
+                            placeholder="{!v.labels.language}"
+                            options="{!v.languageOptions}"
+                            onchange="{!c.handleLanguageChange}"
+                            variant="label-hidden"
+                            disabled="{!v.languageUpdating}"
+                        />
+                    </div>
+
+                    <!-- Business Dropdown -->
+                    <aura:if isTrue="{!not(v.isMainBusinessAccount)}">
+                        <div class="profile-name business-dropdown">
+                            <lightning:helptext class="bussiness-helptext" content="{!v.labels.switchAccountHelp}"></lightning:helptext>
+                            <div class="bussiness-select">
+                                <p class="user-role">{!v.labels.selectedAccount}</p>
+                                <div class="header-menu slds-m-right_x-small">
+                                    <lightning:buttonMenu alternativeText="Show menu" onselect="{!c.handleChange}" variant="bare" label="{!v.selectedAccountName}">
+                                        <aura:iteration items="{!v.acrList}" var="item">
+                                            <aura:if isTrue="{!empty(item.Id)}">
+                                                <lightning:menuDivider />
+                                                <lightning:menuSubheader label="{!item.Name}" />
+                                                <lightning:menuDivider />
+                                                <aura:set attribute="else">
+                                                    <lightning:menuItem iconName="{!item.showIcon ? 'utility:check' : ''}" label="{!item.Name}" value="{!item.Id}" />
+                                                </aura:set>
+                                            </aura:if>
+                                        </aura:iteration>
+                                    </lightning:buttonMenu>
+                                </div>
+                            </div>
+                        </div>
+                    </aura:if>
+
+                    <!-- NOTIFICATION ICON START -->
+                    <div class="notification-wrapper slds-m-right_medium slds-is-relative">
+                        <button
+                            class="notification-btn"
+                            onclick="{!c.toggleNotificationDropdown}"
+                            title="{!v.labels.notifications}"
+                            aria-label="{!v.labels.notifications}"
+                            aria-expanded="{!v.showNotificationDropdown}"
+                            type="button"
+                        >
+                            <lightning:icon iconName="utility:notification" size="small" variant="border-filled"></lightning:icon>
+                            <aura:if isTrue="{!greaterThan(v.unreadCount, 0)}">
+    <span class="notification-badge">{!v.unreadCount}</span>
+</aura:if>
+                        </button>
+
+                        <aura:if isTrue="{!v.showNotificationDropdown}">
+                            <div class="notification-dropdown slds-popover slds-popover_panel slds-nubbin_top-right">
+                                <div class="slds-popover__header slds-p-around_small slds-border_bottom d-flex justify-content-between">
+                                    <h2 class="slds-text-heading_small slds-font-weight_bold">{!v.labels.notifications}</h2>
+                                </div>
+                                <div class="slds-popover__body slds-p-around_small notification-body">
+                                    <aura:if isTrue="{!not(empty(v.notifications))}">
+                                        <aura:iteration items="{!v.notifications}" var="notif">
+                                            <div class="notification-item slds-p-vertical_x-small slds-border_bottom">
+                                                <p class="slds-text-body_small notif-text">{!notif.body}</p>
+                                                <span class="slds-text-color_weak notif-date">{!notif.date}</span>
+                                            </div>
+                                        </aura:iteration>
+                                        <aura:set attribute="else">
+                                            <p class="slds-text-color_weak slds-text-align_center slds-p-around_medium">{!v.labels.noNotifications}</p>
+                                        </aura:set>
+                                    </aura:if>
+                                </div>
+                            </div>
+                        </aura:if>
+                    </div>
+                    <!-- NOTIFICATION ICON END -->
+
+                    <!-- Profile Image -->
+                    <div class="profile-image slds-p-right_small">
+                        <img src="{!v.userProfileImage}" alt="Profile Image" />
+                    </div>
+
+                    <!-- Desktop Menu -->
+                    <div class="profile-name profile-dropdown d-flex dir-column desktop-only">
+                        <lightning:buttonMenu class="profile-menu" variant="bare" label="{!v.userName}" alternativeText="Show menu" menuAlignment="auto">
+                            <div class="profile">
+                                <aura:if isTrue="{!not(v.isBusinessAccount)}">
+                                    <lightning:menuItem tabindex="0" class="profile-icon" value="Profile" label="{!v.labels.myProfile}" onactive="{!c.handleAccount}" />
+                                </aura:if>
+                                <lightning:menuItem tabindex="0" class="logout-icon" value="Logout" label="{!v.labels.logout}" onactive="{!c.handleLogout}" />
+                            </div>
+                        </lightning:buttonMenu>
+                        <aura:if isTrue="{!v.isBusinessAccount}">
+                            <a class="user-role profile-menu-link" onclick="{!c.handleManageAccountClick}">{!v.labels.manageAccount}</a>
+                        </aura:if>
+                    </div>
+
+                    <!-- Mobile Menu -->
+                    <div class="profile-name profile-dropdown d-flex dir-column mobile-only">
+                        <lightning:buttonMenu class="profile-menu" variant="bare" alternativeText="Show menu" menuAlignment="auto">
+                            <div class="profile">
+                                <div class="user-name-mobile-only">{!v.userName}</div>
+                                <aura:if isTrue="{!not(v.isBusinessAccount)}">
+                                    <lightning:menuItem tabindex="0" class="profile-icon" value="Profile" label="{!v.labels.myProfile}" onactive="{!c.handleAccount}" />
+                                </aura:if>
+                                <aura:if isTrue="{!v.isBusinessAccount}">
+                                    <lightning:menuItem tabindex="0" class="profile-icon" value="Manage Account" label="{!v.labels.manageAccount}" onactive="{!c.handleManageAccountClick}" />
+                                </aura:if>
+                                <lightning:menuItem tabindex="0" class="logout-icon" value="Logout" label="{!v.labels.logout}" onactive="{!c.handleLogout}" />
+                            </div>
+                        </lightning:buttonMenu>
+                        <aura:if isTrue="{!v.isBusinessAccount}">
+                            <a class="user-role profile-menu-link" onclick="{!c.handleManageAccountClick}">{!v.labels.manageAccount}</a>
+                        </aura:if>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </aura:if>
+</aura:component>

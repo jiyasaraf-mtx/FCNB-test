@@ -1,0 +1,749 @@
+.vertical-menu {
+
+    .slds-button__icon_x-small,
+    .slds-icon {
+        display: none;
+    }
+
+    .slds-button__icon {
+        fill: $primary-main;
+        width: 1rem;
+        height: 1rem;
+    }
+
+    .slds-button {
+        &:focus {
+            box-shadow: none;
+            color: $primary-main;
+        }
+
+        .btnLabel {
+            border: 0;
+            clip: rect(0, 0, 0, 0);
+            height: toRem(1);
+            margin: toRem(-1);
+            overflow: hidden;
+            padding: 0;
+            position: absolute;
+            width: toRem(1);
+        }
+    }
+
+    .slds-modal__content {
+        .btnLabel {
+            position: unset;
+            width: auto;
+            height: auto;
+            margin: 0;
+        }
+    }
+
+    .slds-dropdown__item {
+        &>a {
+            justify-content: center;
+
+            &:focus {
+                background-color: $white;
+            }
+
+            .slds-truncate {
+                font-size: $font-size-15;
+                font-weight: $font-weight-regular;
+                color: $primary-main;
+            }
+        }
+    }
+}
+
+.table-eye-icon {
+    .slds-button:focus {
+        box-shadow: none;
+        color: $primary-main;
+    }
+}
+
+//License Table-PSF
+c-cf-licenses-table-header,
+c-cf-all-licenses-table-header,
+c-cf-my-application-table-header,
+c-cf-amendment-table-header,
+c-cf-dashboard-licenses-table-header,
+c-cf-dashboard-all-application-table-header,
+c-cf-dashboard-payment-table-header,
+c-cf-m-o-d-p-r-my-business-list {
+    .slds-card {
+        background: $white !important;
+        box-shadow: 0 toRem(2) toRem(4) 0 rgba(0, 0, 0, 0.1) !important;
+        padding: 1.25rem 1.5rem !important;
+    }
+
+    .heading-small {
+        margin-bottom: 1rem;
+    }
+
+    .table-heading-block {
+        align-items: center;
+        margin-bottom: 1rem;
+
+        .heading-small {
+            margin-bottom: 0;
+        }
+
+        a {
+            text-decoration: underline;
+        }
+    }
+}
+
+.table-header {
+    &>omnistudio-block {
+        &>.block-container {
+            &>.slds-grid.slds-wrap {
+                &>.slds-col.slds-size_1-of-1 {
+                    background: $background-light;
+                    padding: 0.8rem;
+                }
+            }
+        }
+    }
+
+    omnistudio-block {
+        &>.block-container {
+            .slds-rich-text-editor__output {
+                font-size: $font-size-14;
+                font-weight: $font-weight-semi-bold;
+                color: $text-primary;
+            }
+
+            .slds-size_2-of-12 .slds-col.slds-size_1-of-1 {
+                padding: 0;
+            }
+        }
+    }
+}
+
+.preview-icon {
+    margin-right: 0.75rem;
+
+    .slds-icon {
+        fill: $primary-main;
+    }
+}
+
+.table-row {
+    border-bottom: toRem(1) solid $line-seperator-border;
+
+    .slds-grid.slds-wrap {
+        align-items: center;
+    }
+
+    div[data-style-id="state0element0block_element2"].slds-col {
+        margin-top: 0 !important;
+    }
+
+    .actions {
+        .slds-col.slds-size_1-of-1 .slds-grid.slds-wrap {
+            align-items: center;
+            // margin-left: 0.4rem;
+        }
+
+        .preview-icon {
+            margin-left: 0.5rem;
+        }
+
+        .vertical-menu {
+            margin-left: 1rem;
+        }
+    }
+
+    >omnistudio-block {
+        &>.block-container {
+            &>.slds-grid.slds-wrap {
+                &>.slds-col.slds-size_1-of-1 {
+                    padding: 0.8rem;
+                }
+            }
+        }
+    }
+
+    omnistudio-block {
+        .slds-col.slds-size_1-of-1 {
+
+            .slds-rich-text-editor__output,
+            .field-value {
+                font-size: $font-size-14;
+                color: $text-primary;
+                padding-right: 0.5rem;
+            }
+
+            .application-number,
+            .license-number {
+                .field-value {
+                    color: $secondary-main;
+                    font-weight: normal;
+                }
+            }
+
+            a {
+                color: $primary-main;
+                font-size: $font-size-14;
+            }
+
+            .slds-size_2-of-12 .slds-col.slds-size_1-of-1 {
+                padding: 0;
+            }
+        }
+    }
+}
+
+
+c-cf-dashboard-licenses-table-header {
+
+    c-amendments-amendment-type-english,
+    c-amendments-amendment-type-english {
+        .slds-card {
+            box-shadow: none !important;
+        }
+    }
+}
+
+.table-eye-icon svg {
+    fill: $primary-main;
+    width: 1rem;
+    height: 1rem;
+}
+
+.review-custom-table {
+    background: $bg-blue;
+}
+
+c-cf-all-licenses-table-header,
+c-cf-my-application-table-header,
+c-cf-renew-licenses {
+    .slds-grid.slds-wrap.slds-card {
+        box-shadow: none;
+
+        .table-header {
+            margin-top: 0.625rem;
+        }
+
+        omnistudio-block[data-style-id="state0element0_child"] {
+            div[data-style-id="state0element0block_element0"].slds-col.page-heading.slds-size_2-of-12 {
+                width: max-content;
+            }
+
+            div[data-style-id="state0element0block_element2"].slds-col {
+                margin-top: 1rem;
+            }
+        }
+
+        omnistudio-block[data-style-id="state0element0block_element1_child"] {
+
+            .slds-col.slds-size_6-of-12,
+            .slds-col.slds-size_3-of-12 {
+                width: max-content;
+            }
+        }
+
+        .domain {
+            margin-top: 0.25rem;
+            width: max-content;
+
+            img {
+                width: 1.125rem;
+                padding-bottom: 0.25rem;
+            }
+        }
+
+        c-cf-licensing-table-row {
+            div[data-style-id="state0element0block_element5"] {
+                .block-container {
+                    .slds-col.slds-size_12-of-12 {
+                        background: $warning-shades-4-p;
+                        width: max-content;
+                        padding: 0.125rem 0.25rem;
+                        border-radius: $border-radius-medium;
+
+                        .slds-rich-text-editor__output {
+                            color: $warning-main;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+c-cf-all-licenses-table-header,
+c-cf-my-application-table-header,
+c-cf-renew-licenses {
+
+    .secondary-button,
+    .primary-button {
+
+        .slds-button_outline-brand,
+        .slds-button_brand {
+            width: 100%;
+        }
+    }
+}
+
+/* License Details */
+c-apply-for-license-license-english {
+    article.omniscript-article {
+        padding: 0;
+        background: transparent;
+        box-shadow: none !important;
+        border: none;
+        margin-top: -1.875rem;
+
+        &>.omniscript-body {
+            padding: 0 0.5rem;
+            margin-top: 0;
+            border-right: none !important;
+        }
+    }
+
+}
+
+.alpha-table-layout {
+    th {
+        background: $background-light !important;
+        padding: $x-l-small !important;
+        font-size: $small;
+        font-weight: 600 !important;
+        color: $table-header-text !important;
+    }
+
+    tr {
+        td {
+            padding:0.8rem;
+            color: $text-primary;
+            .docName {
+                p {
+                    font-size: $small;
+                    color: $text-primary;
+                    font-weight: normal;
+                }
+            }
+
+            .link-underline {
+                font-size: $small;
+                color: $text-primary;
+            }
+        }
+    }
+
+    .remove-icon {
+        button {
+            color: $error-dark;
+            border: none;
+        }
+    }
+    .download-icon {
+        button {
+            color: $primary-main;
+            border: none;
+        }
+    }
+
+    .slds-button_brand {
+        background: $primary-main;
+        padding: 0.1874rem 2rem;
+        font-size: $font-size-14;
+        border: toRem(1) solid $primary-main;
+    }
+
+}
+
+.comm-page-custom-deficiency-response {
+
+    .deficiency-notice {
+        .slds-card__header.slds-grid {
+            padding-left: 0;
+        }
+    }
+
+    .deficiency_note {
+        padding: 0.5rem 1rem;
+        background: $warning-shades-4-p;
+        border-radius: 0.25rem;
+        font-size: $font-size-14;
+        border: toRem(1) solid $warning-main;
+        color: $warning-main;
+
+        svg {
+            fill: $warning-main;
+        }
+    }
+    // .login-container-content {
+    //     padding: 3rem;
+    // }
+
+    // .slds-input {
+    //     border-radius: 0.25rem;
+    //     padding: 0.313rem;
+    //     border: 0.063rem solid $input-border;
+    // }
+
+    // .slds-form-element {
+    //     margin-bottom: 1rem;
+    // }
+
+    // .slds-page-header__title {
+    //     font-size: 1.5rem;
+    //     font-weight: 700;
+    //     line-height: 1.25rem;
+    //     color: $text-primary;
+    //     margin-bottom: 0.5rem;
+    // }
+}
+
+.complaint-form {
+    .slds-table {
+        th,
+        td {
+            padding: 0.8rem;
+        }
+        thead {
+            th {
+                padding: 0.8rem;
+                background: $background-light;
+                color: $text-secondary;
+                font-weight: $font-weight-semi-bold;
+            }
+        }
+        tbody {
+            td {
+                color: $text-primary;
+                font-size: $font-size-14;
+            }
+        }
+    }
+}
+
+c-cf-licensing-table-row {
+    .table-row {
+        .slds-grid.slds-wrap {
+            .vloc-min-height {
+                display: flex;
+            }
+
+            .actions {
+                .action-template {
+                    display: flex;
+                }
+            }
+        }
+    }
+}
+
+c-cf-dashboard-licensing-table-row {
+    .vertical-menu {
+        .flexMenuItems {
+            right: 0;
+            left: auto;
+        }
+    }
+}
+
+.payment-table-appnumber .slds-rich-text-editor__output div {
+    display: inline;
+}
+
+.document-upload_table {
+    thead tr th {
+
+        &:nth-child(1),
+        &:nth-child(2) {
+            width: 40%;
+        }
+
+        &:nth-child(3) {
+            width: 20%;
+        }
+    }
+    td[data-label="File"]{
+        .file-name{
+            span{
+                white-space: normal;
+            }
+            &>.slds-grid {
+                margin-bottom: 0.25rem;
+            }
+        }
+    }
+}
+
+lightning-datatable {
+    .slds-table {
+
+        thead th,
+        .slds-th__action,
+        lightning-primitive-header-factory .slds-cell-fixed {
+            background-color: $background-light !important;
+        }
+
+        .slds-is-resizable .slds-th__action,
+        .slds-is-resizable .slds-th__action:hover,
+        .slds-is-resizable .slds-th__action:focus {
+            background-color: rgb(242, 244, 248) !important;
+        }
+
+        &:not(.slds-no-row-hover) tbody {
+
+            tr:hover>td,
+            tr:hover>th,
+            tr:focus>td,
+            tr:focus>th {
+                background: none;
+                box-shadow: none !important;
+            }
+        }
+
+        tbody th {
+            padding-left: 0.5rem;
+        }
+
+        th.slds-has-focus,
+        td.slds-has-focus {
+            outline-offset: -2px !important;
+        }
+    }
+}
+
+/* Payment Table Start */
+.payment-table {
+
+    .totalDueText,
+    .totalAmount {
+        width: auto;
+    }
+
+    .fee-mob-section .totalDue .slds-grid {
+        justify-content: flex-end;
+    }
+
+    .totalAmount {
+        padding-right: 0.75rem;
+    }
+
+    .fcDataTable .slds-table {
+        [data-label="Amount "] .slds-th__action {
+            justify-content: flex-end;
+        }
+
+        [data-field-name="Fee_Amount"] {
+            justify-content: flex-end;
+            display: flex;
+        }
+    }
+
+}
+
+/* Payment Table END */
+
+.aliastable {
+    .slds-data-table-head-cell {
+        background-color: transparent !important;
+        padding: 0 !important;
+    }
+
+    .slds-table_bordered,
+    .slds-table--bordered {
+        border-bottom: 0 !important;
+    }
+
+    .slds-data-table-row-cell {
+        border-top: 0 !important;
+        padding: 0 !important;
+
+        .dataTableCell {
+            padding: 0 !important;
+        }
+    }
+
+    .slds-th__action {
+        padding: 0 !important;
+        // color: $text-primary;
+
+        &:hover {
+            background-color: transparent !important;
+        }
+    }
+
+
+    .slds-data-table-row.tableRow:hover {
+        &:hover {
+            background-color: transparent !important;
+        }
+    }
+
+    span.field-value {
+        font-size: 1rem !important;
+        color:  $text-primary;
+    }
+
+    h4 {
+        font-size: 1rem !important;
+        margin-bottom: 0 !important;
+    }
+}
+
+c-cf-alias-table {
+    .slds-table.table.slds-data-table {
+        margin: $medium 0;
+
+        .slds-data-table-head {
+            background: $background-light;
+            border: 1px solid $other-divider;
+            border-right:none ;
+            border-left:none ;
+
+            .slds-data-table-head-cell {
+                padding: 0.5rem !important;
+            }
+        }
+
+        .slds-data-table-body {
+            // border-bottom: toRem(1) solid $line-seperator-border;
+
+            c-data-table-cell {
+                // padding: 0.5rem !important;
+                padding: 0.8rem !important;
+                color: $text-primary;
+                border-bottom: 1px solid $other-divider;
+                .field-value{
+                    font-weight: $font-weight-regular !important;
+                }
+            }
+        }
+    }
+
+    lightning-base-combobox.slds-combobox_container {
+        min-width: 16rem;
+    }
+}
+
+@media all and (max-width: 78.125rem) {
+
+    c-cf-dashboard-all-application-table-header .slds-card,
+    c-cf-all-licenses-table-header .slds-card,
+    c-cf-my-application-table-header .slds-card,
+    c-cf-dashboard-payment-table-header .slds-card,
+    c-cf-licenses-table-header .slds-card,
+    c-cf-licensing-table-row .slds-card,
+    c-cf-renew-licenses .slds-card,
+    .table-container {
+        max-width: 100%;
+        overflow: auto;
+
+        .table-heading-block,
+        .table-header,
+        .table-row {
+            min-width: toRem(1000);
+        }
+    }
+}
+
+/* Alpha Design */
+
+table {
+    border-spacing: 0;
+    background-color: $white;
+
+    thead {
+        color: $text-primary;
+        font-size: $font-size-16 ;
+        background-color: $background-light;
+    }
+
+    tbody {
+        color: $table-body-grey;
+        font-size: $font-size-16;
+
+        tr {
+            &+tr {
+                border-top: 0.0625rem solid $table-border;
+            }
+            .slds-dropdown{
+                padding: $x-m-small;
+            }
+            a {
+                text-decoration: none;
+                color: $text-primary !important;
+                font-weight: $font-weight-semi-bold;
+                &:hover {
+                    background: $background-light !important;
+                }
+            }
+        }
+
+        .actions {
+            span {
+                color: $table-body-grey;
+            }
+        }
+        tr{
+            td[data-label="Action"]{
+                button{
+                    font-size: $font-size-14 !important;
+                }
+            }
+        }
+    }
+
+    td,
+    th {
+        padding: 0 $font-size-12;
+    }
+}
+
+.license-results-table
+{
+    .slds-button{
+        font-size: $font-size-14;
+    }
+}
+
+.table-col-15{
+    width: 15rem;
+    white-space:normal; 
+    word-break: break-all
+}
+.table-action{
+    a{
+        justify-content: start;
+        &:focus{
+            outline-offset: toRem(-3) !important;
+        }
+    }
+}
+
+
+@media screen and (max-width: 767px) {
+    .slds-table{
+        .table-body-row td {
+            padding: $small;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            font-weight: $font-weight-bold;
+            text-align: left;
+        }
+        .table-body-row td:before {
+            float: unset !important;
+            text-align: left;
+            text-transform: capitalize;
+            font-weight: $font-weight-medium;
+        }
+        .table-body-row{
+            box-shadow: $box-shadow-regular;
+            margin-bottom: $spacing-large;
+            border-radius: 0.25rem;
+            border-top: none;
+            >td:first-child{
+                border-top: 0;
+            }
+        }
+    }
+}

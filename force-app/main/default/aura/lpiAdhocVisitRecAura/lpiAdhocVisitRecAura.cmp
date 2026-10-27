@@ -1,0 +1,23 @@
+<!--
+  @description       : 
+  @author            : Vamsi Mudaliar
+  @group             : 
+  @last modified on  : 09-22-2023
+  @last modified by  : Vamsi Mudaliar
+-->
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:lightningQuickActionWithoutHeader,force:hasRecordId">
+    <!-- <aura:attribute name="isLwcVisible" type="Boolean" default="true"/>     -->
+    <aura:html tag="style">
+      .slds-modal__container{
+        min-width: 55rem !important; 
+      }
+      .slds-modal__close.closeIcon { 
+        display: none;
+      }
+    </aura:html>   
+    <!-- <aura:handler event="aura:locationChange" action="{!handleLocationChange}"/>
+    <aura:if isTrue="{!v.isLwcVisible}">          -->
+       <c:lpiNewVisitRecord recordId ="{!v.recordId}" onclose="{!c.closeQuickAction}"/>         
+    <!-- </aura:if>  -->
+    
+</aura:component>

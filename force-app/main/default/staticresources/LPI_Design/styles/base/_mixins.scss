@@ -1,0 +1,60 @@
+@function toRem($value) {
+    $remValue: calc($value / 16) + rem;	
+   @return $remValue;
+}
+@function spacing($value) {
+    $spaceValue: calc($value * 0.5) + rem;	
+   @return $spaceValue;
+}
+
+@mixin focus-outline {
+    outline: toRem(2) dotted $dark !important;
+    outline-offset: toRem(3) !important;  
+    box-shadow:none !important;
+}
+@mixin card-box-shadow{
+    box-shadow: toRem(0) toRem(4) toRem(8) toRem(0) rgba(45, 61, 100, 0.10) !important;
+}
+@mixin focus-outline-white {
+    outline: 2px dotted $white !important;
+    outline-offset: 0.188rem;
+    box-shadow:none !important;
+}
+@mixin distinction-between-records{
+    margin-bottom: 1rem !important;
+    border: 1px solid $other-divider !important;
+    border-radius: 0.25rem;
+}
+
+@mixin responsive($breakpoint){
+    @if $breakpoint == phone {
+        @media screen and (max-width: $mobile-end){
+            @content
+        };
+    }
+    @if $breakpoint == tab-port {
+        @media screen and (max-width: $tablet-portrait-end){
+            @content
+        };
+    }
+    @if $breakpoint == tab-land-start {
+        @media screen and (max-width: $tablet-landscape-start){
+            @content
+        };
+    }
+    @if $breakpoint == tab-land-end {
+        @media screen and (max-width: $tablet-landscape-end){
+            @content
+        };
+    }
+    @if $breakpoint == tab-port-start {
+        @media screen and (min-width: $tablet-portrait-start){
+            @content
+        };
+    }
+    @if $breakpoint == big-desktop {
+        @media screen and (min-width: $desktop-large){
+            @content
+        };
+    }
+}

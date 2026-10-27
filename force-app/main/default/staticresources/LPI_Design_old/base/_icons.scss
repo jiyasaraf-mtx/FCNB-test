@@ -1,0 +1,108 @@
+// /*--------------------------------
+
+// material-icon icon font
+// Generated using nucleoapp.com
+
+// -------------------------------- */
+
+// $material-icon-font-path: "fonts" !default;
+
+// @font-face {
+//   font-family: 'material-icon';
+//   src: url('#{$material-icon-font-path}/material-icon.eot');
+//   src: url('#{$material-icon-font-path}/material-icon.eot') format('embedded-opentype'),
+//        url('#{$material-icon-font-path}/material-icon.woff2') format('woff2'),
+//        url('#{$material-icon-font-path}/material-icon.woff') format('woff'),
+//        url('#{$material-icon-font-path}/material-icon.ttf') format('truetype'),
+//        url('#{$material-icon-font-path}/material-icon.svg') format('svg');
+// }
+
+// /* base class */
+// .material-icon {
+//   display: inline-block;
+//   font: normal normal normal 1em/1 'material-icon';
+//   color: inherit;
+//   flex-shrink: 0;
+//   -webkit-font-smoothing: antialiased;
+//   -moz-osx-font-smoothing: grayscale;
+// }
+
+// /* size examples - relative units */
+// .material-icon-sm {
+//   font-size: 0.8em;
+// }
+
+// .material-icon-lg {
+//   font-size: 1.2em;
+// }
+
+// /* size examples - absolute units */
+// .material-icon-16 {
+//   font-size: 16px;
+// }
+
+// .material-icon-32 {
+//   font-size: 32px;
+// }
+
+// /* rotate the icon infinitely */
+// .material-icon-is-spinning {
+//   animation: material-icon-spin 1s infinite linear;
+// }
+
+// @keyframes material-icon-spin {
+//   0% {
+//     transform: rotate(0deg);
+//   }
+//   100% {
+//     transform: rotate(360deg);
+//   }
+// }
+
+// /* transform */
+// .material-icon-rotate-90  {
+// 	transform: rotate(90deg);
+// }
+
+// .material-icon-rotate-180 {
+// 	transform: rotate(180deg);
+// }
+
+// .material-icon-rotate-270 {
+// 	transform: rotate(270deg);
+// }
+
+// .material-icon-flip-y {
+// 	transform: scaleY(-1);
+// }
+
+// .material-icon-flip-x {
+// 	transform: scaleX(-1);
+// }
+
+// /* icons */
+// $icons: (
+//   'down-arrow': 'ea03',
+//   'services': 'ea04',
+//   'contact': 'ea05',
+//   'faq': 'ea06',
+//   'home': 'ea07',
+//   'about': 'ea08',
+//   'print': 'ea09',
+//   'search': 'ea0a',
+//   'register': 'ea0b',
+//   'file': 'ea0c',
+//   'amend-license': 'ea0d',
+//   'renew': 'ea0e',
+//   'payment': 'ea0f',
+// );
+
+// @function unicode($str) {
+//   @return unquote("\"\\#{$str}\"");
+// }
+
+// @each $name, $code in $icons {
+//   .material-icon-#{""+$name}::before {
+//     content: unicode($code);
+//   }
+// }

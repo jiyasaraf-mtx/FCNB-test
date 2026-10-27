@@ -1,0 +1,7 @@
+<!--
+  @description  IBM/FCNB logo for Visualforce PDFs.
+  Note: renderAs="pdf" does not support SVG; PNG static resource is required.
+-->
+<apex:component >
+    <apex:image value="{!URLFOR($Resource.LPI_IBM_Logo_PDF)}" width="163" height="52" alt="FCNB logo" />
+</apex:component>
