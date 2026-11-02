@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata"><active>false</active>
+        <description>This validation rule restricts users from changing the Application status whose profile is other than 'System Administrator' or 'Board Staff'</description>
+        <errorConditionFormula>AND(
+NOT(AND(Is_Auto_Approval_Allowed__c,
+								ISCHANGED(Is_Auto_Approval_Allowed__c))),
+NOT(
+AND(ISCHANGED(OwnerId),ISPICKVAL( Status ,'Under Review'))
+),
+AND(
+ISCHANGED(Status),
+NOT(ISPICKVAL(Status,'Submitted')),
+NOT(
+OR(
+Contains($Profile.Name,"System Administrator"),
+Contains($Profile.Name,"Employer Portal User"),
+Contains($Profile.Name,"Board Staff"),
+Contains($Profile.Name,"IBM Profile"),
+AND(Contains($Profile.Name,"Support Staff"),ISPICKVAL(ApplicationType,'Renewal')),
+AND(Contains($Profile.Name,"MODPR Integration User"),ISPICKVAL(Status,'Rejected'),OR(License_Type_Name__c == 'Registered Nurse', License_Type_Name__c == 'Licensed Practical Nurse'))
+)
+)
+)
+)</errorConditionFormula>
+        <errorDisplayField>Status</errorDisplayField>
+        <errorMessage>Please contact to system admin, you don't have permission to change the Internal application status</errorMessage>
+    </ValidationRule>

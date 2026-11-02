@@ -1,0 +1,263 @@
+<template>
+    <div class="avr-filings">
+        <template if:true={showSuccess}>
+            <c-avr-filing-success filing-id={successContextId}></c-avr-filing-success>
+        </template>
+
+        <template if:true={showPortalContent}>
+        <template if:true={isLoading}>
+            <div class="slds-align_absolute-center slds-p-around_large" role="status">
+                <lightning-spinner alternative-text={labels.loading} size="medium"></lightning-spinner>
+            </div>
+        </template>
+
+        <template if:true={errorMessage}>
+            <div class="slds-notify slds-notify_alert slds-alert_error" role="alert">
+                {errorMessage}
+            </div>
+        </template>
+
+        <template if:true={isList}>
+            <h1 class="page-title">{labels.pensionFilings}</h1>
+            <div class="sub">
+                {labels.portalHome} › {breadcrumbPlan} › {labels.filings} › {labels.avr}
+            </div>
+
+            <div class="grid metrics">
+                <div class="card">
+                    <div class="metric">{metrics.avrFilingCount}</div>
+                    <div class="muted">{labels.avrFiling}</div>
+                </div>
+                <div class="card">
+                    <div class="metric">{metrics.reportingYearMetric}</div>
+                    <div class="muted">{labels.reportingYear}</div>
+                </div>
+                <div class="card">
+                    <div class="metric">{metrics.currentStatusMetric}</div>
+                    <div class="muted">{labels.currentStatus}</div>
+                </div>
+                <div class="card">
+                    <div class="metric">{metrics.filingDueDateMetric}</div>
+                    <div class="muted">{labels.filingDueDate}</div>
+                </div>
+            </div>
+
+            <div class="toolbar">
+                <lightning-input
+                    type="search"
+                    label={labels.searchPlaceholder}
+                    variant="label-hidden"
+                    placeholder={labels.searchPlaceholder}
+                    value={searchTerm}
+                    onchange={handleSearch}
+                    class="search"
+                ></lightning-input>
+                <lightning-button
+                    variant="brand"
+                    label={labels.addAvr}
+                    onclick={handleAddAvr}
+                ></lightning-button>
+            </div>
+
+            <div class="card table-card">
+                <table class="data-table" aria-label={labels.pensionFilings}>
+                    <thead>
+                        <tr>
+                            <th scope="col">{labels.plan}</th>
+                            <th scope="col">{labels.planNumber}</th>
+                            <th scope="col">{labels.filingId}</th>
+                            <th scope="col">{labels.filingType}</th>
+                            <th scope="col">{labels.reportingYear}</th>
+                            <th scope="col">{labels.status}</th>
+                            <th scope="col">{labels.actions}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template if:true={hasFilings}>
+                            <template for:each={filteredFilings} for:item="row">
+                                <tr key={row.id}>
+                                    <td>{row.planName}</td>
+                                    <td>{row.planRegistrationNumber}</td>
+                                    <td>{row.name}</td>
+                                    <td>{row.filingType}</td>
+                                    <td>{row.reportingYear}</td>
+                                    <td>
+                                        <span class={row.statusClass}>{row.status}</span>
+                                    </td>
+                                    <td class="actions-cell">
+                                        <template if:true={row.showEdit}>
+                                            <button
+                                                class="link-btn"
+                                                type="button"
+                                                data-id={row.id}
+                                                onclick={handleEdit}
+                                            >
+                                                {labels.edit}
+                                            </button>
+                                        </template>
+                                        <template if:true={row.showView}>
+                                            <button
+                                                class="link-btn"
+                                                type="button"
+                                                data-id={row.id}
+                                                onclick={handleView}
+                                            >
+                                                {labels.view}
+                                            </button>
+                                        </template>
+                                    </td>
+                                </tr>
+                            </template>
+                        </template>
+                        <template if:false={hasFilings}>
+                            <tr>
+                                <td colspan="7" class="empty">{labels.noFilings}</td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </div>
+        </template>
+
+        <template if:true={isView}>
+            <c-avr-filing-summary
+                filing-id={viewFilingId}
+                onback={handleViewBack}
+            ></c-avr-filing-summary>
+        </template>
+
+        <template if:true={isRmi}>
+            <h1 class="page-title">{labels.rmiTitle}</h1>
+            <div class="sub">{labels.rmiSubtitle}</div>
+            <div class="card table-card">
+                <table class="data-table" aria-label={labels.rmiTitle}>
+                    <thead>
+                        <tr>
+                            <th scope="col">{labels.filingId}</th>
+                            <th scope="col">{labels.plan}</th>
+                            <th scope="col">{labels.reportingYear}</th>
+                            <th scope="col">{labels.status}</th>
+                            <th scope="col">{labels.action}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template if:true={hasRmiFilings}>
+                            <template for:each={rmiFilings} for:item="row">
+                                <tr key={row.id}>
+                                    <td>{row.name}</td>
+                                    <td>{row.planName}</td>
+                                    <td>{row.reportingYear}</td>
+                                    <td><span class={row.statusClass}>{row.status}</span></td>
+                                    <td>
+                                        <lightning-button
+                                            variant="brand"
+                                            label={labels.action}
+                                            data-id={row.id}
+                                            data-name={row.name}
+                                            onclick={handleRmiAction}
+                                        ></lightning-button>
+                                    </td>
+                                </tr>
+                            </template>
+                        </template>
+                        <template if:false={hasRmiFilings}>
+                            <tr>
+                                <td colspan="5" class="empty">{labels.noFilings}</td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </div>
+
+            <template if:true={showRmiModal}>
+                <section
+                    role="dialog"
+                    tabindex="-1"
+                    aria-modal="true"
+                    aria-labelledby="rmi-modal-title"
+                    class="rmi-modal-container"
+                    onkeydown={handleRmiModalKeydown}
+                >
+                    <div class="rmi-backdrop" onclick={handleRmiCancel}></div>
+                    <div class="rmi-modal" onclick={stopPropagation}>
+                        <header class="rmi-modal__header">
+                            <h2 id="rmi-modal-title" class="rmi-modal__title">
+                                {labels.rmiModalTitle}
+                            </h2>
+                            <button
+                                type="button"
+                                class="rmi-modal__close"
+                                aria-label={labels.cancel}
+                                onclick={handleRmiCancel}
+                            >
+                                ×
+                            </button>
+                        </header>
+                        <div class="rmi-modal__body">
+                            <p class="rmi-modal__filing muted">{rmiModalFilingLabel}</p>
+                            <lightning-textarea
+                                label={labels.comments}
+                                value={rmiComments}
+                                onchange={handleRmiCommentsChange}
+                                max-length="32000"
+                                class="rmi-comments"
+                            ></lightning-textarea>
+                            <div class="rmi-upload slds-m-top_medium">
+                                <p class="upload-hint muted">{labels.uploadOptional}</p>
+                                <lightning-file-upload
+                                    label={labels.uploadDocuments}
+                                    name="rmiFiles"
+                                    accept=".pdf,.doc,.docx,.xls,.xlsx,.png,.jpg,.jpeg"
+                                    record-id={rmiSelectedFilingId}
+                                    onuploadfinished={handleRmiUploadFinished}
+                                    multiple
+                                ></lightning-file-upload>
+                                <template if:true={hasRmiUploadedFiles}>
+                                    <ul class="uploaded-list" aria-label={labels.uploadDocuments}>
+                                        <template for:each={rmiUploadedFiles} for:item="file">
+                                            <li key={file.documentId}>{file.name}</li>
+                                        </template>
+                                    </ul>
+                                </template>
+                            </div>
+                        </div>
+                        <footer class="rmi-modal__footer">
+                            <lightning-button
+                                variant="neutral"
+                                label={labels.cancel}
+                                onclick={handleRmiCancel}
+                                disabled={rmiSaving}
+                            ></lightning-button>
+                            <lightning-button
+                                variant="brand"
+                                label={labels.save}
+                                onclick={handleRmiSave}
+                                disabled={rmiSaving}
+                            ></lightning-button>
+                        </footer>
+                    </div>
+                </section>
+            </template>
+        </template>
+
+        <template if:true={isEmails}>
+            <h1 class="page-title">{labels.emailNotifications}</h1>
+            <div class="sub">{labels.emailSubtitle}</div>
+            <div class="grid email-grid">
+                <div class="card">
+                    <h2>AVR-E1 — {labels.submitted}</h2>
+                    <p class="muted">FCNB AVR {labels.submitted}</p>
+                </div>
+                <div class="card">
+                    <h2>AVR-E2 — RMI</h2>
+                    <p class="muted">FCNB AVR {labels.rmiTitle}</p>
+                </div>
+                <div class="card">
+                    <h2>AVR-E3 — Accepted</h2>
+                    <p class="muted">FCNB AVR Accepted</p>
+                </div>
+            </div>
+        </template>
+        </template>
+    </div>
+</template>

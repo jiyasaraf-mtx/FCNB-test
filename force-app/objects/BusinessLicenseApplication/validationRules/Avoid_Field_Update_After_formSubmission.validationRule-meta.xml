@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata"><active>true</active>
+        <description>User should not able to edit the fields once form is submitted</description>
+        <errorConditionFormula>AND( 
+    $Profile.Name = "Portal User",
+    OR(
+       ISCHANGED(License_Questions__c),
+       ISCHANGED(Tax_Compliance__c)
+      ) 
+)</errorConditionFormula>
+        <errorMessage>You can not edit the values once form is submitted</errorMessage>
+    </ValidationRule>

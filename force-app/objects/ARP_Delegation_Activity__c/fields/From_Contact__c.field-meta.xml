@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata"><deleteConstraint>Restrict</deleteConstraint>
+        <label>From Contact</label>
+        <referenceTo>Contact</referenceTo>
+        <relationshipLabel>ARP Delegations From</relationshipLabel>
+        <relationshipName>ARP_Delegations_From</relationshipName>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </CustomField>

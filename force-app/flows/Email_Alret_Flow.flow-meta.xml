@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>additional_Information_required</name>
+        <label>additional Information required</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <actionName>IndividualApplication.Additional_Information_Required</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>IndividualApplication.Additional_Information_Required</nameSegment>
+        <offset>0</offset>
+    </actionCalls>
+    <actionCalls>
+        <name>rejection_email</name>
+        <label>rejection email</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <actionName>IndividualApplication.Rejection_email</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>IndividualApplication.Rejection_email</nameSegment>
+        <offset>0</offset>
+    </actionCalls>
+    <actionCalls>
+        <name>Send_Email_Application_Approval_Confirmation</name>
+        <label>Send Email: Application Approval Confirmation</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <actionName>IndividualApplication.Application_Approval_Confirmation</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>IndividualApplication.Application_Approval_Confirmation</nameSegment>
+        <offset>0</offset>
+    </actionCalls>
+    <actionCalls>
+        <name>Send_Submission_alert</name>
+        <label>Send Submission alert</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <actionName>IndividualApplication.Application_Submission</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>IndividualApplication.Application_Submission</nameSegment>
+        <offset>0</offset>
+    </actionCalls>
+    <apiVersion>68.0</apiVersion>
+    <decisions>
+        <name>Email_Ex</name>
+        <label>Email Exists</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Email_Exist</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.SavedApplicationRef.Contact__r.Email</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SavedApplicationRef.Contact__r.Email</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>additional_Information_required</targetReference>
+            </connector>
+            <label>Email Exists</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>email_exists_s</name>
+        <label>email exists</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Email</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.SavedApplicationRef.Contact__r.Email</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SavedApplicationRef.Contact__r.Email</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>rejection_email</targetReference>
+            </connector>
+            <label>Email exists</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Evaluate_Application_Status</name>
+        <label>Evaluate Application Status</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Other Status</defaultConnectorLabel>
+        <rules>
+            <name>Is_Submitted</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Submitted</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Submitted_Email_Exist</targetReference>
+            </connector>
+            <label>Is Submitted</label>
+        </rules>
+        <rules>
+            <name>Is_Approved</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>License Issued</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Submitted_Email_Exist_Approved</targetReference>
+            </connector>
+            <label>Is Issued Certificate</label>
+        </rules>
+        <rules>
+            <name>Is_Additional_Information_Required</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Awaiting Response</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Email_Ex</targetReference>
+            </connector>
+            <label>Is Additional Information Required</label>
+        </rules>
+        <rules>
+            <name>Is_rejected</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Rejected</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>email_exists_s</targetReference>
+            </connector>
+            <label>Is rejected</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Submitted_Email_Exist</name>
+        <label>Submitted Email Exist</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>No Email</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.SavedApplicationRef.Contact__r.Email</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SavedApplicationRef.Contact__r.Email</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Send_Submission_alert</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Submitted_Email_Exist_Approved</name>
+        <label>Submitted Email Exist</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Email Does Not Exist</defaultConnectorLabel>
+        <rules>
+            <name>Email_Exists</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.SavedApplicationRef.Contact__r.Email</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SavedApplicationRef.Contact__r.Email</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Send_Email_Application_Approval_Confirmation</targetReference>
+            </connector>
+            <label>Email Exists</label>
+        </rules>
+    </decisions>
+    <description>this flow will send email notification when the status is submitted or approved</description>
+    <environments>Default</environments>
+    <interviewLabel>Email Alret Flow {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Email Alret Flow</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Evaluate_Application_Status</targetReference>
+        </connector>
+        <filterFormula>ISCHANGED({!$Record.Status}) || (ISNEW() &amp;&amp; !ISBLANK (TEXT({!$Record.Status})))</filterFormula>
+        <object>IndividualApplication</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

@@ -1,0 +1,371 @@
+:host {
+    display: block;
+    --line: #dfe4ea;
+    --muted: #667085;
+    --ink: #172033;
+    --brand: #1261c9;
+    --brand-dark: #0b4d9f;
+    --amber: #9a6700;
+    --green: #137333;
+}
+
+.avr-filings {
+    padding: 0.25rem 0 2rem;
+    color: var(--ink);
+    font-family: inherit;
+    max-width: 1450px;
+}
+
+.page-title {
+    margin: 0 0 0.35rem;
+    font-size: 1.7rem;
+    font-weight: 800;
+    color: var(--ink);
+}
+
+.sub {
+    color: var(--muted);
+    font-size: 0.75rem;
+    margin-bottom: 1.35rem;
+}
+
+.card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 13px;
+    padding: 18px;
+    box-shadow: 0 5px 20px #1018280a;
+    margin-bottom: 16px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+    margin-bottom: 16px;
+}
+
+.grid2 {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.email-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.metric {
+    font-size: 28px;
+    font-weight: 800;
+    line-height: 1.2;
+    color: var(--ink);
+}
+
+.muted {
+    font-size: 11px;
+    color: var(--muted);
+}
+
+.toolbar {
+    display: flex;
+    gap: 12px;
+    align-items: flex-end;
+    margin-bottom: 14px;
+}
+
+.search {
+    flex: 1;
+}
+
+.table-card {
+    background: #FFFFFF;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    overflow-x: auto;
+    margin-bottom: 0;
+    box-shadow: 0px 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.data-table th {
+    text-align: left;
+    padding: 12px 14px;
+    background: #F0F4F8;
+    color: var(--navy);
+    font-weight: 700;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    border-bottom: 1px solid var(--line);
+    white-space: nowrap;
+    vertical-align: middle;
+}
+
+.data-table td {
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: middle;
+    color: var(--ink);
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+.data-table tr:hover td {
+    background-color: #F8FAFC;
+}
+
+.data-table tr:last-child td {
+    border-bottom: 0;
+}
+
+.empty {
+    text-align: center;
+    color: var(--muted);
+    white-space: normal;
+}
+
+.actions-cell {
+    white-space: nowrap;
+}
+
+.badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.2;
+    text-align: center;
+    white-space: nowrap;
+    background: var(--blue2);
+    color: var(--navy);
+    border: 1px solid #CBD5E1;
+}
+
+.badge.amber,
+.badge.orange,
+.badge.draft,
+.badge.rmi {
+    background: var(--orange2);
+    color: var(--amber);
+    border: 1px solid #FEF3C7;
+}
+
+.badge.green,
+.badge.approved,
+.badge.submitted {
+    background: var(--green2);
+    color: var(--green);
+    border: 1px solid #D1FAE5;
+}
+
+.link-btn {
+    border: 1px solid #b7c8df;
+    background: #fff;
+    color: #145bc2;
+    border-radius: 7px;
+    padding: 9px 12px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.link-btn:hover {
+    background: var(--navy);
+    text-decoration: none;
+}
+
+@media (max-width: 900px) {
+    .grid,
+    .email-grid,
+    .grid2 {
+        grid-template-columns: 1fr;
+    }
+}
+
+.rmi-modal-container {
+    position: fixed;
+    inset: 0;
+    z-index: 9000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    outline: none;
+}
+
+.rmi-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(16, 24, 40, 0.45);
+}
+
+.rmi-modal {
+    position: relative;
+    z-index: 1;
+    width: min(560px, calc(100vw - 2rem));
+    max-height: calc(100vh - 2rem);
+    overflow: auto;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 20px 40px rgba(16, 24, 40, 0.2);
+    border: 1px solid var(--line);
+}
+
+.rmi-modal__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem 1.15rem;
+    border-bottom: 1px solid var(--line);
+}
+
+.rmi-modal__title {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.rmi-modal__close {
+    border: none;
+    background: transparent;
+    font-size: 1.5rem;
+    line-height: 1;
+    cursor: pointer;
+    color: var(--muted);
+    min-width: 44px;
+    min-height: 44px;
+}
+
+.rmi-modal__body {
+    padding: 1.15rem;
+}
+
+.rmi-modal__filing {
+    margin: 0 0 0.85rem;
+    font-size: 0.8rem;
+}
+
+.rmi-modal__footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    padding: 0.85rem 1.15rem 1.15rem;
+    border-top: 1px solid var(--line);
+}
+
+.field-label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 0.25rem;
+}
+
+.upload-hint {
+    margin: 0 0 0.5rem;
+    font-size: 0.75rem;
+}
+
+.uploaded-list {
+    margin: 0.75rem 0 0;
+    padding-left: 1.15rem;
+    font-size: 0.8rem;
+    color: var(--ink);
+}
+
+/* Container Spacing */
+.status-cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-top: 16px;
+}
+
+/* Card Outer Shell */
+.status-card {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 10px;
+    padding: 16px 20px;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    cursor: pointer;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.03);
+    transition: all 0.15s ease-in-out;
+    min-height: 90px;
+    box-sizing: border-box;
+}
+
+/* Active State - Blue Border Highlight */
+.status-card.active,
+.status-card:focus-visible {
+    border: 2px solid #0072CE !important;
+    padding: 15px 19px; /* Compensate for 2px border */
+    box-shadow: none;
+    outline: none;
+}
+
+/* Icon Badges (Rounded Squares) */
+.status-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: grid;
+    place-items: center;
+    font-size: 14px;
+    font-weight: 800;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+/* Icon Background Tints */
+.status-card.submitted .status-icon {
+    background: #EAF2FF;
+    color: #0072CE;
+}
+
+.status-card.rmi .status-icon {
+    background: #FFF3DF;
+    color: #B86B00;
+}
+
+.status-card.approved .status-icon {
+    background: #EAF7EF;
+    color: #16834A;
+}
+
+.status-card.denied .status-icon {
+    background: #FFF5F5;
+    color: #B42318;
+}
+
+/* Card Content Typography & Alignment */
+.status-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.status-label {
+    font-size: 12px;
+    font-weight: 800;
+    color: #102A56;
+    margin-bottom: 4px;
+    line-height: 1.2;
+}
+
+.status-count {
+    font-size: 26px;
+    font-weight: 900;
+    color: #102A56;
+    line-height: 1;
+    margin-bottom: 6px;
+}
+
+.status-caption {
+    font-size: 11px;
+    color: #63738A;
+    font-weight: 500;
+}

@@ -1,0 +1,133 @@
+<template>
+    <div class="summary-page" role="main">
+        <template if:true={isLoading}>
+            <div class="slds-align_absolute-center slds-p-around_large" role="status">
+                <lightning-spinner alternative-text={labels.loading} size="medium"></lightning-spinner>
+            </div>
+        </template>
+
+        <template if:true={errorMessage}>
+            <div class="slds-notify slds-notify_alert slds-alert_error" role="alert">
+                {errorMessage}
+            </div>
+        </template>
+
+        <template if:true={showContent}>
+            <div class="summary-toolbar">
+                <lightning-button
+                    variant="neutral"
+                    label={labels.backToPensionFilings}
+                    onclick={handleBack}
+                ></lightning-button>
+            </div>
+
+            <h1 class="page-title">{labels.reviewSummary}</h1>
+            <div class="sub">
+                {labels.filingId}: {filing.name}
+                <template if:true={filing.status}>
+                    · <span class={statusClass}>{filing.status}</span>
+                </template>
+            </div>
+
+            <section class="section" aria-labelledby="hdr-header">
+                <h2 id="hdr-header" class="section-title">{labels.filingHeader}</h2>
+                <div class="field-grid">
+                    <div class="field">
+                        <div class="field-label">{labels.filingType}</div>
+                        <div class="field-value">{filing.filingTypeDisplay}</div>
+                    </div>
+                    <div class="field">
+                        <div class="field-label">{labels.reportingYear}</div>
+                        <div class="field-value">{filing.reportingYearDisplay}</div>
+                    </div>
+                    <div class="field">
+                        <div class="field-label">{labels.plan}</div>
+                        <div class="field-value">{filing.planNameDisplay}</div>
+                    </div>
+                    <div class="field">
+                        <div class="field-label">{labels.planNumber}</div>
+                        <div class="field-value">{filing.planNumberDisplay}</div>
+                    </div>
+                    <div class="field">
+                        <div class="field-label">{labels.firstName}</div>
+                        <div class="field-value">{filing.firstNameDisplay}</div>
+                    </div>
+                    <div class="field">
+                        <div class="field-label">{labels.lastName}</div>
+                        <div class="field-value">{filing.lastNameDisplay}</div>
+                    </div>
+                    <div class="field">
+                        <div class="field-label">{labels.email}</div>
+                        <div class="field-value">{filing.emailDisplay}</div>
+                    </div>
+                    <div class="field">
+                        <div class="field-label">{labels.phone}</div>
+                        <div class="field-value">{filing.phoneDisplay}</div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" aria-labelledby="hdr-plan">
+                <h2 id="hdr-plan" class="section-title">{labels.planData}</h2>
+                <div class="field-grid">
+                    <div class="field">
+                        <div class="field-label">{labels.registrationNumber}</div>
+                        <div class="field-value">{filing.registrationNumberDisplay}</div>
+                    </div>
+                    <div class="field">
+                        <div class="field-label">{labels.valuationDate}</div>
+                        <div class="field-value">{filing.valuationDateDisplayValue}</div>
+                    </div>
+                    <div class="field">
+                        <div class="field-label">{labels.filingDueDate}</div>
+                        <div class="field-value">{filing.filingDueDateDisplayValue}</div>
+                    </div>
+                    <div class="field">
+                        <div class="field-label">{labels.actuaryName}</div>
+                        <div class="field-value">{filing.actuaryNameDisplay}</div>
+                    </div>
+                    <div class="field">
+                        <div class="field-label">{labels.actuaryFirm}</div>
+                        <div class="field-value">{filing.actuaryFirmDisplay}</div>
+                    </div>
+                    <div class="field span-12">
+                        <div class="field-label">{labels.notes}</div>
+                        <div class="field-value">{filing.notesDisplay}</div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" aria-labelledby="hdr-status">
+                <h2 id="hdr-status" class="section-title">{labels.status}</h2>
+                <div class="field-grid">
+                    <div class="field">
+                        <div class="field-label">{labels.filingId}</div>
+                        <div class="field-value">{filing.nameDisplay}</div>
+                    </div>
+                    <div class="field">
+                        <div class="field-label">{labels.status}</div>
+                        <div class="field-value">
+                            <span class={statusClass}>{filing.statusDisplay}</span>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="field-label">{labels.rmiStatus}</div>
+                        <div class="field-value">{filing.rmiStatusDisplay}</div>
+                    </div>
+                    <div class="field">
+                        <div class="field-label">{labels.attestation}</div>
+                        <div class="field-value">{attestationDisplay}</div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="summary-toolbar bottom">
+                <lightning-button
+                    variant="brand"
+                    label={labels.backToPensionFilings}
+                    onclick={handleBack}
+                ></lightning-button>
+            </div>
+        </template>
+    </div>
+</template>
